@@ -1,5 +1,6 @@
+
 "use strict";
-//Maybe we have to use schema 
+//Maybe we have to use schema
 var mongoose = require('mongoose');
 
 //Not sure how to use Token
