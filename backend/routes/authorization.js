@@ -1,11 +1,13 @@
 // Add Passport-related auth routes here.
 var  express = require('express');
-import {User, Product} from '../models/models';
+var models = require('../models/models');
+var User = models.User;
 var router = express.Router();
 
 
 /* GET home page. */
 function auth(passport) {
+  console.log("hehehehhehehe");
 
   router.get('/auth/signup', function(req, res) {
     res.render('signup') //have to change
@@ -21,7 +23,8 @@ function auth(passport) {
       errors.forEach(function(error) {
         error_msg[error.param] = error.msg
       })
-      res.render('signup', {project: req.body, error: error_msg}) // have to change
+      res.status(400);
+      //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
     } else {
         var new_user = new User({
           username: req.body.username,
@@ -30,7 +33,8 @@ function auth(passport) {
         new_user.save()
                 .then((doc) => {
                   console.log(doc)
-                  res.redirect('/auth/login')
+                  res.status(200)
+                  //res.redirect('/auth/login')
                   // if (err) {
                   //   res.status(400).send({"error": "could not save data"})
                   // } else {
@@ -41,6 +45,7 @@ function auth(passport) {
   })
 
   router.get('/auth/login', function(req, res) {
+    res.send("hello");
     //res.render('login');
   })
 
@@ -50,10 +55,11 @@ function auth(passport) {
   }));
 
   router.get('/', function(req, res, next) {
+    console.log("yoyoyoyoyoyo");
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
-      res.redi
+      next();
     }
   });
 
@@ -65,5 +71,5 @@ function auth(passport) {
   return router;
 }
 
-// module.exports = router;
-export default auth;
+module.exports = auth;
+//export default auth;
