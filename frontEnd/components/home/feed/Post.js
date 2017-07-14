@@ -8,7 +8,7 @@ import Modal from './Modal';
 
 // TODO on action of comment button dispatch modal
 
-class Feed extends React.Component {
+class Post extends React.Component {
 
   render() {
     return (
@@ -19,4 +19,4 @@ class Feed extends React.Component {
   }
 }
 
-export default Feed;
+export default Post;

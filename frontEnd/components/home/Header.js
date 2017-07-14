@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Link} from 'react-router-dom';
-import Quote from '.../containers/Quote';
-import NewPost from '.../containers/NewPost';
+import Quote from '../../containers/Quote';
+import NewPost from '../../containers/NewPost';
 
 // TODO Header content
 // TODO Quote container
