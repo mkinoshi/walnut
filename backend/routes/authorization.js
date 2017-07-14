@@ -53,11 +53,7 @@ function auth(passport) {
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
-      var products = Product.find()
-                            .exec()
-                            .then((products) => {
-                              res.render('products', {products: products})
-                            })
+      res.redi
     }
   });
 
