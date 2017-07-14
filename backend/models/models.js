@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 // Not sure how to use Token
-const Token = mongoose.model('Token', {
+const TokenSchema = new mongoose.Schema({
   userId: {
     type: String
   },
@@ -15,7 +15,7 @@ const Token = mongoose.model('Token', {
   }
 });
 
-const User = mongoose.model('User', {
+const UserSchema = new mongoose.Schema({
   fname: {
     type: String
   },
@@ -43,7 +43,7 @@ const User = mongoose.model('User', {
   }
 });
 
-const Quotes = mongoose.model('Quotes', {
+const QuoteSchema = new mongoose.Schema({
   content: {
     type: String
   },
@@ -53,7 +53,7 @@ const Quotes = mongoose.model('Quotes', {
   }
 });
 
-const Post = mongoose.model('Post', {
+const PostSchema = new mongoose.Schema({
   content: {
     type: String
   },
@@ -81,7 +81,7 @@ const Post = mongoose.model('Post', {
   }
 });
 
-const Comments = mongoose.model('Comments', {
+const CommentSchema = new mongoose.Schema({
   content: {
     type: String
   },
@@ -100,7 +100,7 @@ const Comments = mongoose.model('Comments', {
   ]
 });
 
-const Tag = mongoose.model('Tag', {
+const TagSchema = new mongoose.Schema({
   Posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -109,11 +109,18 @@ const Tag = mongoose.model('Tag', {
   ]
 });
 
+const Token = mongoose.model('Token', TokenSchema);
+const User = mongoose.model('User', UserSchema);
+const Quotes = mongoose.model('Quote', QuoteSchema);
+const Post = mongoose.model('Post', PostSchema);
+const Comment = mongoose.model('Comment', CommentSchema);
+const Tag = mongoose.model('Tag', TagSchema);
+
 module.exports = {
   Token: Token,
   User: User,
   Quotes: Quotes,
   Post: Post,
-  Comments: Comments,
+  Comment: Comment,
   Tag: Tag
 };
