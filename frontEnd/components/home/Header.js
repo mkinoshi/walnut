@@ -1,5 +1,4 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import Quote from '../../containers/Quote';
 import NewPost from '../../containers/NewPost';
 
@@ -13,8 +12,7 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Quote />
-        <NewPost />
+        <p>this is the header</p>
       </div>
     );
   }

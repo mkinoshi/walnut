@@ -1,7 +1,6 @@
 // maps through posts and renders Post
 // connect
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Post from '../components/home/feed/Post';
 

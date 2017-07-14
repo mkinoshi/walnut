@@ -1,5 +1,4 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import NavBar from '../containers/NavBar';
 import Home from './Home';
 

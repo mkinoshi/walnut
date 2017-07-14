@@ -1,5 +1,4 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import Filter from '../../containers/Filter';
 import Feed from '../../containers/Feed';
 

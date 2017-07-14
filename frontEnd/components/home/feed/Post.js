@@ -2,7 +2,6 @@
 // ownprops being passed down too
 // needs to have its own reducer because it
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from './Modal';
 
