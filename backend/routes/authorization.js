@@ -30,7 +30,7 @@ function auth(passport) {
         new_user.save()
                 .then((doc) => {
                   console.log(doc)
-                  res.redirect('/login')
+                  res.redirect('/auth/login')
                   // if (err) {
                   //   res.status(400).send({"error": "could not save data"})
                   // } else {
@@ -40,13 +40,13 @@ function auth(passport) {
     }
   })
 
-  router.get('/login', function(req, res) {
-    res.render('login');
+  router.get('/auth/login', function(req, res) {
+    //res.render('login');
   })
 
-  router.post('/login', passport.authenticate('local', {
+  router.post('/auth/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/auth/login'
   }));
 
   router.get('/', function(req, res, next) {
