@@ -16,6 +16,9 @@ const TokenSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
+  username: {
+    type: String
+  },
   fname: {
     type: String
   },
@@ -36,10 +39,6 @@ const UserSchema = new mongoose.Schema({
   ],
   preferences: {
     type: Array // array of string, and it has to be match with tag
-  },
-  quotes: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Quotes'
   }
 });
 
@@ -57,10 +56,22 @@ const PostSchema = new mongoose.Schema({
   content: {
     type: String
   },
+  createdAt: {
+    type: Date
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   likes: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
+    }
+  ],
+  tags: [
+    {
+      type: String,
     }
   ],
   comments: [
@@ -69,16 +80,6 @@ const PostSchema = new mongoose.Schema({
       ref: 'Comments'
     }
   ],
-  createdAt: {
-    type: Date
-  },
-  tags: {
-    type: String // array of string, and it has to be match with tag
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
 });
 
 const CommentSchema = new mongoose.Schema({
@@ -101,7 +102,10 @@ const CommentSchema = new mongoose.Schema({
 });
 
 const TagSchema = new mongoose.Schema({
-  Posts: [
+  name: {
+    type: String,
+  },
+  posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Posts'
