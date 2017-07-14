@@ -1,10 +1,9 @@
+'use strict';
+// Maybe we have to use schema
+import mongoose from 'mongoose';
 
-"use strict";
-//Maybe we have to use schema
-var mongoose = require('mongoose');
-
-//Not sure how to use Token
-var Token = mongoose.model('Token', {
+// Not sure how to use Token
+const Token = mongoose.model('Token', {
   userId: {
     type: String
   },
@@ -14,9 +13,9 @@ var Token = mongoose.model('Token', {
   createdAt: {
     type: Date
   }
-})
+});
 
-var User = mongoose.model('User', {
+const User = mongoose.model('User', {
   fname: {
     type: String
   },
@@ -37,14 +36,14 @@ var User = mongoose.model('User', {
   ],
   preferences: {
     type: Array // array of string, and it has to be match with tag
-  }
+  },
   quotes: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Quotes'
   }
-})
+});
 
-var Quotes = mongoose.model('Quotes', {
+const Quotes = mongoose.model('Quotes', {
   content: {
     type: String
   },
@@ -52,9 +51,9 @@ var Quotes = mongoose.model('Quotes', {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-})
+});
 
-var Post = mongoose.model('Post', {
+const Post = mongoose.model('Post', {
   content: {
     type: String
   },
@@ -80,9 +79,9 @@ var Post = mongoose.model('Post', {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-})
+});
 
-var Comments = mongoose.model('Comments', {
+const Comments = mongoose.model('Comments', {
   content: {
     type: String
   },
@@ -99,16 +98,16 @@ var Comments = mongoose.model('Comments', {
       ref: 'User'
     }
   ]
-})
+});
 
-var Tag = mongoose.model('Tag', {
+const Tag = mongoose.model('Tag', {
   Posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Posts'
     }
   ]
-})
+});
 
 module.exports = {
   Token: Token,
@@ -117,4 +116,4 @@ module.exports = {
   Post: Post,
   Comments: Comments,
   Tag: Tag
-}
+};
