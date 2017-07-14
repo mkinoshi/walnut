@@ -6,5 +6,5 @@ app.use(express.static('build'));
 
 app.use('/db', dbRoutes);
 app.listen(3000, () => {
-  console.log('Server for Walnut listening on port 3000!')
+  console.log('Server for Walnut listening on port 3000!');
 });
