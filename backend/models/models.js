@@ -80,6 +80,9 @@ const PostSchema = new mongoose.Schema({
       ref: 'Comments'
     }
   ],
+  commentsNumber: {
+    type: Number
+  }
 });
 
 const CommentSchema = new mongoose.Schema({

@@ -45,12 +45,12 @@ function auth(passport) {
   })
 
   router.get('/auth/login', function(req, res) {
-    res.send("hello");
-    //res.render('login');
+    // res.send('ugh');
+    res.render('login');
   })
 
   router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/app',
     failureRedirect: '/auth/login'
   }));
 

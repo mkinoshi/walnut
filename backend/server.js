@@ -51,6 +51,13 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+var hbs = require('express-handlebars')({
+  defaultLayout: 'main',
+  extname: '.hbs'
+});
+app.engine('hbs', hbs);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -86,8 +93,13 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }
 ));
 
+
 app.use('/', auth(passport));
+console.log(__dirname);
 app.use(express.static(path.join(__dirname, '..', 'build')));
+app.get('*', (request, response) => {
+    response.sendFile(__dirname, '..', 'build/index.html'); // For React/Redux
+});
 // make this dbRoutes when we have the database running
 // app.use('/', routes);
 
@@ -105,6 +117,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
   });
 }
 
@@ -112,6 +128,12 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
+
+
+
+
+
+
 });
 
 var port = process.env.PORT || 3000;
