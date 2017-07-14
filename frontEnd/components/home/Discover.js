@@ -1,7 +1,6 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
-import Filter from '.../container/Filter';
-import Feed from '.../container/Feed';
+import Filter from '../../containers/Filter';
+import Feed from '../../containers/Feed';
 
 // TODO Filter
 // TODO Feed

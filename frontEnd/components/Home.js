@@ -1,5 +1,4 @@
 import React from 'react';
-import {Route, Link} from 'react-router-dom';
 import Discover from './home/Discover';
 import Header from './home/Header';
 
