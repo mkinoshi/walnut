@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
-import appReducer from './reducers/appReducer';
+import appReducer from './reducers/index';
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 
