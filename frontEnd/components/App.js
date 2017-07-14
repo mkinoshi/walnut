@@ -1,7 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {Route, Link} from 'react-router-dom';
+import NavBar from '../containers/NavBar';
+import Home from './Home';
 
-// routes to navbar links
-// navbar components
-// navbar compnent has links to render components
+// TODO need to implement routes and links from navbar to render the underneath
+// TODO and also setting /home as default
+
+class App extends React.Component {
+
+  render() {
+    return (
+      <div>
+        <NavBar />
+        <Home />
+      </div>
+    );
+  }
+}
+
+export default App;
