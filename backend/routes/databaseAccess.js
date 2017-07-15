@@ -43,14 +43,14 @@ router.get('/getDiscoverInfo', function(req, res) {
         };
       });
       console.log({filters: filters, posts: posts});
-      res.send({filters: filters, posts: posts});
+      res.json({filters: filters, posts: posts});
     })
     .catch((err) => {
-      res.send(err);
+      res.json(err);
     });
   })
   .catch((err) => {
-    res.send({error: err});
+    res.json({error: err});
   });
 });
 
@@ -70,11 +70,11 @@ router.post('/newPost', function(req, res) {
   newPost.save()
   .then(() => {
     console.log('success!');
-    res.send({success: true});
+    res.json({success: true});
   })
   .catch((e) => {
     console.log(e);
-    res.send({success: false});
+    res.json({success: false});
   });
 });
 
@@ -94,12 +94,12 @@ router.post('/newComment', function(req, res) {
         .then((resp) => {
           console.log();
           console.log(resp);
-          res.send({success: true});
+          res.json({success: true});
         });
       })
       .catch((err) => {
         console.log(err);
-        res.send({success: false});
+        res.json({success: false});
       });
 });
 
