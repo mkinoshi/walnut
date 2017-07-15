@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post} from '../models/models';
+import {User, Tag, Post, Quote} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -120,4 +120,14 @@ router.get('/toggleChecked', function(req, res) {
       });
 });
 
+router.get('/getQuote', function(req, res) {
+  Quote.find()
+       .then((response) => {
+         const ind = new Date().getDate() % response.length;
+         res.json({quote: response[ind].content, createdby: response[ind].createdBy});
+       })
+       .catch((err) => {
+         res.json({quote: 'it’s kind of fun to do the impossible', createdBy: 'Walt Disney'});
+       });
+});
 module.exports = router;

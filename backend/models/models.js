@@ -52,8 +52,7 @@ const QuoteSchema = new mongoose.Schema({
     type: String
   },
   createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    type: String
   }
 });
 
@@ -119,14 +118,14 @@ const TagSchema = new mongoose.Schema({
 
 const Token = mongoose.model('Token', TokenSchema);
 const User = mongoose.model('User', UserSchema);
-const Quotes = mongoose.model('Quote', QuoteSchema);
+const Quote = mongoose.model('Quote', QuoteSchema);
 const Post = mongoose.model('Post', PostSchema);
 const Tag = mongoose.model('Tag', TagSchema);
 
 module.exports = {
   Token: Token,
   User: User,
-  Quotes: Quotes,
+  Quote: Quote,
   Post: Post,
   Tag: Tag
 };
