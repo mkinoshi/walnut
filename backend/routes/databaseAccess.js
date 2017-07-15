@@ -78,5 +78,29 @@ router.post('/newPost', function(req, res) {
   });
 });
 
+// new comment
+router.post('/newComment', function(req, res) {
+  Post.findById(req.body.postId)
+      .then((response) => {
+        console.log(response);
+        const newComment = {
+          content: req.body.commentBody,
+          createdAt: new Date(),
+          createdBy: req.user._id,
+          likes: []
+        };
+        response.comments.push(newComment);
+        response.save()
+        .then((resp) => {
+          console.log();
+          console.log(resp);
+          res.send({success: true});
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.send({success: false});
+      });
+});
 
 module.exports = router;
