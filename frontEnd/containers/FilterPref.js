@@ -31,7 +31,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleChecked: (index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', index: index})
+  // filter.name
+  toggleChecked: (name) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPref);

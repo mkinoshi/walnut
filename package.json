@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/mkinoshi/walnut#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",

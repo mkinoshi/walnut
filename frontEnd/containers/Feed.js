@@ -54,15 +54,13 @@ class Feed extends React.Component {
 
 Feed.propTypes = {
   data: PropTypes.object,
-  newComment: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  newComment: (commentBody, postId) => dispatch({type: 'NEW_COMMENT', commentBody: commentBody, postId: postId})
+const mapDispatchToProps = () => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

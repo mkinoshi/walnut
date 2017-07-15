@@ -9,8 +9,14 @@ import PropTypes from 'prop-types';
 // TODO post button dispatches newPost
 // userPost is the string that gets updated in reducer
 
-class Filter extends React.Component {
-
+class NewPost extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      postBody: 'test',
+      postTags: ['technology', 'marketing']
+    };
+  }
 
   render() {
     console.log(this.props);
@@ -22,17 +28,16 @@ class Filter extends React.Component {
   }
 }
 
-Filter.propTypes = {
+NewPost.propTypes = {
   newPost: PropTypes.function
 };
 
-const mapStateToProps = (state) => ({
-  userPost: state.newPostCommentReducer.post
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onPostChange: (post) => dispatch({type: 'ONCHANGE_POST', post: post}),
-  newPost: (postBody, tags) => dispatch({type: 'NEW_POST', tags: tags})
+  newPost: (postBody, tags) => dispatch(
+    {type: 'NEW_POST', postTags: this.state.postTags, postBody: this.state.postBody})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

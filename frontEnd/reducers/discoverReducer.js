@@ -1,5 +1,6 @@
 
 // TODO check toggle state return new post props down to feed
+import axios from 'axios'
 
 const dummyState = {
   filters: [
@@ -54,14 +55,10 @@ const discoverReducer = (state = dummyState, action) => {
   const data = Object.assign({}, state);
   switch (action.type) {
 
-    // case 'STATE_REFRESH':
-    // TODO axios to query database /db/getDiscoverInfo
-    case 'TOGGLE_FILTER_CHECKED':
-      // TODO needs to be done on the backend
-      data.filters[action.index].checked = !data.filters[action.index].checked;
+    case 'GET_DATA':
+      data = action.response;
       return data;
     default:
-    // TODO axios to query database /getInfo
       return data;
   }
 };
