@@ -13700,7 +13700,72 @@ var Post = function Post(_ref) {
       null,
       postData.commentNumber
     ),
-    _react2.default.createElement(_Modal2.default, { postData: postData })
+    _react2.default.createElement(
+      'a',
+      { className: 'waves-effect waves-light btn', href: '#modal1' },
+      'Modal'
+    ),
+    _react2.default.createElement(
+      'div',
+      { id: 'modal1', className: 'modal' },
+      _react2.default.createElement(
+        'div',
+        { className: 'modal-content' },
+        _react2.default.createElement(
+          'h1',
+          null,
+          'yoyoyoyoyoyo'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.username
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.pictureURL
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.content
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.createdAt
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.tags.map(function (tag) {
+            return _react2.default.createElement(
+              'text',
+              null,
+              '#',
+              tag,
+              ' '
+            );
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.likes
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          postData.commentNumber
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'modal-footer' },
+        _react2.default.createElement(_Modal2.default, { postData: postData })
+      )
+    )
   );
 }; // comment button action renders modal
 
@@ -13953,6 +14018,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // TODO navbar links to react routes
 // TODO navbar
+var styles = {
+  links: {
+    color: '#FFFFFF',
+    fontFamily: 'Apple Symbols',
+    fontSize: '2.1rem',
+    margin: '7px 30px 7px, 30px'
+  }
+};
 
 var Navbar = function (_React$Component) {
   _inherits(Navbar, _React$Component);
@@ -13970,9 +14043,77 @@ var Navbar = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(
-          'p',
-          null,
-          'I am the navbar'
+          'nav',
+          { style: { backgroundColor: '#0D9ED3', position: 'fixed', top: '0px' } },
+          _react2.default.createElement(
+            'div',
+            { className: 'nav-wrapper' },
+            _react2.default.createElement(
+              'ul',
+              { id: 'nav-mobile', className: 'left hide-on-med-and-down' },
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement('img', { src: 'http://i.imgur.com/EBNhMdD.png', style: { maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px' } })
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: 'sass.html', style: styles.links },
+                  'Alumni'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: 'badges.html', style: styles.links },
+                  'Projects'
+                )
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { href: 'collapsible.html', style: styles.links },
+                  'Map'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'a',
+              { href: '#', className: 'brand-logo center' },
+              _react2.default.createElement('img', { src: 'http://i.imgur.com/TbhIBEJ.png', style: { maxHeight: '50px', margin: '7px 15px 7px 30px' } })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'right col s8' },
+              _react2.default.createElement(
+                'div',
+                { className: 'left input-field s6' },
+                _react2.default.createElement(
+                  'i',
+                  { className: 'small material-icons prefix' },
+                  'search'
+                ),
+                _react2.default.createElement('input', { id: 'icon_search', type: 'tel', className: 'validate' }),
+                _react2.default.createElement(
+                  'label',
+                  { htmlFor: 'icon_search', style: { color: 'white' } },
+                  'Search'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'right col s2', style: { margin: '7px 30px 7px 30px' } },
+                _react2.default.createElement('img', { src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg', style: { maxHeight: '50px', borderRadius: '45%' } })
+              )
+            )
+          )
         )
       );
     }

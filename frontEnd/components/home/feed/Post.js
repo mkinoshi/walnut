@@ -17,7 +17,7 @@ const Post = ({postData, newComment}) => {
       <div>{postData.tags.map(tag => (<text>#{tag} </text>))}</div>
       <div>{postData.likes}</div>
       <div>{postData.commentNumber}</div>
-      <Modal postData={postData}/>
+      <Modal postData={postData} is/>
     </div>
   );
 };
