@@ -3,11 +3,13 @@ var  express = require('express');
 var models = require('../models/models');
 var User = models.User;
 var router = express.Router();
+var path = require('path');
 
 
 /* GET home page. */
 function auth(passport) {
-  console.log("hehehehhehehe");
+
+  console.log(__dirname);
 
   router.get('/auth/signup', function(req, res) {
     res.render('signup') //have to change
@@ -45,8 +47,11 @@ function auth(passport) {
   })
 
   router.get('/auth/login', function(req, res) {
-    // res.send('ugh');
+    //res.send('ughalksdjf');
+    console.log("loool")
     res.render('login');
+    console.log("lol")
+
   })
 
   router.post('/auth/login', passport.authenticate('local', {
