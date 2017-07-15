@@ -13498,7 +13498,13 @@ var Modal = function (_React$Component) {
   function Modal(props) {
     _classCallCheck(this, Modal);
 
+<<<<<<< HEAD
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+=======
+var Post = function Post(_ref) {
+  var postData = _ref.postData,
+      newLike = _ref.newLike;
+>>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
 
     _this.state = {
       commentBody: 'this is a test comment'
@@ -13678,8 +13684,17 @@ var Post = function (_React$Component) {
               'div',
               { className: 'card blue-grey lighten-5' },
               _react2.default.createElement(
+<<<<<<< HEAD
                 'div',
                 { className: 'card-content black-text', style: { paddingTop: '0' } },
+=======
+                'a',
+                { style: { backgroundColor: '#0D9ED3', float: 'left' },
+                  className: 'waves-effect waves-light btn',
+                  onClick: function onClick() {
+                    return newLike;
+                  } },
+>>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
                 _react2.default.createElement(
                   'span',
                   { className: 'card-title hashtags',

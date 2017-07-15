@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 // TODO on action of comment button dispatch modal
 // TODO pass postData down
 
+<<<<<<< HEAD
 class Post extends React.Component {
   constructor(props) {
     super(props);

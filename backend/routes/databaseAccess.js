@@ -103,7 +103,7 @@ router.post('/newComment', function(req, res) {
       });
 });
 
-router.get('/toggleChecked', function(req, res) {
+router.post('/toggleChecked', function(req, res) {
   User.findById(req.user._id)
       .then((response) => {
         response.preferences.push(req.query.tagName);
@@ -118,6 +118,22 @@ router.get('/toggleChecked', function(req, res) {
         console.log(err);
         res.json({success: false});
       });
+});
+
+router.post('/newPostLike', function(req, res) {
+  Post.findById(req.body.postId)
+    .then((response) => {
+      response.likes.push(req.user._id);
+      response.save()
+      .then((resp) => {
+        console.log(resp);
+        res.json({success: true});
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({success: false});
+    });
 });
 
 router.get('/getQuote', function(req, res) {
