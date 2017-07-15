@@ -1,8 +1,8 @@
 import React from 'react';
 import NavBar from '../containers/NavBar';
 import Home from './Home';
-import {BrowserRouter, Route} from 'react-router-dom';
-
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import Map from './Map';
 // TODO navbar
 
 class App extends React.Component {
@@ -12,10 +12,12 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <NavBar />
-          <Route path="/app" component={Home}/>
-          <Route path="/app/alumni" component={Home}/>
-          <Route path="/app/projects" component={Home}/>
-          <Route path="/app/map" component={Home}/>
+          <Switch>
+            <Route path="/app/alumni" component={Home}/>
+            <Route path="/app/projects" component={Home}/>
+            <Route path="/app/map" component={Map}/>
+            <Route path="/app" component={Home}/>
+          </Switch>
         </div>
       </BrowserRouter>
     );
