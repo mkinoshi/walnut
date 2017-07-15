@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import {Tag, Post} from '../models/models';
+import {User, Tag, Post} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
+// getting all of tags and posts including comments
 router.get('/getDiscoverInfo', function(req, res) {
   let filters = [];
   let posts = [];
@@ -42,11 +43,18 @@ router.get('/getDiscoverInfo', function(req, res) {
         };
       });
       console.log({filters: filters, posts: posts});
-      return {filters: filters, posts: posts};
+      res.json({filters: filters, posts: posts});
+    })
+    .catch((err) => {
+      res.json(err);
     });
+  })
+  .catch((err) => {
+    res.json({error: err});
   });
 });
 
+// adding a new post
 router.post('/newPost', function(req, res) {
   console.log('it is hitting here');
   const newPost = new Post({
@@ -62,12 +70,54 @@ router.post('/newPost', function(req, res) {
   newPost.save()
   .then(() => {
     console.log('success!');
-    res.send({success: true});
+    res.json({success: true});
   })
   .catch((e) => {
     console.log(e);
-    res.send({success: false});
+    res.json({success: false});
   });
+});
+
+// new comment
+router.post('/newComment', function(req, res) {
+  Post.findById(req.body.postId)
+      .then((response) => {
+        console.log(response);
+        const newComment = {
+          content: req.body.commentBody,
+          createdAt: new Date(),
+          createdBy: req.user._id,
+          likes: []
+        };
+        response.comments.push(newComment);
+        response.save()
+        .then((resp) => {
+          console.log();
+          console.log(resp);
+          res.json({success: true});
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({success: false});
+      });
+});
+
+router.get('/toggleChecked', function(req, res) {
+  User.findById(req.user._id)
+      .then((response) => {
+        response.preferences.push(req.query.tagName);
+        response.save()
+        .then((resp) => {
+          console.log();
+          console.log(resp);
+          res.json({success: true});
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({success: false});
+      });
 });
 
 module.exports = router;
