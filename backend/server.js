@@ -54,6 +54,16 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
+
+var hbs = require('express-handlebars')({
+  defaultLayout: 'main',
+  extname: '.hbs'
+});
+app.engine('hbs', hbs);
+app.set('views', path.join(__dirname, '..', 'views'));
+app.set('view engine', 'hbs');
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 

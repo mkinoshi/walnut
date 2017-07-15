@@ -81,8 +81,22 @@ const PostSchema = new mongoose.Schema({
   ],
   comments: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comment'
+      content: {
+        type: String
+      },
+      createdAt: {
+        type: Date
+      },
+      createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      likes: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }
+      ]
     }
   ],
   commentNumber: {
@@ -90,24 +104,6 @@ const PostSchema = new mongoose.Schema({
   }
 });
 
-const CommentSchema = new mongoose.Schema({
-  content: {
-    type: String
-  },
-  createdAt: {
-    type: Date
-  },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  likes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ]
-});
 
 const TagSchema = new mongoose.Schema({
   name: {
@@ -125,7 +121,6 @@ const Token = mongoose.model('Token', TokenSchema);
 const User = mongoose.model('User', UserSchema);
 const Quotes = mongoose.model('Quote', QuoteSchema);
 const Post = mongoose.model('Post', PostSchema);
-const Comment = mongoose.model('Comment', CommentSchema);
 const Tag = mongoose.model('Tag', TagSchema);
 
 module.exports = {
@@ -133,6 +128,5 @@ module.exports = {
   User: User,
   Quotes: Quotes,
   Post: Post,
-  Comment: Comment,
   Tag: Tag
 };
