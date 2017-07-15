@@ -22,6 +22,7 @@ REQUIRED_ENV.forEach(function(el) {
 
 
 mongoose.connect(connect);
+mongoose.Promise = global.Promise;
 
 var models = require('./models/models');
 
@@ -111,6 +112,7 @@ app.set('view engine', 'hbs');
 
 
 app.use('/', auth(passport));
+app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.get('/app', (request, response) => {
     console.log(path.join(__dirname, '..', 'build/index.html'));
@@ -118,7 +120,7 @@ app.get('/app', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running
-// app.use('/', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

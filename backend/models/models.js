@@ -31,6 +31,9 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String
   },
+  pictureURL: {
+    type: String
+  },
   Project: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -79,10 +82,10 @@ const PostSchema = new mongoose.Schema({
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Comments'
+      ref: 'Comment'
     }
   ],
-  commentsNumber: {
+  commentNumber: {
     type: Number
   }
 });
