@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
+var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
@@ -21,6 +22,7 @@ REQUIRED_ENV.forEach(function(el) {
 
 
 mongoose.connect(connect);
+mongoose.Promise = global.Promise;
 
 var models = require('./models/models');
 
@@ -32,10 +34,11 @@ var app = express();
 app.use(logger('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 //IF WE NEED TO SERVE SOME FILES (stylesheets, scripts, etc.), USE THIS:
 // app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '..', 'build')));
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -50,7 +53,6 @@ app.use(session({
   secret: process.env.SECRET,
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -86,9 +88,29 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }
 ));
 
-// app.use('/', auth(passport));
+
+var hbs = require('express-handlebars')({
+  defaultLayout: 'main',
+  extname: '.hbs'
+});
+app.engine('hbs', hbs);
+app.set('views', path.join(__dirname, '..', 'views'));
+console.log('dirname', __dirname);
+console.log(path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
+
+
+app.use('/', auth(passport));
+app.use('/db', dbRoutes);
+app.use(express.static(path.join(__dirname, '..', 'build')));
+app.get('/app', (request, response) => {
+    console.log(path.join(__dirname, '..', 'build/index.html'));
+    console.log("it is here");
+    response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
+});
 // make this dbRoutes when we have the database running
-// app.use('/', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -104,10 +126,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    // res.render('error', {
-    //   message: err.message,
-    //   error: err
-    // });
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
   });
 }
 
@@ -115,12 +137,6 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-
-
-
-
-
-
 });
 
 var port = process.env.PORT || 3000;
