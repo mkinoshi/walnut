@@ -5,7 +5,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Login from '../containers/Login';
 
 // TODO need to implement routes and links from navbar to render the underneath
-// TODO home needs to go to /
+// TODO home needs to go to /app
 
 class App extends React.Component {
 

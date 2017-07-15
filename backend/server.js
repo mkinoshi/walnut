@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
+var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
@@ -32,6 +33,7 @@ var app = express();
 app.use(logger('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 //IF WE NEED TO SERVE SOME FILES (stylesheets, scripts, etc.), USE THIS:
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -110,8 +112,10 @@ app.set('view engine', 'hbs');
 
 app.use('/', auth(passport));
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.get('*', (request, response) => {
-    response.sendFile(__dirname, '..', 'build/index.html'); // For React/Redux
+app.get('/app', (request, response) => {
+    console.log(path.join(__dirname, '..', 'build/index.html'));
+    console.log("it is here");
+    response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running
 // app.use('/', routes);
