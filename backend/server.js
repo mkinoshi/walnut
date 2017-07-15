@@ -56,7 +56,7 @@ var hbs = require('express-handlebars')({
   extname: '.hbs'
 });
 app.engine('hbs', hbs);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'hbs');
 
 app.use(passport.initialize());
@@ -128,12 +128,6 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-
-
-
-
-
-
 });
 
 var port = process.env.PORT || 3000;
