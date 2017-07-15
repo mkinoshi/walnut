@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
+var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
@@ -32,6 +33,7 @@ var app = express();
 app.use(logger('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 //IF WE NEED TO SERVE SOME FILES (stylesheets, scripts, etc.), USE THIS:
 // app.use(express.static(path.join(__dirname, 'public')));

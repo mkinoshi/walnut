@@ -37,9 +37,11 @@ const UserSchema = new mongoose.Schema({
       ref: 'Project'
     }
   ],
-  preferences: {
-    type: Array // array of string, and it has to be match with tag
-  }
+  preferences: [
+    {
+      type: String
+    }
+  ]
 });
 
 const QuoteSchema = new mongoose.Schema({
