@@ -51,14 +51,6 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-var hbs = require('express-handlebars')({
-  defaultLayout: 'main',
-  extname: '.hbs'
-});
-app.engine('hbs', hbs);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -94,8 +86,19 @@ passport.use(new LocalStrategy(function(username, password, done) {
 ));
 
 
+var hbs = require('express-handlebars')({
+  defaultLayout: 'main',
+  extname: '.hbs'
+});
+app.engine('hbs', hbs);
+app.set('views', path.join(__dirname, '..', 'views'));
+console.log('dirname', __dirname);
+console.log(path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
+
+
 app.use('/', auth(passport));
-console.log(__dirname);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.get('*', (request, response) => {
     response.sendFile(__dirname, '..', 'build/index.html'); // For React/Redux
