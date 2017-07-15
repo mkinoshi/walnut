@@ -1,5 +1,4 @@
 import React from 'react';
-import FilterPref from '../../containers/FilterPref';
 import Feed from '../../containers/Feed';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,13 +7,13 @@ import { connect } from 'react-redux';
 class Discover extends React.Component {
 
   componentDidMount() {
+    console.log('2');
     this.props.stateRefresh();
   }
 
   render() {
     return (
       <div>
-        <FilterPref />
         <Feed />
       </div>
     );

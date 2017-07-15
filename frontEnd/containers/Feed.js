@@ -6,9 +6,6 @@ import Post from '../components/home/feed/Post';
 import PropTypes from 'prop-types';
 
 
-// TODO map through redux post array and render post Component
-// TODO componentDidMount setInterval that dispatches stateRefresh
-
 class Feed extends React.Component {
 
   filterData(data) {

@@ -1,11 +1,12 @@
 import axios from 'axios';
+const URL = 'http://localhost:3000/';
 
 export const apiMiddleware = store => next => action => {
   next(action);
   switch(action.type) {
     case 'NEW_COMMENT':
     // TODO postId needs to be action.Id
-      axios.post(process.env.URL + 'db/newComment', {
+      axios.post(URL + 'db/newComment', {
         commentBody: action.comment,
         postId: action.postId
       })
@@ -18,7 +19,7 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'NEW_POST':
-      axios.post(process.env.URL + 'db/newPost', {
+      axios.post(URL + 'db/newPost', {
         postBody: action.postBody,
         postTags: action.postTags
       })
@@ -31,7 +32,7 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
-      axios.get(process.env.URL + '/toggleChecked', {
+      axios.get(URL + '/toggleChecked', {
         tagName: action.name
       })
       .then((success) => {
@@ -39,14 +40,26 @@ export const apiMiddleware = store => next => action => {
         next({type: 'STATE_REFRESH'});
       });
       break;
-    case 'STATE_REFRESH':
-      axios.get(process.env.URL + 'db/newComment')
+    case 'GET_QUOTE':
+      axios.get(URL + 'db/getQuote')
       .then((response) => {
-        store.dispatch({type: 'GET_DATA', data: response});
+        console.log('resdhufhsiughsudihusdhf', response.data);
+        store.dispatch({type: 'UPDATE_QUOTE', data: response.data});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
-        store.dispatch({type: 'GET_DATA', data: false});
+        store.dispatch({type: 'UPDATE_QUOTE_ERROR'});
+      });
+      break;
+    case 'STATE_REFRESH':
+      axios.get(URL + 'db/getDiscoverInfo')
+      .then((response) => {
+        console.log('resdhufhsiughsudihusdhf', response.data);
+        store.dispatch({type: 'GET_DATA', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in newComment', err);
+        store.dispatch({type: 'GET_DATA_ERROR'});
       });
       break;
     default:

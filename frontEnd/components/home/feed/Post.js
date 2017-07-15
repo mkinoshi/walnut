@@ -1,7 +1,7 @@
 // comment button action renders modal
 
 import React from 'react';
-import Modal from './modal/Modal';
+import Modal from './Modal';
 import PropTypes from 'prop-types';
 
 // TODO on action of comment button dispatch modal

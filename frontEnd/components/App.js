@@ -2,10 +2,8 @@ import React from 'react';
 import NavBar from '../containers/NavBar';
 import Home from './Home';
 import {BrowserRouter, Route} from 'react-router-dom';
-import Login from '../containers/Login';
 
-// TODO need to implement routes and links from navbar to render the underneath
-// TODO home needs to go to /app
+// TODO navbar
 
 class App extends React.Component {
 
@@ -14,7 +12,10 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <NavBar />
-          <Home />
+          <Route path="/app" component={Home}/>
+          <Route path="/app/alumni" component={Home}/>
+          <Route path="/app/projects" component={Home}/>
+          <Route path="/app/map" component={Home}/>
         </div>
       </BrowserRouter>
     );
