@@ -37,7 +37,7 @@ const Post = ({postData, newLike}) => {
               <div>
                 <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
                   className="waves-effect waves-light btn"
-                  onClick={() => (newLike)><i
+                  onClick={() => (newLike)}><i
                     className="material-icons left">thumb_up</i>5</a>
               </div>
               <div>

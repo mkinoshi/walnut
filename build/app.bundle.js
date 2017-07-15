@@ -13113,6 +13113,11 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
             store.dispatch({ type: 'UPDATE_QUOTE_ERROR' });
           });
           break;
+        case 'NEW_LIKE':
+          _axios2.default.get(URL + 'db/newLike').then(function () {
+            next({ type: 'STATE_REFRESH' });
+          });
+          break;
         case 'STATE_REFRESH':
           _axios2.default.get(URL + 'db/getDiscoverInfo').then(function (response) {
             console.log('resdhufhsiughsudihusdhf', response.data);
@@ -13477,7 +13482,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // comment button action renders modal
 
 var Post = function Post(_ref) {
-  var postData = _ref.postData;
+  var postData = _ref.postData,
+      newLike = _ref.newLike;
 
   var commentNum = postData.comments.length;
   return _react2.default.createElement(
@@ -13547,7 +13553,10 @@ var Post = function Post(_ref) {
               _react2.default.createElement(
                 'a',
                 { style: { backgroundColor: '#0D9ED3', float: 'left' },
-                  className: 'waves-effect waves-light btn' },
+                  className: 'waves-effect waves-light btn',
+                  onClick: function onClick() {
+                    return newLike;
+                  } },
                 _react2.default.createElement(
                   'i',
                   {
@@ -13584,7 +13593,8 @@ var Post = function Post(_ref) {
 
 Post.propTypes = {
   postData: _propTypes2.default.object,
-  newComment: _propTypes2.default.func
+  newLike: _propTypes2.default.func
+
 };
 
 exports.default = Post;
@@ -13671,6 +13681,8 @@ var Feed = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var filteredPosts = this.filterData(this.props.data).posts;
       return _react2.default.createElement(
         'div',
@@ -13681,7 +13693,9 @@ var Feed = function (_React$Component) {
           'I am the feed'
         ),
         filteredPosts.map(function (post) {
-          return _react2.default.createElement(_Post2.default, { postData: post });
+          return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
+              return _this2.props.newLike(post._Id);
+            } });
         })
       );
     }
@@ -13691,7 +13705,8 @@ var Feed = function (_React$Component) {
 }(_react2.default.Component);
 
 Feed.propTypes = {
-  data: _propTypes2.default.object
+  data: _propTypes2.default.object,
+  newLike: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -13700,8 +13715,12 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps() {
-  return {};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    newLike: function newLike(id) {
+      return dispatch({ type: 'NEW_LIKE', id: id });
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Feed);
