@@ -7,7 +7,7 @@ export const apiMiddleware = store => next => action => {
     case 'NEW_COMMENT':
     // TODO postId needs to be action.Id
       axios.post(URL + 'db/newComment', {
-        commentBody: action.comment,
+        commentBody: action.commentBody,
         postId: action.postId
       })
       .then((response) => {

@@ -13076,7 +13076,7 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
         case 'NEW_COMMENT':
           // TODO postId needs to be action.Id
           _axios2.default.post(URL + 'db/newComment', {
-            commentBody: action.comment,
+            commentBody: action.commentBody,
             postId: action.postId
           }).then(function (response) {
             console.log('new comment resp', response);
@@ -13438,11 +13438,6 @@ var Header = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'p',
-          null,
-          'this is the header'
-        ),
         _react2.default.createElement(_Quote2.default, null)
       );
     }
@@ -13498,13 +13493,7 @@ var Modal = function (_React$Component) {
   function Modal(props) {
     _classCallCheck(this, Modal);
 
-<<<<<<< HEAD
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
-=======
-var Post = function Post(_ref) {
-  var postData = _ref.postData,
-      newLike = _ref.newLike;
->>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
 
     _this.state = {
       commentBody: 'this is a test comment'
@@ -13513,6 +13502,18 @@ var Post = function Post(_ref) {
   }
 
   _createClass(Modal, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      console.log(e.target.value);
+      this.setState({ commentBody: e.target.value });
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(id) {
+      console.log(id);
+      this.props.newComment(this.state.commentBody, id);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -13577,7 +13578,31 @@ var Post = function Post(_ref) {
               )
             )
           );
-        })
+        }),
+        _react2.default.createElement(
+          'div',
+          { className: 'input-field col s8' },
+          _react2.default.createElement('textarea', { id: 'textarea1', className: 'materialize-textarea', style: { 'paddingTop': 0, 'paddingBottom': 0 }, onChange: function onChange(e) {
+              return _this2.handleChange(e);
+            } }),
+          _react2.default.createElement(
+            'label',
+            { htmlFor: 'textarea1' },
+            'Enter Your Comment'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn waves-effect waves-light', type: 'submit', name: 'action', onClick: function onClick() {
+                return _this2.handleClick(_this2.props.postData.postId);
+              } },
+            'Submit',
+            _react2.default.createElement(
+              'i',
+              { className: 'material-icons right' },
+              'send'
+            )
+          )
+        )
       ) : _react2.default.createElement('div', null);
     }
   }]);
@@ -13600,8 +13625,8 @@ var mapStateToProps = function mapStateToProps() {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     newComment: function newComment(commentBody, postId) {
-      return dispatch({ type: 'NEW_COMMENT', commentBody: undefined.state.commentBody,
-        postId: '59698f8f238cd990df7f5da4' });
+      return dispatch({ type: 'NEW_COMMENT', commentBody: commentBody,
+        postId: postId });
     }
   };
 };
@@ -13684,17 +13709,8 @@ var Post = function (_React$Component) {
               'div',
               { className: 'card blue-grey lighten-5' },
               _react2.default.createElement(
-<<<<<<< HEAD
                 'div',
                 { className: 'card-content black-text', style: { paddingTop: '0' } },
-=======
-                'a',
-                { style: { backgroundColor: '#0D9ED3', float: 'left' },
-                  className: 'waves-effect waves-light btn',
-                  onClick: function onClick() {
-                    return newLike;
-                  } },
->>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
                 _react2.default.createElement(
                   'span',
                   { className: 'card-title hashtags',
@@ -13740,7 +13756,7 @@ var Post = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'card-action', style: { paddingBottom: '50' } },
+                { className: 'card-action', style: { paddingBottom: '15%' } },
                 _react2.default.createElement(
                   'div',
                   null,
@@ -14069,7 +14085,7 @@ var Navbar = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'navbar-fixed' },
         _react2.default.createElement(
           'nav',
           { style: { backgroundColor: '#0D9ED3', position: 'fixed', top: '0px' } },

@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 // TODO on action of comment button dispatch modal
 // TODO pass postData down
 
-<<<<<<< HEAD
 class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +45,7 @@ class Post extends React.Component {
               </div>
               <p style={{clear: 'both', paddingLeft: '40', paddingTop: '10'}}>
                 {this.props.postData.content}</p>
-              <div className="card-action" style={{paddingBottom: '50'}}>
+              <div className="card-action" style={{paddingBottom: '15%'}}>
                 <div>
                   <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
                     className="waves-effect waves-light btn"

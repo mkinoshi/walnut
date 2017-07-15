@@ -94,12 +94,12 @@ router.post('/newComment', function(req, res) {
         .then((resp) => {
           console.log();
           console.log(resp);
-          res.json({success: true});
+          res.json({success: true, data: response});
         });
       })
       .catch((err) => {
         console.log(err);
-        res.json({success: false});
+        res.json({success: false, data: null});
       });
 });
 
