@@ -3,6 +3,7 @@ const router = express.Router();
 import {Tag, Post} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
+// getting all of tags and posts including comments
 router.get('/getDiscoverInfo', function(req, res) {
   let filters = [];
   let posts = [];
@@ -42,11 +43,18 @@ router.get('/getDiscoverInfo', function(req, res) {
         };
       });
       console.log({filters: filters, posts: posts});
-      return {filters: filters, posts: posts};
+      res.send({filters: filters, posts: posts});
+    })
+    .catch((err) => {
+      res.send(err);
     });
+  })
+  .catch((err) => {
+    res.send({error: err});
   });
 });
 
+// adding a new post
 router.post('/newPost', function(req, res) {
   console.log('it is hitting here');
   const newPost = new Post({
@@ -69,5 +77,6 @@ router.post('/newPost', function(req, res) {
     res.send({success: false});
   });
 });
+
 
 module.exports = router;
