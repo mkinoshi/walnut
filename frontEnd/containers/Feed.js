@@ -40,9 +40,8 @@ class Feed extends React.Component {
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
       <div>
-        <h1>I am the feed</h1>
         {filteredPosts.map((post) => (
-          <Post postData={post}/>
+          <Post postData={post} newLike={() => (this.props.newLike(post._Id))}/>
         ))}
       </div>
     );
@@ -51,13 +50,15 @@ class Feed extends React.Component {
 
 Feed.propTypes = {
   data: PropTypes.object,
+  newLike: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  newLike: (id) => dispatch({type: 'NEW_LIKE', id: id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

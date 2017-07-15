@@ -21,29 +21,44 @@ class Modal extends React.Component {
   }
 
   render() {
-    return (
+    console.log('it is here ', this.props.isOpen);
+    const commentNum = this.props.postData.comments.length;
+    return this.props.isOpen ? (
       <div>
-        <h1>Post</h1>
-        <div className="modalPost">
-          <div>{this.props.postData.username}</div>
-          <div>{this.props.postData.pictureURL}</div>
-          <div>{this.props.postData.content}</div>
-          <div>{this.props.postData.createdAt}</div>
-          <div>{this.props.postData.tags.map(tag => (<text>#{tag} </text>))}</div>
-          <div>{this.props.postData.likes}</div>
-          <div>{this.props.postData.commentNumber}</div>
-        </div>
-        <h1>Comments</h1>
         {this.props.postData.comments.map((comment) => (
-          <div className="modalComments">
-            <div>{comment.username}</div>
-            <div>{comment.pictureURL}</div>
-            <div>{comment.content}</div>
-            <div>{comment.createdAt}</div>
-            <div>{comment.likes}</div>
+          <div className="card blue-grey lighten-5" style={{marginTop: '45'}}>
+            <div className="card-content black-text" style={{paddingTop: '0'}}>
+              <img style={{height: '50', float: 'left'}}
+                src="http://clubrunner.blob.core.windows.net/00000010115/PhotoAlbum/4-way-test-speech-contest-finals-2016/_87A1813.jpg"
+                alt="5" className="circle"/>
+              <div style={{marginLeft: '20'}}>
+                <span className="card-title"
+                  style={{float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold'}}>
+                  {comment.username}</span>
+                <span className="card-title date" style={{float: 'right', fontSize: '10'}}>
+                  {comment.createdAt.slice(11, 16)}</span>
+              </div>
+            </div>
+            <p style={{clear: 'both', paddingLeft: '40', paddingTop: '10'}}>
+              {comment.content}</p>
+            <div className="card-action" style={{paddingBottom: '50'}}>
+              <div>
+                <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.props.newLike)}><i
+                    className="material-icons left">thumb_up</i>5</a>
+              </div>
+            </div>
           </div>
         ))}
+        {/* <div>
+          <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
+            className="waves-effect waves-light btn" onClick={() => this.props.onClick()}><i
+              className="material-icons left">close</i>{commentNum}</a>
+        </div> */}
       </div>
+    ) : (
+      <div></div>
     );
   }
 }
@@ -51,6 +66,9 @@ class Modal extends React.Component {
 Modal.propTypes = {
   postData: PropTypes.object,
   newComment: PropTypes.func,
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func,
+  newLike: PropTypes.func
 };
 
 const mapStateToProps = () => ({

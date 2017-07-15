@@ -51,6 +51,12 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'UPDATE_QUOTE_ERROR'});
       });
       break;
+    case 'NEW_LIKE':
+      axios.get(URL + 'db/newLike')
+      .then(() => {
+        next({type: 'STATE_REFRESH'});
+      });
+      break;
     case 'STATE_REFRESH':
       axios.get(URL + 'db/getDiscoverInfo')
       .then((response) => {

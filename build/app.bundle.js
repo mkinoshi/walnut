@@ -13113,6 +13113,11 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
             store.dispatch({ type: 'UPDATE_QUOTE_ERROR' });
           });
           break;
+        case 'NEW_LIKE':
+          _axios2.default.get(URL + 'db/newLike').then(function () {
+            next({ type: 'STATE_REFRESH' });
+          });
+          break;
         case 'STATE_REFRESH':
           _axios2.default.get(URL + 'db/getDiscoverInfo').then(function (response) {
             console.log('resdhufhsiughsudihusdhf', response.data);
@@ -13504,98 +13509,70 @@ var Modal = function (_React$Component) {
   _createClass(Modal, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
+      var _this2 = this;
+
+      console.log('it is here ', this.props.isOpen);
+      var commentNum = this.props.postData.comments.length;
+      return this.props.isOpen ? _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Post'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'modalPost' },
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.username
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.pictureURL
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.content
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.createdAt
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.tags.map(function (tag) {
-              return _react2.default.createElement(
-                'text',
-                null,
-                '#',
-                tag,
-                ' '
-              );
-            })
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.likes
-          ),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.postData.commentNumber
-          )
-        ),
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Comments'
-        ),
         this.props.postData.comments.map(function (comment) {
           return _react2.default.createElement(
             'div',
-            { className: 'modalComments' },
+            { className: 'card blue-grey lighten-5', style: { marginTop: '45' } },
             _react2.default.createElement(
               'div',
-              null,
-              comment.username
+              { className: 'card-content black-text', style: { paddingTop: '0' } },
+              _react2.default.createElement('img', { style: { height: '50', float: 'left' },
+                src: 'http://clubrunner.blob.core.windows.net/00000010115/PhotoAlbum/4-way-test-speech-contest-finals-2016/_87A1813.jpg',
+                alt: '5', className: 'circle' }),
+              _react2.default.createElement(
+                'div',
+                { style: { marginLeft: '20' } },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'card-title',
+                    style: { float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold' } },
+                  comment.username
+                ),
+                _react2.default.createElement(
+                  'span',
+                  { className: 'card-title date', style: { float: 'right', fontSize: '10' } },
+                  comment.createdAt.slice(11, 16)
+                )
+              )
             ),
             _react2.default.createElement(
-              'div',
-              null,
-              comment.pictureURL
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
+              'p',
+              { style: { clear: 'both', paddingLeft: '40', paddingTop: '10' } },
               comment.content
             ),
             _react2.default.createElement(
               'div',
-              null,
-              comment.createdAt
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
-              comment.likes
+              { className: 'card-action', style: { paddingBottom: '50' } },
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  'a',
+                  { style: { backgroundColor: '#0D9ED3', float: 'left' },
+                    className: 'waves-effect waves-light btn',
+                    onClick: function onClick() {
+                      return _this2.props.newLike;
+                    } },
+                  _react2.default.createElement(
+                    'i',
+                    {
+                      className: 'material-icons left' },
+                    'thumb_up'
+                  ),
+                  '5'
+                )
+              )
             )
           );
         })
-      );
+      ) : _react2.default.createElement('div', null);
     }
   }]);
 
@@ -13604,7 +13581,10 @@ var Modal = function (_React$Component) {
 
 Modal.propTypes = {
   postData: _propTypes2.default.object,
-  newComment: _propTypes2.default.func
+  newComment: _propTypes2.default.func,
+  isOpen: _propTypes2.default.bool,
+  onClick: _propTypes2.default.func,
+  newLike: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps() {
@@ -13633,6 +13613,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
@@ -13647,131 +13629,158 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // comment button action renders modal
+
+// import {Link, Route} from 'react-router-dom';
+
 // TODO on action of comment button dispatch modal
 // TODO pass postData down
 
-var Post = function Post(_ref) {
-  var postData = _ref.postData,
-      newComment = _ref.newComment;
+var Post = function (_React$Component) {
+  _inherits(Post, _React$Component);
 
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.username
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.pictureURL
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.content
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.createdAt
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.tags.map(function (tag) {
-        return _react2.default.createElement(
-          'text',
-          null,
-          '#',
-          tag,
-          ' '
-        );
-      })
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.likes
-    ),
-    _react2.default.createElement(
-      'div',
-      null,
-      postData.commentNumber
-    ),
-    _react2.default.createElement(
-      'a',
-      { className: 'waves-effect waves-light btn', href: '#modal1' },
-      'Modal'
-    ),
-    _react2.default.createElement(
-      'div',
-      { id: 'modal1', className: 'modal' },
-      _react2.default.createElement(
+  function Post(props) {
+    _classCallCheck(this, Post);
+
+    var _this = _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).call(this, props));
+
+    _this.state = {
+      isOpen: false
+    };
+    return _this;
+  }
+
+  _createClass(Post, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      this.setState({ isOpen: !this.state.isOpen });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var commentNum = this.props.postData.comments.length;
+      return _react2.default.createElement(
         'div',
-        { className: 'modal-content' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          'yoyoyoyoyoyo'
-        ),
+        { style: { width: '85%', margin: '0 auto', marginLeft: '500' } },
         _react2.default.createElement(
           'div',
-          null,
-          postData.username
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.pictureURL
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.content
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.createdAt
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.tags.map(function (tag) {
-            return _react2.default.createElement(
-              'text',
-              null,
-              '#',
-              tag,
-              ' '
-            );
-          })
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.likes
-        ),
-        _react2.default.createElement(
-          'div',
-          null,
-          postData.commentNumber
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col s12 m6' },
+            _react2.default.createElement(
+              'div',
+              { className: 'card blue-grey lighten-5' },
+              _react2.default.createElement(
+                'div',
+                { className: 'card-content black-text', style: { paddingTop: '0' } },
+                _react2.default.createElement(
+                  'span',
+                  { className: 'card-title hashtags',
+                    style: { textAlign: 'center', marginBottom: '0' } },
+                  this.props.postData.tags.map(function (tag) {
+                    return _react2.default.createElement(
+                      'text',
+                      { style: { fontSize: '14' } },
+                      _react2.default.createElement(
+                        'text',
+                        {
+                          style: { color: '#0D9ED3', fontSize: '20' } },
+                        '#'
+                      ),
+                      tag,
+                      '   '
+                    );
+                  })
+                ),
+                _react2.default.createElement('img', { style: { height: '50', float: 'left' },
+                  src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+                  alt: '5', className: 'circle' }),
+                _react2.default.createElement(
+                  'div',
+                  { style: { marginLeft: '20' } },
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'card-title',
+                      style: { float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold' } },
+                    this.props.postData.username
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    { className: 'card-title date', style: { float: 'right', fontSize: '10' } },
+                    this.props.postData.createdAt.slice(11, 16)
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'p',
+                { style: { clear: 'both', paddingLeft: '40', paddingTop: '10' } },
+                this.props.postData.content
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'card-action', style: { paddingBottom: '50' } },
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'a',
+                    { style: { backgroundColor: '#0D9ED3', float: 'left' },
+                      className: 'waves-effect waves-light btn',
+                      onClick: function onClick() {
+                        return _this2.props.newLike;
+                      } },
+                    _react2.default.createElement(
+                      'i',
+                      {
+                        className: 'material-icons left' },
+                      'thumb_up'
+                    ),
+                    '5'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'a',
+                    { style: { backgroundColor: '#0D9ED3', float: 'right' },
+                      className: 'waves-effect waves-light btn', onClick: function onClick() {
+                        return _this2.handleClick();
+                      } },
+                    _react2.default.createElement(
+                      'i',
+                      {
+                        className: 'material-icons left' },
+                      'comment'
+                    ),
+                    commentNum
+                  )
+                ),
+                _react2.default.createElement(_Modal2.default, { isOpen: this.state.isOpen, postData: this.props.postData, onClick: function onClick() {
+                    return _this2.handleClick();
+                  } })
+              )
+            )
+          )
         )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'modal-footer' },
-        _react2.default.createElement(_Modal2.default, { postData: postData })
-      )
-    )
-  );
-}; // comment button action renders modal
+      );
+    }
+  }]);
+
+  return Post;
+}(_react2.default.Component);
 
 Post.propTypes = {
   postData: _propTypes2.default.object,
-  newComment: _propTypes2.default.func
+  newLike: _propTypes2.default.func
+
 };
 
 exports.default = Post;
@@ -13858,17 +13867,16 @@ var Feed = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var filteredPosts = this.filterData(this.props.data).posts;
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'I am the feed'
-        ),
         filteredPosts.map(function (post) {
-          return _react2.default.createElement(_Post2.default, { postData: post });
+          return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
+              return _this2.props.newLike(post._Id);
+            } });
         })
       );
     }
@@ -13878,7 +13886,8 @@ var Feed = function (_React$Component) {
 }(_react2.default.Component);
 
 Feed.propTypes = {
-  data: _propTypes2.default.object
+  data: _propTypes2.default.object,
+  newLike: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -13887,8 +13896,12 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps() {
-  return {};
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    newLike: function newLike(id) {
+      return dispatch({ type: 'NEW_LIKE', id: id });
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Feed);
