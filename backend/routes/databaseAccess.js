@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {Tag, Post} from '../models/models';
+import {User, Tag, Post} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -90,6 +90,23 @@ router.post('/newComment', function(req, res) {
           likes: []
         };
         response.comments.push(newComment);
+        response.save()
+        .then((resp) => {
+          console.log();
+          console.log(resp);
+          res.json({success: true});
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({success: false});
+      });
+});
+
+router.get('/toggleChecked', function(req, res) {
+  User.findById(req.user._id)
+      .then((response) => {
+        response.preferences.push(req.query.tagName);
         response.save()
         .then((resp) => {
           console.log();
