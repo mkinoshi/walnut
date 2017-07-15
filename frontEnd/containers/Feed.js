@@ -4,9 +4,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Post from '../components/home/feed/Post';
 import PropTypes from 'prop-types';
+import FilterPref from './FilterPref';
 
 
 class Feed extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFilterPref: false
+    };
+  }
+
+  toggleFilterPref() {
+    this.setState({showFilterPref: !this.state.showFilterPref});
+  }
 
   filterData(data) {
     const checkedFilterObject = data.filters.filter((filter) => (filter.checked === true));
@@ -39,11 +50,21 @@ class Feed extends React.Component {
   render() {
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
-      <div>
+      <div className="col-xs-12">
         <h1>I am the feed</h1>
-        {filteredPosts.map((post) => (
-          <Post postData={post} newLike={() => (this.props.newLike(post._Id))}/>
-        ))}
+        <div className="col-xs-2" style={{}}>
+        <div className="discoverButton" style={{}}>
+          <a style={{backgroundColor: '#FF5657'}}
+            className="waves-effect waves-light btn"
+            onClick={() => (this.toggleFilterPref())}>Discover</a>
+        </div>
+        {this.state.showFilterPref ? <FilterPref /> : <p></p>}
+        </div>
+        <div className="col-xs-8">
+          {filteredPosts.map((post) => (
+            <Post postData={post} newLike={() => (this.props.newLike(post._Id))}/>
+          ))}
+        </div>
       </div>
     );
   }

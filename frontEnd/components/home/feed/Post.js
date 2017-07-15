@@ -11,18 +11,18 @@ import PropTypes from 'prop-types';
 const Post = ({postData, newLike}) => {
   const commentNum = postData.comments.length;
   return (
-    <div style={{width: '85%', margin: '0 auto', marginLeft: '500'}}>
-      <div className="row">
-        <div className="col s12 m6">
+    <div style={{width: '85%', margin: '0 auto'}}>
+      <div className="row" style={{marginBottom: '0'}}>
+        <div style={{width: '50%', display: 'block', margin: 'auto'}}>
           <div className="card blue-grey lighten-5">
             <div className="card-content black-text" style={{paddingTop: '0'}}>
               <span className="card-title hashtags"
                 style={{textAlign: 'center', marginBottom: '0'}}>
                 {postData.tags.map(tag => (<text style={{fontSize: '14'}}><text
                   style={{color: '#0D9ED3', fontSize: '20'}}>#</text>{tag}   </text>))}</span>
-              <img style={{height: '50', float: 'left'}}
+              <img style={{borderRadius: '50%', float: 'left', height: '40'}}
                 src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
-                alt="5" className="circle"/>
+                alt="5" />
               <div style={{marginLeft: '20'}}>
                 <span className="card-title"
                   style={{float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold'}}>
@@ -37,7 +37,7 @@ const Post = ({postData, newLike}) => {
               <div>
                 <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
                   className="waves-effect waves-light btn"
-                  onClick={() => (newLike)><i
+                  onClick={() => (newLike)}><i
                     className="material-icons left">thumb_up</i>5</a>
               </div>
               <div>
@@ -56,7 +56,6 @@ const Post = ({postData, newLike}) => {
 Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
-
 };
 
 export default Post;
