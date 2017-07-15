@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 // TODO Filter component box style
 // TODO button onClick dispatches toggleChecked(index) 17
 
-class Filter extends React.Component {
+class FilterPref extends React.Component {
 
 
   render() {
@@ -22,7 +22,7 @@ class Filter extends React.Component {
   }
 }
 
-Filter.propTypes = {
+FilterPref.propTypes = {
   filters: PropTypes.array
 };
 
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', index: index})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterPref);

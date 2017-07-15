@@ -1,13 +1,13 @@
 // comment button action renders modal
 
 import React from 'react';
-// import Modal from './Modal';
+import Modal from './modal/Modal';
 import PropTypes from 'prop-types';
 
 // TODO on action of comment button dispatch modal
+// TODO pass postData down
 
-const Post = ({postData}) => {
-  console.log('here');
+const Post = ({postData, newComment}) => {
   return (
     <div>
       <div>{postData.username}</div>
@@ -17,12 +17,14 @@ const Post = ({postData}) => {
       <div>{postData.tags.map(tag => (<text>#{tag} </text>))}</div>
       <div>{postData.likes}</div>
       <div>{postData.commentNumber}</div>
+      <Modal postData={postData}/>
     </div>
   );
 };
 
 Post.propTypes = {
-  postData: PropTypes.object
+  postData: PropTypes.object,
+  newComment: PropTypes.func
 };
 
 export default Post;

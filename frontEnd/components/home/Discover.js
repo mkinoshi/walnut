@@ -1,8 +1,8 @@
 import React from 'react';
-import Filter from '../../containers/Filter';
+import FilterPref from '../../containers/FilterPref';
 import Feed from '../../containers/Feed';
 
-// TODO Filter
+// TODO FilterPref
 // TODO Feed
 
 class Discover extends React.Component {
@@ -10,7 +10,7 @@ class Discover extends React.Component {
   render() {
     return (
       <div>
-        <Filter />
+        <FilterPref />
         <Feed />
       </div>
     );

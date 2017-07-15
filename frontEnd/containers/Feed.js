@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 
 
 // TODO map through redux post array and render post Component
+// TODO componentDidMount setInterval that dispatches stateRefresh
 
 class Feed extends React.Component {
 
@@ -52,7 +53,8 @@ class Feed extends React.Component {
 }
 
 Feed.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  newComment: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -60,7 +62,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleChecked: (index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', index: index})
+  newComment: (commentBody, postId) => dispatch({type: 'NEW_COMMENT', commentBody: commentBody, postId: postId})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

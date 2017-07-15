@@ -53,28 +53,19 @@ const dummyState = {
 const discoverReducer = (state = dummyState, action) => {
   const data = Object.assign({}, state);
   switch (action.type) {
-    // case 'UPDATE_POST' {
-    //   posts: state.posts.map((post) => postReducer(post, action))
-    // }
+
+    // case 'STATE_REFRESH':
+    // TODO axios to query database /db/getDiscoverInfo
     case 'TOGGLE_FILTER_CHECKED':
+      // TODO needs to be done on the backend
       data.filters[action.index].checked = !data.filters[action.index].checked;
       return data;
     default:
+    // TODO axios to query database /getInfo
       return data;
   }
 };
 
-
-// function postReducer(post = {}, action) {
-//   switch (action.type) {
-//     case 'update':
-//     if (action.id === post.id) {
-//       // update and return
-//     } else {
-//       return state;
-//     }
-//   }
-// }
 
 
 export default discoverReducer;
