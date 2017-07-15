@@ -102,8 +102,10 @@ app.set('view engine', 'hbs');
 
 app.use('/', auth(passport));
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.get('*', (request, response) => {
-    response.sendFile(__dirname, '..', 'build/index.html'); // For React/Redux
+app.get('/app', (request, response) => {
+    console.log(path.join(__dirname, '..', 'build/index.html'));
+    console.log("it is here");
+    response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running
 // app.use('/', routes);
@@ -133,12 +135,6 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-
-
-
-
-
-
 });
 
 var port = process.env.PORT || 3000;
