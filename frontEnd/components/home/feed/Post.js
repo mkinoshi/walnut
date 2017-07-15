@@ -1,21 +1,28 @@
 // comment button action renders modal
-// ownprops being passed down too
-// needs to have its own reducer because it
+
 import React from 'react';
-import { connect } from 'react-redux';
-import Modal from './Modal';
+// import Modal from './Modal';
+import PropTypes from 'prop-types';
 
 // TODO on action of comment button dispatch modal
 
-class Post extends React.Component {
+const Post = ({postData}) => {
+  console.log('here');
+  return (
+    <div>
+      <div>{postData.username}</div>
+      <div>{postData.pictureURL}</div>
+      <div>{postData.content}</div>
+      <div>{postData.createdAt}</div>
+      <div>{postData.tags.map(tag => (<text>#{tag} </text>))}</div>
+      <div>{postData.likes}</div>
+      <div>{postData.commentNumber}</div>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div>
-        <h1>I am the post</h1>
-      </div>
-    );
-  }
-}
+Post.propTypes = {
+  postData: PropTypes.object
+};
 
 export default Post;

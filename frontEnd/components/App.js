@@ -3,7 +3,7 @@ import NavBar from '../containers/NavBar';
 import Home from './Home';
 
 // TODO need to implement routes and links from navbar to render the underneath
-// TODO home needs to go to /
+// TODO home needs to go to /app
 
 class App extends React.Component {
 
