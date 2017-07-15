@@ -13,9 +13,12 @@ class FilterPref extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <div>
+      <div style={{float: 'left', clear: 'both', padding: '5%', paddingTop: '40'}}>
         {this.props.filters.map((filter) => (
-            <div><text>{filter.checked ? 'checked' : 'notChecked'}</text><text> {filter.name}</text></div>
+          <p>
+            <input type="checkbox" id={filter.name} />
+            <label htmlFor={filter.name}>{filter.name}</label>
+          </p>
           ))}
       </div>
     );

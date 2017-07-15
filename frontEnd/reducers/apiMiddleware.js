@@ -32,7 +32,7 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
-      axios.get(URL + '/toggleChecked', {
+      axios.post(URL + '/toggleChecked', {
         tagName: action.name
       })
       .then((success) => {
@@ -52,7 +52,9 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'NEW_LIKE':
-      axios.get(URL + 'db/newLike')
+      axios.post(URL + 'db/newPostLike', {
+        postId: action.postId,
+      })
       .then(() => {
         next({type: 'STATE_REFRESH'});
       });
