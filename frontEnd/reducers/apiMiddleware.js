@@ -12,7 +12,8 @@ export const apiMiddleware = store => next => action => {
       })
       .then((response) => {
         console.log('new comment resp', response);
-        next({type: 'STATE_REFRESH'});
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in newComment', err);

@@ -16,7 +16,7 @@ class Modal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentBody: 'this is a test comment',
+      commentBody: '',
     };
   }
 
@@ -28,6 +28,7 @@ class Modal extends React.Component {
   handleClick(id) {
     console.log(id);
     this.props.newComment(this.state.commentBody, id);
+    this.setState({commentBody: ''});
   }
 
   render() {
@@ -62,10 +63,14 @@ class Modal extends React.Component {
           </div>
         ))}
         <div className="input-field col s8">
-          <textarea id="textarea1" className="materialize-textarea" style={{'paddingTop': 0, 'paddingBottom': 0}} onChange={(e) => this.handleChange(e)}></textarea>
+          <textarea id="textarea1" className="materialize-textarea"
+            style={{'paddingTop': 0, 'paddingBottom': 0}}
+            value={this.state.commentBody}
+            onChange={(e) => this.handleChange(e)}></textarea>
           <label htmlFor="textarea1">Enter Your Comment</label>
 
-        <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => this.handleClick(this.props.postData.postId)}>Submit
+        <button className="btn waves-effect waves-light" type="submit" name="action"
+          onClick={() => this.handleClick(this.props.postData.postId)}>Submit
             <i className="material-icons right">send</i>
           </button>
         </div>

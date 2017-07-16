@@ -17,7 +17,7 @@ class FilterPref extends React.Component {
         {this.props.filters.map((filter) => (
           <p>
             <input type="checkbox" id={filter.name} />
-            <label htmlFor={filter.name}>{filter.name}</label>
+            <label htmlFor={filter.name}># {filter.name}</label>
           </p>
           ))}
       </div>
