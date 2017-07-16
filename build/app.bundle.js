@@ -13219,9 +13219,20 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           _axios2.default.post(URL + 'db/newPostLike', {
             postId: action.postId
           }).then(function () {
-            next({ type: 'STATE_REFRESH' });
+            next(action(store.dispatch({ type: 'STATE_REFRESH' })));
+            next(action);
           });
           break;
+        case 'NEW_COMMENT_LIKE':
+          _axios2.default.post(URL + 'db/newCommentLike', {
+            postId: action.postId,
+            commentId: action.commentId
+          }).then(function () {
+            next(action(store.dispatch({ type: 'STATE_REFRESH' })));
+            next(action);
+          });
+          break;
+
         case 'STATE_REFRESH':
           _axios2.default.get(URL + 'db/getDiscoverInfo').then(function (response) {
             console.log('resdhufhsiughsudihusdhf', response.data);
@@ -13676,6 +13687,8 @@ var Modal = function (_React$Component) {
 
       console.log('it is here ', this.props.isOpen);
       var commentNum = this.props.postData.comments.length;
+      console.log(this.props.postData);
+      console.log(this.props.postData.comments);
       return this.props.isOpen ? _react2.default.createElement(
         'div',
         null,
@@ -13721,7 +13734,7 @@ var Modal = function (_React$Component) {
                   { style: { backgroundColor: '#0D9ED3', float: 'left' },
                     className: 'waves-effect waves-light btn',
                     onClick: function onClick() {
-                      return _this2.props.newLike;
+                      return _this2.props.newCommentLike(_this2.props.postData.postId, comment.commentId);
                     } },
                   _react2.default.createElement(
                     'i',
@@ -13729,7 +13742,7 @@ var Modal = function (_React$Component) {
                       className: 'material-icons left' },
                     'thumb_up'
                   ),
-                  '5'
+                  comment.likes.length
                 )
               )
             )
@@ -13775,7 +13788,8 @@ Modal.propTypes = {
   newComment: _propTypes2.default.func,
   isOpen: _propTypes2.default.bool,
   onClick: _propTypes2.default.func,
-  newLike: _propTypes2.default.func
+  newLike: _propTypes2.default.func,
+  newCommentLike: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps() {
@@ -13787,6 +13801,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     newComment: function newComment(commentBody, postId) {
       return dispatch({ type: 'NEW_COMMENT', commentBody: commentBody,
         postId: postId });
+    },
+    newCommentLike: function newCommentLike(postId, commentId) {
+      return dispatch({ type: 'NEW_COMMENT_LIKE', postId: postId, commentId: commentId });
     }
   };
 };
@@ -13925,7 +13942,7 @@ var Post = function (_React$Component) {
                     { style: { backgroundColor: '#0D9ED3', float: 'left' },
                       className: 'waves-effect waves-light btn',
                       onClick: function onClick() {
-                        return _this2.props.newLike;
+                        return _this2.props.newLike();
                       } },
                     _react2.default.createElement(
                       'i',
@@ -13933,7 +13950,7 @@ var Post = function (_React$Component) {
                         className: 'material-icons left' },
                       'thumb_up'
                     ),
-                    '5'
+                    this.props.postData.likes.length
                   )
                 ),
                 _react2.default.createElement(
@@ -14105,7 +14122,7 @@ var Feed = function (_React$Component) {
           { className: 'col-xs-8' },
           filteredPosts.map(function (post) {
             return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
-                return _this2.props.newLike(post._Id);
+                return _this2.props.newLike(post.postId);
               } });
           })
         )
@@ -14130,7 +14147,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     newLike: function newLike(id) {
-      return dispatch({ type: 'NEW_LIKE', id: id });
+      return dispatch({ type: 'NEW_LIKE', postId: id });
     }
   };
 };

@@ -29,15 +29,16 @@ router.get('/getDiscoverInfo', function(req, res) {
           content: postObj.content,
           createdAt: postObj.createdAt,
           tags: postObj.tags,
-          likes: postObj.likes.length,
+          likes: postObj.likes,
           commentNumber: postObj.commentNumber,
           comments: postObj.comments.map((commentObj) => {
             return {
+              commentId: commentObj._id,
               username: commentObj.createdBy.username,
               pictureURL: commentObj.createdBy.pictureURL,
               content: commentObj.content,
               createdAt: commentObj.createdAt,
-              likes: commentObj.likes.length
+              likes: commentObj.likes
             };
           })
         };
@@ -82,7 +83,6 @@ router.post('/newPost', function(req, res) {
 router.post('/newComment', function(req, res) {
   Post.findById(req.body.postId)
       .then((response) => {
-        console.log(response);
         const newComment = {
           content: req.body.commentBody,
           createdAt: new Date(),
@@ -92,13 +92,10 @@ router.post('/newComment', function(req, res) {
         response.comments.push(newComment);
         response.save()
         .then((resp) => {
-          console.log();
-          console.log(resp);
           res.json({success: true, data: response});
         });
       })
       .catch((err) => {
-        console.log(err);
         res.json({success: false, data: null});
       });
 });
@@ -126,12 +123,27 @@ router.post('/newPostLike', function(req, res) {
       response.likes.push(req.user._id);
       response.save()
       .then((resp) => {
-        console.log(resp);
         res.json({success: true});
       });
     })
     .catch((err) => {
-      console.log(err);
+      res.json({success: false});
+    });
+});
+
+router.post('/newCommentLike', function(req, res) {
+  Post.findById(req.body.postId)
+    .then((post) => {
+      const comment = post.comments.filter((com) => {
+        return com._id.toString() === req.body.commentId.toString();
+      });
+      comment[0].likes.push(req.user._id);
+      return post.save();
+    })
+    .then((resp) => {
+      res.json({success: true});
+    })
+    .catch((err) => {
       res.json({success: false});
     });
 });
@@ -146,4 +158,6 @@ router.get('/getQuote', function(req, res) {
          res.json({quote: 'it’s kind of fun to do the impossible', createdBy: 'Walt Disney'});
        });
 });
+
+
 module.exports = router;

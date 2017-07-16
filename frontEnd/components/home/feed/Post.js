@@ -49,8 +49,8 @@ class Post extends React.Component {
                 <div>
                   <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
                     className="waves-effect waves-light btn"
-                    onClick={() => (this.props.newLike)}><i
-                      className="material-icons left">thumb_up</i>5</a>
+                    onClick={() => this.props.newLike()}><i
+                      className="material-icons left">thumb_up</i>{this.props.postData.likes.length}</a>
                 </div>
                 <div>
                   <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
