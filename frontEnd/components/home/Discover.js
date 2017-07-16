@@ -5,12 +5,6 @@ import { connect } from 'react-redux';
 
 
 class Discover extends React.Component {
-
-  componentDidMount() {
-    console.log('2');
-    this.props.stateRefresh();
-  }
-
   render() {
     return (
       <div>
@@ -20,16 +14,4 @@ class Discover extends React.Component {
   }
 }
 
-Discover.propTypes = {
-  stateRefresh: PropTypes.func,
-};
-
-const mapStateToProps = () => ({
-
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  stateRefresh: () => dispatch({type: 'STATE_REFRESH'})
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Discover);
+export default Discover;

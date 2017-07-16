@@ -12,6 +12,8 @@ const store = createStore(
   applyMiddleware(createLogger, apiMiddleware)
 );
 
+store.dispatch({type: 'STATE_REFRESH'});
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

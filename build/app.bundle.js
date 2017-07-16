@@ -570,7 +570,7 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(79)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(80)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -781,46 +781,6 @@ module.exports = ReactDOMComponentTree;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-<<<<<<< HEAD
-=======
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(80)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(181)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
->>>>>>> alexlatif
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1253,13 +1213,8 @@ module.exports = ReactComponentTreeHook;
 "use strict";
 
 
-<<<<<<< HEAD
-var bind = __webpack_require__(71);
-var isBuffer = __webpack_require__(172);
-=======
 var bind = __webpack_require__(72);
-var isBuffer = __webpack_require__(171);
->>>>>>> alexlatif
+var isBuffer = __webpack_require__(172);
 
 /*global toString:true*/
 
@@ -1697,15 +1652,9 @@ module.exports = { debugTool: debugTool };
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(5);
 
-<<<<<<< HEAD
-var CallbackQueue = __webpack_require__(81);
-var PooledClass = __webpack_require__(19);
-var ReactFeatureFlags = __webpack_require__(86);
-=======
 var CallbackQueue = __webpack_require__(82);
-var PooledClass = __webpack_require__(18);
+var PooledClass = __webpack_require__(19);
 var ReactFeatureFlags = __webpack_require__(87);
->>>>>>> alexlatif
 var ReactReconciler = __webpack_require__(23);
 var Transaction = __webpack_require__(36);
 
@@ -2468,7 +2417,7 @@ module.exports = DOMProperty;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Provider__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__connect_connect__ = __webpack_require__(254);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Provider", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createProvider", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["b"]; });
@@ -3014,28 +2963,6 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-<<<<<<< HEAD
-=======
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Provider__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__connect_connect__ = __webpack_require__(253);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Provider", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createProvider", function() { return __WEBPACK_IMPORTED_MODULE_0__components_Provider__["b"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "connectAdvanced", function() { return __WEBPACK_IMPORTED_MODULE_1__components_connectAdvanced__["a"]; });
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "connect", function() { return __WEBPACK_IMPORTED_MODULE_2__connect_connect__["a"]; });
-
-
-
-
-
-
-/***/ }),
->>>>>>> alexlatif
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3349,21 +3276,12 @@ module.exports = ReactReconciler;
 
 var _assign = __webpack_require__(5);
 
-<<<<<<< HEAD
-var ReactBaseClasses = __webpack_require__(110);
+var ReactBaseClasses = __webpack_require__(111);
 var ReactChildren = __webpack_require__(288);
 var ReactDOMFactories = __webpack_require__(289);
 var ReactElement = __webpack_require__(20);
 var ReactPropTypes = __webpack_require__(291);
 var ReactVersion = __webpack_require__(293);
-=======
-var ReactBaseClasses = __webpack_require__(111);
-var ReactChildren = __webpack_require__(287);
-var ReactDOMFactories = __webpack_require__(288);
-var ReactElement = __webpack_require__(19);
-var ReactPropTypes = __webpack_require__(290);
-var ReactVersion = __webpack_require__(292);
->>>>>>> alexlatif
 
 var createReactClass = __webpack_require__(295);
 var onlyChild = __webpack_require__(297);
@@ -4487,13 +4405,8 @@ module.exports = EventPluginRegistry;
 var _assign = __webpack_require__(5);
 
 var EventPluginRegistry = __webpack_require__(33);
-<<<<<<< HEAD
 var ReactEventEmitterMixin = __webpack_require__(215);
-var ViewportMetrics = __webpack_require__(92);
-=======
-var ReactEventEmitterMixin = __webpack_require__(214);
 var ViewportMetrics = __webpack_require__(93);
->>>>>>> alexlatif
 
 var getVendorPrefixedEventName = __webpack_require__(250);
 var isEventSupported = __webpack_require__(59);
@@ -5380,21 +5293,12 @@ module.exports = canDefineProperty;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-<<<<<<< HEAD
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(116);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(301);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(115);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(117);
-=======
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__combineReducers__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__applyMiddleware__ = __webpack_require__(298);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__compose__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_warning__ = __webpack_require__(118);
->>>>>>> alexlatif
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "createStore", function() { return __WEBPACK_IMPORTED_MODULE_0__createStore__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "combineReducers", function() { return __WEBPACK_IMPORTED_MODULE_1__combineReducers__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "bindActionCreators", function() { return __WEBPACK_IMPORTED_MODULE_2__bindActionCreators__["a"]; });
@@ -7936,9 +7840,9 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(21);
+var _reactRedux = __webpack_require__(18);
 
-var _propTypes = __webpack_require__(7);
+var _propTypes = __webpack_require__(6);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -8019,21 +7923,12 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(10);
-<<<<<<< HEAD
 var settle = __webpack_require__(143);
 var buildURL = __webpack_require__(146);
 var parseHeaders = __webpack_require__(152);
 var isURLSameOrigin = __webpack_require__(150);
-var createError = __webpack_require__(70);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(145);
-=======
-var settle = __webpack_require__(142);
-var buildURL = __webpack_require__(145);
-var parseHeaders = __webpack_require__(151);
-var isURLSameOrigin = __webpack_require__(149);
 var createError = __webpack_require__(71);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(144);
->>>>>>> alexlatif
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(145);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -10044,15 +9939,9 @@ module.exports = ReactHostComponent;
 
 var ReactDOMSelection = __webpack_require__(206);
 
-<<<<<<< HEAD
 var containsNode = __webpack_require__(157);
-var focusNode = __webpack_require__(73);
-var getActiveElement = __webpack_require__(74);
-=======
-var containsNode = __webpack_require__(156);
 var focusNode = __webpack_require__(74);
 var getActiveElement = __webpack_require__(75);
->>>>>>> alexlatif
 
 function isInDocument(node) {
   return containsNode(document.documentElement, node);
@@ -10183,17 +10072,10 @@ var DOMProperty = __webpack_require__(17);
 var React = __webpack_require__(24);
 var ReactBrowserEventEmitter = __webpack_require__(34);
 var ReactCurrentOwner = __webpack_require__(15);
-<<<<<<< HEAD
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDOMContainerInfo = __webpack_require__(198);
 var ReactDOMFeatureFlags = __webpack_require__(200);
-var ReactFeatureFlags = __webpack_require__(86);
-=======
-var ReactDOMComponentTree = __webpack_require__(6);
-var ReactDOMContainerInfo = __webpack_require__(197);
-var ReactDOMFeatureFlags = __webpack_require__(199);
 var ReactFeatureFlags = __webpack_require__(87);
->>>>>>> alexlatif
 var ReactInstanceMap = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMarkupChecksum = __webpack_require__(220);
@@ -11129,15 +11011,9 @@ module.exports = inputValueTracking;
 var _prodInvariant = __webpack_require__(3),
     _assign = __webpack_require__(5);
 
-<<<<<<< HEAD
 var ReactCompositeComponent = __webpack_require__(195);
-var ReactEmptyComponent = __webpack_require__(85);
-var ReactHostComponent = __webpack_require__(87);
-=======
-var ReactCompositeComponent = __webpack_require__(194);
 var ReactEmptyComponent = __webpack_require__(86);
 var ReactHostComponent = __webpack_require__(88);
->>>>>>> alexlatif
 
 var getNextDebugID = __webpack_require__(296);
 var invariant = __webpack_require__(1);
@@ -11557,13 +11433,8 @@ module.exports = traverseAllChildren;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_Subscription__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__ = __webpack_require__(104);
-=======
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_Subscription__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__ = __webpack_require__(105);
->>>>>>> alexlatif
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13335,13 +13206,9 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           });
           break;
         case 'NEW_LIKE':
-<<<<<<< HEAD
-          _axios2.default.get(URL + 'db/newLike').then(function () {
-=======
           _axios2.default.post(URL + 'db/newPostLike', {
             postId: action.postId
           }).then(function () {
->>>>>>> alexlatif
             next({ type: 'STATE_REFRESH' });
           });
           break;
@@ -13449,6 +13316,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var store = (0, _redux.createStore)(_index2.default, (0, _redux.applyMiddleware)(_reduxLogger2.default, _apiMiddleware.apiMiddleware));
 
+store.dispatch({ type: 'STATE_REFRESH' });
+
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },
@@ -13533,7 +13402,7 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Feed = __webpack_require__(129);
+var _Feed = __webpack_require__(130);
 
 var _Feed2 = _interopRequireDefault(_Feed);
 
@@ -13561,12 +13430,6 @@ var Discover = function (_React$Component) {
   }
 
   _createClass(Discover, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      console.log('2');
-      this.props.stateRefresh();
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -13580,23 +13443,7 @@ var Discover = function (_React$Component) {
   return Discover;
 }(_react2.default.Component);
 
-Discover.propTypes = {
-  stateRefresh: _propTypes2.default.func
-};
-
-var mapStateToProps = function mapStateToProps() {
-  return {};
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    stateRefresh: function stateRefresh() {
-      return dispatch({ type: 'STATE_REFRESH' });
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Discover);
+exports.default = Discover;
 
 /***/ }),
 /* 127 */
@@ -13623,11 +13470,7 @@ var _NewPost = __webpack_require__(132);
 
 var _NewPost2 = _interopRequireDefault(_NewPost);
 
-<<<<<<< HEAD
-var _FilterPref = __webpack_require__(130);
-=======
 var _FilterPref = __webpack_require__(67);
->>>>>>> alexlatif
 
 var _FilterPref2 = _interopRequireDefault(_FilterPref);
 
@@ -13729,14 +13572,7 @@ var Modal = function (_React$Component) {
   function Modal(props) {
     _classCallCheck(this, Modal);
 
-<<<<<<< HEAD
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
-=======
-var Post = function Post(_ref) {
-  var postData = _ref.postData,
-      newLike = _ref.newLike;
-<<<<<<< HEAD
->>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
 
     _this.state = {
       commentBody: 'this is a test comment'
@@ -13756,23 +13592,6 @@ var Post = function Post(_ref) {
         null,
         this.props.postData.comments.map(function (comment) {
           return _react2.default.createElement(
-=======
-
-  var commentNum = postData.comments.length;
-  return _react2.default.createElement(
-    'div',
-    { style: { width: '85%', margin: '0 auto' } },
-    _react2.default.createElement(
-      'div',
-      { className: 'row', style: { marginBottom: '0' } },
-      _react2.default.createElement(
-        'div',
-        { style: { width: '50%', display: 'block', margin: 'auto' } },
-        _react2.default.createElement(
-          'div',
-          { className: 'card blue-grey lighten-5' },
-          _react2.default.createElement(
->>>>>>> alexlatif
             'div',
             { className: 'card blue-grey lighten-5', style: { marginTop: '45' } },
             _react2.default.createElement(
@@ -13802,12 +13621,6 @@ var Post = function Post(_ref) {
               { style: { clear: 'both', paddingLeft: '40', paddingTop: '10' } },
               comment.content
             ),
-<<<<<<< HEAD
-=======
-            _react2.default.createElement('img', { style: { borderRadius: '50%', float: 'left', height: '40' },
-              src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-              alt: '5' }),
->>>>>>> alexlatif
             _react2.default.createElement(
               'div',
               { className: 'card-action', style: { paddingBottom: '50' } },
@@ -13864,7 +13677,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Modal);
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13880,7 +13693,7 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Modal = __webpack_require__(127);
+var _Modal = __webpack_require__(128);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -13928,31 +13741,19 @@ var Post = function (_React$Component) {
       var commentNum = this.props.postData.comments.length;
       return _react2.default.createElement(
         'div',
-        { style: { width: '85%', margin: '0 auto', marginLeft: '500' } },
+        { style: { width: '85%', margin: '0 auto' } },
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { className: 'row', style: { marginBottom: '0' } },
           _react2.default.createElement(
             'div',
-            { className: 'col s12 m6' },
+            { style: { width: '50%', display: 'block', margin: 'auto' } },
             _react2.default.createElement(
               'div',
               { className: 'card blue-grey lighten-5' },
               _react2.default.createElement(
-<<<<<<< HEAD
                 'div',
                 { className: 'card-content black-text', style: { paddingTop: '0' } },
-=======
-                'a',
-                { style: { backgroundColor: '#0D9ED3', float: 'left' },
-                  className: 'waves-effect waves-light btn',
-                  onClick: function onClick() {
-                    return newLike;
-                  } },
-<<<<<<< HEAD
->>>>>>> cb604108f0060afbbbf7a1736a7e481d136dbd0c
-=======
->>>>>>> alexlatif
                 _react2.default.createElement(
                   'span',
                   { className: 'card-title hashtags',
@@ -13972,9 +13773,9 @@ var Post = function (_React$Component) {
                     );
                   })
                 ),
-                _react2.default.createElement('img', { style: { height: '50', float: 'left' },
+                _react2.default.createElement('img', { style: { borderRadius: '50%', float: 'left', height: '40' },
                   src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-                  alt: '5', className: 'circle' }),
+                  alt: '5' }),
                 _react2.default.createElement(
                   'div',
                   { style: { marginLeft: '20' } },
@@ -13998,7 +13799,7 @@ var Post = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'card-action', style: { paddingBottom: '50' } },
+                { className: 'card-action', style: { paddingBottom: '15%' } },
                 _react2.default.createElement(
                   'div',
                   null,
@@ -14053,16 +13854,12 @@ var Post = function (_React$Component) {
 Post.propTypes = {
   postData: _propTypes2.default.object,
   newLike: _propTypes2.default.func
-<<<<<<< HEAD
-
-=======
->>>>>>> alexlatif
 };
 
 exports.default = Post;
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14080,7 +13877,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(18);
 
-var _Post = __webpack_require__(128);
+var _Post = __webpack_require__(129);
 
 var _Post2 = _interopRequireDefault(_Post);
 
@@ -14162,96 +13959,6 @@ var Feed = function (_React$Component) {
       var filteredPosts = this.filterData(this.props.data).posts;
       return _react2.default.createElement(
         'div',
-<<<<<<< HEAD
-        null,
-        filteredPosts.map(function (post) {
-          return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
-              return _this2.props.newLike(post._Id);
-            } });
-        })
-      );
-    }
-  }]);
-
-  return Feed;
-}(_react2.default.Component);
-
-Feed.propTypes = {
-  data: _propTypes2.default.object,
-  newLike: _propTypes2.default.func
-};
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    data: state.discoverReducer
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    newLike: function newLike(id) {
-      return dispatch({ type: 'NEW_LIKE', id: id });
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Feed);
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(18);
-
-var _propTypes = __webpack_require__(6);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // dispatches filter preferences
-// connect
-
-
-// TODO Filter component box style
-// TODO button onClick dispatches toggleChecked(index) 17
-
-var FilterPref = function (_React$Component) {
-  _inherits(FilterPref, _React$Component);
-
-  function FilterPref() {
-    _classCallCheck(this, FilterPref);
-
-    return _possibleConstructorReturn(this, (FilterPref.__proto__ || Object.getPrototypeOf(FilterPref)).apply(this, arguments));
-  }
-
-  _createClass(FilterPref, [{
-    key: 'render',
-    value: function render() {
-      console.log(this.props);
-      return _react2.default.createElement(
-        'div',
-        null,
-        this.props.filters.map(function (filter) {
-          return _react2.default.createElement(
-=======
         { className: 'col-xs-12' },
         _react2.default.createElement(
           'h1',
@@ -14262,7 +13969,6 @@ var FilterPref = function (_React$Component) {
           'div',
           { className: 'col-xs-2', style: {} },
           _react2.default.createElement(
->>>>>>> alexlatif
             'div',
             { className: 'discoverButton', style: {} },
             _react2.default.createElement(
@@ -14645,7 +14351,6 @@ var discoverReducer = function discoverReducer() {
 
   var data = Object.assign({}, state);
   switch (action.type) {
-
     case 'GET_DATA':
       data.filters = action.data.filters;
       data.posts = action.data.posts;
@@ -14706,13 +14411,8 @@ module.exports = __webpack_require__(137);
 
 
 var utils = __webpack_require__(10);
-<<<<<<< HEAD
-var bind = __webpack_require__(71);
-var Axios = __webpack_require__(139);
-=======
 var bind = __webpack_require__(72);
-var Axios = __webpack_require__(138);
->>>>>>> alexlatif
+var Axios = __webpack_require__(139);
 var defaults = __webpack_require__(41);
 
 /**
@@ -14746,15 +14446,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-<<<<<<< HEAD
-axios.Cancel = __webpack_require__(68);
-axios.CancelToken = __webpack_require__(138);
-axios.isCancel = __webpack_require__(69);
-=======
 axios.Cancel = __webpack_require__(69);
-axios.CancelToken = __webpack_require__(137);
+axios.CancelToken = __webpack_require__(138);
 axios.isCancel = __webpack_require__(70);
->>>>>>> alexlatif
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -14992,13 +14686,8 @@ module.exports = InterceptorManager;
 
 
 var utils = __webpack_require__(10);
-<<<<<<< HEAD
 var transformData = __webpack_require__(144);
-var isCancel = __webpack_require__(69);
-=======
-var transformData = __webpack_require__(143);
 var isCancel = __webpack_require__(70);
->>>>>>> alexlatif
 var defaults = __webpack_require__(41);
 
 /**
@@ -18025,15 +17714,9 @@ function isSlowBuffer (obj) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(177);
-=======
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Symbol_js__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objectToString_js__ = __webpack_require__(176);
->>>>>>> alexlatif
 
 
 
@@ -21062,28 +20745,16 @@ module.exports = ReactCompositeComponent;
 
 
 
-<<<<<<< HEAD
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDefaultInjection = __webpack_require__(213);
-var ReactMount = __webpack_require__(89);
-=======
-var ReactDOMComponentTree = __webpack_require__(6);
-var ReactDefaultInjection = __webpack_require__(212);
 var ReactMount = __webpack_require__(90);
->>>>>>> alexlatif
 var ReactReconciler = __webpack_require__(23);
 var ReactUpdates = __webpack_require__(14);
 var ReactVersion = __webpack_require__(228);
 
-<<<<<<< HEAD
 var findDOMNode = __webpack_require__(245);
-var getHostComponentFromComposite = __webpack_require__(95);
-var renderSubtreeIntoContainer = __webpack_require__(252);
-=======
-var findDOMNode = __webpack_require__(244);
 var getHostComponentFromComposite = __webpack_require__(96);
-var renderSubtreeIntoContainer = __webpack_require__(251);
->>>>>>> alexlatif
+var renderSubtreeIntoContainer = __webpack_require__(252);
 var warning = __webpack_require__(2);
 
 ReactDefaultInjection.inject();
@@ -21203,21 +20874,12 @@ var DOMPropertyOperations = __webpack_require__(83);
 var EventPluginHub = __webpack_require__(28);
 var EventPluginRegistry = __webpack_require__(33);
 var ReactBrowserEventEmitter = __webpack_require__(34);
-<<<<<<< HEAD
-var ReactDOMComponentFlags = __webpack_require__(83);
+var ReactDOMComponentFlags = __webpack_require__(84);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactDOMInput = __webpack_require__(202);
 var ReactDOMOption = __webpack_require__(205);
-var ReactDOMSelect = __webpack_require__(84);
-var ReactDOMTextarea = __webpack_require__(208);
-=======
-var ReactDOMComponentFlags = __webpack_require__(84);
-var ReactDOMComponentTree = __webpack_require__(6);
-var ReactDOMInput = __webpack_require__(201);
-var ReactDOMOption = __webpack_require__(204);
 var ReactDOMSelect = __webpack_require__(85);
-var ReactDOMTextarea = __webpack_require__(207);
->>>>>>> alexlatif
+var ReactDOMTextarea = __webpack_require__(208);
 var ReactInstrumentation = __webpack_require__(12);
 var ReactMultiChild = __webpack_require__(221);
 var ReactServerRenderingTransaction = __webpack_require__(226);
@@ -22824,13 +22486,8 @@ module.exports = ReactDOMNullInputValuePropHook;
 var _assign = __webpack_require__(5);
 
 var React = __webpack_require__(24);
-<<<<<<< HEAD
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactDOMSelect = __webpack_require__(84);
-=======
-var ReactDOMComponentTree = __webpack_require__(6);
 var ReactDOMSelect = __webpack_require__(85);
->>>>>>> alexlatif
 
 var warning = __webpack_require__(2);
 var didWarnInvalidOptionChildren = false;
@@ -22956,13 +22613,8 @@ module.exports = ReactDOMOption;
 
 var ExecutionEnvironment = __webpack_require__(8);
 
-<<<<<<< HEAD
 var getNodeForCharacterOffset = __webpack_require__(249);
-var getTextContentAccessor = __webpack_require__(96);
-=======
-var getNodeForCharacterOffset = __webpack_require__(248);
 var getTextContentAccessor = __webpack_require__(97);
->>>>>>> alexlatif
 
 /**
  * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -25283,13 +24935,8 @@ module.exports = ReactPropTypeLocationNames;
 
 var _assign = __webpack_require__(5);
 
-<<<<<<< HEAD
-var CallbackQueue = __webpack_require__(81);
-var PooledClass = __webpack_require__(19);
-=======
 var CallbackQueue = __webpack_require__(82);
-var PooledClass = __webpack_require__(18);
->>>>>>> alexlatif
+var PooledClass = __webpack_require__(19);
 var ReactBrowserEventEmitter = __webpack_require__(34);
 var ReactInputSelection = __webpack_require__(89);
 var ReactInstrumentation = __webpack_require__(12);
@@ -26133,13 +25780,8 @@ module.exports = SVGDOMPropertyConfig;
 
 var EventPropagators = __webpack_require__(29);
 var ExecutionEnvironment = __webpack_require__(8);
-<<<<<<< HEAD
 var ReactDOMComponentTree = __webpack_require__(7);
-var ReactInputSelection = __webpack_require__(88);
-=======
-var ReactDOMComponentTree = __webpack_require__(6);
 var ReactInputSelection = __webpack_require__(89);
->>>>>>> alexlatif
 var SyntheticEvent = __webpack_require__(16);
 
 var getActiveElement = __webpack_require__(75);
@@ -27103,13 +26745,8 @@ module.exports = adler32;
 
 var _prodInvariant = __webpack_require__(3);
 
-<<<<<<< HEAD
 var ReactPropTypeLocationNames = __webpack_require__(223);
-var ReactPropTypesSecret = __webpack_require__(91);
-=======
-var ReactPropTypeLocationNames = __webpack_require__(222);
 var ReactPropTypesSecret = __webpack_require__(92);
->>>>>>> alexlatif
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -27908,21 +27545,12 @@ function createProvider() {
 
 "use strict";
 /* unused harmony export createConnect */
-<<<<<<< HEAD
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_connectAdvanced__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_connectAdvanced__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_shallowEqual__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mapDispatchToProps__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mapStateToProps__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mergeProps__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__selectorFactory__ = __webpack_require__(258);
-=======
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_connectAdvanced__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_shallowEqual__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mapDispatchToProps__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mapStateToProps__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mergeProps__ = __webpack_require__(256);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__selectorFactory__ = __webpack_require__(257);
->>>>>>> alexlatif
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -30774,13 +30402,8 @@ var _require = __webpack_require__(111),
 var _require2 = __webpack_require__(20),
     isValidElement = _require2.isValidElement;
 
-<<<<<<< HEAD
-var ReactNoopUpdateQueue = __webpack_require__(113);
-var factory = __webpack_require__(154);
-=======
 var ReactNoopUpdateQueue = __webpack_require__(114);
-var factory = __webpack_require__(153);
->>>>>>> alexlatif
+var factory = __webpack_require__(154);
 
 module.exports = factory(Component, isValidElement, ReactNoopUpdateQueue);
 

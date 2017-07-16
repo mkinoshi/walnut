@@ -5,7 +5,6 @@ const discoverReducer = (state = {
 }, action) => {
   const data = Object.assign({}, state);
   switch (action.type) {
-
     case 'GET_DATA':
       data.filters = action.data.filters;
       data.posts = action.data.posts;
