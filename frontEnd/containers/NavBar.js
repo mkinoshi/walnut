@@ -16,7 +16,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="navbar-fixed">
         <nav style={{backgroundColor: '#0D9ED3', position: 'fixed', top: '0px'}}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">

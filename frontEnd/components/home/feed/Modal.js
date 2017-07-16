@@ -20,6 +20,16 @@ class Modal extends React.Component {
     };
   }
 
+  handleChange(e) {
+    console.log(e.target.value);
+    this.setState({commentBody: e.target.value});
+  }
+
+  handleClick(id) {
+    console.log(id);
+    this.props.newComment(this.state.commentBody, id);
+  }
+
   render() {
     console.log('it is here ', this.props.isOpen);
     const commentNum = this.props.postData.comments.length;
@@ -51,12 +61,15 @@ class Modal extends React.Component {
             </div>
           </div>
         ))}
-        {/* <div>
-          <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
-            className="waves-effect waves-light btn" onClick={() => this.props.onClick()}><i
-              className="material-icons left">close</i>{commentNum}</a>
-        </div> */}
-      </div>
+        <div className="input-field col s8">
+          <textarea id="textarea1" className="materialize-textarea" style={{'paddingTop': 0, 'paddingBottom': 0}} onChange={(e) => this.handleChange(e)}></textarea>
+          <label htmlFor="textarea1">Enter Your Comment</label>
+
+        <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => this.handleClick(this.props.postData.postId)}>Submit
+            <i className="material-icons right">send</i>
+          </button>
+        </div>
+    </div>
     ) : (
       <div></div>
     );
@@ -76,8 +89,8 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newComment: (commentBody, postId) => dispatch(
-    {type: 'NEW_COMMENT', commentBody: this.state.commentBody,
-      postId: '59698f8f238cd990df7f5da4'})
+    {type: 'NEW_COMMENT', commentBody: commentBody,
+      postId: postId})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
