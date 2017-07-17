@@ -1,11 +1,12 @@
 // dispatches filter preferences
-// connect
+
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // TODO Filter component box style
 // TODO button onClick dispatches toggleChecked(index) 17
+// TODO pre define checked box from filter.checked
 
 class FilterPref extends React.Component {
 

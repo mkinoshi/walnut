@@ -9,21 +9,12 @@ import FilterPref from '../../containers/FilterPref';
 // TODO render NewPost
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showFilter: false
-    };
-  }
-
-  toggleFilter() {
-    this.setState({showFilter: !this.state.showFilter});
-  }
 
   render() {
     return (
       <div>
         <Quote />
+        <NewPost />
       </div>
     );
   }
