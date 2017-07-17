@@ -114,7 +114,7 @@ app.set('view engine', 'hbs');
 app.use('/', auth(passport));
 app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.get('/app', (request, response) => {
+app.use('/app', (request, response) => {
     console.log(path.join(__dirname, '..', 'build/index.html'));
     console.log("it is here");
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
