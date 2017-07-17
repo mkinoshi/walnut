@@ -13251,7 +13251,8 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
             postTags: action.postTags
           }).then(function (response) {
             console.log('success in newComment', response);
-            next({ type: 'STATE_REFRESH' });
+            next(action(store.dispatch({ type: 'STATE_REFRESH' })));
+            next(action);
           }).catch(function (err) {
             console.log('error in newComment', err);
           });
@@ -14392,8 +14393,8 @@ var NewPost = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (NewPost.__proto__ || Object.getPrototypeOf(NewPost)).call(this, props));
 
     _this.state = {
-      postBody: 'test',
-      postTags: ['technology', 'marketing'],
+      postBody: '',
+      postTags: [],
       showTagPref: false
     };
     return _this;
@@ -14411,10 +14412,15 @@ var NewPost = function (_React$Component) {
     }
   }, {
     key: 'handleChange',
-    value: function handleChange() {}
+    value: function handleChange(e) {
+      this.setState({ postBody: e.target.value });
+    }
   }, {
     key: 'handleClick',
-    value: function handleClick() {}
+    value: function handleClick() {
+      this.props.newPost(this.state.postBody, this.state.postTags);
+      this.setState({ postBody: '', postTags: [], showTagPref: false });
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -14424,17 +14430,17 @@ var NewPost = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'newPost col-xs-8' },
-        _react2.default.createElement('textarea', { id: 'textarea1', className: 'materialize-textarea',
-          style: { 'paddingTop': 0, 'paddingBottom': 0 },
-          value: this.state.commentBody,
-          onChange: function onChange(e) {
-            return _this2.handleChange(e);
-          } }),
         _react2.default.createElement(
           'label',
           { htmlFor: 'textarea1' },
-          'Enter Your Comment'
+          'Enter Your Post'
         ),
+        _react2.default.createElement('textarea', { id: 'textarea1', className: 'materialize-textarea',
+          style: { 'paddingTop': 0, 'paddingBottom': 0 },
+          value: this.state.postBody,
+          onChange: function onChange(e) {
+            return _this2.handleChange(e);
+          } }),
         _react2.default.createElement(
           'div',
           { className: 'newPostFooter' },
@@ -14471,7 +14477,7 @@ var NewPost = function (_React$Component) {
                 'Add Tags'
               )
             ),
-            this.state.showTagPref ? _react2.default.createElement(_TagPref2.default, { addTagsArray: function addTagsArray(tagsArray) {
+            this.state.showTagPref ? _react2.default.createElement(_TagPref2.default, { addTags: function addTags(tagsArray) {
                 return _this2.addTags(tagsArray);
               } }) : _react2.default.createElement('p', null)
           )
@@ -14493,8 +14499,8 @@ var mapStateToProps = function mapStateToProps() {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    newPost: function newPost(postBody, tags) {
-      return dispatch({ type: 'NEW_POST', postTags: undefined.state.postTags, postBody: undefined.state.postBody });
+    newPost: function newPost(postBody, postTags) {
+      return dispatch({ type: 'NEW_POST', postTags: postTags, postBody: postBody });
     }
   };
 };
@@ -14639,17 +14645,13 @@ var TagPref = function (_React$Component) {
   }
 
   _createClass(TagPref, [{
-    key: 'updateArray',
-    value: function updateArray(tag) {
-      var tagsCopy = this.state.tagsArray;
-      tagsCopy.push(tag);
-      this.setState({ tagsArray: tagsCopy });
-      this.props.addTags(tagsCopy);
-    }
-  }, {
     key: 'handleChange',
     value: function handleChange(e) {
-      console.log('handleChange working ish', e.target.value);
+      console.log('wffsdfsdfsdfdsfdsfdsgdsdsg', this);
+      var tagsCopy = this.state.tagsArray.slice();
+      tagsCopy.push(e.target.value);
+      this.setState({ tagsArray: tagsCopy });
+      this.props.addTags(tagsCopy);
     }
   }, {
     key: 'handleSubmit',
@@ -14672,9 +14674,11 @@ var TagPref = function (_React$Component) {
               'div',
               null,
               _react2.default.createElement('input', { type: 'checkbox', id: filter.name,
-                checked: 'checked',
+                checked: _this2.state.tagsArray.includes(filter.name) ? 'checked' : '',
                 value: filter.name,
-                onChange: _this2.handleChange
+                onChange: function onChange(e) {
+                  return _this2.handleChange(e);
+                }
               }),
               _react2.default.createElement(
                 'label',
@@ -14694,7 +14698,8 @@ var TagPref = function (_React$Component) {
 
 TagPref.propTypes = {
   filters: _propTypes2.default.array,
-  addTags: _propTypes2.default.func
+  addTags: _propTypes2.default.func,
+  tagsArray: _propTypes2.default.array
 };
 
 var mapStateToProps = function mapStateToProps(state) {

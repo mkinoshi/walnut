@@ -14,8 +14,8 @@ class NewPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      postBody: 'test',
-      postTags: ['technology', 'marketing'],
+      postBody: '',
+      postTags: [],
       showTagPref: false
     };
   }
@@ -28,23 +28,24 @@ class NewPost extends React.Component {
     this.setState({showTagPref: !this.state.showTagPref});
   }
 
-  handleChange() {
-
+  handleChange(e) {
+    this.setState({postBody: e.target.value});
   }
 
   handleClick() {
-
+    this.props.newPost(this.state.postBody, this.state.postTags);
+    this.setState({postBody: '', postTags: [], showTagPref: false});
   }
 
   render() {
     console.log(this.props);
     return (
       <div className="newPost col-xs-8">
+        <label htmlFor="textarea1">Enter Your Post</label>
         <textarea id="textarea1" className="materialize-textarea"
           style={{'paddingTop': 0, 'paddingBottom': 0}}
-          value={this.state.commentBody}
+          value={this.state.postBody}
           onChange={(e) => this.handleChange(e)}></textarea>
-        <label htmlFor="textarea1">Enter Your Comment</label>
 
         <div className="newPostFooter">
           <div className="submitButton col-xs-4">
@@ -61,7 +62,7 @@ class NewPost extends React.Component {
                 onClick={() => (this.toggleTagPref())}>Add Tags</a>
             </div>
             {this.state.showTagPref ?
-              <TagPref addTagsArray={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
+              <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
           </div>
         </div>
       </div>
@@ -77,8 +78,8 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, tags) => dispatch(
-    {type: 'NEW_POST', postTags: this.state.postTags, postBody: this.state.postBody})
+  newPost: (postBody, postTags) => dispatch(
+    {type: 'NEW_POST', postTags: postTags, postBody: postBody})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

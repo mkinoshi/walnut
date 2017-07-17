@@ -15,15 +15,12 @@ class TagPref extends React.Component {
     };
   }
 
-  updateArray(tag) {
-    const tagsCopy = this.state.tagsArray;
-    tagsCopy.push(tag);
+  handleChange(e) {
+    console.log('wffsdfsdfsdfdsfdsfdsgdsdsg', this);
+    const tagsCopy = this.state.tagsArray.slice();
+    tagsCopy.push(e.target.value);
     this.setState({tagsArray: tagsCopy});
     this.props.addTags(tagsCopy);
-  }
-
-  handleChange(e) {
-    console.log('handleChange working ish', e.target.value);
   }
 
   handleSubmit(e) {
@@ -37,9 +34,9 @@ class TagPref extends React.Component {
           {this.props.filters.map((filter) => (
             <div>
               <input type="checkbox" id={filter.name}
-                checked="checked"
+                checked={(this.state.tagsArray.includes(filter.name)) ? 'checked' : ''}
                 value={filter.name}
-                onChange={this.handleChange}
+                onChange={(e) => (this.handleChange(e))}
                 />
               <label htmlFor={filter.name}># {filter.name}</label>
             </div>
@@ -52,7 +49,8 @@ class TagPref extends React.Component {
 
 TagPref.propTypes = {
   filters: PropTypes.array,
-  addTags: PropTypes.func
+  addTags: PropTypes.func,
+  tagsArray: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
