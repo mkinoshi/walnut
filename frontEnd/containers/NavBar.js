@@ -1,5 +1,6 @@
 // renders in App
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 // TODO navbar links to react routes
 // TODO navbar
@@ -20,10 +21,10 @@ class Navbar extends React.Component {
         <nav style={{backgroundColor: '#0D9ED3', position: 'fixed', top: '0px'}}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">
-              <li><img src="http://i.imgur.com/EBNhMdD.png" style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/></li>
+              <li><Link to="/app"><img src="http://i.imgur.com/EBNhMdD.png" style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/></Link></li>
               <li><a href="sass.html" style={styles.links}>Alumni</a></li>
               <li><a href="badges.html" style={styles.links}>Projects</a></li>
-              <li><a href="collapsible.html" style={styles.links}>Map</a></li>
+              <li><Link to="/app/map" style={styles.links}>Map</Link></li>
             </ul>
             <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
           <div className="right col s8">

@@ -62,7 +62,7 @@ class Feed extends React.Component {
         </div>
         <div className="col-xs-8">
           {filteredPosts.map((post) => (
-            <Post postData={post} newLike={() => (this.props.newLike(post._Id))}/>
+            <Post postData={post} newLike={() => (this.props.newLike(post.postId))}/>
           ))}
         </div>
       </div>
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newLike: (id) => dispatch({type: 'NEW_LIKE', id: id})
+  newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

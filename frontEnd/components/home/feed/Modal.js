@@ -34,6 +34,8 @@ class Modal extends React.Component {
   render() {
     console.log('it is here ', this.props.isOpen);
     const commentNum = this.props.postData.comments.length;
+    console.log(this.props.postData);
+    console.log(this.props.postData.comments);
     return this.props.isOpen ? (
       <div>
         {this.props.postData.comments.map((comment) => (
@@ -56,8 +58,8 @@ class Modal extends React.Component {
               <div>
                 <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
                   className="waves-effect waves-light btn"
-                  onClick={() => (this.props.newLike)}><i
-                    className="material-icons left">thumb_up</i>5</a>
+                  onClick={() => this.props.newCommentLike(this.props.postData.postId, comment.commentId)}><i
+                    className="material-icons left">thumb_up</i>{comment.likes.length}</a>
               </div>
             </div>
           </div>
@@ -86,7 +88,8 @@ Modal.propTypes = {
   newComment: PropTypes.func,
   isOpen: PropTypes.bool,
   onClick: PropTypes.func,
-  newLike: PropTypes.func
+  newLike: PropTypes.func,
+  newCommentLike: PropTypes.func
 };
 
 const mapStateToProps = () => ({
@@ -95,7 +98,8 @@ const mapStateToProps = () => ({
 const mapDispatchToProps = (dispatch) => ({
   newComment: (commentBody, postId) => dispatch(
     {type: 'NEW_COMMENT', commentBody: commentBody,
-      postId: postId})
+      postId: postId}),
+  newCommentLike: (postId, commentId) => dispatch({type: 'NEW_COMMENT_LIKE', postId: postId, commentId: commentId})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

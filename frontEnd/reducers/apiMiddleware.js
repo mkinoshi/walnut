@@ -57,9 +57,21 @@ export const apiMiddleware = store => next => action => {
         postId: action.postId,
       })
       .then(() => {
-        next({type: 'STATE_REFRESH'});
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
       });
       break;
+    case 'NEW_COMMENT_LIKE':
+      axios.post(URL + 'db/newCommentLike', {
+        postId: action.postId,
+        commentId: action.commentId
+      })
+      .then(() => {
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
+      });
+      break;
+
     case 'STATE_REFRESH':
       axios.get(URL + 'db/getDiscoverInfo')
       .then((response) => {
