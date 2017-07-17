@@ -5,6 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 
 // TODO import modal
 // TODO newComment input and button that dispatches newComment
@@ -12,7 +13,7 @@ import PropTypes from 'prop-types';
 // newPostCommentReducerState is sent
 // POTENTIAL BUG IN POST DATA BEING PASSED DOWN
 
-class Modal extends React.Component {
+class ModalInstance extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,7 +79,7 @@ class Modal extends React.Component {
   }
 }
 
-Modal.propTypes = {
+ModalInstance.propTypes = {
   postData: PropTypes.object,
   newComment: PropTypes.func,
   isOpen: PropTypes.bool,
@@ -97,4 +98,4 @@ const mapDispatchToProps = (dispatch) => ({
   newCommentLike: (postId, commentId) => dispatch({type: 'NEW_COMMENT_LIKE', postId: postId, commentId: commentId})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modal);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalInstance);

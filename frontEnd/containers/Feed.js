@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import FilterPref from './FilterPref';
 
 
+
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class Feed extends React.Component {
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
+
 
   filterData(data) {
     const checkedFilterObject = this.props.data.filters.filter((filter) => (filter.checked === true));

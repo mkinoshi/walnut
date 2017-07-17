@@ -1,9 +1,10 @@
 // comment button action renders modal
 
 import React from 'react';
-import Modal from './Modal';
 import PropTypes from 'prop-types';
 // import {Link, Route} from 'react-router-dom';
+import Modal from './Modal';
+
 
 // TODO on action of comment button dispatch modal
 // TODO pass postData down
@@ -66,6 +67,7 @@ class Post extends React.Component {
     );
   }
 }
+
 
 Post.propTypes = {
   postData: PropTypes.object,
