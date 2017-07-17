@@ -10,24 +10,38 @@ import PropTypes from 'prop-types';
 
 class FilterPref extends React.Component {
 
+  handleChange(e) {
+    this.props.filterChange(e.target.value);
+    this.props.toggleChecked(e.target.value);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
 
   render() {
     console.log(this.props);
     return (
       <div style={{float: 'left', clear: 'both', padding: '5%', paddingTop: '40'}}>
-        {this.props.filters.map((filter) => (
-          <p>
-            <input type="checkbox" id={filter.name} />
-            <label htmlFor={filter.name}># {filter.name}</label>
-          </p>
-          ))}
+        <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
+          {this.props.filters.map((filter) => (
+            <p>
+              <input type="checkbox" id={filter.name}
+              checked={(filter.checked) ? 'checked' : ''}
+              onChange={(e) => (this.handleChange(e))}/>
+              <label htmlFor={filter.name}># {filter.name}</label>
+            </p>
+            ))}
+        </form>
       </div>
     );
   }
 }
 
 FilterPref.propTypes = {
-  filters: PropTypes.array
+  filters: PropTypes.array,
+  filterChange: PropTypes.func,
+  toggleChecked: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

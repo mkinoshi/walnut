@@ -47,14 +47,6 @@ class NewPost extends React.Component {
           value={this.state.postBody}
           onChange={(e) => this.handleChange(e)}></textarea>
 
-        <div className="newPostFooter">
-          <div className="submitButton col-xs-4">
-            <button className="btn waves-effect waves-light" type="submit" name="action"
-            onClick={() => this.handleClick()}>Submit
-              <i className="material-icons right">send</i>
-            </button>
-          </div>
-
           <div className="tagsPref">
             <div className="addTagsButton" style={{}}>
               <a style={{backgroundColor: '#FF5657'}}
@@ -64,6 +56,14 @@ class NewPost extends React.Component {
             {this.state.showTagPref ?
               <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
           </div>
+
+          <div className="newPostFooter">
+            <div className="submitButton col-xs-4">
+              <button className="btn waves-effect waves-light" type="submit" name="action"
+              onClick={() => this.handleClick()}>Submit
+                <i className="material-icons right">send</i>
+              </button>
+            </div>
         </div>
       </div>
     );

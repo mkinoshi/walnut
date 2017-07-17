@@ -39,7 +39,6 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in toggleChecked', success);
-        next({type: 'STATE_REFRESH'});
       });
       break;
     case 'GET_QUOTE':

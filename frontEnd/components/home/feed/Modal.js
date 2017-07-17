@@ -21,21 +21,16 @@ class Modal extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value);
     this.setState({commentBody: e.target.value});
   }
 
   handleClick(id) {
-    console.log(id);
     this.props.newComment(this.state.commentBody, id);
     this.setState({commentBody: ''});
   }
 
   render() {
-    console.log('it is here ', this.props.isOpen);
     const commentNum = this.props.postData.comments.length;
-    console.log(this.props.postData);
-    console.log(this.props.postData.comments);
     return this.props.isOpen ? (
       <div>
         {this.props.postData.comments.map((comment) => (

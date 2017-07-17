@@ -16,11 +16,17 @@ class TagPref extends React.Component {
   }
 
   handleChange(e) {
-    console.log('wffsdfsdfsdfdsfdsfdsgdsdsg', this);
     const tagsCopy = this.state.tagsArray.slice();
-    tagsCopy.push(e.target.value);
-    this.setState({tagsArray: tagsCopy});
-    this.props.addTags(tagsCopy);
+    if(!tagsCopy.includes(e.target.value)) {
+      tagsCopy.push(e.target.value);
+      this.setState({tagsArray: tagsCopy});
+      this.props.addTags(tagsCopy);
+    } else{
+      const index = tagsCopy.indexOf(e.target.value);
+      tagsCopy.splice(index, 1);
+      this.setState({tagsArray: tagsCopy});
+      this.props.addTags(tagsCopy);
+    }
   }
 
   handleSubmit(e) {
