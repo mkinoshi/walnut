@@ -18,9 +18,10 @@ class Feed extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('mounting......', this.props.data);
-    this.setState({filters: this.props.data.filters, isLoaded: true});
-    return true;
+    // console.log('mounting......', this.props.data);
+    // this.setState({filters: this.props.data.filters, isLoaded: true});
+    // return true;
+    // TODO front end filtering
   }
 
   toggleFilterPref() {

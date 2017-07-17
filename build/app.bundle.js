@@ -14132,9 +14132,10 @@ var Feed = function (_React$Component) {
   _createClass(Feed, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log('mounting......', this.props.data);
-      this.setState({ filters: this.props.data.filters, isLoaded: true });
-      return true;
+      // console.log('mounting......', this.props.data);
+      // this.setState({filters: this.props.data.filters, isLoaded: true});
+      // return true;
+      // TODO front end filtering
     }
   }, {
     key: 'toggleFilterPref',
