@@ -4,6 +4,18 @@ import {User, Tag, Post, Quote} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
+router.get('/user', function(req, res) {
+  User.findById(req.user._id)
+      .then((response) => {
+        console.log('yoyoyoyoyyoyoyyooyoyoyoyoy');
+        console.log(response);
+        res.json({data: response});
+      })
+      .catch((err) => {
+        res.json({data: null});
+      });
+});
+
 router.get('/getDiscoverInfo', function(req, res) {
   let filters = [];
   let posts = [];
@@ -17,6 +29,7 @@ router.get('/getDiscoverInfo', function(req, res) {
       return {name: tagObj.name, checked: false};
     });
     Post.find()
+    .sort({createdAt: -1})
     .populate('comments')
     .populate('comments.createdBy')
     .populate('createdBy')
@@ -43,7 +56,6 @@ router.get('/getDiscoverInfo', function(req, res) {
           })
         };
       });
-      console.log({filters: filters, posts: posts});
       res.json({filters: filters, posts: posts});
     })
     .catch((err) => {
@@ -103,16 +115,17 @@ router.post('/newComment', function(req, res) {
 router.post('/toggleChecked', function(req, res) {
   User.findById(req.user._id)
       .then((response) => {
-        response.preferences.push(req.query.tagName);
+        if (req.user.preferences.includes(req.body.tagName)) {
+          req.user.preferences.splice(req.user.preferences.incdexOf(req.body.tagName), 1);
+        } else {
+          response.preferences.push(req.body.tagName);
+        }
         response.save()
         .then((resp) => {
-          console.log();
-          console.log(resp);
           res.json({success: true});
         });
       })
       .catch((err) => {
-        console.log(err);
         res.json({success: false});
       });
 });

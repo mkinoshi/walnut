@@ -1,6 +1,8 @@
 // renders in App
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // TODO navbar links to react routes
 // TODO navbar
@@ -34,7 +36,7 @@ class Navbar extends React.Component {
                 <label htmlFor="icon_search" style={{color: 'white'}}>Search</label>
               </div>
               <div className="right col s2" style={{margin: '7px 30px 7px 30px'}}>
-                <img src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" style={{maxHeight: '50px', borderRadius: '45%'}} />
+                <img src={this.props.pictureURL} style={{maxHeight: '50px', borderRadius: '45%'}} />
               </div>
             </div>
           </div>
@@ -44,4 +46,16 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  pictureURL: PropTypes.string
+};
+
+const mapStateToProps = (state) => ({
+  pictureURL: state.userReducer.pictureURL
+});
+
+const mapDispatchToProps = () => ({
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
