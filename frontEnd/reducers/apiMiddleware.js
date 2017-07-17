@@ -46,11 +46,13 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
-      axios.post(URL + '/toggleChecked', {
+      axios.post(URL + 'db/toggleChecked', {
         tagName: action.name
       })
       .then((success) => {
-        console.log('success in toggleChecked', success);
+        // TODO remove from backend
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
       });
       break;
     case 'GET_QUOTE':

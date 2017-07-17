@@ -28,6 +28,7 @@ class FilterPref extends React.Component {
             <p>
               <input type="checkbox" id={filter.name}
               checked={(filter.checked) ? 'checked' : ''}
+              value={filter.name}
               onChange={(e) => (this.handleChange(e))}/>
               <label htmlFor={filter.name}># {filter.name}</label>
             </p>

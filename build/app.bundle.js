@@ -7896,6 +7896,7 @@ var FilterPref = function (_React$Component) {
               null,
               _react2.default.createElement('input', { type: 'checkbox', id: filter.name,
                 checked: filter.checked ? 'checked' : '',
+                value: filter.name,
                 onChange: function onChange(e) {
                   return _this2.handleChange(e);
                 } }),
@@ -13291,10 +13292,12 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           });
           break;
         case 'TOGGLE_FILTER_CHECKED':
-          _axios2.default.post(URL + '/toggleChecked', {
+          _axios2.default.post(URL + 'db/toggleChecked', {
             tagName: action.name
           }).then(function (success) {
-            console.log('success in toggleChecked', success);
+            // TODO remove from backend
+            next(action(store.dispatch({ type: 'STATE_REFRESH' })));
+            next(action);
           });
           break;
         case 'GET_QUOTE':
