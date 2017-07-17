@@ -38,19 +38,21 @@ export const apiMiddleware = store => next => action => {
       })
       .then((response) => {
         console.log('success in newComment', response);
-        next({type: 'STATE_REFRESH'});
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in newComment', err);
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
-      axios.post(URL + '/toggleChecked', {
+      axios.post(URL + 'db/toggleChecked', {
         tagName: action.name
       })
       .then((success) => {
-        console.log('success in toggleChecked', success);
-        next({type: 'STATE_REFRESH'});
+        // TODO remove from backend
+        next(action(store.dispatch({type: 'STATE_REFRESH'})));
+        next(action);
       });
       break;
     case 'GET_QUOTE':

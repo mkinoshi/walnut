@@ -116,7 +116,7 @@ router.post('/toggleChecked', function(req, res) {
   User.findById(req.user._id)
       .then((response) => {
         if (req.user.preferences.includes(req.body.tagName)) {
-          req.user.preferences.splice(req.user.preferences.indexOf(req.body.tagName), 1);
+          response.preferences.splice(req.user.preferences.indexOf(req.body.tagName), 1);
         } else {
           response.preferences.push(req.body.tagName);
         }
