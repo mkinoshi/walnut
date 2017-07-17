@@ -3,16 +3,18 @@ const quoteReducer = (state = {
   quote: '',
   createdBy: ''
 }, action) => {
-  const data = Object.assign({}, state);
+  const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'UPDATE_QUOTE':
-      data.quote = action.data.quote;
-      data.createdBy = action.data.createdBy;
-      return data;
+      return {
+        ...state,
+        quote: action.data.quote,
+        createdBy: action.data.createdBy
+      };
     case 'UPDATE_QUOTE_ERROR':
-      return data;
+      return newState;
     default:
-      return data;
+      return newState;
   }
 };
 

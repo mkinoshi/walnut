@@ -12,33 +12,12 @@ class Feed extends React.Component {
     super(props);
     this.state = {
       showFilterPref: false,
-      filters: [],
-      isLoaded: false
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // console.log('mounting......', this.props.data);
-    // this.setState({filters: this.props.data.filters, isLoaded: true});
-    // return true;
-    // TODO front end filtering
   }
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
-
-  filterChange(name) {
-    console.log('in here', this.state.filters);
-    const filtersCopy = this.state.filters.splice();
-    for(let i = 0; i < filtersCopy.length; i++) {
-      if(filtersCopy[i].name === name) {
-        filtersCopy[i].checked = !filtersCopy[i].checked;
-      }
-    }
-    this.setState({filters: filtersCopy});
-  }
-
 
   filterData(data) {
     const checkedFilterObject = this.props.data.filters.filter((filter) => (filter.checked === true));
@@ -79,7 +58,7 @@ class Feed extends React.Component {
             className="waves-effect waves-light btn"
             onClick={() => (this.toggleFilterPref())}>Discover</a>
         </div>
-        {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+        {this.state.showFilterPref ? <FilterPref /> : <p></p>}
         </div>
         <div className="col-xs-8">
           {filteredPosts.map((post) => (

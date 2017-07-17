@@ -7869,9 +7869,9 @@ var FilterPref = function (_React$Component) {
 
   _createClass(FilterPref, [{
     key: 'handleChange',
-    value: function handleChange(e) {
-      this.props.filterChange(e.target.value);
-      this.props.toggleChecked(e.target.value);
+    value: function handleChange(e, index) {
+      // this.props.toggleCheckedFront(e.target.value, index);
+      this.props.toggleChecked(e.target.value, index);
     }
   }, {
     key: 'handleSubmit',
@@ -7883,14 +7883,14 @@ var FilterPref = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props);
+      console.log('ran before front');
       return _react2.default.createElement(
         'div',
         { style: { float: 'left', clear: 'both', padding: '5%', paddingTop: '40' } },
         _react2.default.createElement(
           'form',
           { name: 'choice_form', id: 'choice_form', method: 'post', onSubmit: this.handleSubmit },
-          this.props.filters.map(function (filter) {
+          this.props.filters.map(function (filter, index) {
             return _react2.default.createElement(
               'p',
               null,
@@ -7898,7 +7898,7 @@ var FilterPref = function (_React$Component) {
                 checked: filter.checked ? 'checked' : '',
                 value: filter.name,
                 onChange: function onChange(e) {
-                  return _this2.handleChange(e);
+                  console.log('onclick', filter.checked);_this2.handleChange(e, index);
                 } }),
               _react2.default.createElement(
                 'label',
@@ -7919,7 +7919,8 @@ var FilterPref = function (_React$Component) {
 FilterPref.propTypes = {
   filters: _propTypes2.default.array,
   filterChange: _propTypes2.default.func,
-  toggleChecked: _propTypes2.default.func
+  toggleChecked: _propTypes2.default.func,
+  toggleCheckedFront: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -7930,10 +7931,10 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    // filter.name
-    toggleChecked: function toggleChecked(name) {
-      return dispatch({ type: 'TOGGLE_FILTER_CHECKED', name: name });
+    toggleChecked: function toggleChecked(name, index) {
+      return dispatch({ type: 'TOGGLE_FILTER_CHECKED', name: name, index: index });
     }
+    // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
   };
 };
 
@@ -13258,8 +13259,6 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
       switch (action.type) {
         case 'GET_USER_DATA':
           _axios2.default.get(URL + 'db/user').then(function (response) {
-            console.log('user data should be here');
-            console.log(response);
             store.dispatch({ type: 'GET_USER_DATA_DONE', data: response.data.data });
           }).catch(function (err) {
             console.log('getting error in login');
@@ -13267,12 +13266,10 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           });
           break;
         case 'NEW_COMMENT':
-          // TODO postId needs to be action.Id
           _axios2.default.post(URL + 'db/newComment', {
             commentBody: action.commentBody,
             postId: action.postId
           }).then(function (response) {
-            console.log('new comment resp', response);
             next(action(store.dispatch({ type: 'STATE_REFRESH' })));
             next(action);
           }).catch(function (err) {
@@ -13283,8 +13280,7 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           _axios2.default.post(URL + 'db/newPost', {
             postBody: action.postBody,
             postTags: action.postTags
-          }).then(function (response) {
-            console.log('success in newComment', response);
+          }).then(function () {
             next(action(store.dispatch({ type: 'STATE_REFRESH' })));
             next(action);
           }).catch(function (err) {
@@ -13292,17 +13288,15 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
           });
           break;
         case 'TOGGLE_FILTER_CHECKED':
+          store.dispatch({ type: 'TOGGLE_FILTER_FRONT', index: action.index });
           _axios2.default.post(URL + 'db/toggleChecked', {
             tagName: action.name
-          }).then(function (success) {
-            // TODO remove from backend
-            next(action(store.dispatch({ type: 'STATE_REFRESH' })));
-            next(action);
+          }).catch(function (err) {
+            console.log('error in toggleFilterPref', err);
           });
           break;
         case 'GET_QUOTE':
           _axios2.default.get(URL + 'db/getQuote').then(function (response) {
-            console.log('resdhufhsiughsudihusdhf', response.data);
             store.dispatch({ type: 'UPDATE_QUOTE', data: response.data });
           }).catch(function (err) {
             console.log('error in newComment', err);
@@ -14122,37 +14116,15 @@ var Feed = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).call(this, props));
 
     _this.state = {
-      showFilterPref: false,
-      filters: [],
-      isLoaded: false
+      showFilterPref: false
     };
     return _this;
   }
 
   _createClass(Feed, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      // console.log('mounting......', this.props.data);
-      // this.setState({filters: this.props.data.filters, isLoaded: true});
-      // return true;
-      // TODO front end filtering
-    }
-  }, {
     key: 'toggleFilterPref',
     value: function toggleFilterPref() {
       this.setState({ showFilterPref: !this.state.showFilterPref });
-    }
-  }, {
-    key: 'filterChange',
-    value: function filterChange(name) {
-      console.log('in here', this.state.filters);
-      var filtersCopy = this.state.filters.splice();
-      for (var i = 0; i < filtersCopy.length; i++) {
-        if (filtersCopy[i].name === name) {
-          filtersCopy[i].checked = !filtersCopy[i].checked;
-        }
-      }
-      this.setState({ filters: filtersCopy });
     }
   }, {
     key: 'filterData',
@@ -14217,9 +14189,7 @@ var Feed = function (_React$Component) {
               'Discover'
             )
           ),
-          this.state.showFilterPref ? _react2.default.createElement(_FilterPref2.default, { filterChange: function filterChange(name) {
-              return _this2.filterChange(name);
-            } }) : _react2.default.createElement('p', null)
+          this.state.showFilterPref ? _react2.default.createElement(_FilterPref2.default, null) : _react2.default.createElement('p', null)
         ),
         _react2.default.createElement(
           'div',
@@ -14814,16 +14784,19 @@ var discoverReducer = function discoverReducer() {
   };
   var action = arguments[1];
 
-  var data = Object.assign({}, state);
+  var newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_DATA':
-      data.filters = action.data.filters;
-      data.posts = action.data.posts;
-      return data;
+      newState.filters = action.data.filters;
+      newState.posts = action.data.posts;
+      return newState;
     case 'GET_DATA_ERROR':
-      return data;
+      return newState;
+    case 'TOGGLE_FILTER_FRONT':
+      newState.filters[action.index].checked = !newState.filters[action.index].checked;
+      return newState;
     default:
-      return data;
+      return newState;
   }
 };
 
@@ -14840,6 +14813,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var quoteReducer = function quoteReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     quote: '',
@@ -14847,16 +14822,17 @@ var quoteReducer = function quoteReducer() {
   };
   var action = arguments[1];
 
-  var data = Object.assign({}, state);
+  var newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'UPDATE_QUOTE':
-      data.quote = action.data.quote;
-      data.createdBy = action.data.createdBy;
-      return data;
+      return _extends({}, state, {
+        quote: action.data.quote,
+        createdBy: action.data.createdBy
+      });
     case 'UPDATE_QUOTE_ERROR':
-      return data;
+      return newState;
     default:
-      return data;
+      return newState;
   }
 };
 
