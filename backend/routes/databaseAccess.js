@@ -17,6 +17,7 @@ router.get('/getDiscoverInfo', function(req, res) {
       return {name: tagObj.name, checked: false};
     });
     Post.find()
+    .sort({createdAt: -1})
     .populate('comments')
     .populate('comments.createdBy')
     .populate('createdBy')

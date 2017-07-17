@@ -25,6 +25,9 @@ const UserSchema = new mongoose.Schema({
   lname: {
     type: String
   },
+  facebookId: {
+    type: String
+  },
   email: {
     type: String
   },

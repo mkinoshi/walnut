@@ -7,10 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
+var FacebookStrategy = require('passport-facebook');
 var mongoose = require('mongoose');
 var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
-
+var User = require('./models/models').User;
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -98,6 +99,34 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }
 ));
 
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+     profileFields: ['id', 'displayName', 'photos']
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.find({ facebookId: profile.id }, function(err, user) {
+      console.log(user)
+      console.log(profile)
+      if (user.length === 0) {
+        var new_user = new User({
+          username: profile.displayName,
+          pictureURL: profile.photos[0].value,
+          facebookId: profile.id
+        })
+        new_user.save(function(err) {
+          if (!err) {
+            cb(err, new_user);
+          }
+        })
+      } else {
+        cb(err, user[0])
+      }
+    })
+  }
+));
+
 
 var hbs = require('express-handlebars')({
   defaultLayout: 'main',
@@ -114,7 +143,7 @@ app.set('view engine', 'hbs');
 app.use('/', auth(passport));
 app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/app', (request, response) => {
+app.get('/app', (request, response) => {
     console.log(path.join(__dirname, '..', 'build/index.html'));
     console.log("it is here");
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
