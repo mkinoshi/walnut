@@ -4,6 +4,18 @@ const URL = 'http://localhost:3000/';
 export const apiMiddleware = store => next => action => {
   next(action);
   switch(action.type) {
+    case 'GET_USER_DATA':
+      axios.get(URL + 'db/user')
+           .then((response) => {
+             console.log('user data should be here');
+             console.log(response);
+             store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
+           })
+           .catch((err) => {
+             console.log('getting error in login');
+             store.dispatch({type: 'GET_DATA_ERROR'});
+           });
+      break;
     case 'NEW_COMMENT':
     // TODO postId needs to be action.Id
       axios.post(URL + 'db/newComment', {

@@ -13,6 +13,7 @@ const store = createStore(
 );
 
 store.dispatch({type: 'STATE_REFRESH'});
+store.dispatch({type: 'GET_USER_DATA'});
 
 ReactDOM.render(
   <Provider store={store}>
