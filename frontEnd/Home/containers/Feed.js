@@ -2,7 +2,7 @@
 // connect
 import React from 'react';
 import { connect } from 'react-redux';
-import Post from '../../components/home/feed/Post';
+import Post from '../components/Post';
 import PropTypes from 'prop-types';
 import FilterPref from './FilterPref';
 

@@ -12,6 +12,12 @@ const styles = {
     fontFamily: 'Apple Symbols',
     fontSize: '2.1rem',
     margin: '7px 30px 7px, 30px'
+  },
+  ribbon: {
+    backgroundColor: '#0D9ED3',
+    position: 'fixed',
+    top: '0px',
+    height: '7%'
   }
 };
 
@@ -20,7 +26,7 @@ class Navbar extends React.Component {
   render() {
     return (
       <div className="navbar-fixed">
-        <nav style={{backgroundColor: '#0D9ED3', position: 'fixed', top: '0px'}}>
+        <nav style={styles.ribbon}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">
               <li><Link to="/app"><img src="http://i.imgur.com/EBNhMdD.png" style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/></Link></li>
