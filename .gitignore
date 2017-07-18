@@ -1,4 +1,5 @@
 node_modules
 .DS_Store
+env.sh
 app.bundle.js
 app.bundle.js.map

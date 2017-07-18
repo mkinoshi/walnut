@@ -24,56 +24,14 @@ class Post extends React.Component {
   render() {
     const commentNum = this.props.postData.comments.length;
     return (
-      // <div style={{width: '85%', margin: '0 auto'}}>
-      //   <div className="row" style={{marginBottom: '0'}}>
-      //     <div style={{width: '50%', display: 'block', margin: 'auto'}}>
-      //       <div className="card blue-grey lighten-5">
-      //         <div className="card-content black-text" style={{paddingTop: '0'}}>
-      //           <span className="card-title hashtags"
-      //             style={{textAlign: 'center', marginBottom: '0'}}>
-      //             {this.props.postData.tags.map(tag => (<text style={{fontSize: '14'}}><text
-      //               style={{color: '#0D9ED3', fontSize: '20'}}>#</text>{tag}   </text>))}</span>
-      //           <img style={{borderRadius: '50%', float: 'left', height: '40'}}
-      //             src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
-      //             alt="5" />
-      //           <div style={{marginLeft: '20'}}>
-      //             <span className="card-title"
-      //               style={{float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold'}}>
-      //               {this.props.postData.username}</span>
-      //             <span className="card-title date" style={{float: 'right', fontSize: '10'}}>
-      //               {this.props.postData.createdAt.slice(11, 16)}</span>
-      //           </div>
-      //         </div>
-      //         <p style={{clear: 'both', paddingLeft: '40', paddingTop: '10'}}>
-      //           {this.props.postData.content}</p>
-      //         <div className="card-action" style={{paddingBottom: '15%'}}>
-      //           <div>
-      //             <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
-      //               className="waves-effect waves-light btn"
-      //               onClick={() => this.props.newLike()}><i
-      //                 className="material-icons left">thumb_up</i>{this.props.postData.likes.length}</a>
-      //           </div>
-      //           <div>
-      //             <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
-      //               className="waves-effect waves-light btn" onClick={() => this.handleClick()}><i
-      //                 className="material-icons left">comment</i>{commentNum}</a>
-      //           </div>
-      //           <br/> <br/>
-      //           <Modal isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
-      //         </div>
-      //       </div>
-      //     </div>
-      //   </div>
-      // </div>
-
       <div className="card" style={{backgroundColor: '#ececec', width: '66%', float: 'right', marginRight: '2%'}}>
         <div style={{textAlign: 'center'}}>
-          {this.props.postData.tags.map(tag => (<text style={{fontSize: '14'}}><text
-                    style={{color: '#0D9ED3', fontSize: '14'}}>#</text>{tag}   </text>))}
+          {this.props.postData.tags.map((tag, index) => (<text key={index} style={{fontSize: '14px'}}><text
+                    style={{color: '#0D9ED3', fontSize: '14px'}}>#</text>{tag}   </text>))}
         </div>
         <div className="card-block">
           <span>
-          <img style={{borderRadius: '50%', float: 'left', height: '40'}}
+          <img style={{borderRadius: '50%', float: 'left', height: '40px'}}
                   src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
                   alt="5" />
           <h4 className="card-title" style={{fontSize: '14px'}}>{this.props.postData.username}</h4> </span>
@@ -91,7 +49,6 @@ class Post extends React.Component {
           </div>
           <br/> <br/>
           <Modal isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
-
         </div>
       </div>
 

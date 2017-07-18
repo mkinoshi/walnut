@@ -8,25 +8,9 @@ import PropTypes from 'prop-types';
 // TODO button onClick dispatches toggleChecked(index) 17
 
 class TagPref extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tagsArray: []
-    };
-  }
 
   handleChange(e) {
-    const tagsCopy = this.state.tagsArray.slice();
-    if(!tagsCopy.includes(e.target.value)) {
-      tagsCopy.push(e.target.value);
-      this.setState({tagsArray: tagsCopy});
-      this.props.addTags(tagsCopy);
-    } else{
-      const index = tagsCopy.indexOf(e.target.value);
-      tagsCopy.splice(index, 1);
-      this.setState({tagsArray: tagsCopy});
-      this.props.addTags(tagsCopy);
-    }
+    this.props.addTags(e.target.value);
   }
 
   handleSubmit(e) {
@@ -37,10 +21,10 @@ class TagPref extends React.Component {
     return (
       <div>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.filters.map((filter) => (
-            <div>
+          {this.props.filters.map((filter, index) => (
+            <div key={index}>
               <input type="checkbox" id={filter.name}
-                checked={(this.state.tagsArray.includes(filter.name)) ? 'checked' : ''}
+                checked={(this.props.tags.includes(filter.name)) ? 'checked' : ''}
                 value={filter.name}
                 onChange={(e) => (this.handleChange(e))}
                 />
@@ -56,7 +40,7 @@ class TagPref extends React.Component {
 TagPref.propTypes = {
   filters: PropTypes.array,
   addTags: PropTypes.func,
-  tagsArray: PropTypes.array
+  tags: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({

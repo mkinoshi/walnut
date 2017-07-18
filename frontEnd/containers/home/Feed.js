@@ -63,7 +63,7 @@ class Feed extends React.Component {
           </div>
           <div className="col-xs-8">
             {filteredPosts.map((post) => (
-              <Post postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+              <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
         </div>
