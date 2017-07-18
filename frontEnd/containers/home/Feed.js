@@ -7,6 +7,70 @@ import PropTypes from 'prop-types';
 import FilterPref from './FilterPref';
 
 
+const styles = {
+  outer: {
+    borderWidth: '1px',
+    width: '24.5%',
+    height: '120px',
+    borderRadius: '25px',
+    marginTop: '-120px',
+    borderTop: 'solid',
+    borderRight: 'solid'
+  },
+  outer2: {
+    borderWidth: '1px',
+    width: '24%',
+    height: '150px',
+    borderRadius: '25px',
+    marginTop: '-150px',
+    marginLeft: '76.3%',
+    borderTop: 'solid',
+    borderLeft: 'solid'
+  },
+  inner1: {
+    borderWidth: '1px',
+    width: '5%',
+    height: '20px',
+    borderTop: 'solid',
+    marginTop: '-120px',
+    backgroundColor: 'white',
+  },
+  inner2: {
+    borderWidth: '1px',
+    width: '24.5%',
+    height: '40px',
+    borderRight: 'solid',
+    marginTop: '70px',
+    backgroundColor: 'white'
+  },
+  inner3: {
+    width: '24.5%'
+  },
+  under: {
+    height: '30%',
+    borderTop: 'solid',
+    width: '52.5%',
+    marginLeft: '24.3%'
+  },
+  innerRight1: {
+    borderWidth: '1px',
+    width: '10%',
+    height: '20px',
+    borderTop: 'solid',
+    marginTop: '-150px',
+    backgroundColor: 'white',
+  },
+  innerRight2: {
+    borderWidth: '1px',
+    width: '24.5%',
+    height: '30px',
+    borderRight: 'solid',
+    marginTop: '100px',
+    backgroundColor: 'white'
+  },
+};
+
+
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -51,11 +115,9 @@ class Feed extends React.Component {
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
       <div>
-        <div className="col-xs-3" style={{borderWidth: 1}}></div>
-        <div className="col-xs-12">
-          <div className="col-xs-2" style={{}}>
+        <div className="col-xs-3" style={styles.outer}>
           <div className="discoverButton" style={{}}>
-            <a style={{backgroundColor: '#FF5657'}}
+            <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
               className="waves-effect waves-light btn"
               onClick={() => (this.toggleFilterPref())}>Discover</a>
           </div>
@@ -66,7 +128,12 @@ class Feed extends React.Component {
               <Post postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
-        </div>
+          <div style={styles.inner1}></div>
+          <div style={styles.inner2}></div>
+          <div style={styles.inner3}></div>
+        <div className="col-xs-12" style={styles.under}></div>
+        {/* <div style={styles.innerRight1}></div>
+        <div style={styles.innerRight2}></div> */}
       </div>
 
     );

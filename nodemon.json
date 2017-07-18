@@ -1,0 +1,3 @@
+{
+  "ignore": ["frontend/**", "build/**", "views/**"]
+}
