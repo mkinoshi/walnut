@@ -14632,8 +14632,7 @@ var FilterPref = function (_React$Component) {
 FilterPref.propTypes = {
   filters: _propTypes2.default.array,
   filterChange: _propTypes2.default.func,
-  toggleChecked: _propTypes2.default.func,
-  toggleCheckedFront: _propTypes2.default.func
+  toggleChecked: _propTypes2.default.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
