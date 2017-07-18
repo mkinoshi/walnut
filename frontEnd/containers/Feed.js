@@ -63,15 +63,14 @@ class Feed extends React.Component {
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
       <div>
-        <div className="col-xs-3"><h1>hellojejejejejejejej</h1></div>
         <div className="col-xs-12">
           <div className="col-xs-2" style={{}}>
-          <div className="discoverButton" style={{}}>
-            <a style={{backgroundColor: '#FF5657'}}
-              className="waves-effect waves-light btn"
-              onClick={() => (this.toggleFilterPref())}>Discover</a>
-          </div>
-          {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+            <div className="discoverButton" style={{}}>
+              <a style={{backgroundColor: '#FF5657'}}
+                className="waves-effect waves-light btn"
+                onClick={() => (this.toggleFilterPref())}>Discover</a>
+            </div>
+            {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
           </div>
           <div className="col-xs-8">
             {filteredPosts.map((post) => (
