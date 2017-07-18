@@ -56,7 +56,7 @@ class Header extends React.Component {
         <div style={styles.outer} >
           <img src="http://i.imgur.com/EBNhMdD.png" style={styles.logs}/>
         <div style={styles.middle}>
-            <div id="title" style={styles.title}><h1 style={styles.company}>Horizon School Of Technology</h1></div>
+            <div id="title" style={styles.title}><h1 style={styles.company}>Horizons School Of Technology</h1></div>
             <Quote />
           </div>
           <div style={styles.links}>
