@@ -134,8 +134,6 @@ var hbs = require('express-handlebars')({
 });
 app.engine('hbs', hbs);
 app.set('views', path.join(__dirname, '..', 'views'));
-console.log('dirname', __dirname);
-console.log(path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 
@@ -144,8 +142,6 @@ app.use('/', auth(passport));
 app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.get('/app', (request, response) => {
-    console.log(path.join(__dirname, '..', 'build/index.html'));
-    console.log("it is here");
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running
