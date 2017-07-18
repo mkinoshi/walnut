@@ -65,12 +65,6 @@ const UserProfileSchema = new mongoose.Schema({
   blurb: {
     type: String
   },
-  name: {
-    type: String
-  },
-  email: {
-    type: String
-  },
   location: {
     type: String
   },
