@@ -7,8 +7,6 @@ export const apiMiddleware = store => next => action => {
     case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
            .then((response) => {
-             console.log('user data should be here');
-             console.log(response);
              store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
            })
            .catch((err) => {
@@ -17,13 +15,11 @@ export const apiMiddleware = store => next => action => {
            });
       break;
     case 'NEW_COMMENT':
-    // TODO postId needs to be action.Id
       axios.post(URL + 'db/newComment', {
         commentBody: action.commentBody,
         postId: action.postId
       })
       .then((response) => {
-        console.log('new comment resp', response);
         next(action(store.dispatch({type: 'STATE_REFRESH'})));
         next(action);
       })
@@ -36,8 +32,7 @@ export const apiMiddleware = store => next => action => {
         postBody: action.postBody,
         postTags: action.postTags
       })
-      .then((response) => {
-        console.log('success in newComment', response);
+      .then(() => {
         next(action(store.dispatch({type: 'STATE_REFRESH'})));
         next(action);
       })
@@ -46,19 +41,17 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
+      store.dispatch({type: 'TOGGLE_FILTER_FRONT', index: action.index});
       axios.post(URL + 'db/toggleChecked', {
         tagName: action.name
       })
-      .then((success) => {
-        // TODO remove from backend
-        next(action(store.dispatch({type: 'STATE_REFRESH'})));
-        next(action);
+      .catch((err) =>{
+        console.log('error in toggleFilterPref', err);
       });
       break;
     case 'GET_QUOTE':
       axios.get(URL + 'db/getQuote')
       .then((response) => {
-        console.log('resdhufhsiughsudihusdhf', response.data);
         store.dispatch({type: 'UPDATE_QUOTE', data: response.data});
       })
       .catch((err) =>{

@@ -3,16 +3,19 @@ const discoverReducer = (state = {
   filters: [],
   posts: []
 }, action) => {
-  const data = Object.assign({}, state);
+  const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_DATA':
-      data.filters = action.data.filters;
-      data.posts = action.data.posts;
-      return data;
+      newState.filters = action.data.filters;
+      newState.posts = action.data.posts;
+      return newState;
     case 'GET_DATA_ERROR':
-      return data;
+      return newState;
+    case 'TOGGLE_FILTER_FRONT':
+      newState.filters[action.index].checked = !newState.filters[action.index].checked;
+      return newState;
     default:
-      return data;
+      return newState;
   }
 };
 

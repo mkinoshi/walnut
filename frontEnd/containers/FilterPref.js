@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 
 class FilterPref extends React.Component {
 
-  handleChange(e) {
-    this.props.filterChange(e.target.value);
-    this.props.toggleChecked(e.target.value);
+  handleChange(e, index) {
+    // this.props.toggleCheckedFront(e.target.value, index);
+    this.props.toggleChecked(e.target.value, index);
   }
 
   handleSubmit(e) {
@@ -20,16 +20,16 @@ class FilterPref extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log('ran before front');
     return (
       <div style={{float: 'left', clear: 'both', padding: '5%', paddingTop: '40'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.filters.map((filter) => (
+          {this.props.filters.map((filter, index) => (
             <p>
               <input type="checkbox" id={filter.name}
               checked={(filter.checked) ? 'checked' : ''}
               value={filter.name}
-              onChange={(e) => (this.handleChange(e))}/>
+              onChange={(e) => {console.log('onclick', filter.checked); this.handleChange(e, index);}}/>
               <label htmlFor={filter.name}># {filter.name}</label>
             </p>
             ))}
@@ -42,7 +42,8 @@ class FilterPref extends React.Component {
 FilterPref.propTypes = {
   filters: PropTypes.array,
   filterChange: PropTypes.func,
-  toggleChecked: PropTypes.func
+  toggleChecked: PropTypes.func,
+  toggleCheckedFront: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -50,8 +51,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // filter.name
-  toggleChecked: (name) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name})
+  toggleChecked: (name, index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name, index: index}),
+  // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPref);
