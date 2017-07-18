@@ -8,7 +8,7 @@ const styles = {
   },
   map: {
     height: '100vh',
-    width: '90vw'
+    width: '80vw'
   }
 };
 
