@@ -6,9 +6,6 @@ import Head from '../components/Head';
 import Main from '../components/main/Main';
 import Info from '../components/info/Info';
 
-const dummyData = {
-};
-
 class ProfileContainer extends React.Component {
 
   render() {

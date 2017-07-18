@@ -65,15 +65,6 @@ const UserProfileSchema = new mongoose.Schema({
   blurb: {
     type: String
   },
-  fname: {
-    type: String
-  },
-  lname: {
-    type: String
-  },
-  email: {
-    type: String
-  },
   location: {
     type: String
   },
@@ -94,6 +85,12 @@ const UserProfileSchema = new mongoose.Schema({
   },
   portfolio: {
     type: Object
+  },
+  profileUrls: {
+    type: String
+  },
+  username: {
+    type: String
   }
 
 });
