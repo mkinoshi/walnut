@@ -13,7 +13,6 @@ class Home extends React.Component {
       <div>
         <Header />
         <Discover />
-        <Route path="/app/map" component={Map}/>
       </div>
     );
   }

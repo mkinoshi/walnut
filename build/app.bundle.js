@@ -13687,8 +13687,7 @@ var Home = function (_React$Component) {
         'div',
         null,
         _react2.default.createElement(_Header2.default, null),
-        _react2.default.createElement(_Discover2.default, null),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/app/map', component: _Map2.default })
+        _react2.default.createElement(_Discover2.default, null)
       );
     }
   }]);
