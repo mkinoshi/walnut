@@ -15,6 +15,8 @@ const styles = {
   }
 };
 
+
+
 class Map extends React.Component {
 
   render() {
@@ -32,7 +34,7 @@ class Map extends React.Component {
       //     url="https://www.google.com/maps/embed/v1/place?key=AIzaSyCRsfBv1y4taRhb2nGyRue4a5rEi3KAtiQ
       //       &q=Space+Needle,Seattle+WA" allowFullScreen />
       // </div>
-      <div id="map" style={{height: '100%'}}>
+      <div id={map} style={{height: '100%'}}>
       </div>
 
 
