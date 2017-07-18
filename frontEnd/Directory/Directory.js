@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ProfileContainer from './containers/ProfileContainer';
 
 class Directory extends React.Component {
 
@@ -17,10 +17,4 @@ class Directory extends React.Component {
 Directory.propTypes = {
 };
 
-const mapStateToProps = () => ({
-});
-
-const mapDispatchToProps = () => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Directory);
+export default Directory;
