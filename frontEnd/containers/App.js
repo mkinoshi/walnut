@@ -4,9 +4,10 @@ import NavBar from './NavBar';
 import Home from '../Home/components/Home';
 import Map from '../Map/components/Map';
 import CreateProfile from './CreateProfile';
-import Directory from '../Directory/components/Directory';
+import Directory from '../Directory/Directory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import EditProfileContainer from '../editProfile/containers/EditProfileContainer';
 
 class App extends React.Component {
 
@@ -17,7 +18,7 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             {/* <Route path="/app" component={(!this.state.profileCreated) ? Home : CreateProfile }/> */}
-            <Route path="/app/createprofile" component={CreateProfile}/>
+            <Route path="/app/createprofile" component={EditProfileContainer}/>
             <Route path="/app/projects" component={Home}/>
             <Route path="/app/directory" component={Directory} />
             <Route path="/app/map" component={Map}/>
