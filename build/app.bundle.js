@@ -13306,7 +13306,6 @@ var apiMiddleware = exports.apiMiddleware = function apiMiddleware(store) {
 
         case 'STATE_REFRESH':
           _axios2.default.get(URL + 'db/getDiscoverInfo').then(function (response) {
-            console.log('resdhufhsiughsudihusdhf', response.data);
             store.dispatch({ type: 'GET_DATA', data: response.data });
           }).catch(function (err) {
             console.log('error in newComment', err);
@@ -14621,15 +14620,15 @@ var FilterPref = function (_React$Component) {
             return _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement('input', { type: 'checkbox', id: filter.name,
+              _react2.default.createElement('input', { type: 'checkbox', id: index,
                 checked: filter.checked ? 'checked' : '',
                 value: filter.name,
-                onChange: function onChange(e) {
+                onClick: function onClick(e) {
                   console.log('onclick', filter.checked);_this2.handleChange(e, index);
                 } }),
               _react2.default.createElement(
                 'label',
-                { htmlFor: filter.name },
+                { htmlFor: index },
                 '# ',
                 filter.name
               )
@@ -15055,8 +15054,8 @@ var TagPref = function (_React$Component) {
               _react2.default.createElement('input', { type: 'checkbox', id: filter.name,
                 checked: _this2.state.tagsArray.includes(filter.name) ? 'checked' : '',
                 value: filter.name,
-                onChange: function onChange(e) {
-                  return _this2.handleChange(e);
+                onClick: function onClick(e) {
+                  console.log('hi');_this2.handleChange(e);
                 }
               }),
               _react2.default.createElement(
