@@ -13964,10 +13964,10 @@ var ModalInstance = function (_React$Component) {
         this.props.postData.comments.map(function (comment) {
           return _react2.default.createElement(
             'div',
-            { className: 'card blue-grey lighten-5', style: { marginTop: '45' } },
+            { className: 'card', style: { marginTop: '45' } },
             _react2.default.createElement(
               'div',
-              { className: 'card-content black-text', style: { paddingTop: '0' } },
+              { className: 'card-block', style: { paddingTop: '0' } },
               _react2.default.createElement('img', { style: { height: '50', float: 'left' },
                 src: 'http://clubrunner.blob.core.windows.net/00000010115/PhotoAlbum/4-way-test-speech-contest-finals-2016/_87A1813.jpg',
                 alt: '5', className: 'circle' }),
@@ -13977,7 +13977,7 @@ var ModalInstance = function (_React$Component) {
                 _react2.default.createElement(
                   'span',
                   { className: 'card-title',
-                    style: { float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold' } },
+                    style: { float: 'left', paddingLeft: '30', fontSize: '14', fontWeight: 'bold' } },
                   comment.username
                 ),
                 _react2.default.createElement(
@@ -14020,7 +14020,7 @@ var ModalInstance = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'input-field col s8' },
-          _react2.default.createElement('textarea', { id: 'textarea1', className: 'materialize-textarea',
+          _react2.default.createElement('textarea', { id: 'textarea1', className: 'textarea',
             style: { 'paddingTop': 0, 'paddingBottom': 0 },
             value: this.state.commentBody,
             onChange: function onChange(e) {
@@ -14029,7 +14029,7 @@ var ModalInstance = function (_React$Component) {
           _react2.default.createElement(
             'label',
             { htmlFor: 'textarea1' },
-            'Enter Your Comment'
+            '  Enter Your Comment'
           ),
           _react2.default.createElement(
             'button',
@@ -14143,109 +14143,135 @@ var Post = function (_React$Component) {
       var _this2 = this;
 
       var commentNum = this.props.postData.comments.length;
-      return _react2.default.createElement(
-        'div',
-        { style: { width: '85%', margin: '0 auto' } },
+      return (
+        // <div style={{width: '85%', margin: '0 auto'}}>
+        //   <div className="row" style={{marginBottom: '0'}}>
+        //     <div style={{width: '50%', display: 'block', margin: 'auto'}}>
+        //       <div className="card blue-grey lighten-5">
+        //         <div className="card-content black-text" style={{paddingTop: '0'}}>
+        //           <span className="card-title hashtags"
+        //             style={{textAlign: 'center', marginBottom: '0'}}>
+        //             {this.props.postData.tags.map(tag => (<text style={{fontSize: '14'}}><text
+        //               style={{color: '#0D9ED3', fontSize: '20'}}>#</text>{tag}   </text>))}</span>
+        //           <img style={{borderRadius: '50%', float: 'left', height: '40'}}
+        //             src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
+        //             alt="5" />
+        //           <div style={{marginLeft: '20'}}>
+        //             <span className="card-title"
+        //               style={{float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold'}}>
+        //               {this.props.postData.username}</span>
+        //             <span className="card-title date" style={{float: 'right', fontSize: '10'}}>
+        //               {this.props.postData.createdAt.slice(11, 16)}</span>
+        //           </div>
+        //         </div>
+        //         <p style={{clear: 'both', paddingLeft: '40', paddingTop: '10'}}>
+        //           {this.props.postData.content}</p>
+        //         <div className="card-action" style={{paddingBottom: '15%'}}>
+        //           <div>
+        //             <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
+        //               className="waves-effect waves-light btn"
+        //               onClick={() => this.props.newLike()}><i
+        //                 className="material-icons left">thumb_up</i>{this.props.postData.likes.length}</a>
+        //           </div>
+        //           <div>
+        //             <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
+        //               className="waves-effect waves-light btn" onClick={() => this.handleClick()}><i
+        //                 className="material-icons left">comment</i>{commentNum}</a>
+        //           </div>
+        //           <br/> <br/>
+        //           <Modal isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   </div>
+        // </div>
+
         _react2.default.createElement(
           'div',
-          { className: 'row', style: { marginBottom: '0' } },
+          { className: 'card', style: { backgroundColor: '#ececec', width: '66%', float: 'right', marginRight: '2%' } },
           _react2.default.createElement(
             'div',
-            { style: { width: '50%', display: 'block', margin: 'auto' } },
+            { style: { textAlign: 'center' } },
+            this.props.postData.tags.map(function (tag) {
+              return _react2.default.createElement(
+                'text',
+                { style: { fontSize: '14' } },
+                _react2.default.createElement(
+                  'text',
+                  {
+                    style: { color: '#0D9ED3', fontSize: '14' } },
+                  '#'
+                ),
+                tag,
+                '   '
+              );
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'card-block' },
+            _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement('img', { style: { borderRadius: '50%', float: 'left', height: '40' },
+                src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+                alt: '5' }),
+              _react2.default.createElement(
+                'h4',
+                { className: 'card-title', style: { fontSize: '14px' } },
+                this.props.postData.username
+              ),
+              ' '
+            ),
+            _react2.default.createElement(
+              'p',
+              { className: 'card-text', style: { paddingLeft: '10%' } },
+              _react2.default.createElement('br', null),
+              this.props.postData.content
+            ),
             _react2.default.createElement(
               'div',
-              { className: 'card blue-grey lighten-5' },
+              null,
               _react2.default.createElement(
-                'div',
-                { className: 'card-content black-text', style: { paddingTop: '0' } },
+                'a',
+                { style: { backgroundColor: '#0D9ED3', float: 'left' },
+                  className: 'waves-effect waves-light btn btn-primary',
+                  onClick: function onClick() {
+                    return _this2.props.newLike();
+                  } },
                 _react2.default.createElement(
-                  'span',
-                  { className: 'card-title hashtags',
-                    style: { textAlign: 'center', marginBottom: '0' } },
-                  this.props.postData.tags.map(function (tag) {
-                    return _react2.default.createElement(
-                      'text',
-                      { style: { fontSize: '14' } },
-                      _react2.default.createElement(
-                        'text',
-                        {
-                          style: { color: '#0D9ED3', fontSize: '20' } },
-                        '#'
-                      ),
-                      tag,
-                      '   '
-                    );
-                  })
+                  'i',
+                  {
+                    className: 'material-icons left' },
+                  'thumb_up'
                 ),
-                _react2.default.createElement('img', { style: { borderRadius: '50%', float: 'left', height: '40' },
-                  src: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-                  alt: '5' }),
-                _react2.default.createElement(
-                  'div',
-                  { style: { marginLeft: '20' } },
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'card-title',
-                      style: { float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold' } },
-                    this.props.postData.username
-                  ),
-                  _react2.default.createElement(
-                    'span',
-                    { className: 'card-title date', style: { float: 'right', fontSize: '10' } },
-                    this.props.postData.createdAt.slice(11, 16)
-                  )
-                )
-              ),
-              _react2.default.createElement(
-                'p',
-                { style: { clear: 'both', paddingLeft: '40', paddingTop: '10' } },
-                this.props.postData.content
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'card-action', style: { paddingBottom: '15%' } },
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  _react2.default.createElement(
-                    'a',
-                    { style: { backgroundColor: '#0D9ED3', float: 'left' },
-                      className: 'waves-effect waves-light btn',
-                      onClick: function onClick() {
-                        return _this2.props.newLike();
-                      } },
-                    _react2.default.createElement(
-                      'i',
-                      {
-                        className: 'material-icons left' },
-                      'thumb_up'
-                    ),
-                    this.props.postData.likes.length
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  _react2.default.createElement(
-                    'a',
-                    { style: { backgroundColor: '#0D9ED3', float: 'right' },
-                      className: 'waves-effect waves-light btn', onClick: function onClick() {
-                        return _this2.handleClick();
-                      } },
-                    _react2.default.createElement(
-                      'i',
-                      {
-                        className: 'material-icons left' },
-                      'comment'
-                    ),
-                    commentNum
-                  )
-                ),
-                _react2.default.createElement(_Modal2.default, { isOpen: this.state.isOpen, postData: this.props.postData, onClick: function onClick() {
-                    return _this2.handleClick();
-                  } })
+                this.props.postData.likes.length
               )
-            )
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'a',
+                { style: { backgroundColor: '#0D9ED3', float: 'right' },
+                  className: 'waves-effect waves-light btn btn-primary', onClick: function onClick() {
+                    return _this2.handleClick();
+                  } },
+                _react2.default.createElement(
+                  'i',
+                  {
+                    className: 'material-icons left' },
+                  'comment'
+                ),
+                commentNum
+              )
+            ),
+            _react2.default.createElement('br', null),
+            ' ',
+            _react2.default.createElement('br', null),
+            _react2.default.createElement(_Modal2.default, { isOpen: this.state.isOpen, postData: this.props.postData, onClick: function onClick() {
+                return _this2.handleClick();
+              } })
           )
         )
       );

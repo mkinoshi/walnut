@@ -35,14 +35,14 @@ class ModalInstance extends React.Component {
     return this.props.isOpen ? (
       <div>
         {this.props.postData.comments.map((comment) => (
-          <div className="card blue-grey lighten-5" style={{marginTop: '45'}}>
-            <div className="card-content black-text" style={{paddingTop: '0'}}>
+          <div className="card" style={{marginTop: '45'}}>
+            <div className="card-block" style={{paddingTop: '0'}}>
               <img style={{height: '50', float: 'left'}}
                 src="http://clubrunner.blob.core.windows.net/00000010115/PhotoAlbum/4-way-test-speech-contest-finals-2016/_87A1813.jpg"
                 alt="5" className="circle"/>
               <div style={{marginLeft: '20'}}>
                 <span className="card-title"
-                  style={{float: 'left', paddingLeft: '30', fontSize: '20', fontWeight: 'bold'}}>
+                  style={{float: 'left', paddingLeft: '30', fontSize: '14', fontWeight: 'bold'}}>
                   {comment.username}</span>
                 <span className="card-title date" style={{float: 'right', fontSize: '10'}}>
                   {comment.createdAt.slice(11, 16)}</span>
@@ -61,11 +61,11 @@ class ModalInstance extends React.Component {
           </div>
         ))}
         <div className="input-field col s8">
-          <textarea id="textarea1" className="materialize-textarea"
+          <textarea id="textarea1" className="textarea"
             style={{'paddingTop': 0, 'paddingBottom': 0}}
             value={this.state.commentBody}
             onChange={(e) => this.handleChange(e)}></textarea>
-          <label htmlFor="textarea1">Enter Your Comment</label>
+          <label htmlFor="textarea1">  Enter Your Comment</label>
 
         <button className="btn waves-effect waves-light" type="submit" name="action"
           onClick={() => this.handleClick(this.props.postData.postId)}>Submit
@@ -73,7 +73,8 @@ class ModalInstance extends React.Component {
           </button>
         </div>
     </div>
-    ) : (
+    )
+    : (
       <div></div>
     );
   }
