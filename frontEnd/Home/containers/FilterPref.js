@@ -29,7 +29,7 @@ class FilterPref extends React.Component {
               <input type="checkbox" id={index}
               checked={(filter.checked) ? 'checked' : ''}
               value={filter.name}
-              onClick={(e) => {console.log('onclick', filter.checked); this.handleChange(e, index);}}/>
+              onClick={(e) => {this.handleChange(e, index);}}/>
               <label htmlFor={index}># {filter.name}</label>
             </p>
             ))}
@@ -41,7 +41,6 @@ class FilterPref extends React.Component {
 
 FilterPref.propTypes = {
   filters: PropTypes.array,
-  filterChange: PropTypes.func,
   toggleChecked: PropTypes.func
 };
 

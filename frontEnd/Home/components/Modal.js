@@ -30,7 +30,6 @@ class ModalInstance extends React.Component {
   }
 
   render() {
-    const commentNum = this.props.postData.comments.length;
     return this.props.isOpen ? (
       <div>
         {this.props.postData.comments.map((comment) => (

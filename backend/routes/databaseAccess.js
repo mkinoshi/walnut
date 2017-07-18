@@ -4,7 +4,7 @@ import {User, Tag, Post, Quote} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
-router.get('/user', function(req, res) {
+router.get('/user', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
         res.json({data: response});
@@ -14,7 +14,7 @@ router.get('/user', function(req, res) {
       });
 });
 
-router.get('/getDiscoverInfo', function(req, res) {
+router.get('/getDiscoverInfo', (req, res) => {
   let filters = [];
   let posts = [];
   Tag.find()
@@ -66,7 +66,7 @@ router.get('/getDiscoverInfo', function(req, res) {
 });
 
 // adding a new post
-router.post('/newPost', function(req, res) {
+router.post('/newPost', (req, res) => {
   const newPost = new Post({
     content: req.body.postBody,
     createdAt: new Date(),
@@ -88,7 +88,7 @@ router.post('/newPost', function(req, res) {
 });
 
 // new comment
-router.post('/newComment', function(req, res) {
+router.post('/newComment', (req, res) => {
   Post.findById(req.body.postId)
       .then((response) => {
         const newComment = {
@@ -108,7 +108,7 @@ router.post('/newComment', function(req, res) {
       });
 });
 
-router.post('/toggleChecked', function(req, res) {
+router.post('/toggleChecked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
         if (req.user.preferences.includes(req.body.tagName)) {
@@ -126,7 +126,7 @@ router.post('/toggleChecked', function(req, res) {
       });
 });
 
-router.post('/newPostLike', function(req, res) {
+router.post('/newPostLike', (req, res) => {
   Post.findById(req.body.postId)
     .then((response) => {
       response.likes.push(req.user._id);
@@ -140,7 +140,7 @@ router.post('/newPostLike', function(req, res) {
     });
 });
 
-router.post('/newCommentLike', function(req, res) {
+router.post('/newCommentLike', (req, res) => {
   Post.findById(req.body.postId)
     .then((post) => {
       const comment = post.comments.filter((com) => {
@@ -157,7 +157,7 @@ router.post('/newCommentLike', function(req, res) {
     });
 });
 
-router.get('/getQuote', function(req, res) {
+router.get('/getQuote', (req, res) => {
   Quote.find()
        .then((response) => {
          const ind = new Date().getDate() % response.length;
