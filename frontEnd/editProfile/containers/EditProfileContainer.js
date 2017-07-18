@@ -13,18 +13,20 @@ class ProfileContainer extends React.Component {
     return (
       <div>
         <p>profile</p>
-        <Head />
-        <Main />
-        <Info />
+        <Head data={this.props.data}/>
+        <Main data={this.props.data}/>
+        <Info data={this.props.data}/>
       </div>
     );
   }
 }
 
 ProfileContainer.propTypes = {
+  data: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
+  data: state.createProfileReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({

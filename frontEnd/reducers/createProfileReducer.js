@@ -32,10 +32,7 @@ const dummyData = {
   }
 };
 
-const createProfileReducer = (state = {
-  filters: [],
-  posts: []
-}, action) => {
+const createProfileReducer = (state = dummyData, action) => {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_DATA':
