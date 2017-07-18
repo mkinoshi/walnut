@@ -13764,7 +13764,7 @@ var Map = function (_React$Component) {
         //     url="https://www.google.com/maps/embed/v1/place?key=AIzaSyCRsfBv1y4taRhb2nGyRue4a5rEi3KAtiQ
         //       &q=Space+Needle,Seattle+WA" allowFullScreen />
         // </div>
-        _react2.default.createElement('div', { id: 'map' })
+        _react2.default.createElement('div', { id: 'map', style: { height: '100%' } })
       );
     }
   }]);
