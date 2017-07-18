@@ -89,6 +89,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
+    // TODO encrypt this!!!
     // if passwords do not match, auth failed
     if (user.password !== password) {
       return done(null, false, { message: 'Incorrect password.' });
@@ -103,6 +104,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
+    // TODO scrape groups
      profileFields: ['id', 'displayName', 'photos']
   },
   function(accessToken, refreshToken, profile, cb) {

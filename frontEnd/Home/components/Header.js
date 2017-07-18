@@ -1,6 +1,6 @@
 import React from 'react';
-import Quote from '../../containers/home/Quote';
-import NewPost from '../../containers/home/NewPost';
+import Quote from '../containers/Quote';
+import NewPost from '../containers/NewPost';
 
 // TODO Header content
 // TODO Google drive link

@@ -2,7 +2,7 @@
 // connect
 import React from 'react';
 import { connect } from 'react-redux';
-import Post from '../../components/home/feed/Post';
+import Post from '../components/Post';
 import PropTypes from 'prop-types';
 import FilterPref from './FilterPref';
 
@@ -63,7 +63,7 @@ class Feed extends React.Component {
           </div>
           <div className="col-xs-8">
             {filteredPosts.map((post) => (
-              <Post postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+              <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
         </div>

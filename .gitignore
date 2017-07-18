@@ -1,2 +1,6 @@
 node_modules
 .DS_Store
+env.sh
+build/app.bundle.js
+build/app.bundle.js.map
+.idea
