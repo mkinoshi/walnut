@@ -21,7 +21,9 @@ const styles = {
     paddingLeft: '1%',
     paddingRight: '1%',
     paddingBottom: '1%',
-    backgroundColor: '#0D9ED3'
+    backgroundColor: '#0D9ED3',
+    width: '50%',
+    marginLeft: '25%'
   },
   post: {
     backgroundColor: 'white',

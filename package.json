@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack",
+    "webpack": "webpack --watch",
     "dev": "webpack-dev-server --content-base build/",
     "server": "nodemon ./backend/server.js --exec babel-node --presets es2015"
   },
@@ -50,6 +50,7 @@
     "react-dom": "^15.5.4",
     "react-iframe": "^1.0.7",
     "react-logger": "^1.1.0",
+    "react-modal": "^2.2.2",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
