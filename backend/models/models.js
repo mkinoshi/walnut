@@ -85,6 +85,12 @@ const UserProfileSchema = new mongoose.Schema({
   },
   portfolio: {
     type: Object
+  },
+  profileUrls: {
+    type: String
+  },
+  username: {
+    type: String
   }
 
 });
