@@ -89,6 +89,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
+    // TODO encrypt this!!!
     // if passwords do not match, auth failed
     if (user.password !== password) {
       return done(null, false, { message: 'Incorrect password.' });
@@ -103,6 +104,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "http://localhost:3000/auth/facebook/callback",
+    // TODO scrape groups
      profileFields: ['id', 'displayName', 'photos']
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -134,8 +136,6 @@ var hbs = require('express-handlebars')({
 });
 app.engine('hbs', hbs);
 app.set('views', path.join(__dirname, '..', 'views'));
-console.log('dirname', __dirname);
-console.log(path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 
@@ -144,8 +144,6 @@ app.use('/', auth(passport));
 app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.get('/app', (request, response) => {
-    console.log(path.join(__dirname, '..', 'build/index.html'));
-    console.log("it is here");
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running

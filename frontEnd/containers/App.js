@@ -1,10 +1,10 @@
 import React from 'react';
-import NavBar from './NavBar';
-import Home from '../components/Home';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Map from '../components/Map';
+import NavBar from './NavBar';
+import Home from '../Home/components/Home';
+import Map from '../Map/components/Map';
 import CreateProfile from './CreateProfile';
-import Directory from '../components/Directory';
+import Directory from '../Directory/components/Directory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 

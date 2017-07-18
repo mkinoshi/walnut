@@ -1,5 +1,5 @@
 import React from 'react';
-import Feed from '../../containers/home/Feed';
+import Feed from '../containers/Feed';
 
 
 class Discover extends React.Component {

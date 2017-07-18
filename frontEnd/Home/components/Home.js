@@ -1,6 +1,6 @@
 import React from 'react';
-import Discover from './home/Discover';
-import Header from './home/Header';
+import Discover from './Discover';
+import Header from './Header';
 
 // TODO header
 
