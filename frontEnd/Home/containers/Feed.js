@@ -15,7 +15,8 @@ const styles = {
     borderRadius: '25px',
     marginTop: '-120px',
     borderTop: 'solid',
-    borderRight: 'solid'
+    borderRight: 'solid',
+    marginRight: '10%'
   },
   outer2: {
     borderWidth: '1px',
@@ -32,8 +33,9 @@ const styles = {
     width: '5%',
     height: '20px',
     borderTop: 'solid',
-    marginTop: '-120px',
     backgroundColor: 'white',
+    position: 'relative',
+    marginTop: '39px'
   },
   inner2: {
     borderWidth: '1px',
@@ -41,7 +43,8 @@ const styles = {
     height: '40px',
     borderRight: 'solid',
     marginTop: '70px',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    position: 'relative'
   },
   inner3: {
     width: '24.5%'
@@ -50,7 +53,8 @@ const styles = {
     height: '30%',
     borderTop: 'solid',
     width: '52.5%',
-    marginLeft: '24.3%'
+    marginLeft: '24.3%',
+    marginTop: '0.6%'
   },
   innerRight1: {
     borderWidth: '1px',
@@ -68,6 +72,9 @@ const styles = {
     marginTop: '100px',
     backgroundColor: 'white'
   },
+  feed: {
+    marginTop: '2%'
+  }
 };
 
 
@@ -123,15 +130,15 @@ class Feed extends React.Component {
           </div>
           {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
           </div>
-          <div className="col-xs-8">
+          <div className="col-xs-12" style={styles.under}></div>
+          <div className="col-xs-12" style={styles.feed}>
             {filteredPosts.map((post) => (
               <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
-          <div style={styles.inner1}></div>
-          <div style={styles.inner2}></div>
+          <div className="leftTop" style={styles.inner1}></div>
+          <div className="leftLowerRight" style={styles.inner2}></div>
           <div style={styles.inner3}></div>
-        <div className="col-xs-12" style={styles.under}></div>
         {/* <div style={styles.innerRight1}></div>
         <div style={styles.innerRight2}></div> */}
       </div>
