@@ -42,8 +42,16 @@ class NewPost extends React.Component {
     };
   }
 
-  addTags(tagsArray) {
-    this.setState({postTags: tagsArray});
+  addTags(tag) {
+    const postTagsCopy = this.state.postTags.slice();
+    if(postTagsCopy.includes(tag)) {
+      const index = postTagsCopy.indexOf(tag);
+      postTagsCopy.splice(index, 1);
+      this.setState({postTags: postTagsCopy});
+    } else {
+      postTagsCopy.push(tag);
+      this.setState({postTags: postTagsCopy});
+    }
   }
 
   toggleTagPref() {
@@ -60,7 +68,6 @@ class NewPost extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="col-xs-6 col-xs-offset-3" style={styles.outer}>
         <div className="newPost" style={styles.post}>
@@ -79,9 +86,9 @@ class NewPost extends React.Component {
                   onClick={() => (this.toggleTagPref())}>Add Tags</a>
               </div>
               {this.state.showTagPref ?
-                <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
+                <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
+                tags={this.state.postTags}/> : <p></p>}
             </div>
-
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
@@ -97,7 +104,7 @@ class NewPost extends React.Component {
 }
 
 NewPost.propTypes = {
-  newPost: PropTypes.function
+  newPost: PropTypes.func
 };
 
 const mapStateToProps = () => ({
