@@ -22,15 +22,15 @@ class FilterPref extends React.Component {
   render() {
     console.log('ran before front');
     return (
-      <div style={{float: 'left', clear: 'both', padding: '5%', paddingTop: '40'}}>
+      <div style={{float: 'left', clear: 'both', padding: '5%', paddingTop: '40px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {this.props.filters.map((filter, index) => (
-            <p>
-              <input type="checkbox" id={filter.name}
+            <p key={index}>
+              <input type="checkbox" id={index}
               checked={(filter.checked) ? 'checked' : ''}
               value={filter.name}
-              onChange={(e) => {console.log('onclick', filter.checked); this.handleChange(e, index);}}/>
-              <label htmlFor={filter.name}># {filter.name}</label>
+              onClick={(e) => {this.handleChange(e, index);}}/>
+              <label htmlFor={index}># {filter.name}</label>
             </p>
             ))}
         </form>
@@ -41,7 +41,6 @@ class FilterPref extends React.Component {
 
 FilterPref.propTypes = {
   filters: PropTypes.array,
-  filterChange: PropTypes.func,
   toggleChecked: PropTypes.func
 };
 
