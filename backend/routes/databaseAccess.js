@@ -113,11 +113,9 @@ router.post('/newComment', function(req, res) {
 });
 
 router.post('/toggleChecked', function(req, res) {
-  console.log(req.body)
   User.findById(req.user._id)
       .then((response) => {
         if (req.user.preferences.includes(req.body.tagName)) {
-          console.log('inshhsdbbcbcbcbcbbbcbcbcbc');
           response.preferences.splice(req.user.preferences.indexOf(req.body.tagName), 1);
         } else {
           response.preferences.push(req.body.tagName);

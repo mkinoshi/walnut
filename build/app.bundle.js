@@ -13638,6 +13638,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // TODO Google drive link
 // TODO render NewPost
 
+var styles = {
+  outer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  middle: {
+    width: '90%'
+  },
+  logs: {
+    width: '5.5%',
+    height: '5.5%',
+    marginTop: '3%',
+    marginLeft: '3%'
+  },
+  title: {
+    marginTop: '3%',
+    width: '90%'
+  },
+  company: {
+    fontSize: '300%',
+    marginLeft: '5%',
+    letterSpacing: '3px',
+    marginTop: '0.5%'
+  },
+  links: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '10%',
+    justifyContent: 'space-around'
+  },
+  linkLogo: {
+    width: '40%',
+    height: '30%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderWidth: '1%',
+    borderRadius: '10%'
+  },
+  containPost: {
+    width: '100%'
+  }
+};
+
 var Header = function (_React$Component) {
   _inherits(Header, _React$Component);
 
@@ -13653,8 +13696,36 @@ var Header = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_Quote2.default, null),
-        _react2.default.createElement(_NewPost2.default, null)
+        _react2.default.createElement(
+          'div',
+          { style: styles.outer },
+          _react2.default.createElement('img', { src: 'http://i.imgur.com/EBNhMdD.png', style: styles.logs }),
+          _react2.default.createElement(
+            'div',
+            { style: styles.middle },
+            _react2.default.createElement(
+              'div',
+              { id: 'title', style: styles.title },
+              _react2.default.createElement(
+                'h1',
+                { style: styles.company },
+                'Horizon School Of Technology'
+              )
+            ),
+            _react2.default.createElement(_Quote2.default, null)
+          ),
+          _react2.default.createElement(
+            'div',
+            { style: styles.links },
+            _react2.default.createElement('img', { style: styles.linkLogo, src: 'https://www.google.com/drive/static/images/drive/logo-drive.png' }),
+            _react2.default.createElement('img', { style: styles.linkLogo, src: 'http://vannguyen.me/images/githubpurple.png' })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { style: styles.containPost },
+          _react2.default.createElement(_NewPost2.default, null)
+        )
       );
     }
   }]);
@@ -14622,6 +14693,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // TODO post button dispatches newPost
 // userPost is the string that gets updated in reducer
 
+var styles = {
+  postOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: '#0D9ED3'
+  },
+  outer: {
+    paddingTop: '1%',
+    paddingLeft: '1%',
+    paddingRight: '1%',
+    paddingBottom: '1%',
+    backgroundColor: '#0D9ED3'
+  },
+  post: {
+    backgroundColor: 'white',
+    borderRadius: '5px'
+
+  }
+};
+
 var NewPost = function (_React$Component) {
   _inherits(NewPost, _React$Component);
 
@@ -14667,55 +14758,66 @@ var NewPost = function (_React$Component) {
       console.log(this.props);
       return _react2.default.createElement(
         'div',
-        { className: 'newPost col-xs-8' },
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'textarea1' },
-          'Enter Your Post'
-        ),
-        _react2.default.createElement('textarea', { id: 'textarea1', className: 'materialize-textarea',
-          style: { 'paddingTop': 0, 'paddingBottom': 0 },
-          value: this.state.postBody,
-          onChange: function onChange(e) {
-            return _this2.handleChange(e);
-          } }),
+        { className: 'col-xs-6 col-xs-offset-3', style: styles.outer },
         _react2.default.createElement(
           'div',
-          { className: 'tagsPref' },
+          { className: 'newPost', style: styles.post },
           _react2.default.createElement(
-            'div',
-            { className: 'addTagsButton', style: {} },
+            'textarea',
+            { id: 'textarea1',
+              style: { 'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px' },
+              value: this.state.postBody,
+              onChange: function onChange(e) {
+                return _this2.handleChange(e);
+              } },
             _react2.default.createElement(
-              'a',
-              { style: { backgroundColor: '#FF5657' },
-                className: 'waves-effect waves-light btn',
-                onClick: function onClick() {
-                  return _this2.toggleTagPref();
-                } },
-              'Add Tags'
+              'label',
+              { htmlFor: 'textarea1' },
+              'Enter Your Post'
             )
-          ),
-          this.state.showTagPref ? _react2.default.createElement(_TagPref2.default, { addTags: function addTags(tagsArray) {
-              return _this2.addTags(tagsArray);
-            } }) : _react2.default.createElement('p', null)
+          )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'newPostFooter' },
+          { style: styles.postOuter },
           _react2.default.createElement(
             'div',
-            { className: 'submitButton col-xs-4' },
+            { className: 'tagsPref' },
             _react2.default.createElement(
-              'button',
-              { className: 'btn waves-effect waves-light', type: 'submit', name: 'action',
-                onClick: function onClick() {
-                  return _this2.handleClick();
-                } },
-              'Submit',
+              'div',
+              { className: 'addTagsButton', style: {} },
               _react2.default.createElement(
-                'i',
-                { className: 'material-icons right' },
-                'send'
+                'a',
+                { style: { backgroundColor: '#FF5657' },
+                  className: 'waves-effect waves-light btn',
+                  onClick: function onClick() {
+                    return _this2.toggleTagPref();
+                  } },
+                'Add Tags'
+              )
+            ),
+            this.state.showTagPref ? _react2.default.createElement(_TagPref2.default, { addTags: function addTags(tagsArray) {
+                return _this2.addTags(tagsArray);
+              } }) : _react2.default.createElement('p', null)
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'newPostFooter' },
+            _react2.default.createElement(
+              'div',
+              { className: 'submitButton col-xs-12' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn waves-effect waves-light', type: 'submit', name: 'action',
+                  onClick: function onClick() {
+                    return _this2.handleClick();
+                  } },
+                'Submit',
+                _react2.default.createElement(
+                  'i',
+                  { className: 'material-icons right' },
+                  'send'
+                )
               )
             )
           )
@@ -14778,6 +14880,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // TODO Quote content
 
+var styles = {
+  container: {
+    marginLeft: '10%'
+  },
+  quote: {
+    fontSize: '180%',
+    fontStyle: 'italic',
+    textAlign: 'center'
+  },
+  name: {
+    fontSize: '180%',
+    fontStyle: 'italic',
+    textAlign: 'center'
+  }
+};
 
 var Quote = function (_React$Component) {
   _inherits(Quote, _React$Component);
@@ -14793,15 +14910,18 @@ var Quote = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { style: styles.container },
         _react2.default.createElement(
           'p',
-          null,
-          this.props.quote
+          { style: styles.quote },
+          '" ',
+          this.props.quote,
+          ' "'
         ),
         _react2.default.createElement(
           'p',
-          null,
+          { style: styles.name },
+          '- ',
           this.props.name
         )
       );
@@ -15011,8 +15131,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var quoteReducer = function quoteReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    quote: '',
-    createdBy: ''
+    quote: 'Stay Hungry Stay Foolish',
+    createdBy: 'Steve Jobs'
   };
   var action = arguments[1];
 

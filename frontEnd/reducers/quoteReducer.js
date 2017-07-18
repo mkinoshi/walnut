@@ -1,7 +1,7 @@
 
 const quoteReducer = (state = {
-  quote: '',
-  createdBy: ''
+  quote: 'Stay Hungry Stay Foolish',
+  createdBy: 'Steve Jobs'
 }, action) => {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {

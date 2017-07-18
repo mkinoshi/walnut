@@ -10,6 +10,26 @@ import TagPref from './TagPref';
 // TODO post button dispatches newPost
 // userPost is the string that gets updated in reducer
 
+const styles = {
+  postOuter: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: '#0D9ED3'
+  },
+  outer: {
+    paddingTop: '1%',
+    paddingLeft: '1%',
+    paddingRight: '1%',
+    paddingBottom: '1%',
+    backgroundColor: '#0D9ED3'
+  },
+  post: {
+    backgroundColor: 'white',
+    borderRadius: '5px',
+
+  }
+};
+
 class NewPost extends React.Component {
   constructor(props) {
     super(props);
@@ -40,31 +60,35 @@ class NewPost extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <div className="newPost col-xs-8">
-        <label htmlFor="textarea1">Enter Your Post</label>
-        <textarea id="textarea1" className="materialize-textarea"
-          style={{'paddingTop': 0, 'paddingBottom': 0}}
-          value={this.state.postBody}
-          onChange={(e) => this.handleChange(e)}></textarea>
-
-          <div className="tagsPref">
-            <div className="addTagsButton" style={{}}>
-              <a style={{backgroundColor: '#FF5657'}}
-                className="waves-effect waves-light btn"
-                onClick={() => (this.toggleTagPref())}>Add Tags</a>
-            </div>
-            {this.state.showTagPref ?
-              <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
-          </div>
-
-          <div className="newPostFooter">
-            <div className="submitButton col-xs-4">
-              <button className="btn waves-effect waves-light" type="submit" name="action"
-              onClick={() => this.handleClick()}>Submit
-                <i className="material-icons right">send</i>
-              </button>
-            </div>
+      <div className="col-xs-6 col-xs-offset-3" style={styles.outer}>
+        <div className="newPost" style={styles.post}>
+          <textarea id="textarea1"
+            style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}
+            value={this.state.postBody}
+            onChange={(e) => this.handleChange(e)}>
+              <label htmlFor="textarea1">Enter Your Post</label>
+            </textarea>
         </div>
+          <div style={styles.postOuter}>
+            <div className="tagsPref">
+              <div className="addTagsButton" style={{}}>
+                <a style={{backgroundColor: '#FF5657'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.toggleTagPref())}>Add Tags</a>
+              </div>
+              {this.state.showTagPref ?
+                <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}/> : <p></p>}
+            </div>
+
+            <div className="newPostFooter">
+              <div className="submitButton col-xs-12">
+                <button className="btn waves-effect waves-light" type="submit" name="action"
+                onClick={() => this.handleClick()}>Submit
+                  <i className="material-icons right">send</i>
+                </button>
+              </div>
+          </div>
+          </div>
       </div>
     );
   }
