@@ -42,8 +42,7 @@ class FilterPref extends React.Component {
 FilterPref.propTypes = {
   filters: PropTypes.array,
   filterChange: PropTypes.func,
-  toggleChecked: PropTypes.func,
-  toggleCheckedFront: PropTypes.func
+  toggleChecked: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

@@ -4,14 +4,29 @@ import { connect } from 'react-redux';
 
 // TODO Quote content
 
+const styles = {
+  container: {
+    marginLeft: '10%'
+  },
+  quote: {
+    fontSize: '180%',
+    fontStyle: 'italic',
+    textAlign: 'center'
+  },
+  name: {
+    fontSize: '180%',
+    fontStyle: 'italic',
+    textAlign: 'center'
+  }
+};
 
 class Quote extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>{this.props.quote}</p>
-        <p>{this.props.name}</p>
+      <div style={styles.container}>
+        <p style={styles.quote}>" {this.props.quote} "</p>
+        <p style={styles.name}>- {this.props.name}</p>
       </div>
     );
   }
