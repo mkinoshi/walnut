@@ -26,11 +26,11 @@ class FilterPref extends React.Component {
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {this.props.filters.map((filter, index) => (
             <p>
-              <input type="checkbox" id={filter.name}
+              <input type="checkbox" id={index}
               checked={(filter.checked) ? 'checked' : ''}
               value={filter.name}
-              onChange={(e) => {console.log('onclick', filter.checked); this.handleChange(e, index);}}/>
-              <label htmlFor={filter.name}># {filter.name}</label>
+              onClick={(e) => {console.log('onclick', filter.checked); this.handleChange(e, index);}}/>
+              <label htmlFor={index}># {filter.name}</label>
             </p>
             ))}
         </form>

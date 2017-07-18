@@ -82,7 +82,6 @@ export const apiMiddleware = store => next => action => {
     case 'STATE_REFRESH':
       axios.get(URL + 'db/getDiscoverInfo')
       .then((response) => {
-        console.log('resdhufhsiughsudihusdhf', response.data);
         store.dispatch({type: 'GET_DATA', data: response.data});
       })
       .catch((err) =>{
