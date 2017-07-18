@@ -26,8 +26,8 @@ class TagPref extends React.Component {
               <input type="checkbox" id={filter.name}
                 checked={(this.props.tags.includes(filter.name)) ? 'checked' : ''}
                 value={filter.name}
-                onChange={(e) => (this.handleChange(e))}
-                />
+                onClick={(e) => {console.log('hi'); this.handleChange(e);}}
+              />
               <label htmlFor={filter.name}># {filter.name}</label>
             </div>
             ))}

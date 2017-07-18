@@ -7,8 +7,6 @@ import {User, Tag, Post, Quote} from '../models/models';
 router.get('/user', function(req, res) {
   User.findById(req.user._id)
       .then((response) => {
-        console.log('yoyoyoyoyyoyoyyooyoyoyoyoy');
-        console.log(response);
         res.json({data: response});
       })
       .catch((err) => {
@@ -69,7 +67,6 @@ router.get('/getDiscoverInfo', function(req, res) {
 
 // adding a new post
 router.post('/newPost', function(req, res) {
-  console.log('it is hitting here');
   const newPost = new Post({
     content: req.body.postBody,
     createdAt: new Date(),
@@ -79,7 +76,6 @@ router.post('/newPost', function(req, res) {
     comments: [],
     commentNumber: 0,
   });
-  console.log(newPost);
   newPost.save()
   .then(() => {
     console.log('success!');
