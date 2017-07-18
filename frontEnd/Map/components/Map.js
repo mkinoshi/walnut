@@ -11,7 +11,6 @@ class Map extends React.Component {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v10'
     });
-    console.log
   }
 
   render() {
@@ -25,7 +24,8 @@ class Map extends React.Component {
       //       &q=Space+Needle,Seattle+WA" allowFullScreen />
       // </div>
       <div className="mapContainer" style={styles.mapContainer}>
-
+        <div id="map" style={styles.map}>
+        </div>
       </div>
     );
   }
@@ -33,9 +33,9 @@ class Map extends React.Component {
 
 const styles = {
   mapContainer: {
-    height: '100%'
   },
   map: {
+    height: '700'
   }
 };
 
