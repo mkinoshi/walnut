@@ -14475,38 +14475,40 @@ var Feed = function (_React$Component) {
       var filteredPosts = this.filterData(this.props.data).posts;
       return _react2.default.createElement(
         'div',
-        { className: 'col-xs-12' },
-        _react2.default.createElement(
-          'h1',
-          null,
-          'I am the feed'
-        ),
+        null,
+        _react2.default.createElement('div', { className: 'col-xs-3', style: { borderWidth: 1 } }),
         _react2.default.createElement(
           'div',
-          { className: 'col-xs-2', style: {} },
+          { className: 'col-xs-12' },
           _react2.default.createElement(
             'div',
-            { className: 'discoverButton', style: {} },
+            { className: 'col-xs-2', style: {} },
             _react2.default.createElement(
-              'a',
-              { style: { backgroundColor: '#FF5657' },
-                className: 'waves-effect waves-light btn',
-                onClick: function onClick() {
-                  return _this2.toggleFilterPref();
-                } },
-              'Discover'
-            )
+              'div',
+              { className: 'discoverButton', style: {} },
+              _react2.default.createElement(
+                'a',
+                { style: { backgroundColor: '#FF5657' },
+                  className: 'waves-effect waves-light btn',
+                  onClick: function onClick() {
+                    return _this2.toggleFilterPref();
+                  } },
+                'Discover'
+              )
+            ),
+            this.state.showFilterPref ? _react2.default.createElement(_FilterPref2.default, { filterChange: function filterChange(name) {
+                return _this2.filterChange(name);
+              } }) : _react2.default.createElement('p', null)
           ),
-          this.state.showFilterPref ? _react2.default.createElement(_FilterPref2.default, null) : _react2.default.createElement('p', null)
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-xs-8' },
-          filteredPosts.map(function (post) {
-            return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
-                return _this2.props.newLike(post.postId);
-              } });
-          })
+          _react2.default.createElement(
+            'div',
+            { className: 'col-xs-8' },
+            filteredPosts.map(function (post) {
+              return _react2.default.createElement(_Post2.default, { postData: post, newLike: function newLike() {
+                  return _this2.props.newLike(post.postId);
+                } });
+            })
+          )
         )
       );
     }
@@ -14703,7 +14705,9 @@ var styles = {
     paddingLeft: '1%',
     paddingRight: '1%',
     paddingBottom: '1%',
-    backgroundColor: '#0D9ED3'
+    backgroundColor: '#0D9ED3',
+    width: '50%',
+    marginLeft: '25%'
   },
   post: {
     backgroundColor: 'white',
