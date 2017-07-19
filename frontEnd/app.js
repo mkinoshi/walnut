@@ -12,8 +12,9 @@ const store = createStore(
   applyMiddleware(createLogger, apiMiddleware)
 );
 
-store.dispatch({type: 'STATE_REFRESH'});
-store.dispatch({type: 'GET_USER_DATA'});
+store.dispatch({type: 'GET_DISCOVER_INFO'});
+store.dispatch({type: 'GET_PROFILE_INFO'});
+store.dispatch({type: 'GET_FB_DATA'});
 
 ReactDOM.render(
   <Provider store={store}>

@@ -2,11 +2,11 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import discoverReducer from './discoverReducer';
 import quoteReducer from './quoteReducer';
-import userReducer from './userReducers';
+import fbUserReducer from './fbUserReducer';
 import createProfileReducer from './createProfileReducer';
 
 const rootReducer = combineReducers({
-  userReducer: userReducer,
+  fbUserReducer: fbUserReducer,
   discoverReducer: discoverReducer,
   quoteReducer: quoteReducer,
   createProfileReducer: createProfileReducer,
