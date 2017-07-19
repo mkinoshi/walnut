@@ -55,17 +55,17 @@ class MapComponent extends React.Component {
         },
         {
           name: 'Eli Badgio',
-          peofileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 36.7775032]
         },
         {
           name: 'Eli Badgio',
-          peofileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 37.8775032]
         },
         {
           name: 'Eli Badgio',
-          peofileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 37.77757]
         }
       ]};
