@@ -100,7 +100,7 @@ class MapComponent extends React.Component {
       <div style={styles.outer}>
         <MapFilter users={this.state.users}
         changeCenter={(coordinates) => {this.changeCenter(coordinates);}}
-        changeZoom={(num) => {this.changeZoom(num)}}/>
+        changeZoom={(num) => {this.changeZoom(num);}}/>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
           center={this.state.center}
