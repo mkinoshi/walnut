@@ -42,27 +42,37 @@ class MapComponent extends React.Component {
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 38.7775032]
+          location: [-122.4199537, 38.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.7775032]
+          location: [-122.4199537, 37.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 36.7775032]
+          location: [-122.4199537, 36.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.8775032]
+          location: [-122.4199537, 37.8775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.77757]
+          location: [-122.4199537, 37.77757],
+          year: 'Summer 2017',
+          career: 'Rice University'
         }
       ]};
   }
@@ -88,7 +98,9 @@ class MapComponent extends React.Component {
   render() {
     return (
       <div style={styles.outer}>
-        <MapFilter users={this.state.users} />
+        <MapFilter users={this.state.users}
+        changeCenter={(coordinates) => {this.changeCenter(coordinates);}}
+        changeZoom={(num) => {this.changeZoom(num)}}/>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
           center={this.state.center}
