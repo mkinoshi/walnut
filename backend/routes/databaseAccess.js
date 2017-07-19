@@ -210,7 +210,7 @@ router.get('/get/quote', (req, res) => {
 });
 
 router.post('/save/blurb', (req, res) => {
-  UserProfile.findOne({owner: req.body.id})
+  UserProfile.findOne({owner: req.user._id})
              .then((response) => {
                response.blurb = req.body.blurbBody;
                return response.save();
