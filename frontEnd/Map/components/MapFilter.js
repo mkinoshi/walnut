@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LocationSearch from '../containers/LocationSearch.js';
+import LocationSearch from '../containers/LocationSearch';
 
 const styles = {
   outer: {
