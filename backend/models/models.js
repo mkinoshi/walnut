@@ -65,15 +65,12 @@ const UserProfileSchema = new mongoose.Schema({
   blurb: {
     type: String
   },
-<<<<<<< HEAD
-=======
   name: {
     type: String
   },
   email: {
     type: String
   },
->>>>>>> master
   location: {
     type: String
   },
@@ -94,15 +91,12 @@ const UserProfileSchema = new mongoose.Schema({
   },
   portfolio: {
     type: Object
-<<<<<<< HEAD
   },
   profileUrls: {
     type: String
   },
   username: {
     type: String
-=======
->>>>>>> master
   }
 
 });
