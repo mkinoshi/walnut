@@ -67,7 +67,7 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/profileinfo', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  UserProfile.findOne({owner: '596fa2dbf4c1196f85279b27'})
              .then((userProfile) => {
                const data = {
                  isCreated: userProfile.isCreated,
