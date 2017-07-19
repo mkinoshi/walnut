@@ -2,6 +2,13 @@ import React from 'react';
 // import Iframe from 'react-iframe';
 const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
+const styles = {
+  mapContainer: {
+    height: '100%'
+  },
+  map: {
+  }
+};
 
 class Map extends React.Component {
 
@@ -11,7 +18,6 @@ class Map extends React.Component {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v10'
     });
-    console.log
   }
 
   render() {
@@ -31,12 +37,5 @@ class Map extends React.Component {
   }
 }
 
-const styles = {
-  mapContainer: {
-    height: '100%'
-  },
-  map: {
-  }
-};
 
 export default Map;
