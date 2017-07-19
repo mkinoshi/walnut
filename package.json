@@ -51,6 +51,7 @@
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "prop-types": "^15.5.10",
+    "pug": "^2.0.0-rc.2",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.1",
     "react-dom": "^15.5.4",
@@ -71,6 +72,8 @@
     "webpack": "^2.6.1"
   },
   "devDependencies": {
+    "karma-scss-preprocessor": "^2.0.0",
+    "node-sass": "^4.5.3",
     "webpack-dev-server": "^2.4.5"
   }
 }
