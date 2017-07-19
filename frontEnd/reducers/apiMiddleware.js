@@ -10,7 +10,7 @@ export const apiMiddleware = store => next => action => {
          store.dispatch({type: 'GET_FB_DATA_DONE', data: response.data.data});
        })
        .catch((err) => {
-         console.log('getting error in login');
+         console.log('getting error in login', err);
          store.dispatch({type: 'GET_FB_DATA_ERROR'});
        });
       break;
@@ -19,7 +19,7 @@ export const apiMiddleware = store => next => action => {
         commentBody: action.commentBody,
         postId: action.postId
       })
-      .then((response) => {
+      .then(() => {
         next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
         next(action);
       })
@@ -90,6 +90,9 @@ export const apiMiddleware = store => next => action => {
       axios.post(URL + 'db/save/tags', {
         tagsArray: action.tags
       })
+      .then((success) => {
+        console.log('success in save', success);
+      })
       .catch((err) =>{
         console.log('error in saving tags', err);
       });
@@ -97,6 +100,9 @@ export const apiMiddleware = store => next => action => {
     case 'SAVE_INTERESTS':
       axios.post(URL + 'db/save/interests', {
         interestsArray: action.interests
+      })
+      .then((success) => {
+        console.log('success in save', success);
       })
       .catch((err) =>{
         console.log('error in saving interests', err);
@@ -109,6 +115,11 @@ export const apiMiddleware = store => next => action => {
         currentOccupation: action.about.currentOccupation,
         pastOccupations: action.about.pastOccupations
       })
+      .then((success) => {
+        console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action);
+      })
       .catch((err) =>{
         console.log('error in saving about', err);
       });
@@ -119,6 +130,11 @@ export const apiMiddleware = store => next => action => {
         address: action.contact.address,
         phone: action.contact.phone
       })
+      .then((success) => {
+        console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action);
+      })
       .catch((err) =>{
         console.log('error in saving contact', err);
       });
@@ -126,6 +142,11 @@ export const apiMiddleware = store => next => action => {
     case 'SAVE_LINKS':
       axios.post(URL + 'db/save/links', {
         linksArray: action.links
+      })
+      .then((success) => {
+        console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in saving links', err);
@@ -150,7 +171,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_PROFILE_INFO':
       axios.get(URL + 'db/get/profileinfo')
       .then((response) => {
-        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data});
+        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in getting profile data', err);

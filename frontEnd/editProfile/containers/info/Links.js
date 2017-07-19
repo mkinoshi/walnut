@@ -89,7 +89,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveLinks: (links) => dispatch({type: 'SAVE_LINK', links: links})
+  saveLinks: (links) => dispatch({type: 'SAVE_LINKS', links: links})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Links);
