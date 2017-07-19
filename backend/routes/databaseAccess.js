@@ -14,6 +14,7 @@ router.get('/user', (req, res) => {
       });
 });
 
+// TODO use .then correctly without nesting
 router.get('/getDiscoverInfo', (req, res) => {
   let filters = [];
   let posts = [];
