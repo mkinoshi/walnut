@@ -91,7 +91,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveContact: (contactObj) => dispatch({type: 'SAVE_CONTACTS', contact: contactObj})
+  saveContact: (contactObj) => dispatch({type: 'SAVE_CONTACT', contact: contactObj})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);

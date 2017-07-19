@@ -78,9 +78,9 @@ class InterestsContainer extends React.Component {
             <button onClick={() => {this.startEdit();}}>Edit Interests</button>
           </div> :
               <div style={styles.inline}>
-              {this.props.interests.map((interest, idx) => <div style={styles.inline}>
+              {this.props.interests.map((interest, idx) => <div key={idx} style={styles.inline}>
                 <button onClick={() => {this.removeInterest(interest);}}>X</button>
-                <p style={styles.interests} key={idx}>#{interest}</p>
+                <p style={styles.interests}>#{interest}</p>
               </div>)}
             <button onClick={() => {this.openInput();}}>+</button>
           </div>}

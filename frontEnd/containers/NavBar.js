@@ -33,7 +33,7 @@ class Navbar extends React.Component {
               <li><Link to="/app/directory" style={styles.links}>Directory</Link></li>
               <li><Link to="/app/projects" style={styles.links}>Projects</Link></li>
               <li><Link to="/app/map" style={styles.links}>Map</Link></li>
-              <li><Link to="/app/createprofile" style={styles.links}>Create</Link></li>
+              <li><Link to="/app/editprofile" style={styles.links}>Edit</Link></li>
             </ul>
             <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
           <div className="right col s8">

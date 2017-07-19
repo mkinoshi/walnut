@@ -122,7 +122,7 @@ class HeadContainer extends React.Component {
 HeadContainer.propTypes = {
   HeadData: PropTypes.object,
   saveBlurb: PropTypes.func,
-  saveTags: PropTypes.func
+  saveTags: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -131,7 +131,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveBlurb: (blurb) => dispatch({type: 'SAVE_BLURB', blurb: blurb}),
-  saveTags: (tags) => dispatch({type: 'SAVE_TAGS', tags: tags})
+  saveTags: (tags) => dispatch({type: 'SAVE_TAGS', tags: tags}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeadContainer);
