@@ -4,7 +4,6 @@ import React from 'react';
 import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ScaleControl, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from '../components/MapFilter';
 import CircleIcon from 'react-icons/lib/fa/circle';
-
 const styles = {
   mapContainer: {
     height: '100%'
@@ -29,13 +28,10 @@ const styles = {
     marginRigth: '1%'
   }
 };
-
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg'
 });
-
 class MapComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -70,22 +66,18 @@ class MapComponent extends React.Component {
         }
       ]};
   }
-
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
   }
-
   changeCenter(coordinates) {
     // coordinates given in array format
     this.setState({center: coordinates});
   }
-
   changeZoom(zoom) {
     // zoom given as integer
     this.setState({zoom: [zoom]});
   }
-
   clusterMarker(coordinates) {
     console.log(coordinates);
     return (
@@ -94,7 +86,6 @@ class MapComponent extends React.Component {
       </Marker>
     );
   }
-
   render() {
     return (
       <div style={styles.outer}>
@@ -158,5 +149,4 @@ class MapComponent extends React.Component {
     );
   }
 }
-
 export default MapComponent;
