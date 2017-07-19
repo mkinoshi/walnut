@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProfileContainer from './containers/ProfileContainer';
+// import ProfileContainer from './containers/ProfileContainer';
 
 class Directory extends React.Component {
 

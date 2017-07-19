@@ -65,15 +65,20 @@ const UserProfileSchema = new mongoose.Schema({
   blurb: {
     type: String
   },
-  name: {
+  fullName: {
     type: String
   },
   email: {
     type: String
   },
-  location: {
+  address: {
     type: String
   },
+  location: [
+    {
+      type: Number
+    }
+  ],
   phone: {
     type: String
   },
@@ -84,21 +89,32 @@ const UserProfileSchema = new mongoose.Schema({
     type: Array
   },
   links: {
-    type: Object
+    type: Array
   },
   interests: {
-    type: Object
+    type: Array
+  },
+  projects: {
+    type: Array
   },
   portfolio: {
-    type: Object
+    type: Array
   },
-  profileUrls: {
+  profileURL: {
     type: String
   },
   username: {
     type: String
+  },
+  education: {
+    type: String
+  },
+  majors: {
+    type: Array
+  },
+  story: {
+    type: Array
   }
-
 });
 
 const QuoteSchema = new mongoose.Schema({
