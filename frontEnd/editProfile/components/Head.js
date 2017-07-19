@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // const fb = require('../../../img/fb_logo.png');
 
+const styles = {
+  head: {
+    backgroundColor: 'lightblue',
+    marginLeft: '100px',
+    width: '65%'
+  }
+};
+
 class HeadContainer extends React.Component {
   constructor() {
     super();
@@ -39,6 +47,7 @@ class HeadContainer extends React.Component {
   }
 
   onSubmitBlurb() {
+    console.log('blurb', this.state.blurbInput);
     this.setState({editBlurb: false});
     // this.props.saveBlurb(this.state.blurbInput);
   }
@@ -50,7 +59,7 @@ class HeadContainer extends React.Component {
   addTag(tag) {
     const tags = this.state.newTags;
     tags.push(tag);
-    this.setState({newTags: tags});
+    this.setState({newTags: tags, tagInput: ''});
   }
 
   removeTag(tag) {
@@ -60,13 +69,14 @@ class HeadContainer extends React.Component {
   }
 
   saveTags(tags) {
+    console.log('tags', tags);
+    this.setState({editTags: false});
     this.props.saveTags(tags);
   }
 
   render() {
-    console.log(this.props.HeadData);
     return (
-      <div>
+      <div style={styles.head}>
           <div>
             <div style={{height: '200px', width: '150px', backgroundColor: 'blue'}}>X</div>
             <button value="Change your Profile Picture" onClick={() => {}}>Change your Profile picture</button>
@@ -74,8 +84,8 @@ class HeadContainer extends React.Component {
         <h1>{this.props.HeadData.fullName}</h1>
         <div>
 
-          {this.state.editTags ? this.state.newTags.map((tag)=> <div><p>#{' '}{tag}</p><button value="X" onClick={() => {this.removeTag(tag);}}>X</button></div>) :
-              this.props.HeadData.tags.map((tag) => <p>#{' '}{tag}</p>)}
+          {this.state.editTags ? this.state.newTags.map((tag, idx)=> <div key={idx}><p>#{' '}{tag}</p><button value="X" onClick={() => {this.removeTag(tag);}}>X</button></div>) :
+              this.props.HeadData.tags.map((tag, idx) => <p key={idx}>#{' '}{tag}</p>)}
 
           {this.state.editTags ? <div>
               <input type="text"
