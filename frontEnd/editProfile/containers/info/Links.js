@@ -39,7 +39,7 @@ class Links extends React.Component {
   handleSave() {
     this.setState({edit: false});
     console.log('the state that gets sent to middleware', this.state);
-    // this.props.editLinks(this.state.links)
+    this.props.saveLinks(this.state.links);
   }
 
   render() {
@@ -81,13 +81,15 @@ class Links extends React.Component {
 
 Links.propTypes = {
   links: PropTypes.array,
+  saveLinks: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   links: state.createProfileReducer.info.links,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  saveLinks: (links) => dispatch({type: 'SAVE_LINK', links: links})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Links);
