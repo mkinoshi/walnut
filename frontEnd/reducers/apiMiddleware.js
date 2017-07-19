@@ -168,6 +168,16 @@ export const apiMiddleware = store => next => action => {
         console.log('error in saving story', err);
       });
       break;
+    case 'CREATE_PROFILE':
+      axios.post(URL + 'db/save/iscreated')
+      .then((response) => {
+        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
+      })
+      .catch((err) =>{
+        console.log('error in creating profile', err);
+        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
+      });
+      break;
     case 'GET_PROFILE_INFO':
       axios.get(URL + 'db/get/profileinfo')
       .then((response) => {
@@ -182,10 +192,12 @@ export const apiMiddleware = store => next => action => {
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
+        store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
+        store.dispatch({type: 'STATE_FILLED_ERROR'});
       });
       break;
     default:

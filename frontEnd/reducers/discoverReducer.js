@@ -1,8 +1,5 @@
 
-const discoverReducer = (state = {
-  filters: [],
-  posts: []
-}, action) => {
+const discoverReducer = (state = {}, action) => {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
