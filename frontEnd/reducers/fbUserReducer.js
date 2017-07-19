@@ -1,4 +1,4 @@
-const fbUserReducer = (state = {username: '', profileURL: ''}, action) => {
+const fbUserReducer = (state = {}, action) => {
   switch(action.type) {
     case 'GET_FB_DATA_DONE':
       return {

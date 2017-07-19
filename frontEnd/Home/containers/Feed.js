@@ -94,7 +94,7 @@ class Feed extends React.Component {
   }
 
   filterData(data) {
-    const checkedFilterObject = this.props.data.filters.filter((filter) => (filter.checked === true));
+    const checkedFilterObject = data.filters.filter((filter) => (filter.checked === true));
     const getFields = (input, field) => {
       const output = [];
       for(let i = 0; i < input.length; ++i) {
@@ -122,6 +122,7 @@ class Feed extends React.Component {
   }
 
   render() {
+    console.log('sdfdfdsfdsfdsfdsfdsfdsfsdfsdf', this.props.data);
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
       <div>

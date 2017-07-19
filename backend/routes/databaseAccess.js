@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import {User, Tag, Post, Quote, UserProfile} from '../models/models';
+import request from 'request';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -274,15 +275,32 @@ router.post('/save/about', (req, res) => {
 });
 
 router.post('/save/contact', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  UserProfile.findOne({owner: req.body.id})
              .then((response) => {
                response.email = req.body.email;
                response.address = req.body.address;
-               // TODO we have to figure out how to convert to location
                response.phone = req.body.phone;
+               response.location = req.body.location;
+              //  const addr = req.body.address.split(' ').join('+');
+              //  const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+              //  request(locationUrl, function(error, resp, body) {
+              //    const jsonResp = JSON.parse(resp.body);
+              //    response.location = [jsonResp.results[0].geometry.location.lng,
+              //    jsonResp.results[0].geometry.location.lat];
+              //    response.save()
+              //    .then((data) => {
+              //      console.log(data);
+              //      res.json({success: true});
+              //    })
+              //    .catch((err) => {
+              //      console.log(err);
+              //      res.json({success: false});
+              //    });
+              //  });
                return response.save();
              })
-             .then(() => {
+             .then((data) => {
+               console.log(data);
                res.json({success: true});
              })
              .catch((err) => {
@@ -304,6 +322,50 @@ router.post('/save/links', (req, res) => {
                console.log(err);
                res.json({success: false});
              });
+});
+
+router.post('/save/iscreated', (req, res) => {
+  UserProfile.findOne({owner: req.body.id})
+             .then((response) => {
+               response.isCreated = true;
+               return response.save();
+             })
+            .then((userProfile) => {
+              const data = {
+                isCreated: userProfile.isCreated,
+                head: {
+                  fullName: userProfile.fullName,
+                  tags: userProfile.tags,
+                  blurb: userProfile.blurb,
+                  profileURL: userProfile.profileURL
+                },
+                info: {
+                  about: {
+                    education: userProfile.education,
+                    majors: userProfile.majors,
+                    currentOccupation: userProfile.currentOccupation,
+                    pastOccupations: userProfile.pastOccupations
+                  },
+                  contact: {
+                    email: userProfile.email,
+                    address: userProfile.address,
+                    phone: userProfile.phone
+                  },
+                  interests: userProfile.interests,
+                  projects: UserProfile.projects,
+                  links: userProfile.links
+                },
+                main: {
+                  portfolio: userProfile.portfolio,
+                  story: userProfile.story
+                }
+              };
+              res.json({data: data});
+            })
+            .catch((err) => {
+              console.log(err);
+              res.json({data: null});
+            });
 });
 
 module.exports = router;

@@ -9,21 +9,41 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import EditProfile from '../editProfile/components/EditProfile';
 
+const styles = {
+  App: {
+    backgroundColor: 'lightblue',
+    marginLeft: '100px',
+    width: '65%'
+  }
+};
+
 class App extends React.Component {
 
   render() {
     return (
       <BrowserRouter>
         <div>
-          <NavBar />
-          <Switch>
-            {/* <Route path="/app" component={(!this.state.profileCreated) ? Home : CreateProfile }/> */}
-            <Route path="/app/createprofile" component={EditProfile}/>
-            <Route path="/app/projects" component={Home}/>
-            <Route path="/app/directory" component={Directory} />
-            <Route path="/app/map" component={Map}/>
-            <Route path="/app" component={Home} />
-          </Switch>
+          {(!this.props.isLoaded) ?
+            <div style={styles.App}>
+              <h1>I am supposed to be animating while our super fast server is loading</h1>
+            </div>
+          :
+          <div>
+          {this.props.isCreated ?
+            <div>
+            <NavBar />
+            <Switch>
+              {/* <Route path="/app" component={(!this.state.profileCreated) ? Home : CreateProfile }/> */}
+              <Route path="/app/editprofile" component={EditProfile}/>
+              <Route path="/app/projects" component={Home}/>
+              <Route path="/app/directory" component={Directory} />
+              <Route path="/app/map" component={Map}/>
+              <Route path="/app" component={Home} />
+            </Switch></div>
+            :
+            <EditProfile isCreating={!null}/>}
+          </div>
+        }
         </div>
       </BrowserRouter>
     );
@@ -32,9 +52,13 @@ class App extends React.Component {
 
 
 App.propTypes = {
+  isLoaded: PropTypes.bool,
+  isCreated: PropTypes.bool,
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  isLoaded: state.appReducer.isLoaded,
+  isCreated: state.createProfileReducer.isCreated
 });
 
 const mapDispatchToProps = () => ({
