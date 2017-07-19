@@ -4,11 +4,8 @@ import discoverReducer from './discoverReducer';
 import quoteReducer from './quoteReducer';
 import fbUserReducer from './fbUserReducer';
 import createProfileReducer from './createProfileReducer';
-<<<<<<< HEAD
 import mapReducer from './mapReducer';
-=======
 import appReducer from './appReducer';
->>>>>>> master
 
 const rootReducer = combineReducers({
   fbUserReducer: fbUserReducer,
