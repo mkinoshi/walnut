@@ -48,25 +48,27 @@ function auth(passport) {
         preferences: req.body.tags
       });
       new_user.save()
-        .then((doc) => {
-          console.log(doc);
-          return doc
-        })
-        .then((doc) => {
-          const newProf = new UserProfile({
-              owner: doc._id,
-              isCreated: false,
-          });
-          return newProf.save()
-        })
-        .then((doc2) => {
-            console.log(doc2);
-            res.status(200);
-            res.redirect('/auth/login')
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+      .then((doc) => {
+        console.log(doc);
+        return doc
+      })
+      .then((doc) => {
+        const newProf = new UserProfile({
+          owner: doc._id,
+          isCreated: false,
+          fullName: doc.fname + ' ' + doc.lname,
+          email: doc.email
+        });
+        return newProf.save()
+      })
+      .then((doc2) => {
+        console.log(doc2);
+        res.status(200);
+        res.redirect('/auth/login')
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   })
 
