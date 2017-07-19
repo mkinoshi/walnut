@@ -1,7 +1,7 @@
 import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ScaleControl, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from '../components/MapFilter';
 import CircleIcon from 'react-icons/lib/fa/circle';
 
@@ -10,7 +10,7 @@ const styles = {
     height: '100%'
   },
   map: {
-    height: '100vh',
+    height: '92vh',
     width: '80vw'
   },
   outer: {
@@ -23,6 +23,10 @@ const styles = {
   },
   cluster: {
     color: '#ff6f00'
+  },
+  zoom: {
+    marginTop: '5%',
+    marginRigth: '1%'
   }
 };
 
@@ -127,6 +131,7 @@ class MapComponent extends React.Component {
             }}}>
               <Feature coordinates={[-122.4199537, 37.7775032]}/>
             </Layer> */}
+            <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
                   this.state.users.map((feature, key) => {
