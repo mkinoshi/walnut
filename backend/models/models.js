@@ -52,46 +52,46 @@ const UserSchema = new mongoose.Schema({
 
 
 const UserProfileSchema = new mongoose.Schema({
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    isCreated: {
-      type: Boolean
-    },
-    tags: {
-      type: Array
-    },
-    blurb: {
-      type: String
-    },
-    name: {
-      type: String
-    },
-    email: {
-      type: String
-    },
-    location: {
-        type:String
-    },
-    phone: {
-      type:String
-    },
-    currentOccupation: {
-      type: String
-    },
-    pastOccupations: {
-      type: Array
-    },
-    links: {
-      type: Object
-    },
-    interests: {
-      type: Object
-    },
-    portfolio: {
-      type: Object
-    }
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  isCreated: {
+    type: Boolean
+  },
+  tags: {
+    type: Array
+  },
+  blurb: {
+    type: String
+  },
+  name: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  location: {
+    type: String
+  },
+  phone: {
+    type: String
+  },
+  currentOccupation: {
+    type: String
+  },
+  pastOccupations: {
+    type: Array
+  },
+  links: {
+    type: Object
+  },
+  interests: {
+    type: Object
+  },
+  portfolio: {
+    type: Object
+  }
 
 });
 

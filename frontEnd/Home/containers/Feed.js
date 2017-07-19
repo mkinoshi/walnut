@@ -11,9 +11,9 @@ const styles = {
   outer: {
     borderWidth: '1px',
     width: '24.5%',
-    height: '120px',
+    height: '117px',
     borderRadius: '25px',
-    marginTop: '-120px',
+    marginTop: '-15%',
     borderTop: 'solid',
     borderRight: 'solid',
     marginRight: '10%'
@@ -21,9 +21,9 @@ const styles = {
   outer2: {
     borderWidth: '1px',
     width: '24.5%',
-    height: '150px',
+    height: '117px',
     borderRadius: '25px',
-    marginTop: '-150px',
+    marginTop: '-15%',
     marginLeft: '76.3%',
     borderTop: 'solid',
     borderLeft: 'solid'
@@ -42,7 +42,7 @@ const styles = {
     width: '24.5%',
     height: '40px',
     borderRight: 'solid',
-    marginTop: '70px',
+    marginTop: '-4%',
     backgroundColor: 'white',
     position: 'relative'
   },
@@ -54,15 +54,16 @@ const styles = {
     borderTop: 'solid',
     width: '51.4%',
     marginLeft: '24.3%',
-    marginTop: '0.6%'
+    marginTop: '-7%'
   },
   innerRight1: {
     borderWidth: '1px',
     width: '10%',
     height: '20px',
     borderTop: 'solid',
-    marginTop: '-150px',
+    marginTop: '-117px',
     backgroundColor: 'white',
+    position: 'relative'
   },
   innerRight2: {
     borderWidth: '1px',
@@ -134,7 +135,6 @@ class Feed extends React.Component {
           </div>
           <div className="col-xs-12" style={styles.under}></div>
           <div className="right" style={styles.outer2} />
-          <div className="rightTop" style={styles.innerRight1}></div>
           <div className="rightInnerLeft" style={styles.innerRight2}></div>
           <div className="col-xs-12" style={styles.feed}>
             {filteredPosts.map((post) => (
@@ -144,6 +144,7 @@ class Feed extends React.Component {
           <div className="leftTop" style={styles.inner1}></div>
           <div className="leftLowerRight" style={styles.inner2}></div>
           <div style={styles.inner3}></div>
+          <div className="rightTop" style={styles.innerRight1}></div>
       </div>
 
     );
