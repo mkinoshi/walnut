@@ -15,6 +15,7 @@ const styles = {
   filterOuter: {
     display: 'flex',
     flexDirection: 'column',
+    marginTop: '10%'
   },
   image: {
     width: '15%',
@@ -41,7 +42,7 @@ class MapFilter extends React.Component {
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
-          {/* <LocationSearch /> */}
+          <LocationSearch />
         </div>
         <div style={styles.filterOuter}>
           {this.props.users.map((user) => (
