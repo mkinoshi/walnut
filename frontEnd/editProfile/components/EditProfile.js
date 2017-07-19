@@ -6,7 +6,16 @@ import Head from '../containers/Head';
 import Main from './main/Main';
 import Info from './Info';
 
-class EditProfile extends React.Component {
+
+class EditProfileContainer extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.saveProfile();
+  }
 
   render() {
     return (
@@ -15,12 +24,22 @@ class EditProfile extends React.Component {
         <Head />
         {/* <Main /> */}
         <Info />
+          {this.props.isCreating ? <button onClick={() =>{this.handleClick();}}>Done</button> : null}
       </div>
     );
   }
 }
 
-EditProfile.propTypes = {
+EditProfileContainer.propTypes = {
+  isCreating: PropTypes.bool,
+  saveProfile: PropTypes.func
 };
 
-export default EditProfile;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  saveProfile: () => dispatch({type: 'CREATE_PROFILE'})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileContainer);
