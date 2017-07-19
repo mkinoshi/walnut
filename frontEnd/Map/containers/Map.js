@@ -79,7 +79,6 @@ class MapComponent extends React.Component {
     this.setState({zoom: [zoom]});
   }
   clusterMarker(coordinates) {
-    console.log(coordinates);
     return (
       <Marker coordinates={coordinates} style={styles.marker}>
         <CircleIcon />
@@ -98,35 +97,10 @@ class MapComponent extends React.Component {
             height: '100vh',
             width: '80vw'
           }}>
-            {/* <Layer
-              type="symbol"
-              id="marker"
-              layout={{ 'icon-image': 'marker-15' }}
-              paint={{'circle-color': {
-                property: 'point_count',
-                type: 'interval',
-                stops: [
-                    [0, '#51bbd6'],
-                    [100, '#f1f075'],
-                    [750, '#f28cb1'],
-                ]
-              },
-            'circle-radius': {
-              property: 'point_count',
-              type: 'interval',
-              stops: [
-                    [0, 20],
-                    [100, 30],
-                    [750, 40]
-              ]
-            }}}>
-              <Feature coordinates={[-122.4199537, 37.7775032]}/>
-            </Layer> */}
             <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
                   this.state.users.map((feature, key) => {
-                    console.log(feature);
                     return (
                       <Marker
                         key={key}
