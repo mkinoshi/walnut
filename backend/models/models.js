@@ -63,16 +63,20 @@ const UserProfileSchema = new mongoose.Schema({
     type: Array
   },
   blurb: {
-    type: String
+    type: String,
+    default: ''
   },
   fullName: {
-    type: String
+    type: String,
+    default: ''
   },
   email: {
-    type: String
+    type: String,
+    default: ''
   },
   address: {
-    type: String
+    type: String,
+    default: ''
   },
   location: [
     {
@@ -80,10 +84,12 @@ const UserProfileSchema = new mongoose.Schema({
     }
   ],
   phone: {
-    type: String
+    type: String,
+    default: ''
   },
   currentOccupation: {
-    type: String
+    type: String,
+    default: ''
   },
   pastOccupations: {
     type: Array
@@ -101,13 +107,16 @@ const UserProfileSchema = new mongoose.Schema({
     type: Array
   },
   profileURL: {
-    type: String
+    type: String,
+    default: ''
   },
   username: {
-    type: String
+    type: String,
+    default: ''
   },
   education: {
-    type: String
+    type: String,
+    default: ''
   },
   majors: {
     type: Array
