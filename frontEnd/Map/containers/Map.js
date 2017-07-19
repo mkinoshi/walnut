@@ -1,9 +1,12 @@
 import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ScaleControl, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from '../components/MapFilter';
 import CircleIcon from 'react-icons/lib/fa/circle';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 const styles = {
   mapContainer: {
     height: '100%'
@@ -80,14 +83,14 @@ class MapComponent extends React.Component {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
   }
-  changeCenter(coordinates) {
-    // coordinates given in array format
-    this.setState({center: coordinates});
-  }
-  changeZoom(zoom) {
-    // zoom given as integer
-    this.setState({zoom: [zoom]});
-  }
+  // changeCenter(coordinates) {
+  //   // coordinates given in array format
+  //   this.setState({center: coordinates});
+  // }
+  // changeZoom(zoom) {
+  //   // zoom given as integer
+  //   this.setState({zoom: [zoom]});
+  // }
   clusterMarker(coordinates) {
     return (
       <Marker coordinates={coordinates} style={styles.marker}>
@@ -99,12 +102,12 @@ class MapComponent extends React.Component {
     return (
       <div style={styles.outer}>
         <MapFilter users={this.state.users}
-        changeCenter={(coordinates) => {this.changeCenter(coordinates);}}
-        changeZoom={(num) => {this.changeZoom(num);}}/>
+        changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
+        changeZoom={(num) => {this.props.updateZoom();}}/>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
-          center={this.state.center}
-          zoom={this.state.zoom}
+          center={this.props.center}
+          zoom={this.props.zoom}
           containerStyle={{
             height: '100vh',
             width: '80vw'
@@ -119,8 +122,8 @@ class MapComponent extends React.Component {
                         coordinates={feature.location}
                         style={styles.cluster}
                         onClick={() => {
-                          this.changeCenter([20, 20]);
-                          this.changeZoom(10);
+                          this.props.updateCenter([20, 20]);
+                          this.props.updateZoom();
                         }}
                         >
                         <CircleIcon />
@@ -135,4 +138,28 @@ class MapComponent extends React.Component {
     );
   }
 }
-export default MapComponent;
+
+MapComponent.propTypes = {
+  center: PropTypes.array,
+  zoom: PropTypes.array,
+  updateCenter: PropTypes.func,
+  updateZoom: PropTypes.func
+};
+
+const mapStateToProps = (state) => ({
+  center: state.mapReducer.center,
+  zoom: state.mapReducer.zoom
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateCenter: (newCenter) => dispatch({
+    type: 'NEW_CENTER',
+    center: newCenter,
+  }),
+  updateZoom: () => dispatch({
+    type: 'UPDATE_ZOOM',
+  })
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapComponent);
