@@ -4,19 +4,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Head from './Head';
 import Main from './main/Main';
-import Info from './info/Info';
+import Info from './Info';
 
-console.log('here');
 class EditProfile extends React.Component {
 
   render() {
     return (
-        <div>
-          <p>profile</p>
-          <Head />
-          {/* <Main /> */}
-          {/* <Info /> */}
-        </div>
+      <div>
+        <p>profile</p>
+        <Head />
+        {/* <Main /> */}
+        <Info />
+      </div>
     );
   }
 }

@@ -4,16 +4,16 @@ const dummyData = {
   isCreated: false,
   head: {
     fullName: 'Eli Badgio',
-    tags: ['Alumni', 'Summer of 2017'],
-    blurb: 'Here is my blurb!',
+    tags: [],
+    blurb: '',
     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
   },
   info: {
     about: {
-      education: '',
-      majors: [],
-      currentOccupation: '',
-      pastOccupations: [],
+      education: 'colby college',
+      majors: ['cs'],
+      currentOccupation: 'google',
+      pastOccupations: ['fb'],
     },
     contact: {
       email: 'ebadgio@gmail.com',
@@ -26,15 +26,15 @@ const dummyData = {
       hobbies: [],
       sport: []
     },
-    Projects: [
-            // {
-            //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
-            //   name: 'Project1'
-            // },
-            // {
-            //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
-            //   name: 'Project2'
-            // }
+    projects: [
+      // {
+      //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
+      //   name: 'Project1'
+      // },
+      // {
+      //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
+      //   name: 'Project2'
+      // }
     ],
     links: {
       fb: {name: 'fb', url: 'https://www.facebook.com/aglk1'}
