@@ -63,42 +63,67 @@ const UserProfileSchema = new mongoose.Schema({
     type: Array
   },
   blurb: {
-    type: String
+    type: String,
+    default: ''
   },
-  name: {
-    type: String
+  fullName: {
+    type: String,
+    default: ''
   },
   email: {
-    type: String
+    type: String,
+    default: ''
   },
-  location: {
-    type: String
+  address: {
+    type: String,
+    default: ''
   },
+  location: [
+    {
+      type: Number
+    }
+  ],
   phone: {
-    type: String
+    type: String,
+    default: ''
   },
   currentOccupation: {
-    type: String
+    type: String,
+    default: ''
   },
   pastOccupations: {
     type: Array
   },
   links: {
-    type: Object
+    type: Array
   },
   interests: {
-    type: Object
+    type: Array
+  },
+  projects: {
+    type: Array
   },
   portfolio: {
-    type: Object
+    type: Array
   },
-  profileUrls: {
-    type: String
+  profileURL: {
+    type: String,
+    default: ''
   },
   username: {
-    type: String
+    type: String,
+    default: ''
+  },
+  education: {
+    type: String,
+    default: ''
+  },
+  majors: {
+    type: Array
+  },
+  story: {
+    type: Array
   }
-
 });
 
 const QuoteSchema = new mongoose.Schema({

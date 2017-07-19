@@ -36,7 +36,7 @@ class Contact extends React.Component {
   handleSave() {
     this.setState({edit: false});
     console.log('the state that gets sent to middleware', this.state);
-    // this.props.editContact(this.state)
+    this.props.saveContact(this.state);
   }
 
   render() {
@@ -80,7 +80,8 @@ class Contact extends React.Component {
 Contact.propTypes = {
   email: PropTypes.string,
   address: PropTypes.string,
-  phone: PropTypes.string
+  phone: PropTypes.string,
+  saveContact: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -89,7 +90,8 @@ const mapStateToProps = (state) => ({
   phone: state.createProfileReducer.info.contact.phone
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  saveContact: (contactObj) => dispatch({type: 'SAVE_CONTACTS', contact: contactObj})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contact);
