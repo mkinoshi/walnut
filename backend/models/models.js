@@ -91,6 +91,12 @@ const UserProfileSchema = new mongoose.Schema({
   },
   portfolio: {
     type: Object
+  },
+  profileUrls: {
+    type: String
+  },
+  username: {
+    type: String
   }
 
 });
@@ -169,11 +175,13 @@ const User = mongoose.model('User', UserSchema);
 const Quote = mongoose.model('Quote', QuoteSchema);
 const Post = mongoose.model('Post', PostSchema);
 const Tag = mongoose.model('Tag', TagSchema);
+const UserProfile = mongoose.model('UserProfile', UserProfileSchema);
 
 module.exports = {
   Token: Token,
   User: User,
   Quote: Quote,
   Post: Post,
-  Tag: Tag
+  Tag: Tag,
+  UserProfile: UserProfile
 };

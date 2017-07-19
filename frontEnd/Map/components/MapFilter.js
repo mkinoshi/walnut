@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LocationSearch from '../containers/LocationSearch';
 import { Menu, Message, Dropdown } from 'semantic-ui-react';
 
 const options = [
@@ -22,6 +23,7 @@ const options = [
   { key: 'ui', text: 'UI Design', value: 'ui' },
   { key: 'ux', text: 'User Experience', value: 'ux' },
 ];
+
 
 
 const styles = {
