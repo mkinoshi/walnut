@@ -11,7 +11,7 @@ class Info extends React.Component {
   render() {
     return (
       <div>
-        <p>Info</p>
+        <h1>Info</h1>
         <About />
         <Contact />
         <Links />

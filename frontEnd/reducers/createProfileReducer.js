@@ -17,7 +17,7 @@ const dummyData = {
     },
     contact: {
       email: 'ebadgio@gmail.com',
-      location: '',
+      address: '',
       phone: '',
     },
     interests: {
@@ -36,9 +36,7 @@ const dummyData = {
       //   name: 'Project2'
       // }
     ],
-    links: {
-      fb: {name: 'fb', url: 'https://www.facebook.com/aglk1'}
-    },
+    links: ['https://www.facebook.com/aglk1']
   },
   main: {
     portfolio: {
