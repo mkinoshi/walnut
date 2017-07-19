@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LocationSearch from '../containers/LocationSearch.js';
+// import LocationSearch from '../containers/LocationSearch.js';
 
 const styles = {
   outer: {
@@ -41,7 +41,7 @@ class MapFilter extends React.Component {
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
-          <LocationSearch />
+          {/* <LocationSearch /> */}
         </div>
         <div style={styles.filterOuter}>
           {this.props.users.map((user) => (
