@@ -11,7 +11,6 @@ class Map extends React.Component {
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v10'
     });
-    console.log
   }
 
   render() {
@@ -24,7 +23,7 @@ class Map extends React.Component {
       //     url="https://www.google.com/maps/embed/v1/place?key=AIzaSyCRsfBv1y4taRhb2nGyRue4a5rEi3KAtiQ
       //       &q=Space+Needle,Seattle+WA" allowFullScreen />
       // </div>
-      <div className="mapContainer" style={styles.mapContainer}>
+      <div className="mapContainer">
 
       </div>
     );
