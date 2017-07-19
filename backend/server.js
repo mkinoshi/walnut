@@ -143,7 +143,7 @@ app.set('view engine', 'hbs');
 app.use('/', auth(passport));
 app.use('/db', dbRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.get('/app', (request, response) => {
+app.use('/app', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 // make this dbRoutes when we have the database running

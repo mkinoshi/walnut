@@ -11,18 +11,19 @@ const styles = {
   outer: {
     borderWidth: '1px',
     width: '24.5%',
-    height: '120px',
+    height: '117px',
     borderRadius: '25px',
-    marginTop: '-120px',
+    marginTop: '-15%',
     borderTop: 'solid',
-    borderRight: 'solid'
+    borderRight: 'solid',
+    marginRight: '10%'
   },
   outer2: {
     borderWidth: '1px',
-    width: '24%',
-    height: '150px',
+    width: '24.5%',
+    height: '117px',
     borderRadius: '25px',
-    marginTop: '-150px',
+    marginTop: '-15%',
     marginLeft: '76.3%',
     borderTop: 'solid',
     borderLeft: 'solid'
@@ -32,16 +33,18 @@ const styles = {
     width: '5%',
     height: '20px',
     borderTop: 'solid',
-    marginTop: '-120px',
     backgroundColor: 'white',
+    position: 'relative',
+    marginTop: '-9.1%'
   },
   inner2: {
     borderWidth: '1px',
     width: '24.5%',
     height: '40px',
     borderRight: 'solid',
-    marginTop: '70px',
-    backgroundColor: 'white'
+    marginTop: '-4%',
+    backgroundColor: 'white',
+    position: 'relative'
   },
   inner3: {
     width: '24.5%'
@@ -49,25 +52,32 @@ const styles = {
   under: {
     height: '30%',
     borderTop: 'solid',
-    width: '52.5%',
-    marginLeft: '24.3%'
+    width: '51.4%',
+    marginLeft: '24.3%',
+    marginTop: '-7%'
   },
   innerRight1: {
     borderWidth: '1px',
     width: '10%',
     height: '20px',
     borderTop: 'solid',
-    marginTop: '-150px',
+    marginTop: '-117px',
     backgroundColor: 'white',
+    position: 'relative'
   },
   innerRight2: {
     borderWidth: '1px',
     width: '24.5%',
     height: '30px',
-    borderRight: 'solid',
-    marginTop: '100px',
-    backgroundColor: 'white'
+    borderLeft: 'solid',
+    marginTop: '18.8%',
+    backgroundColor: 'white',
+    marginLeft: '75.5%',
+    position: 'relative'
   },
+  feed: {
+    marginTop: '2%'
+  }
 };
 
 
@@ -123,17 +133,18 @@ class Feed extends React.Component {
           </div>
           {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
           </div>
-          <div className="col-xs-8">
+          <div className="col-xs-12" style={styles.under}></div>
+          <div className="right" style={styles.outer2} />
+          <div className="rightInnerLeft" style={styles.innerRight2}></div>
+          <div className="col-xs-12" style={styles.feed}>
             {filteredPosts.map((post) => (
               <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
-          <div style={styles.inner1}></div>
-          <div style={styles.inner2}></div>
+          <div className="leftTop" style={styles.inner1}></div>
+          <div className="leftLowerRight" style={styles.inner2}></div>
           <div style={styles.inner3}></div>
-        <div className="col-xs-12" style={styles.under}></div>
-        {/* <div style={styles.innerRight1}></div>
-        <div style={styles.innerRight2}></div> */}
+          <div className="rightTop" style={styles.innerRight1}></div>
       </div>
 
     );
