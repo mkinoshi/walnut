@@ -50,7 +50,7 @@ class About extends React.Component {
   handleSave() {
     this.setState({edit: false});
     console.log('the state that gets sent to middleware', this.state);
-    // this.props.editAbout(this.state)
+    this.props.saveAbout(this.state);
   }
 
   render() {
@@ -133,7 +133,8 @@ About.propTypes = {
   education: PropTypes.string,
   majors: PropTypes.array,
   currentOccupation: PropTypes.string,
-  pastOccupations: PropTypes.array
+  pastOccupations: PropTypes.array,
+  saveAbout: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -143,7 +144,8 @@ const mapStateToProps = (state) => ({
   pastOccupations: state.createProfileReducer.info.about.pastOccupations
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  saveAbout: (about) => dispatch({type: 'SAVE_ABOUT', about: about})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(About);

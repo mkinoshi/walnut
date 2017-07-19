@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote} from '../models/models';
+import {User, Tag, Post, Quote, UserProfile} from '../models/models';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -15,7 +15,7 @@ router.get('/user', (req, res) => {
 });
 
 // TODO use .then correctly without nesting
-router.get('/getDiscoverInfo', (req, res) => {
+router.get('/get/discoverinfo', (req, res) => {
   let filters = [];
   let posts = [];
   Tag.find()
@@ -66,8 +66,48 @@ router.get('/getDiscoverInfo', (req, res) => {
   });
 });
 
+router.get('/get/profileinfo', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((userProfile) => {
+               const data = {
+                 isCreated: userProfile.isCreated,
+                 head: {
+                   fullName: userProfile.fullName,
+                   tags: userProfile.tags,
+                   blurb: userProfile.blurb,
+                   profileURL: userProfile.profileURL
+                 },
+                 info: {
+                   about: {
+                     education: userProfile.education,
+                     majors: userProfile.majors,
+                     currentOccupation: userProfile.currentOccupation,
+                     pastOccupations: userProfile.pastOccupations
+                   },
+                   contact: {
+                     email: userProfile.email,
+                     address: userProfile.address,
+                     phone: userProfile.phone
+                   },
+                   interests: userProfile.interests,
+                   projects: UserProfile.projects,
+                   links: userProfile.links
+                 },
+                 main: {
+                   portfolio: userProfile.portfolio,
+                   story: userProfile.story
+                 }
+               };
+               res.json({data: data});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({data: null});
+             });
+});
+
 // adding a new post
-router.post('/newPost', (req, res) => {
+router.post('/save/post', (req, res) => {
   const newPost = new Post({
     content: req.body.postBody,
     createdAt: new Date(),
@@ -89,7 +129,7 @@ router.post('/newPost', (req, res) => {
 });
 
 // new comment
-router.post('/newComment', (req, res) => {
+router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
       .then((response) => {
         const newComment = {
@@ -109,7 +149,7 @@ router.post('/newComment', (req, res) => {
       });
 });
 
-router.post('/toggleChecked', (req, res) => {
+router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
         if (req.user.preferences.includes(req.body.tagName)) {
@@ -127,7 +167,7 @@ router.post('/toggleChecked', (req, res) => {
       });
 });
 
-router.post('/newPostLike', (req, res) => {
+router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((response) => {
       response.likes.push(req.user._id);
@@ -141,7 +181,7 @@ router.post('/newPostLike', (req, res) => {
     });
 });
 
-router.post('/newCommentLike', (req, res) => {
+router.post('/save/commentlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((post) => {
       const comment = post.comments.filter((com) => {
@@ -150,7 +190,7 @@ router.post('/newCommentLike', (req, res) => {
       comment[0].likes.push(req.user._id);
       return post.save();
     })
-    .then((resp) => {
+    .then(() => {
       res.json({success: true});
     })
     .catch((err) => {
@@ -158,16 +198,112 @@ router.post('/newCommentLike', (req, res) => {
     });
 });
 
-router.get('/getQuote', (req, res) => {
+router.get('/get/quote', (req, res) => {
   Quote.find()
        .then((response) => {
          const ind = new Date().getDate() % response.length;
          res.json({quote: response[ind].content, createdby: response[ind].createdBy});
        })
-       .catch((err) => {
+       .catch(() => {
          res.json({quote: 'it’s kind of fun to do the impossible', createdBy: 'Walt Disney'});
        });
 });
 
+router.post('/save/blurb', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((response) => {
+               response.blurb = req.body.blurbBody;
+               return response.save();
+             })
+             .then((resp) => {
+               console.log(resp);
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
+
+router.post('/save/tags', (req, res) => {
+  UserProfile.findOne({owner: req.user._id}) // user req.user._id
+             .then((response) => {
+               response.tags = req.body.tagsArray;
+               return response.save();
+             })
+             .then(() => {
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
+
+router.post('/save/interests', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((response) => {
+               response.interests = req.body.interestsArray;
+               return response.save();
+             })
+             .then(() => {
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
+
+router.post('/save/about', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((response) => {
+               response.education = req.body.education;
+               response.majors = req.body.majors;
+               response.currentOccupation = req.body.currentOccupation;
+               response.pastOccupations = req.body.pastOccupations;
+               return response.save();
+             })
+             .then(() => {
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
+
+router.post('/save/contact', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((response) => {
+               response.email = req.body.email;
+               response.address = req.body.address;
+               // TODO we have to figure out how to convert to location
+               response.phone = req.body.phone;
+               return response.save();
+             })
+             .then(() => {
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
+
+router.post('/save/links', (req, res) => {
+  UserProfile.findOne({owner: req.user._id})
+             .then((response) => {
+               response.links = req.body.linksArray;
+               return response.save();
+             })
+             .then(() => {
+               res.json({success: true});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({success: false});
+             });
+});
 
 module.exports = router;

@@ -109,9 +109,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveInterests: (interests) => dispatch({type: 'SAVE_INTERESTS', interests:interests})
+  saveInterests: (interests) => dispatch({type: 'SAVE_INTERESTS', interests: interests})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterestsContainer);
-
-
