@@ -325,7 +325,7 @@ router.post('/save/links', (req, res) => {
 });
 
 router.post('/save/iscreated', (req, res) => {
-  UserProfile.findOne({owner: req.body.id})
+  UserProfile.findOne({owner: req.user._id})
              .then((response) => {
                response.isCreated = true;
                return response.save();
