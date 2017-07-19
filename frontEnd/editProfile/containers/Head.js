@@ -84,7 +84,11 @@ class HeadContainer extends React.Component {
         <h1>{this.props.HeadData.fullName}</h1>
         <div>
 
-          {this.state.editTags ? this.state.newTags.map((tag, idx)=> <div key={idx}><p>#{' '}{tag}</p><button value="X" onClick={() => {this.removeTag(tag);}}>X</button></div>) :
+          {this.state.editTags ?
+              this.state.newTags.map((tag, idx)=> <div key={idx}>
+                <p>#{' '}{tag}</p>
+                <button value="X" onClick={() => {this.removeTag(tag);}}>X</button>
+              </div>) :
               this.props.HeadData.tags.map((tag, idx) => <p key={idx}>#{' '}{tag}</p>)}
 
           {this.state.editTags ? <div>
@@ -96,10 +100,19 @@ class HeadContainer extends React.Component {
           </div>
               : null }
 
-            {this.state.editTags ? <button onClick={() => this.saveTags(this.state.newTags)}>Save Tags</button> : <button value="Edit Tags" onClick={() => this.toggleTags()}>Edit Tags</button> }
+            {this.state.editTags ?
+                <button onClick={() => this.saveTags(this.state.newTags)}>Save Tags</button> :
+                <button value="Edit Tags" onClick={() => this.toggleTags()}>Edit Tags</button> }
         </div>
-        {this.state.editBlurb ? <div><input type="text" placeholder="Enter blurb here" value={this.state.blurbInput ? this.state.blurbInput : this.props.HeadData.blurb} onChange={(e) => this.handleChangeBlurb(e)}/>
-          <button onClick={() => {this.onSubmitBlurb(this.state.blurbInput);}}>Save Blurb</button></div> : <div><p>{!!this.state.blurbInput ? this.state.blurbInput : this.props.HeadData.blurb}</p>
+        {this.state.editBlurb ? <div>
+          <input type="text"
+                 placeholder="Enter blurb here"
+                 value={this.state.blurbInput ? this.state.blurbInput : this.props.HeadData.blurb}
+                 onChange={(e) => this.handleChangeBlurb(e)}/>
+          <button onClick={() => {this.onSubmitBlurb(this.state.blurbInput);}}>Save Blurb</button>
+        </div> :
+            <div>
+              <p>{!!this.state.blurbInput ? this.state.blurbInput : this.props.HeadData.blurb}</p>
           <button onClick={() => {this.toggleBlurb();}}>Edit Blurb</button></div> }
       </div>
     );

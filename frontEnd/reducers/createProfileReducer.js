@@ -20,21 +20,16 @@ const dummyData = {
       location: '',
       phone: '',
     },
-    interests: {
-      programming: [],
-      technology: [],
-      hobbies: [],
-      sport: []
-    },
+    interests: ['piano', 'biking', 'Machine Learning', 'Ui/Ux'],
     projects: [
-      // {
-      //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
-      //   name: 'Project1'
-      // },
-      // {
-      //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
-      //   name: 'Project2'
-      // }
+      {
+        picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
+        name: 'Project1'
+      },
+      {
+        picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
+        name: 'Project2'
+      }
     ],
     links: {
       fb: {name: 'fb', url: 'https://www.facebook.com/aglk1'}
