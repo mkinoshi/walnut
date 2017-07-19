@@ -1,15 +1,13 @@
 
 
 const createProfileReducer = (state = {}, action) => {
-  const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_PROFLE_DATA_DONE':
-      newState = action.data;
-      return newState;
+      return action.data;
     case 'GET_PROFILE_DATA_ERROR':
-      return newState;
+      return state;
     default:
-      return newState;
+      return state;
   }
 };
 
