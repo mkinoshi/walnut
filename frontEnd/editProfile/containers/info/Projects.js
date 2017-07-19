@@ -1,19 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+const styles = {
+  projects: {
+    backgroundColor: 'lightblue',
+    marginLeft: '100px',
+    width: '65%'
+  }
+};
 
-class Projects extends React.Component {
+class ProjectsContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+    };
+  }
 
   render() {
     return (
-      <div>
+      <div style={styles.projects}>
         <p>Projects</p>
       </div>
     );
   }
 }
 
-Projects.propTypes = {
+ProjectsContainer.propTypes = {
 };
 
-export default Projects;
+ProjectsContainer.propTypes = {
+  projects: PropTypes.array
+};
+
+const mapStateToProps = (state) => ({
+  projects: state.createProfileReducer.info.projects
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsContainer);
