@@ -4,7 +4,6 @@ import React from 'react';
 import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ScaleControl, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from '../components/MapFilter';
 import CircleIcon from 'react-icons/lib/fa/circle';
-
 const styles = {
   mapContainer: {
     height: '100%'
@@ -29,13 +28,10 @@ const styles = {
     marginRigth: '1%'
   }
 };
-
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg'
 });
-
 class MapComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -46,59 +42,65 @@ class MapComponent extends React.Component {
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 38.7775032]
+          location: [-122.4199537, 38.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.7775032]
+          location: [-122.4199537, 37.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 36.7775032]
+          location: [-122.4199537, 36.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.8775032]
+          location: [-122.4199537, 37.8775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.77757]
+          location: [-122.4199537, 37.77757],
+          year: 'Summer 2017',
+          career: 'Rice University'
         }
       ]};
   }
-
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
   }
-
   changeCenter(coordinates) {
     // coordinates given in array format
     this.setState({center: coordinates});
   }
-
   changeZoom(zoom) {
     // zoom given as integer
     this.setState({zoom: [zoom]});
   }
-
   clusterMarker(coordinates) {
-    console.log(coordinates);
     return (
       <Marker coordinates={coordinates} style={styles.marker}>
         <CircleIcon />
       </Marker>
     );
   }
-
   render() {
     return (
       <div style={styles.outer}>
-        <MapFilter users={this.state.users} />
+        <MapFilter users={this.state.users}
+        changeCenter={(coordinates) => {this.changeCenter(coordinates);}}
+        changeZoom={(num) => {this.changeZoom(num);}}/>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
           center={this.state.center}
@@ -107,35 +109,10 @@ class MapComponent extends React.Component {
             height: '100vh',
             width: '80vw'
           }}>
-            {/* <Layer
-              type="symbol"
-              id="marker"
-              layout={{ 'icon-image': 'marker-15' }}
-              paint={{'circle-color': {
-                property: 'point_count',
-                type: 'interval',
-                stops: [
-                    [0, '#51bbd6'],
-                    [100, '#f1f075'],
-                    [750, '#f28cb1'],
-                ]
-              },
-            'circle-radius': {
-              property: 'point_count',
-              type: 'interval',
-              stops: [
-                    [0, 20],
-                    [100, 30],
-                    [750, 40]
-              ]
-            }}}>
-              <Feature coordinates={[-122.4199537, 37.7775032]}/>
-            </Layer> */}
             <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
                   this.state.users.map((feature, key) => {
-                    console.log(feature);
                     return (
                       <Marker
                         key={key}
@@ -158,5 +135,4 @@ class MapComponent extends React.Component {
     );
   }
 }
-
 export default MapComponent;

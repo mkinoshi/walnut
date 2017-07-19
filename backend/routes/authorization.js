@@ -3,6 +3,7 @@ var  express = require('express');
 var models = require('../models/models');
 var User = models.User;
 var Tag = models.Tag;
+const UserProfile = models.UserProfile;
 var router = express.Router();
 var path = require('path');
 
@@ -24,7 +25,7 @@ function auth(passport) {
       res.render('signup', {tags: tag_names}); //have to change
     })
   })
-
+  // TODO: TEST REGISTRATION
   router.post('/auth/signup', function(req, res) {
     req.check('username', "username cannot be empty").notEmpty();
     req.check('password', "password cannot be empty").notEmpty();
@@ -38,23 +39,34 @@ function auth(passport) {
       res.status(400);
       //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
     } else {
-        var new_user = new User({
-          fname: req.body.fname,
-          lname: req.body.lname,
-          email: req.body.email,
-          username: req.body.username,
-          password: req.body.password,
-          preferences: req.body.tags
+      var new_user = new User({
+        fname: req.body.fname,
+        lname: req.body.lname,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        preferences: req.body.tags
+      });
+      new_user.save()
+        .then((doc) => {
+          console.log(doc);
+          return doc
         })
-        new_user.save()
-                .then((doc) => {
-                  console.log(doc)
-                  res.status(200)
-                  res.redirect('/auth/login')
-                })
-                .catch((err) => {
-                  console.log(err);
-                })
+        .then((doc) => {
+          const newProf = new UserProfile({
+              owner: doc._id,
+              isCreated: false,
+          });
+          return newProf.save()
+        })
+        .then((doc2) => {
+            console.log(doc2);
+            res.status(200);
+            res.redirect('/auth/login')
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
   })
 

@@ -12,6 +12,8 @@ var mongoose = require('mongoose');
 var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
+var cors = require('cors');
+
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -45,9 +47,14 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Headers", "Content-Type, *");
+  res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
+const corsOptions = {
+  origin: 'http://localhost:3000'
+}
 
+app.use(cors(corsOptions))
 
 // Passport
 app.use(session({
