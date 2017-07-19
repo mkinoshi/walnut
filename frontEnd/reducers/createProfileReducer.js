@@ -46,8 +46,6 @@ const createProfileReducer = (state = dummyData, action) => {
   switch (action.type) {
     case 'GET_DATA':
     case 'GET_DATA_ERROR':
-    case 'SAVE_BLURB':
-    case 'SAVE_TAGS':
     default:
       return newState;
   }
