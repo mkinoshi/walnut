@@ -10,12 +10,15 @@ class Main extends React.Component {
     return (
       <div>
         <p>Main</p>
+        <Story data={this.props.data.story}/>
+        <Portfolio data={this.props.data.portfolio}/>
       </div>
     );
   }
 }
 
 Main.propTypes = {
+  data: PropTypes.object
 };
 
 export default Main;

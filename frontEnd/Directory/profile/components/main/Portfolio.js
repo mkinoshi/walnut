@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-class Contact extends React.Component {
+class Portfolio extends React.Component {
 
   render() {
     return (
       <div>
-        <p>Contact</p>
+        <p>Portfolio</p>
       </div>
     );
   }
 }
 
-Contact.propTypes = {
+Portfolio.propTypes = {
 };
 
-export default Contact;
+export default Portfolio;
