@@ -64,7 +64,7 @@ class InterestsContainer extends React.Component {
 
   saveChanges() {
     this.setState({isEditing: false});
-    // dispatch
+    this.props.saveInterests(this.state.newInterests);
   }
 
   render() {
@@ -100,7 +100,8 @@ class InterestsContainer extends React.Component {
 }
 
 InterestsContainer.propTypes = {
-  interests: PropTypes.array
+  interests: PropTypes.array,
+  saveInterests: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -108,6 +109,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  saveInterests: (interests) => dispatch({type: 'SAVE_INTERESTS', interests:interests})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterestsContainer);
