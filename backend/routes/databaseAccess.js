@@ -37,6 +37,7 @@ router.get('/get/discoverinfo', (req, res) => {
     .populate('createdBy')
     .then((postArr) => {
       posts = postArr.map((postObj) => {
+        console.log(postObj);
         return {
           postId: postObj._id,
           username: postObj.createdBy.username,
@@ -58,15 +59,16 @@ router.get('/get/discoverinfo', (req, res) => {
           })
         };
       });
-      res.json({filters: filters, posts: posts});
+      console.log(posts);
+      res.json({filters: [], posts: []});
     })
-    .catch((err) => {
-      res.json(err);
-    });
+      .catch((err) => {
+        res.json(err);
+      });
   })
-  .catch((err) => {
-    res.json({error: err});
-  });
+    .catch((err) => {
+      res.json({error: err});
+    });
 });
 
 router.get('/get/profileinfo', (req, res) => {
