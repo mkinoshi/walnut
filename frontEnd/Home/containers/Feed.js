@@ -90,7 +90,7 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-
+    this.props.getData();
   }
 
   toggleFilterPref() {
@@ -158,7 +158,8 @@ class Feed extends React.Component {
 
 Feed.propTypes = {
   data: PropTypes.object,
-  newLike: PropTypes.func
+  newLike: PropTypes.func,
+  getData: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
