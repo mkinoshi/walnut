@@ -4,14 +4,14 @@ const URL = 'http://localhost:3000/';
 export const apiMiddleware = store => next => action => {
   next(action);
   switch(action.type) {
-    case 'GET_FB_DATA':
+    case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
        .then((response) => {
-         store.dispatch({type: 'GET_FB_DATA_DONE', data: response.data.data});
+         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data});
        })
        .catch((err) => {
          console.log('getting error in login', err);
-         store.dispatch({type: 'GET_FB_DATA_ERROR'});
+         store.dispatch({type: 'GET_USER_DATA_ERROR'});
        });
       break;
     case 'NEW_COMMENT':
@@ -172,7 +172,8 @@ export const apiMiddleware = store => next => action => {
     case 'CREATE_PROFILE':
       axios.post(URL + 'db/save/iscreated')
       .then((response) => {
-        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
+        console.log('response', response);
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in creating profile', err);
@@ -182,7 +183,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_PROFILE_INFO':
       axios.get(URL + 'db/get/profileinfo')
       .then((response) => {
-        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in getting profile data', err);
@@ -192,6 +193,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
+        console.log('discover', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
         store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })
@@ -199,6 +201,30 @@ export const apiMiddleware = store => next => action => {
         console.log('error in newComment', err);
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
         store.dispatch({type: 'STATE_FILLED_ERROR'});
+      });
+      break;
+    case 'GET_ALL_USERS':
+      axios.get(URL + 'db/get/allusers')
+      .then((response) => {
+        console.log('deck middleware', response);
+        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_ERROR'});
+      });
+      break;
+    case 'GET_ONE_PROFILE':
+      axios.get(URL + 'db/get/specprofile', {
+        owner: action.id
+      })
+      .then((response) => {
+        console.log('in one profile get', response);
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting profile data', err);
+        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
       });
       break;
     default:

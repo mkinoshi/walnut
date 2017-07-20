@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, UserProfile} from '../models/models';
+import {User, Tag, Post, Quote, Profile} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
+
 
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
@@ -67,9 +68,10 @@ router.get('/get/discoverinfo', (req, res) => {
         res.json({filters: filters, posts: []});
       });
   })
-    .catch((err) => {
-      res.json({error: err});
-    });
+  .catch((err) => {
+    console.log('error 2', err);
+    res.json({error: err});
+  });
 });
 
 router.get('/get/profileinfo', (req, res) => {
@@ -97,7 +99,7 @@ router.get('/get/profileinfo', (req, res) => {
                      phone: userProfile.phone
                    },
                    interests: userProfile.interests,
-                   projects: UserProfile.projects,
+                   projects: userProfile.projects,
                    links: userProfile.links
                  },
                  main: {
@@ -302,16 +304,16 @@ router.post('/save/about', (req, res) => {
 router.post('/save/contact', (req, res) => {
   let globalResponse;
   Profile.findOne({owner: req.user._id})
-             .then((response) => {
-               globalResponse = response;
-               response.email = req.body.email;
-               response.address = req.body.address;
-               response.phone = req.body.phone;
-               response.location = req.body.location;
-               const addr = req.body.address.split(' ').join('+');
-               const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-               return axios.get(locationUrl);
-             })
+            .then((response) => {
+              globalResponse = response;
+              response.email = req.body.email;
+              response.address = req.body.address;
+              response.phone = req.body.phone;
+              response.location = req.body.location;
+              const addr = req.body.address.split(' ').join('+');
+              const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+              return axios.get(locationUrl);
+            })
              .then((resp) => {
                const jsonResp = resp.data.results[0];
                globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
@@ -372,7 +374,7 @@ router.post('/save/iscreated', (req, res) => {
                     phone: userProfile.phone
                   },
                   interests: userProfile.interests,
-                  projects: UserProfile.projects,
+                  projects: userProfile.projects,
                   links: userProfile.links
                 },
                 main: {
@@ -380,10 +382,12 @@ router.post('/save/iscreated', (req, res) => {
                   story: userProfile.story
                 }
               };
+              console.log('in backend', data);
               res.json({data: data});
             })
             .catch((err) => {
               console.log(err);
+              console.log('in error', err);
               res.json({data: null});
             });
 });
