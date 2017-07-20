@@ -13,5 +13,4 @@ const createProfileReducer = (state = {}, action) => {
 };
 
 
-
 export default createProfileReducer;

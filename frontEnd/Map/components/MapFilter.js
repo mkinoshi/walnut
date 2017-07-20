@@ -74,7 +74,7 @@ class MapFilter extends React.Component {
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
-          <Dropdown placeholder="Skills" fluid multiple selection options={options} />
+        <LocationSearch />
         </div>
         <div style={styles.filterOuter}>
           {this.props.users.map((user) => (
