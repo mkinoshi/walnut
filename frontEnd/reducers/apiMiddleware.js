@@ -7,7 +7,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
        .then((response) => {
-         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
+         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data});
        })
        .catch((err) => {
          console.log('getting error in login', err);
@@ -206,7 +206,8 @@ export const apiMiddleware = store => next => action => {
     case 'GET_ALL_USERS':
       axios.get(URL + 'db/get/allusers')
       .then((response) => {
-        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
+        console.log('deck middleware', response);
+        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in getting users', err);

@@ -3,8 +3,6 @@ const router = express.Router();
 import {User, Tag, Post, Quote, Profile} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
-
-
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -17,7 +15,6 @@ router.get('/user', (req, res) => {
         res.json({data: null});
       });
 });
-
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
   let filters = [];
@@ -72,7 +69,6 @@ router.get('/get/discoverinfo', (req, res) => {
     res.json({error: err});
   });
 });
-
 router.get('/get/profileinfo', (req, res) => {
   Profile.findOne({owner: req.user._id})
              .then((userProfile) => {
@@ -113,7 +109,6 @@ router.get('/get/profileinfo', (req, res) => {
                res.json({data: null});
              });
 });
-
 // adding a new post
 router.post('/save/post', (req, res) => {
   const newPost = new Post({
@@ -135,7 +130,6 @@ router.post('/save/post', (req, res) => {
     res.json({success: false});
   });
 });
-
 // new comment
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
@@ -156,7 +150,6 @@ router.post('/save/comment', (req, res) => {
         res.json({success: false, data: null});
       });
 });
-
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
@@ -174,7 +167,6 @@ router.post('/toggle/checked', (req, res) => {
         res.json({success: false});
       });
 });
-
 router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((response) => {
@@ -188,7 +180,6 @@ router.post('/save/postlike', (req, res) => {
       res.json({success: false});
     });
 });
-
 router.post('/save/commentlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((post) => {
@@ -205,7 +196,6 @@ router.post('/save/commentlike', (req, res) => {
       res.json({success: false});
     });
 });
-
 router.get('/get/quote', (req, res) => {
   Quote.find()
        .then((response) => {
@@ -216,7 +206,6 @@ router.get('/get/quote', (req, res) => {
          res.json({quote: 'it’s kind of fun to do the impossible', createdBy: 'Walt Disney'});
        });
 });
-
 router.post('/save/blurb', (req, res) => {
   Profile.findOne({owner: req.user._id})
              .then((response) => {
@@ -232,7 +221,6 @@ router.post('/save/blurb', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/tags', (req, res) => {
   Profile.findOne({owner: req.user._id}) // user req.user._id
              .then((response) => {
@@ -247,7 +235,6 @@ router.post('/save/tags', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/interests', (req, res) => {
   Profile.findOne({owner: req.user._id})
              .then((response) => {
@@ -262,10 +249,9 @@ router.post('/save/interests', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/about', (req, res) => {
   let globalResponse = {};
-  Profile.findOne({owner: req.body.id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                globalResponse = response;
                globalResponse.education = req.body.education;
@@ -299,7 +285,6 @@ router.post('/save/about', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/contact', (req, res) => {
   let globalResponse;
   Profile.findOne({owner: req.user._id})
@@ -328,7 +313,6 @@ router.post('/save/contact', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/links', (req, res) => {
   Profile.findOne({owner: req.user._id})
              .then((response) => {
@@ -343,7 +327,6 @@ router.post('/save/links', (req, res) => {
                res.json({success: false});
              });
 });
-
 router.post('/save/iscreated', (req, res) => {
   Profile.findOne({owner: req.user._id})
              .then((response) => {
@@ -390,5 +373,67 @@ router.post('/save/iscreated', (req, res) => {
               res.json({data: null});
             });
 });
+router.get('/get/allusers', (req, res) => {
+  User.find()
+      .then((response) => {
+        res.json({data: response});
+      })
+      .catch((err) => {
+        res.json({data: null})
+      })
+});
+
+router.get('/get/allprofiles', (req, res) => {
+  Profile.find()
+         .then((response) => {
+           res.json({data: response});
+         })
+        .catch((err) => {
+          res.json({data: null});
+        })
+});
+
+router.get('/get/specprofile', (req, res) => {
+  Profile.findOne({owner: req.query.owner})
+         .then((userProfile) => {
+               console.log(userProfile);
+               const data = {
+                 isCreated: userProfile.isCreated,
+                 head: {
+                   fullName: userProfile.fullName,
+                   tags: userProfile.tags,
+                   blurb: userProfile.blurb,
+                   profileURL: userProfile.profileURL
+                 },
+                 info: {
+                   about: {
+                     education: userProfile.education,
+                     majors: userProfile.majors,
+                     currentOccupation: userProfile.currentOccupation,
+                     currentOccupationCity: userProfile.currentOccupationCity,
+                     pastOccupations: userProfile.pastOccupations
+                   },
+                   contact: {
+                     email: userProfile.email,
+                     address: userProfile.address,
+                     phone: userProfile.phone
+                   },
+                   interests: userProfile.interests,
+                   projects: userProfile.projects,
+                   links: userProfile.links
+                 },
+                 main: {
+                   portfolio: userProfile.portfolio,
+                   story: userProfile.story
+                 }
+               };
+               res.json({data: data});
+             })
+             .catch((err) => {
+               console.log(err);
+               res.json({data: null});
+             });
+
+})
 
 module.exports = router;
