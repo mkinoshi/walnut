@@ -78,11 +78,11 @@ const UserProfileSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  location: [
-    {
-      type: Number
-    }
-  ],
+  location: {
+    college: [Number],
+    homeTown: [Number],
+    occupation: [Number]
+  },
   phone: {
     type: String,
     default: ''
