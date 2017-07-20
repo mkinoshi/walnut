@@ -34,10 +34,22 @@ export const apiMiddleware = store => next => action => {
       })
       .then(() => {
         next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
-        next(action);
+        // next(action);
       })
       .catch((err) =>{
         console.log('error in newComment', err);
+      });
+      break;
+    case 'NEW_TAG':
+      axios.post(URL + 'db/save/tag', {
+        tag: action.tag
+      })
+      .then(() => {
+        next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
+        next(action);
+      })
+      .catch((err) =>{
+        console.log('error in newTag', err);
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':

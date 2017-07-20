@@ -100,7 +100,7 @@ function auth(passport) {
 
   router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/login');
+    res.redirect('/auth/login');
   });
 
   return router;

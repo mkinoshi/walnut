@@ -461,4 +461,32 @@ router.get('/get/specprofile', (req, res) => {
              });
 });
 
+
+router.get('/get/allusers', (req, res) => {
+  User.find()
+      .then((response) => {
+        res.json({data: response});
+      })
+      .catch((err) => {
+        res.json({data: null})
+      })
+})
+router.get('/get/specprofile/', (req, res) => {
+});
+
+router.post('/save/tag', (req, res) => {
+  const newTag = new Tag({
+    name: req.body.tag
+  })
+  newTag.save()
+  .then(() => {
+    console.log('success!');
+    res.json({success: true});
+  })
+  .catch((e) => {
+    console.log(e);
+    res.json({success: false});
+  });
+});
+
 module.exports = router;

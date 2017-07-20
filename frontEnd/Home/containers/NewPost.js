@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPref from './TagPref';
+import NewTag from './NewTag';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -38,7 +39,8 @@ class NewPost extends React.Component {
     this.state = {
       postBody: '',
       postTags: [],
-      showTagPref: false
+      showTagPref: false,
+      showNewTag: false
     };
   }
 
@@ -52,6 +54,10 @@ class NewPost extends React.Component {
       postTagsCopy.push(tag);
       this.setState({postTags: postTagsCopy});
     }
+  }
+
+  toggleNewTag() {
+    this.setState({showNewTag: !this.state.showNewTag});
   }
 
   toggleTagPref() {
@@ -89,6 +95,20 @@ class NewPost extends React.Component {
                 <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
                 tags={this.state.postTags}/> : <p></p>}
             </div>
+
+            <div className="newTags">
+              <div className="newTagsButton" style={{}}>
+                <a style={{backgroundColor: '#FF5657'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.toggleNewTag())}>New Tags</a>
+              </div>
+              {this.state.showNewTag ?
+                // <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
+                // tags={this.state.postTags}/>
+                <NewTag />
+                : <p></p>}
+            </div>
+
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
