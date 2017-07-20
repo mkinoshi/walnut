@@ -260,38 +260,35 @@ router.post('/save/about', (req, res) => {
                globalResponse.currentOccupationCity = req.body.currentOccupationCity;
                globalResponse.pastOccupations = req.body.pastOccupations;
                if (req.body.education) {
-                const addr = req.body.education.split(' ').join('+');
-                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-                return axios.get(locationUrl);
-               } else {
-                 return null;
+                 const addr = req.body.education.split(' ').join('+');
+                 const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+                 return axios.get(locationUrl);
                }
+               return null;
              })
              .then((resp) => {
                if (resp && req.body.currentOccupationCity) {
-                const jsonResp = resp.data.results[0];
-                globalResponse.location.college = [jsonResp.geometry.location.lng,
+                 const jsonResp = resp.data.results[0];
+                 globalResponse.location.college = [jsonResp.geometry.location.lng,
                 jsonResp.geometry.location.lat];
-                const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
-                const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
-                return axios.get(locationOccupationUrl);
+                 const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
+                 const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
+                 return axios.get(locationOccupationUrl);
                } else if (req.body.currentOccupationCity) {
-                const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
-                const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
-                return axios.get(locationOccupationUrl);
+                 const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
+                 const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
+                 return axios.get(locationOccupationUrl);
                } else if (resp) {
-                const jsonResp = resp.data.results[0];
-                globalResponse.location.college = [jsonResp.geometry.location.lng,
+                 const jsonResp = resp.data.results[0];
+                 globalResponse.location.college = [jsonResp.geometry.location.lng,
                 jsonResp.geometry.location.lat];
-                 return null;
-               } else {
-                 return null;
                }
+               return null;
              })
              .then((respond) => {
                if (respond) {
-                const jsonp = respond.data.results[0];
-                globalResponse.location.occupation = [jsonp.geometry.location.lng,
+                 const jsonp = respond.data.results[0];
+                 globalResponse.location.occupation = [jsonp.geometry.location.lng,
                 jsonp.geometry.location.lat];
                }
                return globalResponse.save();
@@ -324,8 +321,8 @@ router.post('/save/contact', (req, res) => {
             })
              .then((resp) => {
                if (resp) {
-                const jsonResp = resp.data.results[0];
-                globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
+                 const jsonResp = resp.data.results[0];
+                 globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
                 jsonResp.geometry.location.lat];
                }
                return globalResponse.save();
@@ -405,8 +402,8 @@ router.get('/get/allusers', (req, res) => {
         res.json({data: response});
       })
       .catch((err) => {
-        res.json({data: null})
-      })
+        res.json({data: null});
+      });
 });
 
 router.get('/get/allprofiles', (req, res) => {
@@ -416,50 +413,48 @@ router.get('/get/allprofiles', (req, res) => {
          })
         .catch((err) => {
           res.json({data: null});
-        })
+        });
 });
 
 router.get('/get/specprofile', (req, res) => {
   Profile.findOne({owner: req.query.owner})
          .then((userProfile) => {
-               console.log(userProfile);
-               const data = {
-                 isCreated: userProfile.isCreated,
-                 head: {
-                   fullName: userProfile.fullName,
-                   tags: userProfile.tags,
-                   blurb: userProfile.blurb,
-                   profileURL: userProfile.profileURL
-                 },
-                 info: {
-                   about: {
-                     education: userProfile.education,
-                     majors: userProfile.majors,
-                     currentOccupation: userProfile.currentOccupation,
-                     currentOccupationCity: userProfile.currentOccupationCity,
-                     pastOccupations: userProfile.pastOccupations
-                   },
-                   contact: {
-                     email: userProfile.email,
-                     address: userProfile.address,
-                     phone: userProfile.phone
-                   },
-                   interests: userProfile.interests,
-                   projects: userProfile.projects,
-                   links: userProfile.links
-                 },
-                 main: {
-                   portfolio: userProfile.portfolio,
-                   story: userProfile.story
-                 }
-               };
-               res.json({data: data});
-             })
-             .catch((err) => {
-               console.log(err);
-               res.json({data: null});
-             });
-
-})
+           const data = {
+             isCreated: userProfile.isCreated,
+             head: {
+               fullName: userProfile.fullName,
+               tags: userProfile.tags,
+               blurb: userProfile.blurb,
+               profileURL: userProfile.profileURL
+             },
+             info: {
+               about: {
+                 education: userProfile.education,
+                 majors: userProfile.majors,
+                 currentOccupation: userProfile.currentOccupation,
+                 currentOccupationCity: userProfile.currentOccupationCity,
+                 pastOccupations: userProfile.pastOccupations
+               },
+               contact: {
+                 email: userProfile.email,
+                 address: userProfile.address,
+                 phone: userProfile.phone
+               },
+               interests: userProfile.interests,
+               projects: userProfile.projects,
+               links: userProfile.links
+             },
+             main: {
+               portfolio: userProfile.portfolio,
+               story: userProfile.story
+             }
+           };
+           res.json({data: data});
+         })
+        .catch((err) => {
+          console.log(err);
+          res.json({data: null});
+        });
+});
 
 module.exports = router;
