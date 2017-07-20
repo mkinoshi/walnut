@@ -58,7 +58,7 @@ Navbar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  pictureURL: state.fbUserReducer.pictureURL
+  pictureURL: state.userReducer.pictureURL
 });
 
 const mapDispatchToProps = () => ({

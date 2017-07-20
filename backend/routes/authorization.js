@@ -3,7 +3,7 @@ var  express = require('express');
 var models = require('../models/models');
 var User = models.User;
 var Tag = models.Tag;
-const UserProfile = models.UserProfile;
+const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
 
@@ -53,7 +53,7 @@ function auth(passport) {
         return doc
       })
       .then((doc) => {
-        const newProf = new UserProfile({
+        const newProf = new Profile({
           owner: doc._id,
           isCreated: false,
           fullName: doc.fname + ' ' + doc.lname,
@@ -101,7 +101,7 @@ function auth(passport) {
   router.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/login');
-  })
+  });
 
   return router;
 }

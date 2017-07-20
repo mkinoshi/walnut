@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, UserProfile} from '../models/models';
+import {User, Tag, Post, Quote, Profile} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
+
 
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
@@ -58,19 +59,22 @@ router.get('/get/discoverinfo', (req, res) => {
           })
         };
       });
+      console.log('here', filters, posts);
       res.json({filters: filters, posts: posts});
     })
     .catch((err) => {
+      console.log('error 1', err);
       res.json(err);
     });
   })
   .catch((err) => {
+    console.log('error 2', err);
     res.json({error: err});
   });
 });
 
 router.get('/get/profileinfo', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((userProfile) => {
                const data = {
                  isCreated: userProfile.isCreated,
@@ -94,7 +98,7 @@ router.get('/get/profileinfo', (req, res) => {
                      phone: userProfile.phone
                    },
                    interests: userProfile.interests,
-                   projects: UserProfile.projects,
+                   projects: userProfile.projects,
                    links: userProfile.links
                  },
                  main: {
@@ -214,7 +218,7 @@ router.get('/get/quote', (req, res) => {
 });
 
 router.post('/save/blurb', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.blurb = req.body.blurbBody;
                return response.save();
@@ -230,7 +234,7 @@ router.post('/save/blurb', (req, res) => {
 });
 
 router.post('/save/tags', (req, res) => {
-  UserProfile.findOne({owner: req.user._id}) // user req.user._id
+  Profile.findOne({owner: req.user._id}) // user req.user._id
              .then((response) => {
                response.tags = req.body.tagsArray;
                return response.save();
@@ -245,7 +249,7 @@ router.post('/save/tags', (req, res) => {
 });
 
 router.post('/save/interests', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.interests = req.body.interestsArray;
                return response.save();
@@ -261,7 +265,7 @@ router.post('/save/interests', (req, res) => {
 
 router.post('/save/about', (req, res) => {
   let globalResponse = {};
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.body.id})
              .then((response) => {
                globalResponse = response;
                globalResponse.education = req.body.education;
@@ -298,17 +302,17 @@ router.post('/save/about', (req, res) => {
 
 router.post('/save/contact', (req, res) => {
   let globalResponse;
-  UserProfile.findOne({owner: req.user._id})
-             .then((response) => {
-               globalResponse = response;
-               response.email = req.body.email;
-               response.address = req.body.address;
-               response.phone = req.body.phone;
-               response.location = req.body.location;
-               const addr = req.body.address.split(' ').join('+');
-               const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-               return axios.get(locationUrl);
-             })
+  Profile.findOne({owner: req.user._id})
+    .then((response) => {
+      globalResponse = response;
+      response.email = req.body.email;
+      response.address = req.body.address;
+      response.phone = req.body.phone;
+      response.location = req.body.location;
+      const addr = req.body.address.split(' ').join('+');
+      const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+      return axios.get(locationUrl);
+    })
              .then((resp) => {
                const jsonResp = resp.data.results[0];
                globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
@@ -326,7 +330,7 @@ router.post('/save/contact', (req, res) => {
 });
 
 router.post('/save/links', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.links = req.body.linksArray;
                return response.save();
@@ -341,7 +345,7 @@ router.post('/save/links', (req, res) => {
 });
 
 router.post('/save/iscreated', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.isCreated = true;
                return response.save();
@@ -369,7 +373,7 @@ router.post('/save/iscreated', (req, res) => {
                     phone: userProfile.phone
                   },
                   interests: userProfile.interests,
-                  projects: UserProfile.projects,
+                  projects: userProfile.projects,
                   links: userProfile.links
                 },
                 main: {
@@ -377,10 +381,12 @@ router.post('/save/iscreated', (req, res) => {
                   story: userProfile.story
                 }
               };
+              console.log('in backend', data);
               res.json({data: data});
             })
             .catch((err) => {
               console.log(err);
+              console.log('in error', err);
               res.json({data: null});
             });
 });
