@@ -206,7 +206,6 @@ export const apiMiddleware = store => next => action => {
     case 'GET_ALL_USERS':
       axios.get(URL + 'db/get/allusers')
       .then((response) => {
-        console.log('deck middleware', response);
         store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
       })
       .catch((err) =>{
@@ -225,6 +224,17 @@ export const apiMiddleware = store => next => action => {
       .catch((err) =>{
         console.log('error in getting profile data', err);
         store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
+      });
+      break;
+    case 'GET_ALL_PROFILES':
+      axios.get(URL + 'db/get/allprofiles')
+      .then((response) => {
+        console.log('deck middleware', response);
+        store.dispatch({type: 'GET_ALL_PROFILES_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_PROFILES_ERROR'});
       });
       break;
     default:

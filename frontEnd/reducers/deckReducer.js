@@ -126,10 +126,10 @@ const dummyData = {
 
 const deckReducer = (state = [], action) => {
   switch(action.type) {
-    case 'GET_ALL_USERS_DONE':
+    case 'GET_ALL_PROFILES_DONE':
       console.log('in deckReducer', action.data);
       return action.data;
-    case 'GET_ALL_USERS_ERROR':
+    case 'GET_ALL_PROFILES_ERROR':
       return state;
     default:
       return state;
