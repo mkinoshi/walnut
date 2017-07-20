@@ -87,6 +87,7 @@ router.get('/get/profileinfo', (req, res) => {
                      education: userProfile.education,
                      majors: userProfile.majors,
                      currentOccupation: userProfile.currentOccupation,
+                     currentOccupationCity: userProfile.currentOccupationCity,
                      pastOccupations: userProfile.pastOccupations
                    },
                    contact: {
@@ -361,6 +362,7 @@ router.post('/save/iscreated', (req, res) => {
                     education: userProfile.education,
                     majors: userProfile.majors,
                     currentOccupation: userProfile.currentOccupation,
+                    currentOccupationCity: userProfile.currentOccupationCity,
                     pastOccupations: userProfile.pastOccupations
                   },
                   contact: {

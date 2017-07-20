@@ -10,6 +10,21 @@ class LocationSearch extends React.Component {
     this.onChange = (address) => this.setState({ address });
   }
 
+  handleFormEnter(event) {
+    // event.preventDefault();
+
+    geocodeByAddress(this.state.address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log('Success', latLng);
+        this.props.updateCenter(latLng);
+        this.props.updateZoom();
+      })
+      .catch(error => console.error('Error', error));
+  }
+
+
+
   handleFormSubmit(event) {
     event.preventDefault();
 
@@ -31,7 +46,7 @@ class LocationSearch extends React.Component {
 
     return (
       <form onSubmit={this.handleFormSubmit.bind(this)}>
-        <PlacesAutocomplete inputProps={inputProps} />
+        <PlacesAutocomplete inputProps={inputProps} onEnterKeyDown={this.handleFormEnter.bind(this)}/>
         <button type="submit">Submit</button>
       </form>
     );

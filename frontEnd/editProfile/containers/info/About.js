@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { connect } from 'react-redux';
 
 const styles = {
@@ -24,6 +25,7 @@ class About extends React.Component {
       education: this.props.education,
       majors: this.props.majors,
       currentOccupation: this.props.currentOccupation,
+      currentOccupationCity: this.props.currentOccupationCity,
       pastOccupations: this.props.pastOccupations
     });
   }
@@ -54,6 +56,10 @@ class About extends React.Component {
   }
 
   render() {
+    const inputProps = {
+      value: this.state.currentOccupationCity,
+      onChange: (e) => this.aboutChange(e, 'currentOccupationCity')
+    };
     return (
       <div style={styles.about}>
         <h1>About</h1>
@@ -95,6 +101,14 @@ class About extends React.Component {
            :
            <p>{this.state.currentOccupation ? this.state.currentOccupation : this.props.currentOccupation}</p>}
 
+        <p>Current Occupation City</p>
+        {this.state.edit ?
+          <PlacesAutocomplete inputProps={inputProps} />
+          // <input value={this.state.currentOccupationCity}
+          //   onChange={(e) => (this.aboutChange(e.target.value, 'currentOccupationCity'))} />
+           :
+           <p>{this.state.currentOccupationCity ? this.state.currentOccupationCity : this.props.currentOccupationCity}</p>}
+
         {this.state.edit ?
           <p onClick={() => (this.add('pastOccupations'))}>Add</p> : <p></p>}
         <p>Past Occupations</p>
@@ -133,6 +147,7 @@ About.propTypes = {
   education: PropTypes.string,
   majors: PropTypes.array,
   currentOccupation: PropTypes.string,
+  currentOccupationCity: PropTypes.string,
   pastOccupations: PropTypes.array,
   saveAbout: PropTypes.func
 };
@@ -141,6 +156,7 @@ const mapStateToProps = (state) => ({
   education: state.createProfileReducer.info.about.education,
   majors: state.createProfileReducer.info.about.majors,
   currentOccupation: state.createProfileReducer.info.about.currentOccupation,
+  currentOccupationCity: state.createProfileReducer.info.about.currentOccupationCity,
   pastOccupations: state.createProfileReducer.info.about.pastOccupations
 });
 
