@@ -2,6 +2,8 @@ import express from 'express';
 const router = express.Router();
 import {User, Tag, Post, Quote, UserProfile} from '../models/models';
 import request from 'request';
+import rp from 'request-promise';
+
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -257,16 +259,28 @@ router.post('/save/interests', (req, res) => {
 });
 
 router.post('/save/about', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  UserProfile.findOne({owner: req.body.id})
              .then((response) => {
                response.education = req.body.education;
                response.majors = req.body.majors;
                response.currentOccupation = req.body.currentOccupation;
                response.pastOccupations = req.body.pastOccupations;
-               return response.save();
-             })
-             .then(() => {
-               res.json({success: true});
+               const addr = req.body.education.split(' ').join('+');
+               const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+               request(locationUrl, function(error, resp, body) {
+                 const jsonResp = JSON.parse(resp.body);
+                 response.location = [jsonResp.results[0].geometry.location.lng,
+                 jsonResp.results[0].geometry.location.lat];
+                 response.save()
+                 .then((data) => {
+                   console.log(data);
+                   res.json({success: true});
+                 })
+                 .catch((err) => {
+                   console.log(err);
+                   res.json({success: false});
+                 });
+               });
              })
              .catch((err) => {
                console.log(err);
@@ -275,33 +289,28 @@ router.post('/save/about', (req, res) => {
 });
 
 router.post('/save/contact', (req, res) => {
-  UserProfile.findOne({owner: req.body.id})
+  UserProfile.findOne({owner: req.user._id})
              .then((response) => {
                response.email = req.body.email;
                response.address = req.body.address;
                response.phone = req.body.phone;
                response.location = req.body.location;
-              //  const addr = req.body.address.split(' ').join('+');
-              //  const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-              //  request(locationUrl, function(error, resp, body) {
-              //    const jsonResp = JSON.parse(resp.body);
-              //    response.location = [jsonResp.results[0].geometry.location.lng,
-              //    jsonResp.results[0].geometry.location.lat];
-              //    response.save()
-              //    .then((data) => {
-              //      console.log(data);
-              //      res.json({success: true});
-              //    })
-              //    .catch((err) => {
-              //      console.log(err);
-              //      res.json({success: false});
-              //    });
-              //  });
-               return response.save();
-             })
-             .then((data) => {
-               console.log(data);
-               res.json({success: true});
+               const addr = req.body.address.split(' ').join('+');
+               const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+               request(locationUrl, function(error, resp, body) {
+                 const jsonResp = JSON.parse(resp.body);
+                 response.location = [jsonResp.results[0].geometry.location.lng,
+                 jsonResp.results[0].geometry.location.lat];
+                 response.save()
+                 .then((data) => {
+                   console.log(data);
+                   res.json({success: true});
+                 })
+                 .catch((err) => {
+                   console.log(err);
+                   res.json({success: false});
+                 });
+               });
              })
              .catch((err) => {
                console.log(err);
