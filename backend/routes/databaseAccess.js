@@ -251,7 +251,7 @@ router.post('/save/interests', (req, res) => {
 });
 router.post('/save/about', (req, res) => {
   let globalResponse = {};
-  Profile.findOne({owner: req.body.id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                globalResponse = response;
                globalResponse.education = req.body.education;
