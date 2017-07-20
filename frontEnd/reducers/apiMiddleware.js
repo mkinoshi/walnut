@@ -113,6 +113,7 @@ export const apiMiddleware = store => next => action => {
         education: action.about.education,
         majors: action.about.majors,
         currentOccupation: action.about.currentOccupation,
+        currentOccupationCity: action.about.currentOccupationCity,
         pastOccupations: action.about.pastOccupations
       })
       .then((success) => {
