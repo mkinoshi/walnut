@@ -173,7 +173,7 @@ export const apiMiddleware = store => next => action => {
       axios.post(URL + 'db/save/iscreated')
       .then((response) => {
         console.log('response', response);
-        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in creating profile', err);
@@ -183,7 +183,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_PROFILE_INFO':
       axios.get(URL + 'db/get/profileinfo')
       .then((response) => {
-        store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
         console.log('error in getting profile data', err);
@@ -201,6 +201,30 @@ export const apiMiddleware = store => next => action => {
         console.log('error in newComment', err);
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
         store.dispatch({type: 'STATE_FILLED_ERROR'});
+      });
+      break;
+    case 'GET_ALL_USERS':
+      axios.get(URL + 'db/get/allusers')
+      .then((response) => {
+        console.log('deck middleware', response);
+        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_ERROR'});
+      });
+      break;
+    case 'GET_ONE_PROFILE':
+      axios.get(URL + 'db/get/specprofile', {
+        owner: action.id
+      })
+      .then((response) => {
+        console.log('in one profile get', response);
+        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting profile data', err);
+        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
       });
       break;
     default:

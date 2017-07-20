@@ -123,3 +123,19 @@ const dummyData = {
     },
   ]
 };
+
+const deckReducer = (state = [], action) => {
+  switch(action.type) {
+    case 'GET_ALL_USERS_DONE':
+      console.log('in deckReducer', action.data);
+      return action.data;
+    case 'GET_ALL_USERS_ERROR':
+      return state;
+    default:
+      return state;
+  }
+};
+
+export default deckReducer;
+
+

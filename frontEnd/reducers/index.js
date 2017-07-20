@@ -6,6 +6,7 @@ import userReducer from './userReducer';
 import createProfileReducer from './createProfileReducer';
 import mapReducer from './mapReducer';
 import appReducer from './appReducer';
+import deckReducer from './deckReducer';
 
 const rootReducer = combineReducers({
   userReducer: userReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   createProfileReducer: createProfileReducer,
   mapReducer: mapReducer,
   appReducer: appReducer,
+  deckReducer: deckReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 
