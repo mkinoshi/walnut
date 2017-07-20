@@ -56,7 +56,11 @@ const UserSchema = new mongoose.Schema({
     {
       type: String
     }
-  ]
+  ],
+  Profile: {
+    type: mongoose.Schema.Types.ObjectId,
+      ref: 'Profile'
+  }
 });
 
 const UserIdentitySchema = new mongoose.Schema({
