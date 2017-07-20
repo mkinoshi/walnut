@@ -40,29 +40,15 @@ function auth(passport) {
       //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
     } else {
       var new_user = new User({
-        fname: req.body.fname,
-        lname: req.body.lname,
+        fullName: req.body.fname + ' ' + req.body.lname,
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
         preferences: req.body.tags
       });
-      new_user.save()
+      return new_user.save()
       .then((doc) => {
         console.log(doc);
-        return doc
-      })
-      .then((doc) => {
-        const newProf = new Profile({
-          owner: doc._id,
-          isCreated: false,
-          fullName: doc.fname + ' ' + doc.lname,
-          email: doc.email
-        });
-        return newProf.save()
-      })
-      .then((doc2) => {
-        console.log(doc2);
         res.status(200);
         res.redirect('/auth/login')
       })
@@ -70,11 +56,11 @@ function auth(passport) {
         console.log(err);
       })
     }
-  })
+  });
 
   router.get('/auth/login', function(req, res) {
     res.render('login');
-  })
+  });
 
   router.post('/auth/login', passport.authenticate('local', {
     successRedirect: '/app',

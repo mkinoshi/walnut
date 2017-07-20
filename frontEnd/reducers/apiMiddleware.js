@@ -216,28 +216,28 @@ export const apiMiddleware = store => next => action => {
       break;
     case 'GET_ONE_PROFILE':
       axios.get(URL + 'db/get/specprofile', {
-        owner: action.id
+        owner: action.owner
       })
       .then((response) => {
         console.log('in one profile get', response);
-        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data});
+        store.dispatch({type: 'GET_ONE_PROFILE_DONE', data: response.data});
       })
       .catch((err) =>{
         console.log('error in getting profile data', err);
-        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
+        store.dispatch({type: 'GET_ONE_PROFILE_ERROR'});
       });
       break;
-    case 'GET_ALL_PROFILES':
-      axios.get(URL + 'db/get/allprofiles')
-      .then((response) => {
-        console.log('deck middleware', response);
-        store.dispatch({type: 'GET_ALL_PROFILES_DONE', data: response.data});
-      })
-      .catch((err) =>{
-        console.log('error in getting users', err);
-        store.dispatch({type: 'GET_ALL_PROFILES_ERROR'});
-      });
-      break;
+    // case 'GET_ALL_PROFILES':
+    //   axios.get(URL + 'db/get/allprofiles')
+    //   .then((response) => {
+    //     console.log('deck middleware', response);
+    //     store.dispatch({type: 'GET_ALL_PROFILES_DONE', data: response.data});
+    //   })
+    //   .catch((err) =>{
+    //     console.log('error in getting users', err);
+    //     store.dispatch({type: 'GET_ALL_PROFILES_ERROR'});
+    //   });
+    //   break;
     default:
       break;
   }

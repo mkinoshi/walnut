@@ -15,7 +15,7 @@ class DeckContainer extends React.Component {
     }
 
     handleClick(id) {
-
+        this.props.renderProfile(id)
     }
 
   render() {
@@ -30,7 +30,8 @@ class DeckContainer extends React.Component {
 
 
 DeckContainer.propTypes = {
-    profiles: PropTypes.array
+    profiles: PropTypes.array,
+    renderProfile: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -38,7 +39,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    
+    renderProfile: (id) => dispatch({type: 'GET_ONE_PROFILE', owner: id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
