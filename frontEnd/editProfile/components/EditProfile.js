@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Head from '../containers/Head';
 import Main from './main/Main';
 import Info from './Info';
+import { Link} from 'react-router-dom';
 
 
 class EditProfileContainer extends React.Component {
@@ -24,7 +25,7 @@ class EditProfileContainer extends React.Component {
         <Head />
         {/* <Main /> */}
         <Info />
-          {this.props.isCreating ? <button onClick={() =>{this.handleClick();}}>Done</button> : null}
+          {this.props.isCreating ? <button onClick={() =>{this.handleClick();}}><Link to="/app">Done</Link></button> : null}
       </div>
     );
   }
