@@ -21,6 +21,8 @@ const styles = {
   }
 };
 
+const URL = 'localhost:3000';
+
 class Navbar extends React.Component {
 
   render() {
@@ -36,7 +38,8 @@ class Navbar extends React.Component {
               <li><Link to="/app/editprofile" style={styles.links}>Edit</Link></li>
             </ul>
             <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
-          <div className="right col s8">
+            <a href="/logout">logout</a>
+            <div className="right col s8">
               <div className="left input-field s6">
                 <i className="small material-icons prefix">search</i>
                 <input id="icon_search" type="tel" className="validate" />
