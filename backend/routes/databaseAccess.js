@@ -58,13 +58,16 @@ router.get('/get/discoverinfo', (req, res) => {
           })
         };
       });
+      console.log('here', filters, posts);
       res.json({filters: filters, posts: posts});
     })
     .catch((err) => {
+      console.log('error 1', err);
       res.json(err);
     });
   })
   .catch((err) => {
+    console.log('error 2', err);
     res.json({error: err});
   });
 });
@@ -361,7 +364,7 @@ router.post('/save/iscreated', (req, res) => {
                     phone: userProfile.phone
                   },
                   interests: userProfile.interests,
-                  projects: UserProfile.projects,
+                  projects: userProfile.projects,
                   links: userProfile.links
                 },
                 main: {
@@ -369,10 +372,12 @@ router.post('/save/iscreated', (req, res) => {
                   story: userProfile.story
                 }
               };
+              console.log('in backend', data);
               res.json({data: data});
             })
             .catch((err) => {
               console.log(err);
+              console.log('in error', err);
               res.json({data: null});
             });
 });

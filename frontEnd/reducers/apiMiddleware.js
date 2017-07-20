@@ -171,6 +171,7 @@ export const apiMiddleware = store => next => action => {
     case 'CREATE_PROFILE':
       axios.post(URL + 'db/save/iscreated')
       .then((response) => {
+        console.log('response', response);
         store.dispatch({type: 'GET_PROFLE_DATA_DONE', data: response.data.data});
       })
       .catch((err) =>{
@@ -191,7 +192,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
-        console.log(response);
+        console.log('discover', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
         store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })

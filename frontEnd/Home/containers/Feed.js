@@ -89,6 +89,10 @@ class Feed extends React.Component {
     };
   }
 
+  componentDidMount() {
+
+  }
+
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
@@ -162,7 +166,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id})
+  newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id}),
+  getData: () => dispatch({type: 'GET_DISCOVER_INFO'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);
