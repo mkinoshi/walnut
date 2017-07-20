@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import ProfileContainer from './containers/ProfileContainer';
-import ContactList from './ContactList';
+// import ContactList from './ContactList';
 
 const styles = {
   header: {
@@ -17,7 +17,7 @@ class Directory extends React.Component {
     return (
         <div>
           <h1 style={styles.header}>I am the directory</h1>
-          <ContactList />
+          {/* <ContactList /> */}
         </div>
     );
   }

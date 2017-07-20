@@ -4,14 +4,14 @@ const URL = 'http://localhost:3000/';
 export const apiMiddleware = store => next => action => {
   next(action);
   switch(action.type) {
-    case 'GET_FB_DATA':
+    case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
        .then((response) => {
-         store.dispatch({type: 'GET_FB_DATA_DONE', data: response.data.data});
+         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
        })
        .catch((err) => {
          console.log('getting error in login', err);
-         store.dispatch({type: 'GET_FB_DATA_ERROR'});
+         store.dispatch({type: 'GET_USER_DATA_ERROR'});
        });
       break;
     case 'NEW_COMMENT':
@@ -191,6 +191,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
+        console.log(response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
         store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })
