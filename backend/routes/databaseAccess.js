@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 import {User, Tag, Post, Quote, UserProfile} from '../models/models';
-import request from 'request';
-import rp from 'request-promise';
+import axios from 'axios';
+import Promise from 'promise';
 
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
@@ -259,28 +259,35 @@ router.post('/save/interests', (req, res) => {
 });
 
 router.post('/save/about', (req, res) => {
-  UserProfile.findOne({owner: req.body.id})
+  let globalResponse = {};
+  UserProfile.findOne({owner: req.user._id})
              .then((response) => {
-               response.education = req.body.education;
-               response.majors = req.body.majors;
-               response.currentOccupation = req.body.currentOccupation;
-               response.pastOccupations = req.body.pastOccupations;
+               globalResponse = response;
+               globalResponse.education = req.body.education;
+               globalResponse.majors = req.body.majors;
+               globalResponse.currentOccupation = req.body.currentOccupation;
+               globalResponse.currentOccupationCity = req.body.currentOccupationCity;
+               globalResponse.pastOccupations = req.body.pastOccupations;
                const addr = req.body.education.split(' ').join('+');
                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-               request(locationUrl, function(error, resp, body) {
-                 const jsonResp = JSON.parse(resp.body);
-                 response.location = [jsonResp.results[0].geometry.location.lng,
-                 jsonResp.results[0].geometry.location.lat];
-                 response.save()
-                 .then((data) => {
-                   console.log(data);
-                   res.json({success: true});
-                 })
-                 .catch((err) => {
-                   console.log(err);
-                   res.json({success: false});
-                 });
-               });
+               return axios.get(locationUrl);
+             })
+             .then((resp) => {
+               const jsonResp = resp.data.results[0];
+               globalResponse.location.college = [jsonResp.geometry.location.lng,
+               jsonResp.geometry.location.lat];
+               const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
+               const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
+               return axios.get(locationOccupationUrl);
+             })
+             .then((respond) => {
+               const jsonp = respond.data.results[0];
+               globalResponse.location.occupation = [jsonp.geometry.location.lng,
+               jsonp.geometry.location.lat];
+               return globalResponse.save();
+             })
+             .then((data) => {
+               res.json({success: true});
              })
              .catch((err) => {
                console.log(err);
@@ -289,28 +296,27 @@ router.post('/save/about', (req, res) => {
 });
 
 router.post('/save/contact', (req, res) => {
+  let globalResponse;
   UserProfile.findOne({owner: req.user._id})
              .then((response) => {
+               globalResponse = response;
                response.email = req.body.email;
                response.address = req.body.address;
                response.phone = req.body.phone;
                response.location = req.body.location;
                const addr = req.body.address.split(' ').join('+');
                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-               request(locationUrl, function(error, resp, body) {
-                 const jsonResp = JSON.parse(resp.body);
-                 response.location = [jsonResp.results[0].geometry.location.lng,
-                 jsonResp.results[0].geometry.location.lat];
-                 response.save()
-                 .then((data) => {
-                   console.log(data);
-                   res.json({success: true});
-                 })
-                 .catch((err) => {
-                   console.log(err);
-                   res.json({success: false});
-                 });
-               });
+               return axios.get(locationUrl);
+             })
+             .then((resp) => {
+               const jsonResp = resp.data.results[0];
+               globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
+               jsonResp.geometry.location.lat];
+               return globalResponse.save();
+             })
+             .then((data) => {
+               console.log(data);
+               res.json({success: true});
              })
              .catch((err) => {
                console.log(err);

@@ -93,7 +93,7 @@ const UserProfileSchema = new mongoose.Schema({
   },
   currentOccupationCity: {
     type: String,
-    default: null
+    default: ''
   },
   pastOccupations: {
     type: Array
