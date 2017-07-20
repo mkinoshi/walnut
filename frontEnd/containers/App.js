@@ -3,7 +3,6 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import NavBar from './NavBar';
 import Home from '../Home/components/Home';
 import Map from '../Map/containers/Map';
-import CreateProfile from './CreateProfile';
 import Directory from '../Directory/Directory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -20,6 +19,7 @@ const styles = {
 class App extends React.Component {
 
   render() {
+    console.log(this.props);
     return (
       <BrowserRouter>
         <div>
