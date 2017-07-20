@@ -14,7 +14,7 @@ class DeckContainer extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
+    handleClick(id) {
 
     }
 
@@ -37,7 +37,8 @@ const mapStateToProps = (state) => ({
     profiles: state.deckReducer
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+    
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
