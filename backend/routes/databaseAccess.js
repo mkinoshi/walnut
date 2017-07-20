@@ -259,22 +259,41 @@ router.post('/save/about', (req, res) => {
                globalResponse.currentOccupation = req.body.currentOccupation;
                globalResponse.currentOccupationCity = req.body.currentOccupationCity;
                globalResponse.pastOccupations = req.body.pastOccupations;
-               const addr = req.body.education.split(' ').join('+');
-               const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-               return axios.get(locationUrl);
+               if (req.body.education) {
+                const addr = req.body.education.split(' ').join('+');
+                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+                return axios.get(locationUrl);
+               } else {
+                 return null;
+               }
              })
              .then((resp) => {
-               const jsonResp = resp.data.results[0];
-               globalResponse.location.college = [jsonResp.geometry.location.lng,
-               jsonResp.geometry.location.lat];
-               const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
-               const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
-               return axios.get(locationOccupationUrl);
+               if (resp && req.body.currentOccupationCity) {
+                const jsonResp = resp.data.results[0];
+                globalResponse.location.college = [jsonResp.geometry.location.lng,
+                jsonResp.geometry.location.lat];
+                const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
+                const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
+                return axios.get(locationOccupationUrl);
+               } else if (req.body.currentOccupationCity) {
+                const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
+                const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
+                return axios.get(locationOccupationUrl);
+               } else if (resp) {
+                const jsonResp = resp.data.results[0];
+                globalResponse.location.college = [jsonResp.geometry.location.lng,
+                jsonResp.geometry.location.lat];
+                 return null;
+               } else {
+                 return null;
+               }
              })
              .then((respond) => {
-               const jsonp = respond.data.results[0];
-               globalResponse.location.occupation = [jsonp.geometry.location.lng,
-               jsonp.geometry.location.lat];
+               if (respond) {
+                const jsonp = respond.data.results[0];
+                globalResponse.location.occupation = [jsonp.geometry.location.lng,
+                jsonp.geometry.location.lat];
+               }
                return globalResponse.save();
              })
              .then((data) => {
@@ -285,23 +304,30 @@ router.post('/save/about', (req, res) => {
                res.json({success: false});
              });
 });
+
 router.post('/save/contact', (req, res) => {
   let globalResponse;
   Profile.findOne({owner: req.user._id})
-    .then((response) => {
-      globalResponse = response;
-      response.email = req.body.email;
-      response.address = req.body.address;
-      response.phone = req.body.phone;
-      response.location = req.body.location;
-      const addr = req.body.address.split(' ').join('+');
-      const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-      return axios.get(locationUrl);
-    })
+            .then((response) => {
+              globalResponse = response;
+              response.email = req.body.email;
+              response.address = req.body.address;
+              response.phone = req.body.phone;
+              response.location = req.body.location;
+              if (response.address) {
+                const addr = req.body.address.split(' ').join('+');
+                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
+                return axios.get(locationUrl);
+              } else {
+                return null;
+              }
+            })
              .then((resp) => {
-               const jsonResp = resp.data.results[0];
-               globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
-               jsonResp.geometry.location.lat];
+               if (resp) {
+                const jsonResp = resp.data.results[0];
+                globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
+                jsonResp.geometry.location.lat];
+               }
                return globalResponse.save();
              })
              .then((data) => {
