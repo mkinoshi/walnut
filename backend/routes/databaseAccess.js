@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, UserProfile} from '../models/models';
+import {User, Tag, Post, Quote, Profile} from '../models/models';
 import request from 'request';
 import rp from 'request-promise';
 
@@ -70,7 +70,7 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/profileinfo', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((userProfile) => {
                const data = {
                  isCreated: userProfile.isCreated,
@@ -93,7 +93,7 @@ router.get('/get/profileinfo', (req, res) => {
                      phone: userProfile.phone
                    },
                    interests: userProfile.interests,
-                   projects: UserProfile.projects,
+                   projects: userProfile.projects,
                    links: userProfile.links
                  },
                  main: {
@@ -213,7 +213,7 @@ router.get('/get/quote', (req, res) => {
 });
 
 router.post('/save/blurb', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.blurb = req.body.blurbBody;
                return response.save();
@@ -229,7 +229,7 @@ router.post('/save/blurb', (req, res) => {
 });
 
 router.post('/save/tags', (req, res) => {
-  UserProfile.findOne({owner: req.user._id}) // user req.user._id
+  Profile.findOne({owner: req.user._id}) // user req.user._id
              .then((response) => {
                response.tags = req.body.tagsArray;
                return response.save();
@@ -244,7 +244,7 @@ router.post('/save/tags', (req, res) => {
 });
 
 router.post('/save/interests', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.interests = req.body.interestsArray;
                return response.save();
@@ -259,7 +259,7 @@ router.post('/save/interests', (req, res) => {
 });
 
 router.post('/save/about', (req, res) => {
-  UserProfile.findOne({owner: req.body.id})
+  Profile.findOne({owner: req.body.id})
              .then((response) => {
                response.education = req.body.education;
                response.majors = req.body.majors;
@@ -289,7 +289,7 @@ router.post('/save/about', (req, res) => {
 });
 
 router.post('/save/contact', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.email = req.body.email;
                response.address = req.body.address;
@@ -319,7 +319,7 @@ router.post('/save/contact', (req, res) => {
 });
 
 router.post('/save/links', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.links = req.body.linksArray;
                return response.save();
@@ -334,7 +334,7 @@ router.post('/save/links', (req, res) => {
 });
 
 router.post('/save/iscreated', (req, res) => {
-  UserProfile.findOne({owner: req.user._id})
+  Profile.findOne({owner: req.user._id})
              .then((response) => {
                response.isCreated = true;
                return response.save();
