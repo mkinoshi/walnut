@@ -379,8 +379,8 @@ router.get('/get/allusers', (req, res) => {
         res.json({data: response});
       })
       .catch((err) => {
-        res.json({data: null})
-      })
+        res.json({data: null});
+      });
 });
 
 router.get('/get/allprofiles', (req, res) => {
@@ -390,50 +390,49 @@ router.get('/get/allprofiles', (req, res) => {
          })
         .catch((err) => {
           res.json({data: null});
-        })
+        });
 });
 
 router.get('/get/specprofile', (req, res) => {
   Profile.findOne({owner: req.query.owner})
          .then((userProfile) => {
-               console.log(userProfile);
-               const data = {
-                 isCreated: userProfile.isCreated,
-                 head: {
-                   fullName: userProfile.fullName,
-                   tags: userProfile.tags,
-                   blurb: userProfile.blurb,
-                   profileURL: userProfile.profileURL
-                 },
-                 info: {
-                   about: {
-                     education: userProfile.education,
-                     majors: userProfile.majors,
-                     currentOccupation: userProfile.currentOccupation,
-                     currentOccupationCity: userProfile.currentOccupationCity,
-                     pastOccupations: userProfile.pastOccupations
-                   },
-                   contact: {
-                     email: userProfile.email,
-                     address: userProfile.address,
-                     phone: userProfile.phone
-                   },
-                   interests: userProfile.interests,
-                   projects: userProfile.projects,
-                   links: userProfile.links
-                 },
-                 main: {
-                   portfolio: userProfile.portfolio,
-                   story: userProfile.story
-                 }
-               };
-               res.json({data: data});
-             })
+           console.log(userProfile);
+           const data = {
+             isCreated: userProfile.isCreated,
+             head: {
+               fullName: userProfile.fullName,
+               tags: userProfile.tags,
+               blurb: userProfile.blurb,
+               profileURL: userProfile.profileURL
+             },
+             info: {
+               about: {
+                 education: userProfile.education,
+                 majors: userProfile.majors,
+                 currentOccupation: userProfile.currentOccupation,
+                 currentOccupationCity: userProfile.currentOccupationCity,
+                 pastOccupations: userProfile.pastOccupations
+               },
+               contact: {
+                 email: userProfile.email,
+                 address: userProfile.address,
+                 phone: userProfile.phone
+               },
+               interests: userProfile.interests,
+               projects: userProfile.projects,
+               links: userProfile.links
+             },
+             main: {
+               portfolio: userProfile.portfolio,
+               story: userProfile.story
+             }
+           };
+           res.json({data: data});
+         })
              .catch((err) => {
                console.log(err);
                res.json({data: null});
              });
-
-})
+});
 
 module.exports = router;
