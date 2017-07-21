@@ -12,9 +12,10 @@ const store = createStore(
   applyMiddleware(createLogger, apiMiddleware)
 );
 
-store.dispatch({type: 'GET_DISCOVER_INFO'});
-store.dispatch({type: 'GET_PROFILE_INFO'});
+// store.dispatch({type: 'GET_DISCOVER_INFO'});
+// store.dispatch({type: 'GET_PROFILE_INFO'});
 store.dispatch({type: 'GET_USER_DATA'});
+
 
 ReactDOM.render(
   <Provider store={store}>

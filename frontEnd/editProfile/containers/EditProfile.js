@@ -2,9 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Head from '../containers/Head';
-import Main from './main/Main';
-import Info from './Info';
+import Head from './Head';
+import Main from '../components/main/Main';
+import Info from '../components/Info';
 import { Link} from 'react-router-dom';
 
 

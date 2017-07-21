@@ -32,13 +32,15 @@ router.post('/create/community', (req, res) => {
               return user.save();
             })
             .then(() => {
-              res.json({success: true, community: req.user.currentCommunity});
+              console.log('success', response);
+              res.json({success: true, community: response});
             })
             .catch((err) => {
               res.json({error: err});
             });
     })
     .catch((err) => {
+      console.log('got error', err);
       res.json({error: err});
     });
 });

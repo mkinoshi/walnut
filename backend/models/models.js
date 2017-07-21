@@ -103,6 +103,9 @@ const UserSchema = new mongoose.Schema({
   },
   tags: {
     type: Array
+  },
+  hasProfile: {
+    type: Boolean
   }
 });
 

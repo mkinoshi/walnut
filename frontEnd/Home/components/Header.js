@@ -1,6 +1,8 @@
 import React from 'react';
 import Quote from '../containers/Quote';
 import NewPost from '../containers/NewPost';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // TODO Header content
 // TODO Google drive link
@@ -48,15 +50,21 @@ const styles = {
     width: '100%'
   }
 };
-class Header extends React.Component {
+class HeaderContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+    };
+  }
 
   render() {
+    console.log('in Header', this.props.community);
     return (
       <div>
         <div style={styles.outer} >
-          <img src="http://i.imgur.com/EBNhMdD.png" style={styles.logs}/>
+          <img src={this.props.community.icon} style={styles.logs}/>
         <div style={styles.middle}>
-            <div id="title" style={styles.title}><h1 style={styles.company}>Horizons School Of Technology</h1></div>
+            <div id="title" style={styles.title}><h1 style={styles.company}>{this.props.community.title}</h1></div>
             <Quote />
           </div>
           <div style={styles.links}>
@@ -72,4 +80,17 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+HeaderContainer.propTypes = {
+  community: PropTypes.object
+};
+
+const mapStateToProps = (state) => ({
+  community: state.getCommunityReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+
+

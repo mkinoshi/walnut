@@ -89,9 +89,9 @@ class Feed extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getData();
-  }
+  // componentDidMount() {
+  //   this.props.getData();
+  // }
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});

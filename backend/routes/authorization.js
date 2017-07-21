@@ -63,7 +63,7 @@ function auth(passport) {
   });
 
   router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/app',
+    successRedirect: '/app/walnuthome',
     failureRedirect: '/auth/login'
   }));
 
@@ -72,7 +72,7 @@ function auth(passport) {
   router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('/app');
+      res.redirect('/app/walnuthome');
     }
   );
 
@@ -80,7 +80,7 @@ function auth(passport) {
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
-      res.redirect('/app');
+      res.redirect('/app/walnuthome');
     }
   });
 

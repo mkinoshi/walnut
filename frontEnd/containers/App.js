@@ -6,7 +6,9 @@ import Map from '../Map/containers/Map';
 import Directory from '../Directory/Directory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import EditProfile from '../editProfile/components/EditProfile';
+import EditProfile from '../editProfile/containers/EditProfile';
+import WalnutHomeContainer from '../WalnutHome/WalnutHomeContainer';
+import CommunityCard from '../WalnutHome/CommunityCard';
 
 const styles = {
   App: {
@@ -17,33 +19,34 @@ const styles = {
 };
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+    };
+  }
 
   render() {
-    console.log(this.props);
     return (
       <BrowserRouter>
         <div>
-          {(!this.props.isLoaded) ?
-            <div style={styles.App}>
-              <h1>I am supposed to be animating while our super fast server is loading</h1>
-            </div>
-          :
-          <div>
-          {this.props.isCreated ?
-            <div>
-            <NavBar />
-            <Switch>
-              {/* <Route path="/app" component={(!this.state.profileCreated) ? Home : CreateProfile }/> */}
-              <Route path="/app/editprofile" component={EditProfile}/>
-              <Route path="/app/projects" component={Home}/>
-              <Route path="/app/directory" component={Directory} />
-              <Route path="/app/map" component={Map}/>
-              <Route path="/app" component={Home} />
-            </Switch></div>
-            :
-            <EditProfile isCreating={!null}/>}
-          </div>
-        }
+          <Switch>
+            <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
+            <Route path="/app/community" component={Home} />
+          </Switch>
+          {/* <div>*/}
+          {/* {this.props.isCreated ?*/}
+            {/* <div>*/}
+            {/* <NavBar />*/}
+            {/* <Switch>*/}
+               {/* <Route path="/app/editprofile" component={EditProfile}/>*/}
+               {/* <Route path="/app/projects" component={Home}/>*/}
+               {/* <Route path="/app/directory" component={Directory} />*/}
+               {/* <Route path="/app/map" component={Map}/>*/}
+               {/* <Route path="/app" component={Home} />*/}
+            {/* </Switch></div>*/}
+            {/* :*/}
+            {/* <EditProfile isCreating={!null}/>}*/}
+          {/* </div>*/}
         </div>
       </BrowserRouter>
     );
@@ -52,16 +55,9 @@ class App extends React.Component {
 
 
 App.propTypes = {
-  isLoaded: PropTypes.bool,
-  isCreated: PropTypes.bool,
+  // isLoaded: PropTypes.bool,
+  // isCreated: PropTypes.bool,
+  // currentCommunity: PropTypes.object
 };
 
-const mapStateToProps = (state) => ({
-  isLoaded: state.appReducer.isLoaded,
-  isCreated: state.createProfileReducer.isCreated
-});
-
-const mapDispatchToProps = () => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

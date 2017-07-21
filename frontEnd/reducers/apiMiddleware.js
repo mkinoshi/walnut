@@ -227,17 +227,20 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_ONE_PROFILE_ERROR'});
       });
       break;
-    // case 'GET_ALL_PROFILES':
-    //   axios.get(URL + 'db/get/allprofiles')
-    //   .then((response) => {
-    //     console.log('deck middleware', response);
-    //     store.dispatch({type: 'GET_ALL_PROFILES_DONE', data: response.data});
-    //   })
-    //   .catch((err) =>{
-    //     console.log('error in getting users', err);
-    //     store.dispatch({type: 'GET_ALL_PROFILES_ERROR'});
-    //   });
-    //   break;
+    case 'CREATE_COMMUNITY':
+      axios.post(URL + 'db/create/community', {
+        title: action.title,
+        image: action.image
+      })
+      .then((response) => {
+        console.log('Community Created', response);
+        store.dispatch({type: 'GET_COMMUNITY_DONE', community: response.data.community});
+      })
+      .catch((err) => {
+        console.log('probably failed to create community', err);
+        store.dispatch({type: 'GET_COMMUNITY_ERROR'});
+      });
+      break;
     default:
       break;
   }
