@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, Profile, Community} from '../models/models';
+import {User, Tag, Post, Quote, Community} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
 // you have to import models like so:
@@ -27,12 +27,14 @@ router.post('/create/community', (req, res) => {
     .then((response) => {
       User.findById(req.user._id)
             .then((user) => {
+              console.log(user);
               user.communities.push(response._id);
               user.currentCommunity = response._id;
               return user.save();
             })
-            .then(() => {
-              res.json({success: true, community: req.user.currentCommunity});
+            .then((resp) => {
+              console.log(resp);
+              res.json({success: true, community: response});
             })
             .catch((err) => {
               res.json({error: err});
@@ -44,7 +46,7 @@ router.post('/create/community', (req, res) => {
 });
 
 router.post('/join/community', (req, res) => {
-  Community.findById(req.body.id)
+  Community.findById(req.body.communityId)
     .then((community) => {
       community.users.push(req.user._id);
       return community.save();
@@ -53,8 +55,8 @@ router.post('/join/community', (req, res) => {
       return User.findById(req.user._id);
     })
     .then((user) => {
-      user.communities.push(req.body.id);
-      user.currentCommunity = req.body.id;
+      user.communities.push(req.body.communityId);
+      user.currentCommunity = req.body.communityId;
       return user.save();
     })
     .then((response) => {
@@ -66,10 +68,24 @@ router.post('/join/community', (req, res) => {
     });
 });
 
+// router.post('/create/profile', (req, res) => {
+//   const profile = new Profile({
+//     owner: req.user._id,
+//     community: req.user.currentCommunity
+//   });
+//   return profile.save()
+//   .then((response) => {
+//     res.json({success: true});
+//   })
+//   .catch((err) => {
+//     res.sjon({success: false, error: err});
+//   });
+// });
+
 router.post('/toggle/community', (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      user.currentCommunity = req.body.id;
+      user.currentCommunity = req.body.communityId;
       return user.save();
     })
     .then((response) => {
@@ -80,7 +96,15 @@ router.post('/toggle/community', (req, res) => {
     });
 });
 
-
+router.get('/get/allcommunities', (req, res) => {
+  Community.find()
+           .then((communities) => {
+             res.json({data: communities});
+           })
+          .catch((err) => {
+            res.json({error: err});
+          });
+});
 
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
@@ -290,10 +314,9 @@ router.get('/get/quote', (req, res) => {
        });
 });
 router.post('/save/blurb', (req, res) => {
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.fidnById(req.user._id)
          .then((response) => {
-           response.owner.blurb = req.body.blurbBody;
+           response.blurb = req.body.blurbBody;
            return response.save();
          })
          .then((resp) => {
@@ -305,11 +328,11 @@ router.post('/save/blurb', (req, res) => {
            res.json({success: false});
          });
 });
+
 router.post('/save/tags', (req, res) => {
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
          .then((response) => {
-           response.owner.tags = req.body.tagsArray;
+           response.tags = req.body.tagsArray;
            return response.save();
          })
          .then(() => {
@@ -321,10 +344,9 @@ router.post('/save/tags', (req, res) => {
          });
 });
 router.post('/save/interests', (req, res) => {
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
          .then((response) => {
-           response.owner.interests = req.body.interestsArray;
+           response.interests = req.body.interestsArray;
            return response.save();
          })
          .then(() => {
@@ -337,27 +359,24 @@ router.post('/save/interests', (req, res) => {
 });
 router.post('/save/about', (req, res) => {
   let globalResponse = {};
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
          .then((response) => {
            globalResponse = response;
-           globalResponse.owner.education = req.body.education;
-           globalResponse.owner.majors = req.body.majors;
-           globalResponse.owner.currentOccupation = req.body.currentOccupation;
-           globalResponse.owner.currentOccupationCity = req.body.currentOccupationCity;
-           globalResponse.owner.pastOccupations = req.body.pastOccupations;
-           if (req.body.education) {
-             const addr = req.body.education.split(' ').join('+');
+           globalResponse.education = req.body.education;
+           globalResponse.currentOccupation = req.body.currentOccupation;
+           globalResponse.currentOccupationCity = req.body.currentOccupationCity;
+           globalResponse.pastOccupations = req.body.pastOccupations;
+           if (req.body.education.college) {
+             const addr = req.body.education.college.split(' ').join('+');
              const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
              return axios.get(locationUrl);
-           } else {
-             return null;
            }
+           return null;
          })
          .then((resp) => {
            if (resp && req.body.currentOccupationCity) {
              const jsonResp = resp.data.results[0];
-             globalResponse.owner.location.college = [jsonResp.geometry.location.lng,
+             globalResponse.location.college = [jsonResp.geometry.location.lng,
             jsonResp.geometry.location.lat];
              const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
              const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
@@ -368,17 +387,16 @@ router.post('/save/about', (req, res) => {
              return axios.get(locationOccupationUrl);
            } else if (resp) {
              const jsonResp = resp.data.results[0];
-             globalResponse.owner.location.college = [jsonResp.geometry.location.lng,
+             globalResponse.location.college = [jsonResp.geometry.location.lng,
             jsonResp.geometry.location.lat];
              return null;
-           } else {
-             return null;
            }
+           return null;
          })
          .then((respond) => {
            if (respond) {
              const jsonp = respond.data.results[0];
-             globalResponse.owner.location.occupation = [jsonp.geometry.location.lng,
+             globalResponse.location.occupation = [jsonp.geometry.location.lng,
             jsonp.geometry.location.lat];
            }
            return globalResponse.save();
@@ -394,26 +412,24 @@ router.post('/save/about', (req, res) => {
 
 router.post('/save/contact', (req, res) => {
   let globalResponse;
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
             .then((response) => {
               globalResponse = response;
-              response.owner.email = req.body.email;
-              response.owner.address = req.body.address;
-              response.owner.phone = req.body.phone;
-              response.owner.location = req.body.location;
-              if (response.owner.address) {
+              response.email = req.body.email;
+              response.address = req.body.address;
+              response.phone = req.body.phone;
+              response.location = req.body.location;
+              if (response.address) {
                 const addr = req.body.address.split(' ').join('+');
                 const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
                 return axios.get(locationUrl);
-              } else {
-                return null;
               }
+              return null;
             })
              .then((resp) => {
                if (resp) {
                  const jsonResp = resp.data.results[0];
-                 globalResponse.owner.location.homeTown = [jsonResp.geometry.location.lng,
+                 globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
                 jsonResp.geometry.location.lat];
                }
                return globalResponse.save();
@@ -427,11 +443,11 @@ router.post('/save/contact', (req, res) => {
                res.json({success: false});
              });
 });
+
 router.post('/save/links', (req, res) => {
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
          .then((response) => {
-           response.owner.links = req.body.linksArray;
+           response.links = req.body.linksArray;
            return response.save();
          })
          .then(() => {
@@ -443,10 +459,9 @@ router.post('/save/links', (req, res) => {
          });
 });
 router.post('/save/iscreated', (req, res) => {
-  Profile.findOne({owner: req.user._id, community: req.user.currentCommunity})
-      .populate('User')
+  User.findById(req.user._id)
              .then((response) => {
-               response.owner.isCreated = true;
+               response.isCreated = true;
                return response.save();
              })
             .then((userProfile) => {
@@ -480,7 +495,6 @@ router.post('/save/iscreated', (req, res) => {
                   story: userProfile.story
                 }
               };
-              console.log('in backend', data);
               res.json({data: data});
             })
             .catch((err) => {
@@ -491,7 +505,7 @@ router.post('/save/iscreated', (req, res) => {
 });
 router.get('/get/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
-      .populate('User')
+      .populate('users')
       .then((community) => {
         res.json({data: community.users});
       })
@@ -500,22 +514,9 @@ router.get('/get/allusers', (req, res) => {
       });
 });
 
-router.get('/get/allprofiles', (req, res) => {
-  Profile.find({community: req.user.currentCommunity})
-      .populate('User')
-         .then((response) => {
-           res.json({data: response});
-         })
-        .catch((err) => {
-          res.json({data: null});
-        });
-});
-
 router.get('/get/specprofile', (req, res) => {
-  Profile.findById({owner: req.user._id, community: req.user.communityId})
-      .populate('User')
+  User.findById(req.user._id)
          .then((userProfile) => {
-
            console.log(userProfile);
            const data = {
              isCreated: userProfile.isCreated,
