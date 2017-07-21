@@ -3,7 +3,8 @@ import Discover from './Discover';
 import Header from './Header';
 import PropTypes from 'prop-types';
 
-// TODO header
+// TODO call header components quote container
+// TODO and feed modules
 
 class Home extends React.Component {
   constructor() {

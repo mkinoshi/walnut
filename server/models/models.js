@@ -182,6 +182,7 @@ const TagSchema = new mongoose.Schema({
   name: {
     type: String,
   },
+  // TODO
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,

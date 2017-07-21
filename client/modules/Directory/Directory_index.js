@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 // import ProfileContainer from './containers/ProfileContainer';
 // import ContactList from './ContactList';
 
+
+// TODO needs to call deck container and profile container
+// TODO profile only dispatches different search actions
+
 const styles = {
   header: {
     backgroundColor: 'lightblue',

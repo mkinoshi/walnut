@@ -31,9 +31,21 @@ class WalnutHomeContainer extends React.Component {
   handleSubmit() {
     console.log('submission', this.state);
     // this.props.createBuffer();
+
+    // TODO get community image and url
     this.props.createCommunity(this.state.image, this.state.titleValue);
   }
 
+// TODO horizons buttton for now
+// search bar for communities after some greyed out others not
+
+// TODO this should not handle creating a cummunity unless it hasnt been typed
+// already and added
+
+// then we go to creating community
+// but we skip this and go to horizons home as if it was created
+
+// just needs to be a link to horizons
   render() {
     return (
         <div>
