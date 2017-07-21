@@ -1,10 +1,11 @@
 const userReducer = (state = {}, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
+      // console.log('here is the user data', action.data);
       return {
         ...action.data,
         username: action.data.username,
-        pictureURL: action.data.pictureURL
+        pictureURL: action.data.pictureURL,
       };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {

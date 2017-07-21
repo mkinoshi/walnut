@@ -7,7 +7,7 @@ export const apiMiddleware = store => next => action => {
     case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
        .then((response) => {
-         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data});
+         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
        })
        .catch((err) => {
          console.log('getting error in login', err);
