@@ -5,7 +5,6 @@ const discoverReducer = (state = {
 }, action) => {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
-      console.log(action.data);
       return action.data;
     case 'GET_DISCOVER_DATA_ERROR':
       return state;

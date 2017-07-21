@@ -67,6 +67,7 @@ class Header extends React.Component {
         <div style={styles.containPost}>
           <NewPost />
         </div>
+        <br /> <br />
       </div>
     );
   }
