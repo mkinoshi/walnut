@@ -109,18 +109,6 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-
-const ProfileSchema = new mongoose.Schema({
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  community: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Community'
-  }
-});
-
 const QuoteSchema = new mongoose.Schema({
   content: {
     type: String
@@ -207,7 +195,6 @@ const User = mongoose.model('User', UserSchema);
 const Quote = mongoose.model('Quote', QuoteSchema);
 const Post = mongoose.model('Post', PostSchema);
 const Tag = mongoose.model('Tag', TagSchema);
-const Profile = mongoose.model('Profile', ProfileSchema);
 const Community = mongoose.model('Community', CommunitySchema);
 
 
@@ -217,6 +204,5 @@ module.exports = {
   Quote: Quote,
   Post: Post,
   Tag: Tag,
-  Profile: Profile,
   Community: Community
 };
