@@ -11,9 +11,7 @@ class NewTag extends React.Component {
   }
 
   handleClick(event) {
-    console.log(event);
     event.preventDefault();
-    console.log('here is the tag', this.state.tag);
     this.props.addNewTag(this.state.tag);
     this.setState({tag: ''});
   }

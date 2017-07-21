@@ -2,9 +2,14 @@ const userReducer = (state = {}, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
       return {
-        ...state,
+        ...action.data,
         username: action.data.username,
         pictureURL: action.data.pictureURL
+      };
+    case 'GET_FILTERS_UPDATE_FRONT':
+      return {
+        ...state,
+        preferences: action.data.preferences
       };
     case 'GET_USER_DATA_ERROR':
       return state;

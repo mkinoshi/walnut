@@ -205,7 +205,6 @@ export const apiMiddleware = store => next => action => {
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
-        console.log('discover', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
         store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })
@@ -218,7 +217,6 @@ export const apiMiddleware = store => next => action => {
     case 'GET_ALL_USERS':
       axios.get(URL + 'db/get/allusers')
       .then((response) => {
-        console.log('deck middleware', response);
         store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
       })
       .catch((err) =>{
@@ -231,12 +229,23 @@ export const apiMiddleware = store => next => action => {
         owner: action.id
       })
       .then((response) => {
-        console.log('in one profile get', response);
         store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data});
       })
       .catch((err) =>{
         console.log('error in getting profile data', err);
         store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
+      });
+      break;
+    case 'UPDATE_USER':
+      store.dispatch({type: 'GET_FILTERS_UPDATE_FRONT', data: action.data});
+      axios.post(URL + 'db/update/user', {
+        data: action.data
+      })
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((err) =>{
+        console.log('error in newTag', err);
       });
       break;
     default:

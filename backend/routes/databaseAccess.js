@@ -59,7 +59,6 @@ router.get('/get/discoverinfo', (req, res) => {
           })
         };
       });
-      console.log('here', filters, posts);
       res.json({filters: filters, posts: posts});
     })
     .catch((err) => {
@@ -74,8 +73,10 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/profileinfo', (req, res) => {
+  console.log(req.user);
   Profile.findOne({owner: req.user._id})
              .then((userProfile) => {
+               console.log(userProfile);
                const data = {
                  isCreated: userProfile.isCreated,
                  head: {
@@ -127,7 +128,6 @@ router.post('/save/post', (req, res) => {
   });
   newPost.save()
   .then(() => {
-    console.log('success!');
     res.json({success: true});
   })
   .catch((e) => {
@@ -224,7 +224,6 @@ router.post('/save/blurb', (req, res) => {
                return response.save();
              })
              .then((resp) => {
-               console.log(resp);
                res.json({success: true});
              })
              .catch((err) => {
@@ -320,7 +319,6 @@ router.post('/save/contact', (req, res) => {
                return globalResponse.save();
              })
              .then((data) => {
-               console.log(data);
                res.json({success: true});
              })
              .catch((err) => {
@@ -381,7 +379,6 @@ router.post('/save/iscreated', (req, res) => {
                   story: userProfile.story
                 }
               };
-              console.log('in backend', data);
               res.json({data: data});
             })
             .catch((err) => {
@@ -410,7 +407,6 @@ router.post('/save/tag', (req, res) => {
   })
   newTag.save()
   .then(() => {
-    console.log('success!');
     res.json({success: true});
   })
   .catch((e) => {
@@ -418,5 +414,16 @@ router.post('/save/tag', (req, res) => {
     res.json({success: false});
   });
 });
+
+router.post('/update/user', (req, res) => {
+  console.log('req.body', req.body);
+  User.findByIdAndUpdate(req.user._id, req.body.data)
+      .then((response) => {
+        res.json({success: true});
+      })
+      .catch((err) => {
+        res.json({success: false});
+      })
+})
 
 module.exports = router;

@@ -21,8 +21,6 @@ const styles = {
   }
 };
 
-const URL = 'localhost:3000';
-
 class Navbar extends React.Component {
 
   render() {

@@ -6,7 +6,6 @@ const discoverReducer = (state = {
   const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
-      console.log(action.data);
       return action.data;
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
