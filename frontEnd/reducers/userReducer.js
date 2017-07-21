@@ -1,7 +1,7 @@
 const userReducer = (state = {}, action) => {
   switch(action.type) {
     case 'GET_USER_DATA_DONE':
-      return action.data
+      return action.data;
     case 'GET_USER_DATA_ERROR':
       return state;
     default:
