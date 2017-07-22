@@ -29,11 +29,11 @@ class Navbar extends React.Component {
         <nav style={styles.ribbon}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">
-              <li><Link to="/app"><img src={this.props.community.icon} style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/></Link></li>
-              <li><Link to="/app/directory" style={styles.links}>Directory</Link></li>
-              <li><Link to="/app/projects" style={styles.links}>Projects</Link></li>
-              <li><Link to="/app/map" style={styles.links}>Map</Link></li>
-              <li><Link to="/app/editprofile" style={styles.links}>Edit</Link></li>
+              <li><Link to="/app/community/discover"><img src={this.props.community.icon} style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/></Link></li>
+              <li><Link to="/app/commnity/directory" style={styles.links}>Directory</Link></li>
+              <li><Link to="/app/community/projects" style={styles.links}>Projects</Link></li>
+              <li><Link to="/app/community/map" style={styles.links}>Map</Link></li>
+              <li><Link to="/app/community/editprofile" style={styles.links}>Edit</Link></li>
             </ul>
             <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
             <a href="/logout">logout</a>
