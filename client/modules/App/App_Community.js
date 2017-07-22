@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
 import Directory from '../Directory/Directory_index';
 import NavBar from './App_Community_NavBar';
-import Map from '../Map/Map_index';
+import MapContainer from '../Map/Map_index';
+import EditProfile from '../EditProfile/EditProfile_index';
 
 const styles = {
   App: {
@@ -34,7 +35,7 @@ class Community extends React.Component {
                 <Route path="/app/community/editprofile" component={EditProfile}/>
                 {/* <Route path="/app/projects" component={Home}/> */}
                 <Route path="/app/community/directory" component={Directory} />
-                <Route path="/app/community/map" component={Map}/>
+                <Route path="/app/community/map" component={MapContainer}/>
                 <Route path="/app/community/discover" component={Discover} />
              </Switch>
              </div>
@@ -54,4 +55,4 @@ const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile
 });
 
-export default connect(mapStateToProps)(Community)
+export default connect(mapStateToProps)(Community);

@@ -3,7 +3,7 @@ import React from 'react';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from './Map_Filter';
-import MapItemSelector from './Map_Item_Selector';
+import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -39,7 +39,8 @@ const styles = {
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg'
 });
-class Map extends React.Component {
+
+class MapContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,7 +159,7 @@ class Map extends React.Component {
   }
 }
 
-Map.propTypes = {
+MapContainer.propTypes = {
   center: PropTypes.array,
   zoom: PropTypes.array,
   updateCenter: PropTypes.func,
@@ -180,4 +181,4 @@ const mapDispatchToProps = (dispatch) => ({
   })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
+export default connect(mapStateToProps, mapDispatchToProps)(MapContainer);

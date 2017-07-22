@@ -16,6 +16,7 @@ class FilterPrefContainer extends React.Component {
     this.state = {
       filters: this.props.preferences.slice(),
       value: [],
+    };
   }
 
   componentDidMount() {

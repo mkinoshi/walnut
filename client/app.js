@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './containers/App';
-import appReducer from './reducers/index';
+import App from './modules/App/App_index';
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import {apiMiddleware} from './reducers/apiMiddleware';
+import rootReducer from './reducers/index';
 
 const store = createStore(
-  appReducer,
+  rootReducer,
   applyMiddleware(createLogger, apiMiddleware)
 );
 

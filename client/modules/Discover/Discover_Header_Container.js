@@ -1,5 +1,5 @@
 import React from 'react';
-import Quote from '../containers/Quote';
+import QuoteContainer from './Discover_Quote_Container';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -65,7 +65,7 @@ class HeaderContainer extends React.Component {
           <img src={this.props.community.icon} style={styles.logs}/>
         <div style={styles.middle}>
             <div id="title" style={styles.title}><h1 style={styles.company}>{this.props.community.title}</h1></div>
-            <Quote />
+            <QuoteContainer />
           </div>
           <div style={styles.links}>
             <img style={styles.linkLogo} src="https://www.google.com/drive/static/images/drive/logo-drive.png" />
@@ -85,7 +85,7 @@ HeaderContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  community: state.getCommunityReducer
+  community: state.getCommunityReducer.currentCommunity
 });
 
 const mapDispatchToProps = (dispatch) => ({

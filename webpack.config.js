@@ -1,7 +1,7 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './frontEnd/app.js',
+  entry: './client/app.js',
   output: {
     path: __dirname + '/build',
     filename: 'app.bundle.js'
@@ -26,6 +26,10 @@ module.exports = {
             plugins: ['transform-object-rest-spread']
           }
         }
+      },
+      {
+         test: /\.s?css$/, 
+         loader: 'style-loader!css-loader!sass-loader'
       }
     ]
   },
