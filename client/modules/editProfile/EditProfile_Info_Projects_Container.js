@@ -27,9 +27,6 @@ class ProjectsContainer extends React.Component {
 }
 
 ProjectsContainer.propTypes = {
-};
-
-ProjectsContainer.propTypes = {
   projects: PropTypes.array
 };
 

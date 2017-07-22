@@ -7,11 +7,14 @@ import Promise from 'promise';
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
 router.get('/user', (req, res) => {
+  console.log('req.user', req.user);
   User.findById(req.user._id)
       .then((response) => {
+        console.log('get user success', response);
         res.json({data: response});
       })
       .catch((err) => {
+        console.log('get user error', err);
         res.json({data: null});
       });
 });
@@ -44,9 +47,11 @@ router.post('/create/community', (req, res) => {
 });
 
 router.post('/join/community', (req, res) => {
+  let joined;
   Community.findById(req.body.communityId)
     .then((community) => {
       community.users.push(req.user._id);
+      joined = community
       return community.save();
     })
     .then((response) => {
@@ -57,28 +62,14 @@ router.post('/join/community', (req, res) => {
       user.currentCommunity = req.body.communityId;
       return user.save();
     })
-    .then((response) => {
+    .then((response2) => {
       console.log(req.user.fullName + 'has successfully joined the community');
-      res.json({success: true});
+      res.json({success: true, community: joined});
     })
     .catch((err) => {
       res.json({error: err});
     });
 });
-
-// router.post('/create/profile', (req, res) => {
-//   const profile = new Profile({
-//     owner: req.user._id,
-//     community: req.user.currentCommunity
-//   });
-//   return profile.save()
-//   .then((response) => {
-//     res.json({success: true});
-//   })
-//   .catch((err) => {
-//     res.sjon({success: false, error: err});
-//   });
-// });
 
 router.post('/toggle/community', (req, res) => {
   User.findById(req.user._id)
@@ -96,12 +87,12 @@ router.post('/toggle/community', (req, res) => {
 
 router.get('/get/allcommunities', (req, res) => {
   Community.find()
-           .then((communities) => {
-             res.json({data: communities});
-           })
-          .catch((err) => {
-            res.json({error: err});
-          });
+      .then((communities) => {
+        res.json({data: communities});
+      })
+      .catch((err) => {
+        res.json({error: err});
+      });
 });
 
 // TODO use .then correctly without nesting
@@ -173,45 +164,46 @@ router.get('/get/discoverinfo', (req, res) => {
         res.json({error: err});
       });
 });
+
 router.get('/get/profilecreate', (req, res) => {
   User.findById(req.user._id)
-     .then((userProfile) => {
-       const data = {
-         isCreated: userProfile.isCreated,
-         head: {
-           fullName: userProfile.fullName,
-           tags: userProfile.tags,
-           blurb: userProfile.blurb,
-           profileURL: userProfile.profileURL
-         },
-         info: {
-           about: {
-             education: userProfile.education,
-             majors: userProfile.majors,
-             currentOccupation: userProfile.currentOccupation,
-             currentOccupationCity: userProfile.currentOccupationCity,
-             pastOccupations: userProfile.pastOccupations
-           },
-           contact: {
-             email: userProfile.email,
-             address: userProfile.address,
-             phone: userProfile.phone
-           },
-           interests: userProfile.interests,
-           projects: userProfile.projects,
-           links: userProfile.links
-         },
-         main: {
-           portfolio: userProfile.portfolio,
-           story: userProfile.story
-         }
-       };
-       res.json({data: data});
-     })
-     .catch((err) => {
-       console.log(err);
-       res.json({data: null});
-     });
+        .then((userProfile) => {
+          const data = {
+            isCreated: userProfile.isCreated,
+            head: {
+              fullName: userProfile.fullName,
+              tags: userProfile.tags,
+              blurb: userProfile.blurb,
+              profileURL: userProfile.profileURL
+            },
+            info: {
+              about: {
+                education: userProfile.education,
+                majors: userProfile.majors,
+                currentOccupation: userProfile.currentOccupation,
+                currentOccupationCity: userProfile.currentOccupationCity,
+                pastOccupations: userProfile.pastOccupations
+              },
+              contact: {
+                email: userProfile.email,
+                address: userProfile.address,
+                phone: userProfile.phone
+              },
+              interests: userProfile.interests,
+              projects: userProfile.projects,
+              links: userProfile.links
+            },
+            main: {
+              portfolio: userProfile.portfolio,
+              story: userProfile.story
+            }
+          };
+          res.json({data: data});
+        })
+        .catch((err) => {
+          console.log(err);
+          res.json({data: null});
+        });
 });
 // adding a new post
 router.post('/save/post', (req, res) => {
@@ -227,7 +219,6 @@ router.post('/save/post', (req, res) => {
   });
   newPost.save()
   .then(() => {
-    console.log('success!');
     res.json({success: true});
   })
   .catch((e) => {
@@ -255,6 +246,7 @@ router.post('/save/comment', (req, res) => {
         res.json({success: false, data: null});
       });
 });
+
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
@@ -272,6 +264,7 @@ router.post('/toggle/checked', (req, res) => {
         res.json({success: false});
       });
 });
+
 router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((response) => {
@@ -285,6 +278,7 @@ router.post('/save/postlike', (req, res) => {
       res.json({success: false});
     });
 });
+
 router.post('/save/commentlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((post) => {
@@ -301,6 +295,7 @@ router.post('/save/commentlike', (req, res) => {
       res.json({success: false});
     });
 });
+
 router.get('/get/quote', (req, res) => {
   Quote.find({community: req.user.currentCommunity})
        .then((response) => {
@@ -311,9 +306,11 @@ router.get('/get/quote', (req, res) => {
          res.json({quote: 'it’s kind of fun to do the impossible', createdBy: 'Walt Disney'});
        });
 });
+
 router.post('/save/blurb', (req, res) => {
   User.fidnById(req.user._id)
          .then((response) => {
+           response.hasProfile = true;
            response.blurb = req.body.blurbBody;
            return response.save();
          })
@@ -330,6 +327,7 @@ router.post('/save/blurb', (req, res) => {
 router.post('/save/tags', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
+           response.hasProfile = true;
            response.tags = req.body.tagsArray;
            return response.save();
          })
@@ -341,9 +339,11 @@ router.post('/save/tags', (req, res) => {
            res.json({success: false});
          });
 });
+
 router.post('/save/interests', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
+           response.hasProfile = true;
            response.interests = req.body.interestsArray;
            return response.save();
          })
@@ -355,11 +355,13 @@ router.post('/save/interests', (req, res) => {
            res.json({success: false});
          });
 });
+
 router.post('/save/about', (req, res) => {
   let globalResponse = {};
   User.findById(req.user._id)
          .then((response) => {
            globalResponse = response;
+           globalResponse.hasProfile = true;
            globalResponse.education = req.body.education;
            globalResponse.currentOccupation = req.body.currentOccupation;
            globalResponse.currentOccupationCity = req.body.currentOccupationCity;
@@ -413,10 +415,11 @@ router.post('/save/contact', (req, res) => {
   User.findById(req.user._id)
             .then((response) => {
               globalResponse = response;
-              response.email = req.body.email;
-              response.address = req.body.address;
-              response.phone = req.body.phone;
-              response.location = req.body.location;
+              globalResponse.hasProfile = true;
+              globalResponse.email = req.body.email;
+              globalResponse.address = req.body.address;
+              globalResponse.phone = req.body.phone;
+              globalResponse.location = req.body.location;
               if (response.address) {
                 const addr = req.body.address.split(' ').join('+');
                 const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
@@ -433,7 +436,6 @@ router.post('/save/contact', (req, res) => {
                return globalResponse.save();
              })
              .then((data) => {
-               console.log(data);
                res.json({success: true});
              })
              .catch((err) => {
@@ -445,6 +447,7 @@ router.post('/save/contact', (req, res) => {
 router.post('/save/links', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
+           response.hasProfile = true;
            response.links = req.body.linksArray;
            return response.save();
          })
@@ -456,10 +459,11 @@ router.post('/save/links', (req, res) => {
            res.json({success: false});
          });
 });
+
 router.post('/save/iscreated', (req, res) => {
   User.findById(req.user._id)
              .then((response) => {
-               response.isCreated = true;
+               response.hasProfile = true;
                return response.save();
              })
             .then((userProfile) => {
@@ -501,6 +505,7 @@ router.post('/save/iscreated', (req, res) => {
               res.json({data: null});
             });
 });
+
 router.get('/get/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
       .populate('users')
@@ -552,6 +557,43 @@ router.get('/get/specprofile', (req, res) => {
            console.log(err);
            res.json({data: null});
          });
+});
+
+
+router.get('/get/allusers', (req, res) => {
+  User.find()
+      .then((response) => {
+        res.json({data: response});
+      })
+      .catch((err) => {
+        res.json({data: null});
+      });
+});
+
+
+router.post('/save/tag', (req, res) => {
+  const newTag = new Tag({
+    name: req.body.tag
+  });
+  newTag.save()
+  .then(() => {
+    res.json({success: true});
+  })
+  .catch((e) => {
+    console.log(e);
+    res.json({success: false});
+  });
+});
+
+router.post('/update/user', (req, res) => {
+  console.log('req.body', req.body);
+  User.findByIdAndUpdate(req.user._id, req.body.data)
+      .then((response) => {
+        res.json({success: true});
+      })
+      .catch((err) => {
+        res.json({success: false});
+      });
 });
 
 module.exports = router;

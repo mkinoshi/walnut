@@ -5,8 +5,9 @@ const discoverReducer = (state = {
 }, action) => {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
-      console.log(action.data);
-      return action.data;
+      const newState1 = Object.assign({}, state);
+      newState1.posts.push(action.data);
+      return newState1;
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'TOGGLE_FILTER_FRONT':

@@ -7,7 +7,8 @@ export const apiMiddleware = store => next => action => {
     case 'GET_USER_DATA':
       axios.get(URL + 'db/user')
        .then((response) => {
-         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data});
+         console.log('got user:', response);
+         store.dispatch({type: 'GET_USER_DATA_DONE', data: response.data.data});
        })
        .catch((err) => {
          console.log('getting error in login', err);
@@ -34,10 +35,22 @@ export const apiMiddleware = store => next => action => {
       })
       .then(() => {
         next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
-        next(action);
+        // next(action);
       })
       .catch((err) =>{
         console.log('error in newComment', err);
+      });
+      break;
+    case 'NEW_TAG':
+      axios.post(URL + 'db/save/tag', {
+        tag: action.tag
+      })
+      .then(() => {
+        next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
+        next(action);
+      })
+      .catch((err) =>{
+        console.log('error in newTag', err);
       });
       break;
     case 'TOGGLE_FILTER_CHECKED':
@@ -169,62 +182,38 @@ export const apiMiddleware = store => next => action => {
         console.log('error in saving story', err);
       });
       break;
-    case 'CREATE_PROFILE':
-      axios.post(URL + 'db/save/iscreated')
-      .then((response) => {
-        console.log('response', response);
-        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
-      })
-      .catch((err) =>{
-        console.log('error in creating profile', err);
-        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
-      });
-      break;
-    case 'GET_PROFILE_INFO':
-      axios.get(URL + 'db/get/profileinfo')
-      .then((response) => {
-        store.dispatch({type: 'GET_PROFILE_DATA_DONE', data: response.data.data});
-      })
-      .catch((err) =>{
-        console.log('error in getting profile data', err);
-        store.dispatch({type: 'GET_PROFILE_DATA_ERROR'});
-      });
-      break;
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
-        console.log('discover', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
-        store.dispatch({type: 'STATE_FILLED', isLoaded: {isLoaded: true}});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
-        store.dispatch({type: 'STATE_FILLED_ERROR'});
       });
       break;
     case 'GET_ALL_USERS':
       axios.get(URL + 'db/get/allusers')
       .then((response) => {
-        console.log('deck middleware', response);
-        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
+        // console.log('deck middleware', response);
+        // store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
+        store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
       })
       .catch((err) =>{
         console.log('error in getting users', err);
         store.dispatch({type: 'GET_ALL_USERS_ERROR'});
       });
       break;
-    case 'GET_ONE_PROFILE':
-      axios.get(URL + 'db/get/specprofile', {
-        owner: action.owner
-      })
+    case 'GET_ALL_COMMUNITIES':
+      axios.get(URL + 'db/get/allcommunities')
       .then((response) => {
-        console.log('in one profile get', response);
-        store.dispatch({type: 'GET_ONE_PROFILE_DONE', data: response.data});
+          // console.log('deck middleware', response);
+          // store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
+        store.dispatch({type: 'GET_ALL_COMMUNITIES_DONE', communities: response.data});
       })
       .catch((err) =>{
-        console.log('error in getting profile data', err);
-        store.dispatch({type: 'GET_ONE_PROFILE_ERROR'});
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_COMMUNITIES_ERROR'});
       });
       break;
     case 'CREATE_COMMUNITY':
@@ -234,6 +223,31 @@ export const apiMiddleware = store => next => action => {
       })
       .then((response) => {
         console.log('Community Created', response);
+        store.dispatch({type: 'GET_COMMUNITY_DONE', community: response.data.community});
+      })
+      .catch((err) => {
+        console.log('probably failed to create community', err);
+        store.dispatch({type: 'GET_COMMUNITY_ERROR'});
+      });
+      break;
+    case 'UPDATE_USER':
+      store.dispatch({type: 'GET_FILTERS_UPDATE_FRONT', data: action.data});
+      axios.post(URL + 'db/update/user', {
+        data: action.data
+      })
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((err) =>{
+        console.log('error in newTag', err);
+      });
+      break;
+    case 'JOIN_COMMUNITY':
+      axios.post(URL + 'db/join/community', {
+        communityId: action.id
+      })
+      .then((response) => {
+        console.log('Community Joined', response);
         store.dispatch({type: 'GET_COMMUNITY_DONE', community: response.data.community});
       })
       .catch((err) => {

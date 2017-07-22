@@ -11,7 +11,7 @@ const styles = {
 };
 
 
-class Links extends React.Component {
+class LinksContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,17 +79,17 @@ class Links extends React.Component {
   }
 }
 
-Links.propTypes = {
+LinksContainer.propTypes = {
   links: PropTypes.array,
   saveLinks: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  links: state.createProfileReducer.info.links,
+  links: state.userReducer.links,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveLinks: (links) => dispatch({type: 'SAVE_LINKS', links: links})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Links);
+export default connect(mapStateToProps, mapDispatchToProps)(LinksContainer);

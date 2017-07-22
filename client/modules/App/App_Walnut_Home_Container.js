@@ -1,11 +1,19 @@
-/**
- * Created by ebadgio on 7/20/17.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import EditProfile from '../editProfile/containers/EditProfile';
+import EditProfile from '../EditProfile/EditProfile_index';
+
+const styles = {
+  communities: {
+    display: '-webkit-inline-box'
+  },
+  image: {
+    maxHeight: '50px',
+    maxWidth: '50px',
+    margin: '7px 15px 7px 30px'
+  }
+};
 
 class WalnutHomeContainer extends React.Component {
   constructor() {
@@ -18,6 +26,17 @@ class WalnutHomeContainer extends React.Component {
     this.handleStart = this.handleStart.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.joinCommunity = this.joinCommunity.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getCommunities();
+    console.log('trying to get communities');
+  }
+
+  componentDidMount() {
+    this.props.getUser();
+    console.log('mounted', this.props.hasProfile);
   }
 
   handleStart() {
@@ -30,22 +49,14 @@ class WalnutHomeContainer extends React.Component {
 
   handleSubmit() {
     console.log('submission', this.state);
-    // this.props.createBuffer();
-
-    // TODO get community image and url
     this.props.createCommunity(this.state.image, this.state.titleValue);
   }
 
-// TODO horizons buttton for now
-// search bar for communities after some greyed out others not
+  joinCommunity(id) {
+    this.props.joinCommunity(id);
+  }
 
-// TODO this should not handle creating a cummunity unless it hasnt been typed
-// already and added
-
-// then we go to creating community
-// but we skip this and go to horizons home as if it was created
-
-// just needs to be a link to horizons
+  // TODO HORIZONS
   render() {
     return (
         <div>
@@ -55,6 +66,13 @@ class WalnutHomeContainer extends React.Component {
             </div>
             <div>
                 <h2>Find Communities here:</h2>
+                <div style={styles.communities}>
+                    {this.props.communities.map((community, idx) => <div key={idx}>
+                      <img src={community.icon} style={styles.image} />
+                      <p>{community.title}</p>
+                      <button onClick={() => {this.joinCommunity(community._id);}}><Link to="/app/community/discover">+ Join</Link></button>
+                    </div> )}
+                </div>
             </div>
             <div>
                 <button onClick={() => {this.handleStart();}}>Start New Community</button>
@@ -64,9 +82,9 @@ class WalnutHomeContainer extends React.Component {
                 <input type="text"
                        value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
                 </label>
-                <button onClick={() => {this.handleSubmit();}}><Link to="/app/community">Create</Link></button>
+                <button onClick={() => {this.handleSubmit();}}><Link to="/app/community/discover">Create</Link></button>
             </div> : null} </div> :
-                <EditProfile /> }
+                <EditProfile isCreating={!null} /> }
         </div>
     );
   }
@@ -74,15 +92,23 @@ class WalnutHomeContainer extends React.Component {
 
 WalnutHomeContainer.propTypes = {
   createCommunity: PropTypes.func,
-  hasProfile: PropTypes.bool
+  hasProfile: PropTypes.bool,
+  getUser: PropTypes.func,
+  communities: PropTypes.array,
+  joinCommunity: PropTypes.func,
+  getCommunities: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
+  communities: state.getCommunityReducer.communities
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  joinCommunity: (id) => dispatch({type: 'JOIN_COMMUNITY', id: id}),
   createCommunity: (image, title) => dispatch({type: 'CREATE_COMMUNITY', image: image, title: title}),
+  getUser: () => dispatch({type: 'GET_USER_DATA'}),
+  getCommunities: () => dispatch({type: 'GET_ALL_COMMUNITIES'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Card from './Card';
+import Card from './Directory_Deck_Card';
 
 class DeckContainer extends React.Component {
     constructor() {

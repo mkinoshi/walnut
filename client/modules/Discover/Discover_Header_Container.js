@@ -1,6 +1,6 @@
 import React from 'react';
 import Quote from '../containers/Quote';
-import NewPost from '../containers/NewPost';
+import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -73,7 +73,7 @@ class HeaderContainer extends React.Component {
           </div>
         </div>
         <div style={styles.containPost}>
-          <NewPost />
+          <NewPostContainer />
         </div>
       </div>
     );

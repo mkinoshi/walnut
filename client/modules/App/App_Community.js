@@ -1,12 +1,12 @@
 // TODO navbar and router links
-
-
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Home from '../Home/components/Home';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import WalnutHomeContainer from '../WalnutHome/WalnutHomeContainer';
+import Discover from '../Discover/Discover_index';
+import Directory from '../Directory/Directory_index';
+import NavBar from './App_Community_NavBar';
+import Map from '../Map/Map_index';
 
 const styles = {
   App: {
@@ -16,7 +16,7 @@ const styles = {
   }
 };
 
-class App extends React.Component {
+class Community extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -29,17 +29,15 @@ class App extends React.Component {
         <div>
           <div>
             <NavBar />
-          {this.props.isCreated ?
              <div>
              <Switch>
-                <Route path="/app/editprofile" component={EditProfile}/>
-                <Route path="/app/projects" component={Home}/>
-                <Route path="/app/directory" component={Directory} />
-                <Route path="/app/map" component={Map}/>
-                <Route path="/app/discover" component={Discover} />
-             </Switch></div>
-             :
-             <EditProfile />}
+                <Route path="/app/community/editprofile" component={EditProfile}/>
+                {/* <Route path="/app/projects" component={Home}/> */}
+                <Route path="/app/community/directory" component={Directory} />
+                <Route path="/app/community/map" component={Map}/>
+                <Route path="/app/community/discover" component={Discover} />
+             </Switch>
+             </div>
            </div>
         </div>
       </BrowserRouter>
@@ -48,12 +46,12 @@ class App extends React.Component {
 }
 
 
-App.propTypes = {
-  // isLoaded: PropTypes.bool,
-  // isCreated: PropTypes.bool,
-  // currentCommunity: PropTypes.object
+Community.propTypes = {
+  hasProfile: PropTypes.bool,
 };
 
-// passes down props of get community with title and image
+const mapStateToProps = (state) => ({
+  hasProfile: state.userReducer.hasProfile
+});
 
-export default App;
+export default connect(mapStateToProps)(Community)

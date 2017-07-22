@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-class Portfolio extends React.Component {
+class PortfolioContainer extends React.Component {
 
   render() {
     return (
@@ -13,7 +13,7 @@ class Portfolio extends React.Component {
   }
 }
 
-Portfolio.propTypes = {
+PortfolioContainer.propTypes = {
 };
 
-export default Portfolio;
+export default PortfolioContainer;

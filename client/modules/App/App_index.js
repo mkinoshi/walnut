@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Home from '../Home/components/Home';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import WalnutHomeContainer from '../WalnutHome/WalnutHomeContainer';
+import Community from './App_Community';
+import WalnutHomeContainer from './App_Walnut_Home_Container';
 
 const styles = {
   App: {
@@ -26,7 +26,7 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-            <Route path="/app/community/discover" component={App_Community} />
+            <Route path="/app/community/discover" component={Community} />
           </Switch>
         </div>
       </BrowserRouter>
@@ -36,9 +36,6 @@ class App extends React.Component {
 
 
 App.propTypes = {
-  // isLoaded: PropTypes.bool,
-  // isCreated: PropTypes.bool,
-  // currentCommunity: PropTypes.object
 };
 
 export default App;

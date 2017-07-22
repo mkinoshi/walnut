@@ -3,7 +3,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import TagPref from './TagPref';
+import TagPrefContainer from './Feed_NewPost_TagPref_Container';
+import NewTagContainer from './Feed_NewPost_NewTag_Container';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -28,17 +29,17 @@ const styles = {
   post: {
     backgroundColor: 'white',
     borderRadius: '5px',
-
   }
 };
 
-class NewPost extends React.Component {
+class NewPostContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       postBody: '',
       postTags: [],
-      showTagPref: false
+      showTagPref: false,
+      showNewTag: false
     };
   }
 
@@ -52,6 +53,10 @@ class NewPost extends React.Component {
       postTagsCopy.push(tag);
       this.setState({postTags: postTagsCopy});
     }
+  }
+
+  toggleNewTag() {
+    this.setState({showNewTag: !this.state.showNewTag});
   }
 
   toggleTagPref() {
@@ -86,8 +91,20 @@ class NewPost extends React.Component {
                   onClick={() => (this.toggleTagPref())}>Add Tags</a>
               </div>
               {this.state.showTagPref ?
-                <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
+                <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
                 tags={this.state.postTags}/> : <p></p>}
+            </div>
+            <div className="newTags">
+              <div className="newTagsButton" style={{}}>
+                <a style={{backgroundColor: '#FF5657'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.toggleNewTag())}>New Tags</a>
+              </div>
+              {this.state.showNewTag ?
+                // <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
+                // tags={this.state.postTags}/>
+                <NewTagContainer />
+                : <p></p>}
             </div>
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
@@ -103,7 +120,7 @@ class NewPost extends React.Component {
   }
 }
 
-NewPost.propTypes = {
+NewPostContainer.propTypes = {
   newPost: PropTypes.func
 };
 
@@ -115,4 +132,4 @@ const mapDispatchToProps = (dispatch) => ({
     {type: 'NEW_POST', postTags: postTags, postBody: postBody})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPost);
+export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

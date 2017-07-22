@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Story extends React.Component {
+class StoryContainer extends React.Component {
 
   render() {
     return (
@@ -12,7 +12,7 @@ class Story extends React.Component {
   }
 }
 
-Story.propTypes = {
+StoryContainer.propTypes = {
 };
 
-export default Story;
+export default StoryContainer;

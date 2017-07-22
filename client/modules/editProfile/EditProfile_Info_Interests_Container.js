@@ -105,7 +105,7 @@ InterestsContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  interests: state.createProfileReducer.info.interests
+  interests: state.userReducer.interests
 });
 
 const mapDispatchToProps = (dispatch) => ({

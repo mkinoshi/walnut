@@ -2,7 +2,8 @@ import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
-import MapFilter from '../components/MapFilter';
+import MapFilter from './Map_Filter';
+import MapItemSelector from './Map_Item_Selector';
 import CircleIcon from 'react-icons/lib/fa/circle';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,6 +20,10 @@ const styles = {
     display: 'flex',
     flexDirection: 'row'
   },
+  inner: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   marker: {
     color: '#37d67a',
     fontSize: '40px'
@@ -34,7 +39,7 @@ const styles = {
 const Map = ReactMapboxGl({
   accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg'
 });
-class MapComponent extends React.Component {
+class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,41 +52,52 @@ class MapComponent extends React.Component {
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 38.7775032],
           year: 'Summer 2017',
-          career: 'Rice University'
+          career: 'Rice University',
+          liveData: true
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 37.7775032],
           year: 'Summer 2017',
-          career: 'Rice University'
+          career: 'Rice University',
+          liveData: true
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 36.7775032],
           year: 'Summer 2017',
-          career: 'Rice University'
+          career: 'Rice University',
+          liveData: true
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 37.8775032],
           year: 'Summer 2017',
-          career: 'Rice University'
+          career: 'Rice University',
+          liveData: true
         },
         {
           name: 'Eli Badgio',
           profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
           location: [-122.4199537, 37.77757],
           year: 'Summer 2017',
-          career: 'Rice University'
+          career: 'Rice University',
+          liveData: true
         }
       ]};
   }
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
+    this.getCurrentLocations();
+  }
+  getCurrentLocations() {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude, position.coords.longitude);
+    });
   }
   // changeCenter(coordinates) {
   //   // coordinates given in array format
@@ -101,9 +117,12 @@ class MapComponent extends React.Component {
   render() {
     return (
       <div style={styles.outer}>
-        <MapFilter users={this.state.users}
-        changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
-        changeZoom={(num) => {this.props.updateZoom();}}/>
+        <div style={styles.inner}>
+          <MapItemSelector />
+          <MapFilter users={this.state.users}
+          changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
+          changeZoom={(num) => {this.props.updateZoom();}}/>
+        </div>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
           center={this.props.center}
@@ -139,7 +158,7 @@ class MapComponent extends React.Component {
   }
 }
 
-MapComponent.propTypes = {
+Map.propTypes = {
   center: PropTypes.array,
   zoom: PropTypes.array,
   updateCenter: PropTypes.func,
@@ -161,5 +180,4 @@ const mapDispatchToProps = (dispatch) => ({
   })
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(MapComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

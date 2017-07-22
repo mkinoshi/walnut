@@ -11,7 +11,7 @@ const styles = {
   }
 };
 
-class About extends React.Component {
+class AboutContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +70,6 @@ class About extends React.Component {
             onChange={(e) => (this.aboutChange(e.target.value, 'education'))} />
            :
            <p>{this.state.education ? this.state.education : this.props.education}</p>}
-
         <p>Majors</p>
         {this.state.edit ?
         <p onClick={() => (this.add('majors'))}>Add</p> : <p></p>}
@@ -93,14 +92,12 @@ class About extends React.Component {
              :
              <p key={i}>{major}</p>;})}
            </div>
-
         <p>Current Occupation</p>
         {this.state.edit ?
           <input value={this.state.currentOccupation}
             onChange={(e) => (this.aboutChange(e.target.value, 'currentOccupation'))} />
            :
            <p>{this.state.currentOccupation ? this.state.currentOccupation : this.props.currentOccupation}</p>}
-
         <p>Current Occupation City</p>
         {this.state.edit ?
           <PlacesAutocomplete inputProps={inputProps} />
@@ -108,7 +105,6 @@ class About extends React.Component {
           //   onChange={(e) => (this.aboutChange(e.target.value, 'currentOccupationCity'))} />
            :
            <p>{this.state.currentOccupationCity ? this.state.currentOccupationCity : this.props.currentOccupationCity}</p>}
-
         {this.state.edit ?
           <p onClick={() => (this.add('pastOccupations'))}>Add</p> : <p></p>}
         <p>Past Occupations</p>
@@ -143,7 +139,7 @@ class About extends React.Component {
   }
 }
 
-About.propTypes = {
+AboutContainer.propTypes = {
   education: PropTypes.string,
   majors: PropTypes.array,
   currentOccupation: PropTypes.string,
@@ -153,15 +149,15 @@ About.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  education: state.createProfileReducer.info.about.education,
-  majors: state.createProfileReducer.info.about.majors,
-  currentOccupation: state.createProfileReducer.info.about.currentOccupation,
-  currentOccupationCity: state.createProfileReducer.info.about.currentOccupationCity,
-  pastOccupations: state.createProfileReducer.info.about.pastOccupations
+  education: state.userReducer.education.college,
+  majors: state.userReducer.education.majors,
+  currentOccupation: state.userReducer.currentOccupation,
+  currentOccupationCity: state.userReducer.currentOccupationCity,
+  pastOccupations: state.userReducer.pastOccupations
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveAbout: (about) => dispatch({type: 'SAVE_ABOUT', about: about})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(About);
+export default connect(mapStateToProps, mapDispatchToProps)(AboutContainer);

@@ -2,9 +2,9 @@
 // connect
 import React from 'react';
 import { connect } from 'react-redux';
-import Post from '../components/Post';
 import PropTypes from 'prop-types';
-import FilterPref from './FilterPref';
+import Post from '../Post/Post_index';
+import FilterPrefContainer from './Feed_FilterPref_Container';
 
 
 const styles = {
@@ -80,7 +80,6 @@ const styles = {
   }
 };
 
-
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -126,32 +125,45 @@ class Feed extends React.Component {
   }
 
   render() {
-    console.log('sdfdfdsfdsfdsfdsfdsfdsfsdfsdf', this.props.data);
     const filteredPosts = this.filterData(this.props.data).posts;
     return (
+      // <div>
+      //   <div className="col-xs-3" style={styles.outer}>
+      //     <div className="discoverButton" style={{}}>
+      //       <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
+      //         className="waves-effect waves-light btn"
+      //         onClick={() => (this.toggleFilterPref())}>Discover</a>
+      //     </div>
+      //     {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+      //     </div>
+      //     <div className="col-xs-12" style={styles.under}></div>
+      //     <div className="right" style={styles.outer2} />
+      //     <div className="rightInnerLeft" style={styles.innerRight2}></div>
+      //     <div className="col-xs-12" style={styles.feed}>
+      //       {filteredPosts.map((post) => (
+      //         <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+      //       ))}
+      //     </div>
+      //     <div className="leftTop" style={styles.inner1}></div>
+      //     <div className="leftLowerRight" style={styles.inner2}></div>
+      //     <div style={styles.inner3}></div>
+      //     <div className="rightTop" style={styles.innerRight1}></div>
+      // </div>
       <div>
-        <div className="col-xs-3" style={styles.outer}>
-          <div className="discoverButton" style={{}}>
+          <div className="col-xs-12" style={styles.feed}>
+          <div className="col-xs-3">
+          <div className="discoverButton left" style={{}}>
             <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
               className="waves-effect waves-light btn"
               onClick={() => (this.toggleFilterPref())}>Discover</a>
           </div>
-          {this.state.showFilterPref ? <FilterPref filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+          {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
           </div>
-          <div className="col-xs-12" style={styles.under}></div>
-          <div className="right" style={styles.outer2} />
-          <div className="rightInnerLeft" style={styles.innerRight2}></div>
-          <div className="col-xs-12" style={styles.feed}>
             {filteredPosts.map((post) => (
               <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
           </div>
-          <div className="leftTop" style={styles.inner1}></div>
-          <div className="leftLowerRight" style={styles.inner2}></div>
-          <div style={styles.inner3}></div>
-          <div className="rightTop" style={styles.innerRight1}></div>
       </div>
-
     );
   }
 }

@@ -10,7 +10,7 @@ const styles = {
   }
 };
 
-class Contact extends React.Component {
+class ContactContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +77,7 @@ class Contact extends React.Component {
   }
 }
 
-Contact.propTypes = {
+ContactContainer.propTypes = {
   email: PropTypes.string,
   address: PropTypes.string,
   phone: PropTypes.string,
@@ -85,13 +85,13 @@ Contact.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  email: state.createProfileReducer.info.contact.email,
-  address: state.createProfileReducer.info.contact.address,
-  phone: state.createProfileReducer.info.contact.phone
+  email: state.userReducer.email,
+  address: state.userReducer.from,
+  phone: state.userReducer.phone
 });
 
 const mapDispatchToProps = (dispatch) => ({
   saveContact: (contactObj) => dispatch({type: 'SAVE_CONTACT', contact: contactObj})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contact);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactContainer);

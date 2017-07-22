@@ -20,7 +20,7 @@ const styles = {
   }
 };
 
-class Quote extends React.Component {
+class QuoteContainer extends React.Component {
 
   render() {
     return (
@@ -32,7 +32,7 @@ class Quote extends React.Component {
   }
 }
 
-Quote.propTypes = {
+QuoteContainer.propTypes = {
   quote: PropTypes.string,
   name: PropTypes.string
 };
@@ -47,4 +47,4 @@ const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (name) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Quote);
+export default connect(mapStateToProps, mapDispatchToProps)(QuoteContainer);

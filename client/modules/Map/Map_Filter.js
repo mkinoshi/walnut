@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LocationSearch from '../containers/LocationSearch';
+import LocationSearchContainer from './Map_Location_Search_Container';
 import { Menu, Message, Dropdown } from 'semantic-ui-react';
 
 const options = [
@@ -74,7 +74,7 @@ class MapFilter extends React.Component {
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
-        <LocationSearch />
+        <LocationSearchContainer />
         </div>
         <div style={styles.filterOuter}>
           {this.props.users.map((user) => (

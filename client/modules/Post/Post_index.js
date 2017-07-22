@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import {Link, Route} from 'react-router-dom';
-import Modal from './Modal';
+import ModalContainer from './Post_Modal_Container';
 
 
 // TODO on action of comment button dispatch modal
@@ -48,7 +48,7 @@ class Post extends React.Component {
                 className="material-icons left">comment</i>{commentNum}</a>
           </div>
           <br/> <br/>
-          <Modal isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
+          <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
         </div>
       </div>
 
