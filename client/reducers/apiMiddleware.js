@@ -95,6 +95,11 @@ export const apiMiddleware = store => next => action => {
       axios.post(URL + 'db/save/blurb', {
         blurbBody: action.blurb
       })
+      .then((success) => {
+        console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
+      })
       .catch((err) =>{
         console.log('error in saving blurb', err);
       });
@@ -105,6 +110,8 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in saving tags', err);
@@ -116,6 +123,8 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in saving interests', err);
@@ -131,7 +140,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{
@@ -146,7 +155,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{
@@ -159,7 +168,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{

@@ -60,7 +60,7 @@ class WalnutHomeContainer extends React.Component {
   render() {
     return (
         <div>
-            {this.props.hasProfile ? <div>
+           <div>
             <div>
                 <h1>I am the Walnut Home</h1>
             </div>
@@ -83,8 +83,8 @@ class WalnutHomeContainer extends React.Component {
                        value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
                 </label>
                 <button onClick={() => {this.handleSubmit();}}><Link to="/app/community/discover">Create</Link></button>
-            </div> : null} </div> :
-                <EditProfile isCreating={!null} /> }
+            </div> : null}
+          </div>
         </div>
     );
   }
