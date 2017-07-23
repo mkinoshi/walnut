@@ -31,7 +31,6 @@ class Community extends React.Component {
           <div>
             <NavBar />
              <div>
-               {this.props.hasProfile ?
              <Switch>
                 <Route path="/app/community/editprofile" component={EditProfile}/>
                 {/* <Route path="/app/projects" component={Home}/> */}
@@ -39,8 +38,6 @@ class Community extends React.Component {
                 <Route path="/app/community/map" component={MapContainer}/>
                 <Route path="/app/community/discover" component={Discover} />
              </Switch>
-             :
-                <EditProfile />}
              </div>
            </div>
         </div>
