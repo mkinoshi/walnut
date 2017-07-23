@@ -16,6 +16,7 @@ class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      sneakyFront: {},
       files: [],
       onEdit: false,
       currUrl: ''
@@ -34,11 +35,12 @@ class UploadsContainer extends React.Component {
   // }
 
   uploadFiles() {
+    this
     const files = this.state.files.slice();
     files.forEach((file) => {
       superagent.post('/aws/upload')
         .attach('demo', file)
-        .query('port=' + this.props.tab)
+        .query('port=' + this.props.tab + 'name=' + this.state.files.newName)
         .end((err, res) => {
           if (err) {
             console.log(err);
@@ -55,6 +57,7 @@ class UploadsContainer extends React.Component {
   }
 
   render() {
+    console.log('ffifjwiofjwifjiefjiejfiejif', this.state.files);
     console.log('tab', this.props.tab);
     const filesArr = this.props.portfolio[this.props.tab];
     return (
@@ -70,7 +73,7 @@ class UploadsContainer extends React.Component {
               <div>Try dropping a file here, or click to select a file to upload.</div>
             </Dropzone>
             {this.state.files.map((file, i) => (
-              <p key={i}>{file.name}</p>
+              <input key={i} placeholder={file.name} onChange={(e) => (this.nameChange(e.target.value, i))}/>
               // <input value={file.name} onChange={(e) => (this.handleNameChange(e.target.value, i))} />
             ))}
             {this.state.onEdit ? <button onClick={() => {this.uploadFiles();}}>Upload</button> : null}
@@ -86,7 +89,8 @@ UploadsContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  portfolio: state.userReducer.portfolio
+  portfolio: state.userReducer.portfolio,
+  userId: state.userReducer._id
 });
 
 const mapDispatchToProps = () => ({

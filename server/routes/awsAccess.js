@@ -21,7 +21,7 @@ const upload = multer({
 
 router.post('/upload', upload.single('demo'), (req, res) => {
   const toSave = req.user._id + req.file.originalname + Date.now();
-  console.log(req.file);
+  console.log('htuhuhdusdsudhushudshdsd', req.file);
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,
@@ -36,7 +36,7 @@ router.post('/upload', upload.single('demo'), (req, res) => {
     User.findOne({owner: req.user._id})
     .then((user) => {
       const newFile = {
-        fileName: req.file.fieldname,
+        fileName: req.query.name,
         fileType: req.file.mimetype,
         fileUrl: process.env.AWS_BUCKET_URL + toSave
       };

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Link, Switch } from 'react-router-dom';
-import Uploads from './EditProfile_Main_Body_Uploads_Container';
+import Uploads from './EditProfile_Main_Body_Portfolio_Uploads_Container';
 
 const styles = {
   portfolio: {
