@@ -12,7 +12,7 @@ const styles = {
   }
 };
 
-class Uploads extends React.Component {
+class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ class Uploads extends React.Component {
 
   onDrop(files) {
     console.log('inenenenene', files);
-    this.setState({files: files, onEdit: true});
+    this.setState({files: this.state.files.concat(files), onEdit: true});
   }
 
   // handleNameChange(update, i) {
@@ -38,7 +38,7 @@ class Uploads extends React.Component {
     files.forEach((file) => {
       superagent.post('/aws/upload')
         .attach('demo', file)
-        .query('port=' + this.props.file)
+        .query('port=' + this.props.tab)
         .end((err, res) => {
           if (err) {
             console.log(err);
@@ -55,14 +55,14 @@ class Uploads extends React.Component {
   }
 
   render() {
-    console.log('state', this.props.file);
-    const filesArr = this.props.portfolio[this.props.file];
+    console.log('tab', this.props.tab);
+    const filesArr = this.props.portfolio[this.props.tab];
     return (
           <div>
             {(this.state.currUrl !== '') ? <img style={styles.pic} src={this.state.currUrl} /> : <p></p>}
             {filesArr.map((file) => (
               <div onClick={() => (this.renderFile(file.fileUrl))}>
-                <img style={styles.pic} src={ (file.fileType === 'image/png') ? 'http://wfarm3.dataknet.com/static/resources/icons/set112/f2afb6f7.png' : '../../../img/pdf.png' }/>
+                <img style={styles.pic} src={ (file.fileType === 'image/png') ? 'http://wfarm3.dataknet.com/static/resources/icons/set112/f2afb6f7.png' : 'https://cdn.shopify.com/s/files/1/1061/1924/files/Poop_Emoji.png?9898922749706957214' }/>
                 <p>{file.fileName}</p>
               </div>
             ))}
@@ -80,16 +80,16 @@ class Uploads extends React.Component {
   }
 }
 
-Uploads.propTypes = {
+UploadsContainer.propTypes = {
   portfolio: PropTypes.object,
-  file: PropTypes.string
+  tab: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-  portfolio: state.createProfileReducer.main.portfolio
+  portfolio: state.userReducer.portfolio
 });
 
 const mapDispatchToProps = () => ({
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Uploads);
+export default connect(mapStateToProps, mapDispatchToProps)(UploadsContainer);

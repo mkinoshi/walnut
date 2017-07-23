@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Link, Switch } from 'react-router-dom';
-import Uploads from '../../containers/Uploads';
+import Uploads from './EditProfile_Main_Body_Uploads_Container';
 
 const styles = {
   portfolio: {
@@ -12,12 +12,22 @@ const styles = {
 };
 
 class Portfolio extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'media'
+    };
+  }
+
+  tabChange(tab) {
+    this.setState({tab: tab});
+  }
 
   render() {
     return (
       <div style={styles.portfolio}>
         <h2>Portfolio</h2>
-        <p><Link to="/app/editprofile" style={styles.links}>media</Link></p>
+        {/* <p><Link to="/app/editprofile" style={styles.links}>media</Link></p>
         <p><Link to="/app/editprofile/portfolio/documents" style={styles.links}>documents</Link></p>
         <p><Link to="/app/editprofile/portfolio/code" style={styles.links}>code</Link></p>
         <p><Link to="/app/editprofile/portfolio/design" style={styles.links}>design</Link></p>
@@ -34,7 +44,12 @@ class Portfolio extends React.Component {
           <Route path="/app/editprofile" render={(props) =>
             <Uploads file={'media'} {...props}/>
           }/>
-        </Switch>
+        </Switch> */}
+        <p onClick={()=> (this.tabChange('media'))}>Media</p>
+        <p onClick={()=> (this.tabChange('documents'))}>Documents</p>
+        <p onClick={()=> (this.tabChange('code'))}>Code</p>
+        <p onClick={()=> (this.tabChange('design'))}>Design</p>
+        <Uploads tab={this.state.tab} />
       </div>
     );
   }

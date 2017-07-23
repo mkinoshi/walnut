@@ -21,7 +21,12 @@ const userObj = {
   links: [],
   interests: [],
   projects: [],
-  portfolio: [],
+  portfolio: {
+    media: [],
+    documents: [],
+    code: [],
+    design: []
+  },
   education: {
     college: '',
     majors: [],

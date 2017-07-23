@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import AWS from 'aws-sdk';
 // TODO user models with new db layout
-import {Profile} from '../models/models';
+import {User} from '../models/models';
 
 AWS.config.update(
   {
@@ -33,19 +33,19 @@ router.post('/upload', upload.single('demo'), (req, res) => {
       res.status(400).send(err);
       return;
     }
-    Profile.findOne({owner: req.user._id})
-    .then((profile) => {
+    User.findOne({owner: req.user._id})
+    .then((user) => {
       const newFile = {
         fileName: req.file.fieldname,
         fileType: req.file.mimetype,
         fileUrl: process.env.AWS_BUCKET_URL + toSave
       };
-      profile.portfolio[req.query.port].push(newFile);
-      return profile.save();
+      user.portfolio[req.query.port].push(newFile);
+      return user.save();
     })
-    .then((profile) => {
-      console.log('fefeefefefefefegef', profile);
-      res.json({portfolio: profile.portfolio});
+    .then((user) => {
+      console.log('fefeefefefefefegef', user);
+      res.json({portfolio: user.portfolio});
     });
   });
 
