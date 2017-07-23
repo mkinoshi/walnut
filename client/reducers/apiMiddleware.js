@@ -204,7 +204,8 @@ export const apiMiddleware = store => next => action => {
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
-        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
+        console.log('discover response', response);
+        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.filters, posts: response.posts});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
