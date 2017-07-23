@@ -191,6 +191,16 @@ export const apiMiddleware = store => next => action => {
         console.log('error in saving story', err);
       });
       break;
+    case 'CREATE_PROFILE':
+      axios.post(URL + 'db/save/iscreated', {
+      })
+      .then((response) => {
+        console.log('Profile Done', response);
+      })
+      .catch((err) => {
+        console.log('Profile Done Error', err);
+      });
+      break;
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {

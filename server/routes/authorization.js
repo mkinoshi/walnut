@@ -63,7 +63,7 @@ function auth(passport) {
   });
 
   router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/app/walnuthome',
+    successRedirect: '/',
     failureRedirect: '/auth/login'
   }));
 
@@ -80,13 +80,19 @@ function auth(passport) {
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
-      res.redirect('/app/walnuthome');
+      if(req.user.hasProfile) {
+          console.log('has it');
+          res.redirect('/app/walnuthome');
+      } else{
+          console.log('doesnt have it')
+          res.redirect('/app/community/editprofile');
+      }
     }
   });
 
   router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/login');
+    res.redirect('/auth/login');
   });
 
   return router;

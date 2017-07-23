@@ -310,7 +310,6 @@ router.get('/get/quote', (req, res) => {
 router.post('/save/blurb', (req, res) => {
   User.fidnById(req.user._id)
          .then((response) => {
-           response.hasProfile = true;
            response.blurb = req.body.blurbBody;
            return response.save();
          })
@@ -327,7 +326,6 @@ router.post('/save/blurb', (req, res) => {
 router.post('/save/tags', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
-           response.hasProfile = true;
            response.tags = req.body.tagsArray;
            return response.save();
          })
@@ -343,7 +341,6 @@ router.post('/save/tags', (req, res) => {
 router.post('/save/interests', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
-           response.hasProfile = true;
            response.interests = req.body.interestsArray;
            return response.save();
          })
@@ -361,7 +358,6 @@ router.post('/save/about', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            globalResponse = response;
-           globalResponse.hasProfile = true;
            globalResponse.education = req.body.education;
            globalResponse.currentOccupation = req.body.currentOccupation;
            globalResponse.currentOccupationCity = req.body.currentOccupationCity;
@@ -415,7 +411,6 @@ router.post('/save/contact', (req, res) => {
   User.findById(req.user._id)
             .then((response) => {
               globalResponse = response;
-              globalResponse.hasProfile = true;
               globalResponse.email = req.body.email;
               globalResponse.address = req.body.address;
               globalResponse.phone = req.body.phone;
@@ -447,7 +442,6 @@ router.post('/save/contact', (req, res) => {
 router.post('/save/links', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
-           response.hasProfile = true;
            response.links = req.body.linksArray;
            return response.save();
          })
@@ -467,41 +461,10 @@ router.post('/save/iscreated', (req, res) => {
                return response.save();
              })
             .then((userProfile) => {
-              const data = {
-                isCreated: userProfile.isCreated,
-                head: {
-                  fullName: userProfile.fullName,
-                  tags: userProfile.tags,
-                  blurb: userProfile.blurb,
-                  profileURL: userProfile.profileURL
-                },
-                info: {
-                  about: {
-                    education: userProfile.education,
-                    majors: userProfile.majors,
-                    currentOccupation: userProfile.currentOccupation,
-                    currentOccupationCity: userProfile.currentOccupationCity,
-                    pastOccupations: userProfile.pastOccupations
-                  },
-                  contact: {
-                    email: userProfile.email,
-                    address: userProfile.address,
-                    phone: userProfile.phone
-                  },
-                  interests: userProfile.interests,
-                  projects: userProfile.projects,
-                  links: userProfile.links
-                },
-                main: {
-                  portfolio: userProfile.portfolio,
-                  story: userProfile.story
-                }
-              };
-              res.json({data: data});
+              res.json({success: true, data: userProfile});
             })
             .catch((err) => {
-              console.log(err);
-              console.log('in error', err);
+              console.log('in created', err);
               res.json({data: null});
             });
 });
