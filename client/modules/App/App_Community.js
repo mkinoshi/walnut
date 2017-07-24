@@ -24,6 +24,25 @@ class Community extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log('ehhehehehehehehehehe');
+    console.log(this.props);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
+    }
+  }
+
+  handlePosition(position) {
+    console.log(this);
+    console.log(position);
+    this.props.updateLocation([position.coords.longitude, position.coords.latitude]);
+  }
+
+  handleError(msg) {
+    console.log(msg);
+    this.props.updateLocation([]);
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -49,10 +68,14 @@ class Community extends React.Component {
 
 Community.propTypes = {
   hasProfile: PropTypes.bool,
+  updateLocation: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  hasProfile: state.userReducer.hasProfile
+  hasProfile: state.userReducer.hasProfile,
+});
+const mapDispatchToProps = (dispatch) => ({
+  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
 });
 
-export default connect(mapStateToProps)(Community);
+export default connect(mapStateToProps, mapDispatchToProps)(Community);

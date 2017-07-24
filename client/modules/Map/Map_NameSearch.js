@@ -5,13 +5,15 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 
+// today could not figure out why value won't change for Select!!!!! so weird
+
 class NameSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
-      value: '',
+      selectValue: 'lonely',
       users: [
         {
           name: 'Alex Badgio',
@@ -55,7 +57,10 @@ class NameSearch extends React.Component {
     // this.props.getUserData();
   }
   handleChange(value) {
-    this.setState({value: value});
+    console.log('value', value);
+    console.log(this);
+    this.setState({selectValue: value.name});
+    console.log('this.state.selectValue', this.state.selectValue);
   }
   handleNew(event) {
     event.preventDefault();
@@ -63,24 +68,34 @@ class NameSearch extends React.Component {
     // console.log('value')
     // const index = this.state.users.indexOf(this.state.value);
     // console.log(index);
-    this.props.updateCenter(this.state.users.find((user) => {return user.name === this.state.value;}));
+    console.log(this.state.selectValue);
+    const center = this.state.users.find((user) => {return user.name === this.state.selectValue;}).location;
+    console.log(center);
+    this.props.updateCenter(center);
     this.props.updateZoom();
-    this.setState({value: ''});
+    this.setState({selectValue: ''});
   }
   render() {
+    console.log('here', this.state.selectValue);
     return (
+      <div>
       <form onSubmit={(e) => this.handleNew(e)}>
         <Select
-          name="form-field-name"
-          value={this.state.value}
+          name="selected-state"
+          value={this.state.selectValue}
           simpleValue
+          autofocus
+          clearable
           options={this.state.users.map((user) => {
             return {value: user, label: user.name};
           })}
-          onChange={(e) => this.handleChange(e)}
+          onChange={this.handleChange.bind(this)}
+          placeholder="test"
+          onInputKeyDown={() => {console.log('hey', this.state.selectValue);}}
         />
         <button type="submit">Search by Name</button>
       </form>
+      </div>
     );
   }
 }

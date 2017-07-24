@@ -55,7 +55,8 @@ const UserSchema = new mongoose.Schema({
     type: String
   },
   pictureURL: {
-    type: String
+    type: String,
+    default: ''
   },
   preferences: [
     {
@@ -68,7 +69,8 @@ const UserSchema = new mongoose.Schema({
   location: {
     college: [Number],
     homeTown: [Number],
-    occupation: [Number]
+    occupation: [Number],
+    live: [Number]
   },
   phone: {
     type: String
