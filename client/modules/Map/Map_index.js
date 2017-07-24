@@ -127,12 +127,9 @@ class MapContainer extends React.Component {
       //     liveData: true
       //   }
       // ]};
-    };
   }
 
   componentDidMount() {
-    // Dispatch fucntion to get all of data
-    // TODO we have to get data from the server side through reducers
     this.props.getAllUsersMap();
   }
 
@@ -195,7 +192,7 @@ MapContainer.propTypes = {
   zoom: PropTypes.array,
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
-  updateClicked: PropTypes.func
+  updateClicked: PropTypes.func,
   getAllUsersMap: PropTypes.func,
   users: PropTypes.array
 };
@@ -217,6 +214,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateClicked: (index) => dispatch({
     type: 'UPDATE_CLICKED',
     clicked: index
+  }),
   getAllUsersMap: () => dispatch({
     type: 'GET_ALL_USERS_MAP'
   })
