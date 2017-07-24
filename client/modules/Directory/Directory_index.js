@@ -32,6 +32,7 @@ class Directory extends React.Component {
   render() {
     console.log('made it to directory');
     return (
+
         <div style={styles.page}>
           <DeckContainer style={styles.container}/>
           <Profile style={styles.profile}/>
