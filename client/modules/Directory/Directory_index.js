@@ -32,16 +32,21 @@ class Directory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentIndex: 0
     };
+  }
+
+  componentDidMount() {
+    this.props.getAllUsersDirectory();
+  }
+
+  handleClick() {
   }
 
   render() {
     return (
-
         <div style={styles.page}>
-          <DeckContainer style={styles.container}/>
-          <Profile style={styles.profile} user={this.props.users[this.state.currentIndex]}/>
+          <DeckContainer profiles={this.props.users} handleClick={this.handleClick.bind(this)}/>
+          <Profile user={this.props.users[this.props.clicked]}/>
         </div>
     );
   }
@@ -49,14 +54,20 @@ class Directory extends React.Component {
 
 
 Directory.propTypes = {
-  users: PropTypes.array
+  users: PropTypes.array,
+  getAllUsersDirectory: PropTypes.func,
+  clicked: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
-  users: state.deckReducer.profiles
+  users: state.deckReducer.profiles,
+  clicked: state.deckReducer.clicked
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getAllUsersDirectory: () => dispatch({
+    type: 'GET_ALL_USERS_DIRECTORY'
+  })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Directory);

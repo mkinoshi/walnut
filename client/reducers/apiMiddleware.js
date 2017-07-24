@@ -235,6 +235,17 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_ALL_USERS_ERROR'});
       });
       break;
+    case 'GET_ALL_USERS_DIRECTORY':
+      console.log('getting here');
+      axios.get(URL + 'db/get/allusersdirectory')
+      .then((response) => {
+        store.dispatch({type: 'GET_ALL_USERS_DIRECTORY_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_DIRECTORY_ERROR'});
+      });
+      break;
     case 'GET_ALL_COMMUNITIES':
       axios.get(URL + 'db/get/allcommunities')
       .then((response) => {

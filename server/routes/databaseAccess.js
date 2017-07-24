@@ -493,6 +493,16 @@ router.get('/get/allusersmap', (req, res) => {
       });
 });
 
+router.get('/get/allusersdirectory', (req, res) => {
+  Community.findById(req.user.currentCommunity)
+      .populate('users')
+      .then((community) => {
+        res.json({data: community.users});
+      })
+      .catch((err) => {
+        res.json({data: null});
+      });
+})
 
 router.get('/get/specprofile', (req, res) => {
   User.findById(req.user._id)
