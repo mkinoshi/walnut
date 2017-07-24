@@ -213,6 +213,17 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
       });
       break;
+    case 'GET_NEXT_POSTS':
+      axios.get(URL + 'db/get/next10' + '?lastOne=' + action.lastOne)
+      .then((response) => {
+        console.log('discover response', response);
+        store.dispatch({type: 'GET_NEXT_TEN_DONE', filters: response.data.filters, posts: response.data.posts});
+      })
+      .catch((err) =>{
+        console.log('error in newComment', err);
+        store.dispatch({type: 'GET_NEXT_TEN_ERROR'});
+      });
+      break;
     case 'GET_ALL_USERS':
       axios.get(URL + 'db/get/allusers')
       .then((response) => {

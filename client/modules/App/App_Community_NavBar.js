@@ -24,18 +24,18 @@ const styles = {
 class Navbar extends React.Component {
 
   render() {
+    const title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     return (
       <div className="navbar-fixed">
         <nav style={styles.ribbon}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">
-              <li><Link to="/app/community/discover"> Discover
+              <li><Link to={'/app/community/' + {title} + '/discover'} > Discover
             {/* <img src={this.props.community.icon} style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/> */}
               </Link></li>
-              <li><Link to="/app/community/directory" style={styles.links}>Directory</Link></li>
-              <li><Link to="/app/community/projects" style={styles.links}>Projects</Link></li>
-              <li><Link to="/app/community/map" style={styles.links}>Map</Link></li>
-              <li><Link to="/app/community/editprofile" style={styles.links}>Edit</Link></li>
+              <li><Link to={'/app/community/' + {title} + '/directory'} style={styles.links}>Directory</Link></li>
+              <li><Link to={'/app/community/' + {title} + '/map'} style={styles.links}>Map</Link></li>
+              <li><Link to={'/app/community/' + {title} + '/editprofile'} style={styles.links}>Edit</Link></li>
             </ul>
             <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
             <a href="/logout">logout</a>
