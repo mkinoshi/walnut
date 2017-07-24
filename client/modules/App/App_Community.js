@@ -24,6 +24,10 @@ class Community extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // this.props.getDiscoverContent();
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -49,10 +53,16 @@ class Community extends React.Component {
 
 Community.propTypes = {
   hasProfile: PropTypes.bool,
+  getDiscoverContent: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile
 });
 
-export default connect(mapStateToProps)(Community);
+const mapDispatchToProps = (dispatch) => ({
+  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'})
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Community);

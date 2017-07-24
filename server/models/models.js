@@ -2,11 +2,6 @@
 // Maybe we have to use schema
 import mongoose from 'mongoose';
 
-// Not sure how to use Token
-const TokenSchema = new mongoose.Schema({
-
-});
-
 const CommunitySchema = new mongoose.Schema({
   title: {
     type: String
@@ -25,7 +20,13 @@ const CommunitySchema = new mongoose.Schema({
   ],
   icon: {
     type: String,
-  }
+  },
+  tags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tag'
+    }
+  ]
 });
 
 const UserSchema = new mongoose.Schema({
@@ -145,7 +146,8 @@ const PostSchema = new mongoose.Schema({
   ],
   tags: [
     {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tag'
     }
   ],
   comments: [
@@ -175,23 +177,17 @@ const PostSchema = new mongoose.Schema({
 
 
 const TagSchema = new mongoose.Schema({
-  community: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Community'
-  },
+  communities: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Community'
+    }
+  ],
   name: {
     type: String,
   },
-  // TODO
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Posts'
-    }
-  ]
 });
 
-const Token = mongoose.model('Token', TokenSchema);
 const User = mongoose.model('User', UserSchema);
 const Quote = mongoose.model('Quote', QuoteSchema);
 const Post = mongoose.model('Post', PostSchema);
@@ -200,7 +196,6 @@ const Community = mongoose.model('Community', CommunitySchema);
 
 
 module.exports = {
-  Token: Token,
   User: User,
   Quote: Quote,
   Post: Post,
