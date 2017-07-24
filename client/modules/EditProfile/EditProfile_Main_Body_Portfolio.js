@@ -14,41 +14,38 @@ class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'media'
+      tab: 'media',
+      currUrl: ''
     };
   }
 
   tabChange(tab) {
-    this.setState({tab: tab});
+    this.setState({tab: tab, currUrl: ''});
+  }
+
+  renderFile(url) {
+    console.log('renderfile toggle state', this.state.currUrl);
+    if(this.state.currUrl === url) {
+      console.log('in here');
+      this.setState({currUrl: ''});
+    } else{
+      this.setState({currUrl: url});
+    }
   }
 
   render() {
+    // TODO currUrl needs to deploy modal to show all file types and not just image
     return (
       <div style={styles.portfolio}>
         <h2>Portfolio</h2>
-        {/* <p><Link to="/app/editprofile" style={styles.links}>media</Link></p>
-        <p><Link to="/app/editprofile/portfolio/documents" style={styles.links}>documents</Link></p>
-        <p><Link to="/app/editprofile/portfolio/code" style={styles.links}>code</Link></p>
-        <p><Link to="/app/editprofile/portfolio/design" style={styles.links}>design</Link></p>
-        <Switch>
-          <Route exact path="/app/editprofile/portfolio/documents" render={(props) =>
-            <Uploads file={'documents'} {...props}/>
-          }/>
-          <Route exact path="/app/editprofile/portfolio/code" render={(props) =>
-            <Uploads file={'code'} {...props}/>
-          }/>
-          <Route exact path="/app/editprofile/portfolio/design" render={(props) =>
-            <Uploads file={'design'} {...props}/>
-          }/>
-          <Route path="/app/editprofile" render={(props) =>
-            <Uploads file={'media'} {...props}/>
-          }/>
-        </Switch> */}
         <p onClick={()=> (this.tabChange('media'))}>Media</p>
         <p onClick={()=> (this.tabChange('documents'))}>Documents</p>
         <p onClick={()=> (this.tabChange('code'))}>Code</p>
         <p onClick={()=> (this.tabChange('design'))}>Design</p>
-        <Uploads tab={this.state.tab} />
+        {(this.state.currUrl !== '') ? <img style={styles.pic} src={this.state.currUrl} /> : <p></p>}
+        <Uploads
+        tab={this.state.tab}
+        renderFile={(url) => (this.renderFile(url))}/>
       </div>
     );
   }

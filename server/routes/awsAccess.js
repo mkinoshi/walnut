@@ -33,10 +33,10 @@ router.post('/upload', upload.single('demo'), (req, res) => {
       res.status(400).send(err);
       return;
     }
-    User.findOne({owner: req.user._id})
+    User.findById(req.user._id)
     .then((user) => {
       const newFile = {
-        fileName: req.query.name || req.file.originalname,
+        fileName: req.query.name,
         fileType: req.file.mimetype,
         fileUrl: process.env.AWS_BUCKET_URL + toSave
       };
@@ -49,7 +49,7 @@ router.post('/upload', upload.single('demo'), (req, res) => {
     })
     .catch((error) => console.log('error in aws db save', error));
   });
-  console.log('newName', req.query.name);
+  console.log('query....', req.query);
 });
 
 
