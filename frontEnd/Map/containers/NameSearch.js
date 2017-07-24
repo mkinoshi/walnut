@@ -1,11 +1,11 @@
 // searches on the Map by name
+
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 
-// today could not figure out why value won't change for Select!!!!! so weird
 
 class NameSearch extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class NameSearch extends React.Component {
     this.state = {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
-      selectValue: 'lonely',
+      value: '',
       users: [
         {
           name: 'Alex Badgio',
@@ -53,75 +53,74 @@ class NameSearch extends React.Component {
       ]
     };
   }
+
   componentDidMount() {
     // this.props.getUserData();
   }
+
   handleChange(value) {
-    console.log('value', value);
-    console.log(this);
-    this.setState({selectValue: value.name});
-    console.log('this.state.selectValue', this.state.selectValue);
+    console.log
+    this.setState({value: value});
   }
+
   handleNew(event) {
     event.preventDefault();
     // this.props.updateUser({preferences: this.props.preferences.concat(this.state.value)});
     // console.log('value')
     // const index = this.state.users.indexOf(this.state.value);
     // console.log(index);
-    console.log(this.state.selectValue);
-    const center = this.state.users.find((user) => {return user.name === this.state.selectValue;}).location;
-    console.log(center);
-    this.props.updateCenter(center);
+    this.props.updateCenter(this.state.users.find((user) => {return user.name === this.state.value;}).location);
     this.props.updateZoom();
-    this.setState({selectValue: ''});
+    this.setState({value: ''});
   }
+
   render() {
-    console.log('here', this.state.selectValue);
     return (
-      <div>
       <form onSubmit={(e) => this.handleNew(e)}>
         <Select
-          name="selected-state"
-          value={this.state.selectValue}
+          name="form-field-name"
+          value={this.state.value}
           simpleValue
-          autofocus
-          clearable
           options={this.state.users.map((user) => {
             return {value: user, label: user.name};
           })}
-          onChange={this.handleChange.bind(this)}
-          placeholder="test"
-          onInputKeyDown={() => {console.log('hey', this.state.selectValue);}}
+          onChange={(e) => this.handleChange(e)}
         />
         <button type="submit">Search by Name</button>
       </form>
-      </div>
     );
   }
 }
+
 // FilterPref.propTypes = {
 //   preferences: PropTypes.array,
 //   toggleChecked: PropTypes.func,
 //   getUserData: PropTypes.func,
 //   updateUser: PropTypes.func
 // };
+
 // const mapStateToProps = (state) => ({
 //   filters: state.discoverReducer.filters,
 //   preferences: state.userReducer.preferences
 // });
+
 // const mapDispatchToProps = (dispatch) => ({
 //   toggleChecked: (name, index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name, index: index}),
 //   getUserData: () => dispatch({type: 'GET_USER_DATA'}),
 //   updateUser: (updateObj) => dispatch({type: 'UPDATE_USER', data: updateObj})
 //   // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
 // });
+
 // export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);
+
 NameSearch.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func
 };
+
 const mapStateToProps = (state) => ({
 });
+
 const mapDispatchToProps = (dispatch) => ({
   updateCenter: (newCenter) => dispatch({
     type: 'NEW_CENTER',
@@ -131,4 +130,5 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'UPDATE_ZOOM',
   })
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);

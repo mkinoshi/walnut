@@ -51,7 +51,7 @@ router.post('/join/community', (req, res) => {
   Community.findById(req.body.communityId)
     .then((community) => {
       community.users.push(req.user._id);
-      joined = community
+      joined = community;
       return community.save();
     })
     .then((response) => {
@@ -473,12 +473,34 @@ router.get('/get/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
       .populate('users')
       .then((community) => {
+        console.log(community.users);
         res.json({data: community.users});
       })
       .catch((err) => {
         res.json({data: null});
       });
 });
+
+router.get('/get/allusersmap', (req, res) => {
+  Community.findById(req.user.currentCommunity)
+      .populate('users')
+      .then((community) => {
+        const users = community.users.map((user) => {
+          return {
+            name: user.fullName,
+            profileURL: user.pictureURL,
+            location: user.location.homeTown,
+            career: user.currentOccupation
+          };
+        });
+        console.log(users);
+        res.json({data: users});
+      })
+      .catch((err) => {
+        res.json({data: null});
+      });
+});
+
 
 router.get('/get/specprofile', (req, res) => {
   User.findById(req.user._id)
@@ -522,6 +544,19 @@ router.get('/get/specprofile', (req, res) => {
          });
 });
 
+router.post('/update/location', (req, res) => {
+  User.findById(req.user._id)
+      .then((response) => {
+        response.location.live = req.body.location;
+        return response.save();
+      })
+      .then((resp) => {
+        res.json({success: true});
+      })
+      .catch((err) => {
+        res.json({success: false});
+      });
+});
 
 router.get('/get/allusers', (req, res) => {
   User.find()
