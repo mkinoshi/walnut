@@ -69,7 +69,7 @@ class Community extends React.Component {
 
 Community.propTypes = {
   hasProfile: PropTypes.bool,
-  getDiscoverContent: PropTypes.func
+  getDiscoverContent: PropTypes.func,
   updateLocation: PropTypes.func
 };
 
