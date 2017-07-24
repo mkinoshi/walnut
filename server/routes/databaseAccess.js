@@ -483,10 +483,11 @@ router.get('/get/allusersmap', (req, res) => {
       .then((community) => {
         const users = community.users.map((user) => {
           return {
-            name: user.fullName,
-            profileURL: user.pictureURL,
+            fullName: user.fullName,
+            pictureURL: user.pictureURL,
             location: user.location,
-            career: user.currentOccupation
+            career: user.currentOccupation,
+            education: user.education
           };
         });
         console.log(users);

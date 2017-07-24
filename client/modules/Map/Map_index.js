@@ -48,52 +48,6 @@ class MapContainer extends React.Component {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
       clicked: [],
-      // users: [
-      //   {
-      //     name: 'Eli Badgio',
-      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: [-122.4199537, 38.7775032],
-      //     year: 'Summer 2017',
-      //     career: 'Rice University',
-      //     liveData: true
-      //   },
-      //   {
-      //     name: 'Eli Badgio',
-      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: [-122.4199537, 37.7775032],
-      //     year: 'Summer 2017',
-      //     career: 'Rice University',
-      //     liveData: true
-      //   },
-      //   {
-      //     name: 'Eli Badgio',
-      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: [-122.4199537, 36.7775032],
-      //     year: 'Summer 2017',
-      //     career: 'Rice University',
-      //     liveData: true
-      //   },
-      //   {
-      //     name: 'Eli Badgio',
-      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: [-122.4199537, 37.8775032],
-      //     year: 'Summer 2017',
-      //     career: 'Rice University',
-      //     liveData: true
-      //   },
-      //   {
-      //     name: 'Eli Badgio',
-      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: {
-            //     college: [123123, 12123],
-            //     homeTown: [123123, 12123],
-            //     live: [12312, 12313]
-            //  }
-      //     year: 'Summer 2017',
-      //     career: 'Rice University',
-      //     liveData: true
-      //   }
-      // ]};
     };
   }
 
@@ -123,7 +77,7 @@ class MapContainer extends React.Component {
           <MapItemSelector />
           <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
-          changeZoom={(num) => {this.props.updateZoom();}}/>
+          changeZoom={(num) => {this.props.updateZoom(num);}} />
         </div>
         <Map
           style="mapbox://styles/mapbox/dark-v9"
@@ -181,9 +135,6 @@ const mapDispatchToProps = (dispatch) => ({
   updateCenter: (newCenter) => dispatch({
     type: 'NEW_CENTER',
     center: newCenter,
-  }),
-  updateZoom: () => dispatch({
-    type: 'UPDATE_ZOOM',
   }),
   updateClicked: (index) => dispatch({
     type: 'UPDATE_CLICKED',

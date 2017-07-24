@@ -18,7 +18,7 @@ const mapReducer = (state = {
     case 'UPDATE_ZOOM':
       return {
         ...state,
-        zoom: [10]
+        zoom: [action.num]
       };
     case 'CHANGE_CATEGORY':
       return {
