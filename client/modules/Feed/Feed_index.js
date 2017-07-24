@@ -124,6 +124,10 @@ class Feed extends React.Component {
     return {filters: filters, posts: final};
   }
 
+  handleScroll() {
+
+  }
+
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
     return (
@@ -151,17 +155,19 @@ class Feed extends React.Component {
       // </div>
       <div>
           <div className="col-xs-12" style={styles.feed}>
-          <div className="col-xs-3">
-          <div className="discoverButton left" style={{}}>
-            <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
-              className="waves-effect waves-light btn"
-              onClick={() => (this.toggleFilterPref())}>Discover</a>
-          </div>
-          {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
-          </div>
+            <div className="col-xs-3">
+              <div className="discoverButton left" style={{}}>
+                <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.toggleFilterPref())}>Discover</a>
+              </div>
+            {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+            </div>
+            <div onScroll={() =>{}}>
             {filteredPosts.map((post) => (
               <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
+            </div>
           </div>
       </div>
     );
@@ -171,7 +177,8 @@ class Feed extends React.Component {
 Feed.propTypes = {
   data: PropTypes.object,
   newLike: PropTypes.func,
-  getData: PropTypes.func
+  getData: PropTypes.func,
+  getNext10: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -180,7 +187,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id}),
-  getData: () => dispatch({type: 'GET_DISCOVER_INFO'})
+  getData: () => dispatch({type: 'GET_DISCOVER_INFO'}),
+  getNext10: (last) => dispatch({type: 'GET_NEXT_10', lastOne: last})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

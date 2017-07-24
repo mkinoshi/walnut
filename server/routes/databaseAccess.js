@@ -10,6 +10,7 @@ router.get('/user', (req, res) => {
   console.log('req.user', req.user);
   User.findById(req.user._id)
       .populate('communities')
+      .populate('currentCommunity')
       .then((response) => {
         console.log('get user success', response);
         res.json({data: response});
@@ -51,7 +52,7 @@ router.post('/join/community', (req, res) => {
   let joined;
   Community.findById(req.body.communityId)
     .then((community) => {
-      if (!community.includes(req.user._id)) {
+      if (community.users.indexOf(req.user._id) === -1) {
         community.users.push(req.user._id);
       }
       joined = community;
@@ -62,8 +63,8 @@ router.post('/join/community', (req, res) => {
     })
     .then((user) => {
       console.log('current 1', req.body.communityId);
-      if (!user.communities.includes(req.body.communityId)) {
-        user.communities.push(req.body.commentId);
+      if (user.communities.indexOf(req.body.communityId) === -1) {
+        user.communities.push(req.body.communityId);
       }
       user.currentCommunity = req.body.communityId;
       return user.save();
@@ -119,6 +120,7 @@ router.get('/get/discoverinfo', (req, res) => {
           let posts = [];
           Post.find({community: req.user.currentCommunity})
             .sort({createdAt: -1})
+            .limit(20)
             .populate('tags')
             .populate('comments')
             .populate('comments.createdBy')
@@ -160,6 +162,66 @@ router.get('/get/discoverinfo', (req, res) => {
         console.log('error 2', err);
         res.json({error: err});
       });
+});
+
+router.get('/get/next10', (req, res) => {
+  Community.findById(req.user.currentCommunity)
+        .populate('tags')
+        .then((community) => {
+          community.users.filter((user) => {
+            return user === req.user._id;
+          });
+          if (community.length === 0) {
+            console.log('not in community error');
+            res.json({error: 'No authorization'});
+          } else{
+            const filters = community.tags;
+            let posts = [];
+            Post.find({community: req.user.currentCommunity})
+                    .sort({createdAt: -1})
+                    .skip(req.query.lastOne)
+                    .limit(10)
+                    .populate('tags')
+                    .populate('comments')
+                    .populate('comments.createdBy')
+                    .populate('createdBy')
+                    .then((postArr) => {
+                      console.log('posts', postArr);
+                      posts = postArr.map((postObj) => {
+                        return {
+                          postId: postObj._id,
+                          username: postObj.createdBy.username,
+                          pictureURL: postObj.createdBy.pictureURL,
+                          content: postObj.content,
+                          createdAt: postObj.createdAt,
+                          tags: postObj.tags,
+                          likes: postObj.likes,
+                          commentNumber: postObj.commentNumber,
+                          comments: postObj.comments.map((commentObj) => {
+                            return {
+                              commentId: commentObj._id,
+                              username: commentObj.createdBy.username,
+                              pictureURL: commentObj.createdBy.pictureURL,
+                              content: commentObj.content,
+                              createdAt: commentObj.createdAt,
+                              likes: commentObj.likes
+                            };
+                          })
+                        };
+                      });
+                      console.log('here', filters, posts);
+                      res.json({filters: filters, posts: posts});
+                    })
+                    .catch((err) => {
+                      console.log('error 1', err);
+                      res.json(err);
+                    });
+          }
+        })
+        .catch((err) => {
+          console.log('error 2', err);
+          res.json({error: err});
+        });
 });
 
 router.get('/get/profilecreate', (req, res) => {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import EditProfile from '../EditProfile/EditProfile_index';
+import _ from 'underscore';
 
 const styles = {
   communities: {
@@ -31,12 +32,12 @@ class WalnutHomeContainer extends React.Component {
 
   componentWillMount() {
     this.props.getCommunities();
+    this.props.getUser();
     console.log('trying to get communities');
+    console.log('mounted', this.props.hasProfile);
   }
 
   componentDidMount() {
-    this.props.getUser();
-    console.log('mounted', this.props.hasProfile);
   }
 
   handleStart() {
@@ -56,8 +57,10 @@ class WalnutHomeContainer extends React.Component {
     this.props.joinCommunity(id);
   }
 
+
   // TODO HORIZONS
   render() {
+    console.log('coms', this.props.communities, this.props.userCommunities);
     return (
         <div>
            <div>
@@ -67,20 +70,27 @@ class WalnutHomeContainer extends React.Component {
              <div>
                <h2>Your Communities</h2>
                <div style={styles.communities}>
-                   {this.props.userCommunities.map((community, idx) => <div onClick={() => {this.props.joinCommunity(community._id);}} key={idx}>
+                   {this.props.userCommunities.map((community, idx) => <Link to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div onClick={() => {this.props.joinCommunity(community._id);}} key={idx}>
                      <img src={community.icon} style={styles.image} />
                      <p>{community.title}</p>
-                   </div> )}
+                   </div></Link> )}
                </div>
              </div>
             <div>
                 <h2>Search For new Communities</h2>
                 <div style={styles.communities}>
-                    {this.props.communities.map((community, idx) => <div key={idx}>
-                      <img src={community.icon} style={styles.image} />
-                      <p>{community.title}</p>
-                      <button onClick={() => {this.joinCommunity(community._id);}}><Link to="/app/community/discover">+ Join</Link></button>
-                    </div> )}
+                    {this.props.communities.filter((com) => {
+                      let found = false;
+                      this.props.userCommunities.forEach((com2) => {
+                        found = _.isEqual(com, com2);
+                      });
+                      return !found;
+                    }).map((community, idx) => <div key={idx}>
+                        <img src={community.icon} style={styles.image} />
+                        <p>{community.title}</p>
+                        <button onClick={() => {this.joinCommunity(community._id);}}><Link to={'/app/community/' + community.title.split(' ').join('') + '/discover'}>+ Join</Link></button>
+                    </div> )
+                    }
                 </div>
             </div>
             <div>
@@ -91,7 +101,7 @@ class WalnutHomeContainer extends React.Component {
                 <input type="text"
                        value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
                 </label>
-                <button onClick={() => {this.handleSubmit();}}><Link to="/app/community/discover">Create</Link></button>
+                <button onClick={() => {this.handleSubmit();}}><Link to={'/app/community/' + this.state.titleValue.split(' ').join('') + '/discover'}>Create</Link></button>
             </div> : null}
           </div>
         </div>
