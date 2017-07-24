@@ -40,25 +40,28 @@ class Card extends React.Component {
 
   render() {
     return (
-        <div style={styles.Card}>
-            <img style={styles.Image}
-                 src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
-                 alt="5" />
-            <div style={styles.Content}>
-                <p style={styles.Name}>{this.props.prof.fullName}</p>
-                <p style={styles.College}>{this.props.prof.education}</p>
-            </div>
-            <hr style={styles.Hr}></hr>
-        </div>
+      <div>
+      {this.props.profile.head.fullName}
+      </div>
     );
   }
 }
 
+/* <div style={styles.Card}>
+    <img style={styles.Image}
+         src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
+         alt="5" />
+    <div style={styles.Content}>
+        <p style={styles.Name}>{this.props.prof.fullName}</p>
+        <p style={styles.College}>{this.props.prof.education}</p>
+    </div>
+    <hr style={styles.Hr}></hr>
+</div> */
+
 
 Card.propTypes = {
-  prof: PropTypes.object,
-  handleClick: PropTypes.func,
-  key: PropTypes.number
+  profile: PropTypes.object,
+  handleClick: PropTypes.func
 };
 
 export default Card;

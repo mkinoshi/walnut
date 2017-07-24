@@ -78,8 +78,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});},
-  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'})
+  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'}),
+  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
 });
 
 
