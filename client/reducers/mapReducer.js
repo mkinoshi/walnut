@@ -6,7 +6,8 @@ const mapReducer = (state = {
   selected: 'live',
   center: [-103.59179687498357, 40.66995747013945],
   zoom: [3],
-  data: []
+  usersData: [],
+  clicked: -1
 }, action) => {
   switch (action.type) {
     case 'NEW_CENTER':
@@ -23,6 +24,11 @@ const mapReducer = (state = {
       return {
         ...state,
         selected: action.selected
+      };
+    case 'UPDATE_CLICKED':
+      return {
+        ...state,
+        clicked: action.clicked
       };
     case 'GET_ALL_USERS_MAP_DONE':
       return {

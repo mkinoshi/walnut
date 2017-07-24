@@ -7,6 +7,7 @@ import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import uuidv4 from 'uuid/v4';
 
 const styles = {
   mapContainer: {
@@ -47,6 +48,43 @@ class MapContainer extends React.Component {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
       clicked: [],
+      users: [
+        {
+          name: 'Alex Badgio',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          location: [-122.4199537, 38.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
+        },
+        {
+          name: 'Omid Badgio',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          location: [-122.4199537, 37.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
+        },
+        {
+          name: 'Makoto Badgio',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          location: [-122.4199537, 36.7775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
+        },
+        {
+          name: 'Otto Badgio',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          location: [-122.4199537, 37.8775032],
+          year: 'Summer 2017',
+          career: 'Rice University'
+        },
+        {
+          name: 'Eli Badgio',
+          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+          location: [-122.4199537, 37.77757],
+          year: 'Summer 2017',
+          career: 'Rice University'
+        }
+      ]};
       // users: [
       //   {
       //     name: 'Eli Badgio',
@@ -91,19 +129,19 @@ class MapContainer extends React.Component {
       // ]};
     };
   }
+
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
     this.props.getAllUsersMap();
   }
-  // changeCenter(coordinates) {
-  //   // coordinates given in array format
-  //   this.setState({center: coordinates});
-  // }
-  // changeZoom(zoom) {
-  //   // zoom given as integer
-  //   this.setState({zoom: [zoom]});
-  // }
+
+  handleClick(index) {
+    this.props.updateCenter(this.state.users[index].location);
+    this.props.updateZoom(10);
+    this.props.updateClicked(index);
+  }
+
   clusterMarker(coordinates) {
     return (
       <Marker coordinates={coordinates} style={styles.marker}>
@@ -131,16 +169,13 @@ class MapContainer extends React.Component {
             <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
-                  this.props.users.map((feature, key) => {
+                  this.state.users.map((feature, index) => {
                     return (
                       <Marker
-                        key={key}
+                        key={uuidv4()}
                         coordinates={feature.location}
                         style={styles.cluster}
-                        onClick={() => {
-                          this.props.updateCenter([20, 20]);
-                          this.props.updateZoom();
-                        }}
+                        onClick={this.handleClick.bind(this, index)}
                         >
                         <CircleIcon />
                       </Marker>
@@ -160,6 +195,7 @@ MapContainer.propTypes = {
   zoom: PropTypes.array,
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
+  updateClicked: PropTypes.func
   getAllUsersMap: PropTypes.func,
   users: PropTypes.array
 };
@@ -178,6 +214,9 @@ const mapDispatchToProps = (dispatch) => ({
   updateZoom: () => dispatch({
     type: 'UPDATE_ZOOM',
   }),
+  updateClicked: (index) => dispatch({
+    type: 'UPDATE_CLICKED',
+    clicked: index
   getAllUsersMap: () => dispatch({
     type: 'GET_ALL_USERS_MAP'
   })
