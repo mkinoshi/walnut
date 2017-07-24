@@ -85,7 +85,7 @@ function auth(passport) {
           res.redirect('/app/walnuthome');
       } else{
           console.log('doesnt have it')
-          res.redirect('/app/community/editprofile');
+          res.redirect('/app/editprofile');
       }
     }
   });

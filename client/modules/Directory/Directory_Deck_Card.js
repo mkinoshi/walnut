@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const styles = {
   Card: {
@@ -27,6 +28,12 @@ const styles = {
   },
   Hr: {
     width: '80%'
+  },
+  Clicked: {
+    backgroundColor: 'green'
+  },
+  Unclicked: {
+    backgroundColor: 'blue'
   }
 };
 
@@ -38,10 +45,17 @@ class Card extends React.Component {
     };
   }
 
+  handleClick() {
+    this.props.updateClicked(this.props.index);
+  }
+
   render() {
     return (
-      <div>
-      {this.props.profile.head.fullName}
+      <div style={styles[(this.props.clicked === this.props.index) ? 'Clicked' : 'Unclicked']}
+      onClick={this.handleClick.bind(this)}>
+        <span> <img src={this.props.profile.pictureURL} />
+        {this.props.profile.fullName}
+        </span>
       </div>
     );
   }
@@ -61,7 +75,22 @@ class Card extends React.Component {
 
 Card.propTypes = {
   profile: PropTypes.object,
-  handleClick: PropTypes.func
+  index: PropTypes.number,
+  handleClick: PropTypes.func,
+  updateClicked: PropTypes.func,
+  clicked: PropTypes.number
 };
 
-export default Card;
+const mapStateToProps = (state) => ({
+  clicked: state.mapReducer.clicked
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateClicked: (index) => dispatch({
+    type: 'UPDATE_CLICKED',
+    clicked: index
+  })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
+

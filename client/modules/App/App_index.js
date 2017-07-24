@@ -28,8 +28,8 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-            <Route path="/app/community/discover" component={Community} />
-            <Route path="/app/community/editprofile" render={(props) =>
+            <Route path="/app/community" component={Community} />
+            <Route path="/app/editprofile" render={(props) =>
               <EditProfile isCreating={!null} {...props} />
             } />
           </Switch>

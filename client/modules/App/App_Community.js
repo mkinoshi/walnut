@@ -46,22 +46,18 @@ class Community extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <div>
-            <NavBar />
-             <div>
-             <Switch>
-                <Route path="/app/community/editprofile" component={EditProfile}/>
-                {/* <Route path="/app/projects" component={Home}/> */}
-                <Route path="/app/community/directory" component={Directory} />
-                <Route path="/app/community/map" component={MapContainer}/>
-                <Route path="/app/community/discover" component={Discover} />
-             </Switch>
-             </div>
-           </div>
-        </div>
-      </BrowserRouter>
+      <div>
+        <NavBar />
+         <div>
+         <Switch>
+            <Route path="/app/community/:communityName/editprofile" component={EditProfile}/>
+            {/* <Route path="/app/projects" component={Home}/> */}
+            <Route path="/app/community/:communityName/directory" component={Directory} />
+            <Route path="/app/community/:communityName/map" component={MapContainer}/>
+            <Route path="/app/community/:communityName/discover" component={Discover} />
+         </Switch>
+         </div>
+       </div>
     );
   }
 }

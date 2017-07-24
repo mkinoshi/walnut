@@ -6,15 +6,11 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 
-// TODO Filter component box style
-// TODO button onClick dispatches toggleChecked(index) 17
-// TODO pre define checked box from filter.checked
-
 class FilterPrefContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: this.props.filters.map((filter) => filter.name),
+      filters: [],
       value: [],
     };
   }
@@ -27,6 +23,7 @@ class FilterPrefContainer extends React.Component {
     // this.props.toggleCheckedFront(e.target.value, index);
     // this.props.toggleChecked(e.target.value, index);
     const index = this.state.filters.indexOf(e.target.value);
+    this.props.filterChange(e.target.value);
     if (!this.state.filters.includes(e.target.value)) {
       this.setState({filters: this.state.filters.concat(e.target.value)});
     } else {
@@ -56,7 +53,7 @@ class FilterPrefContainer extends React.Component {
           {this.props.filters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
-              checked={(this.state.filters.includes(filter)) ? 'checked' : ''}
+              checked={(this.state.filters.includes(filter.name)) ? 'checked' : ''}
               value={filter.name}
               onChange={(e) => {this.handleChange(e);}}/>
               <label htmlFor={index} style={{color: 'black'}}># {filter.name}</label>
@@ -85,7 +82,8 @@ FilterPrefContainer.propTypes = {
   preferences: PropTypes.array,
   toggleChecked: PropTypes.func,
   getDiscoverData: PropTypes.func,
-  updateUser: PropTypes.func
+  updateUser: PropTypes.func,
+  filterChange: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

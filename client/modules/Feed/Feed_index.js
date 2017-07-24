@@ -85,6 +85,7 @@ class Feed extends React.Component {
     super(props);
     this.state = {
       showFilterPref: false,
+      filters: []
     };
   }
 
@@ -97,36 +98,38 @@ class Feed extends React.Component {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
 
-  filterData(data) {
-    const checkedFilterObject = data.filters.filter((filter) => (filter.checked === true));
-    const getFields = (input, field) => {
-      const output = [];
-      for(let i = 0; i < input.length; ++i) {
-        output.push(input[i][field]);
-      }
-      return output;
-    };
-    // filters array of tags
-    const filters = getFields(checkedFilterObject, 'name');
-    // if the array zero return the entire unfiltered array
-    if(filters.length === 0) {
-      return data;
+  filterChange(filterName) {
+    const filts = this.state.filters;
+    if (filts.indexOf(filterName) >= 0) {
+      const idx = filts.indexOf(filterName);
+      filts.splice(idx, 1);
+    } else {
+      filts.push(filterName);
     }
-    const final = data.posts.filter((post) => {
+    this.setState({filters: filts});
+  }
+
+  filterData(filters, posts) {
+    // if the array zero return the entire unfiltered array
+    if(filters.length === 0 || filters.length === this.props.data.filters.length) {
+      return {filters: filters, posts: posts};
+    }
+    const final = posts.filter((post) => {
       const findOne = (haystack, arr) => {
-        return arr.some(tag => haystack.indexOf(tag) >= 0);
+        return arr.some(tag => haystack.indexOf(tag.name) >= 0);
       };
-      if(findOne(filters, post.tags) === true) {
-        return post;
-      }
-      return null;
+      return findOne(filters, post.tags) === true;
     });
-    const filteredState = {filters: data.filters, posts: final};
-    return filteredState;
+
+    return {filters: filters, posts: final};
+  }
+
+  handleScroll() {
+
   }
 
   render() {
-    const filteredPosts = this.filterData(this.props.data).posts;
+    const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
     return (
       // <div>
       //   <div className="col-xs-3" style={styles.outer}>
@@ -152,17 +155,19 @@ class Feed extends React.Component {
       // </div>
       <div>
           <div className="col-xs-12" style={styles.feed}>
-          <div className="col-xs-3">
-          <div className="discoverButton left" style={{}}>
-            <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
-              className="waves-effect waves-light btn"
-              onClick={() => (this.toggleFilterPref())}>Discover</a>
-          </div>
-          {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
-          </div>
+            <div className="col-xs-3">
+              <div className="discoverButton left" style={{}}>
+                <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
+                  className="waves-effect waves-light btn"
+                  onClick={() => (this.toggleFilterPref())}>Discover</a>
+              </div>
+            {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+            </div>
+            <div onScroll={() =>{}}>
             {filteredPosts.map((post) => (
               <Post key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
             ))}
+            </div>
           </div>
       </div>
     );
@@ -172,7 +177,8 @@ class Feed extends React.Component {
 Feed.propTypes = {
   data: PropTypes.object,
   newLike: PropTypes.func,
-  getData: PropTypes.func
+  getData: PropTypes.func,
+  getNext10: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -181,7 +187,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id}),
-  getData: () => dispatch({type: 'GET_DISCOVER_INFO'})
+  getData: () => dispatch({type: 'GET_DISCOVER_INFO'}),
+  getNext10: (last) => dispatch({type: 'GET_NEXT_10', lastOne: last})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

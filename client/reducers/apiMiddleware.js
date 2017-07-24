@@ -47,7 +47,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then(() => {
         next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
-        next(action);
+        // next(action);
       })
       .catch((err) =>{
         console.log('error in newTag', err);
@@ -201,7 +201,8 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'GET_DISCOVER_INFO':
-      axios.get(URL + 'db/get/discoverinfo')
+      axios.get(URL + 'db/get/discoverinfo', {
+      })
       .then((response) => {
         console.log('discover response', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.data.filters, posts: response.data.posts});
@@ -209,6 +210,17 @@ export const apiMiddleware = store => next => action => {
       .catch((err) =>{
         console.log('error in newComment', err);
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
+      });
+      break;
+    case 'GET_NEXT_POSTS':
+      axios.get(URL + 'db/get/next10' + '?lastOne=' + action.lastOne)
+      .then((response) => {
+        console.log('discover response', response);
+        store.dispatch({type: 'GET_NEXT_TEN_DONE', filters: response.data.filters, posts: response.data.posts});
+      })
+      .catch((err) =>{
+        console.log('error in newComment', err);
+        store.dispatch({type: 'GET_NEXT_TEN_ERROR'});
       });
       break;
     case 'GET_ALL_USERS':
@@ -231,6 +243,17 @@ export const apiMiddleware = store => next => action => {
       .catch((err) =>{
         console.log('error in getting users', err);
         store.dispatch({type: 'GET_ALL_USERS_ERROR'});
+      });
+      break;
+    case 'GET_ALL_USERS_DIRECTORY':
+      console.log('getting here');
+      axios.get(URL + 'db/get/allusersdirectory')
+      .then((response) => {
+        store.dispatch({type: 'GET_ALL_USERS_DIRECTORY_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_DIRECTORY_ERROR'});
       });
       break;
     case 'GET_ALL_COMMUNITIES':
@@ -294,7 +317,7 @@ export const apiMiddleware = store => next => action => {
           store.dispatch({type: 'UPDATE_LOCATION_DONE', location: action.location});
         })
         .catch((err) => {
-          console.lgo(err);
+          console.log(err);
           store.dispatch({type: 'UPDATE_LOCATION_DONE_ERR'});
         });
       } else {

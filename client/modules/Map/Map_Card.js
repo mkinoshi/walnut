@@ -98,8 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'NEW_CENTER',
     center: newCenter,
   }),
-  updateZoom: () => dispatch({
+  updateZoom: (num) => dispatch({
     type: 'UPDATE_ZOOM',
+    num: num
   }),
   updateClicked: (index) => dispatch({
     type: 'UPDATE_CLICKED',
