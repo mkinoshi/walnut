@@ -12,6 +12,8 @@ const styles = {
   }
 };
 
+const bucketUrl = 'https://s3-us-west-1.amazonaws.com/walnut-test/';
+
 class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -28,19 +30,25 @@ class UploadsContainer extends React.Component {
     this.setState({files: this.state.files.concat(files), onEdit: true});
   }
 
-  // handleNameChange(update, i) {
-  //   const filesArr = this.state.files.slice();
-  //   filesArr[i].name = update;
-  //   this.setState({files: filesArr});
-  // }
+  nameChange(update, i) {
+    const filesArr = this.state.files.slice();
+    filesArr[i].newName = update;
+    this.setState({files: filesArr});
+  }
 
   uploadFiles() {
-    this
+    const dummyArr = this.state.files.map((file) => (
+      {
+        fileName: file.newName || file.name,
+        fileUrl: bucketUrl + this.props.userId + (file.newName || file.originalname),
+        fileType: file.type
+      }
+    ));
     const files = this.state.files.slice();
     files.forEach((file) => {
       superagent.post('/aws/upload')
         .attach('demo', file)
-        .query('port=' + this.props.tab + 'name=' + this.state.files.newName)
+        .query('port=' + this.props.tab + '&&name=' + this.state.files.newName)
         .end((err, res) => {
           if (err) {
             console.log(err);
@@ -48,6 +56,7 @@ class UploadsContainer extends React.Component {
           }
           console.log('RESPONSE', res);
           alert('File uploaded!');
+          this.setState({sneakyFront: this.props.portfolio[this.props.tab].concat(dummyArr), files: [], onEdit: false});
         });
     });
   }
@@ -59,7 +68,7 @@ class UploadsContainer extends React.Component {
   render() {
     console.log('ffifjwiofjwifjiefjiejfiejif', this.state.files);
     console.log('tab', this.props.tab);
-    const filesArr = this.props.portfolio[this.props.tab];
+    const filesArr = ( this.state.sneakyFront.length > 1 ) ? this.state.sneakyFront : this.props.portfolio[this.props.tab];
     return (
           <div>
             {(this.state.currUrl !== '') ? <img style={styles.pic} src={this.state.currUrl} /> : <p></p>}
@@ -73,7 +82,9 @@ class UploadsContainer extends React.Component {
               <div>Try dropping a file here, or click to select a file to upload.</div>
             </Dropzone>
             {this.state.files.map((file, i) => (
-              <input key={i} placeholder={file.name} onChange={(e) => (this.nameChange(e.target.value, i))}/>
+              <input key={i}
+              value={file.newName || file.name}
+              onChange={(e) => (this.nameChange(e.target.value, i))}/>
               // <input value={file.name} onChange={(e) => (this.handleNameChange(e.target.value, i))} />
             ))}
             {this.state.onEdit ? <button onClick={() => {this.uploadFiles();}}>Upload</button> : null}
@@ -85,7 +96,8 @@ class UploadsContainer extends React.Component {
 
 UploadsContainer.propTypes = {
   portfolio: PropTypes.object,
-  tab: PropTypes.string
+  tab: PropTypes.string,
+  userId: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

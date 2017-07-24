@@ -20,7 +20,7 @@ const upload = multer({
 });
 
 router.post('/upload', upload.single('demo'), (req, res) => {
-  const toSave = req.user._id + req.file.originalname + Date.now();
+  const toSave = req.user._id + (req.query.name || req.file.originalname);
   console.log('htuhuhdusdsudhushudshdsd', req.file);
   s3.putObject({
     Bucket: 'walnut-test',
@@ -36,7 +36,7 @@ router.post('/upload', upload.single('demo'), (req, res) => {
     User.findOne({owner: req.user._id})
     .then((user) => {
       const newFile = {
-        fileName: req.query.name,
+        fileName: req.query.name || req.file.originalname,
         fileType: req.file.mimetype,
         fileUrl: process.env.AWS_BUCKET_URL + toSave
       };
@@ -44,28 +44,12 @@ router.post('/upload', upload.single('demo'), (req, res) => {
       return user.save();
     })
     .then((user) => {
-      console.log('fefeefefefefefegef', user);
+      console.log('user object after save. check new name!!!!', user);
       res.json({portfolio: user.portfolio});
-    });
+    })
+    .catch((error) => console.log('error in aws db save', error));
   });
-
-  console.log('FILE', req.file);
-  // finding user object in db
-  console.log('USER for db save', req.user._id);
-  // object key of where the links get stored
-  console.log('media placement', req.query.port);
-
-  // TODO in response send the file link to tempFiles, while it is getting saved
-  res.send('DONE');
-
-  // TODO : req.file. fieldname, mimetype, originalname save to database
-
-  // { fieldname: 'theseNamesMustMatch',
-  // originalname: 'Screen Shot 2017-07-20 at 10.39.11 AM.png',
-  // encoding: '7bit',
-  // mimetype: 'image/png',
-  // buffer: <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 0a 00 00 00 06 40 08 06 00 00 00 b5 ac 1b c0 00 00 0c 13 69 43 43 50 49 43 43 20 50 72 6f 66 69 ... >,
-  // size: 1266247
+  console.log('newName', req.query.name);
 });
 
 
