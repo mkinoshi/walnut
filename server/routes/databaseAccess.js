@@ -9,6 +9,7 @@ import Promise from 'promise';
 router.get('/user', (req, res) => {
   console.log('req.user', req.user);
   User.findById(req.user._id)
+      .populate('communities')
       .then((response) => {
         console.log('get user success', response);
         res.json({data: response});
