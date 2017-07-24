@@ -5,24 +5,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from './Directory_Deck_Card';
+import uuidv4 from 'uuid/v4';
 
 class DeckContainer extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
+  constructor() {
+    super();
+    this.state = {
+    };
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-    handleClick(id) {
-        this.props.renderProfile(id)
-    }
+  handleClick(id) {
+        // this.props.renderProfile(id)
+  }
 
   render() {
     return (
         <div>
-            <h1 style={}>I am the Deck</h1>
-            {this.props.profiles.map((prof, idx) => <Card key={idx} handleClick={this.handleClick} prof={prof} />)}
+            <h1>I am the Deck</h1>
+            {this.props.profiles.map((prof, idx) => <Card key={uuidv4()} handleClick={this.handleClick} />)}
         </div>
     );
   }
@@ -30,16 +31,16 @@ class DeckContainer extends React.Component {
 
 
 DeckContainer.propTypes = {
-    profiles: PropTypes.array,
-    renderProfile: PropTypes.func
+  profiles: PropTypes.array,
+  renderProfile: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-    profiles: state.deckReducer
+  profiles: state.deckReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    renderProfile: (id) => dispatch({type: 'GET_ONE_PROFILE', owner: id})
+  renderProfile: (id) => dispatch({type: 'GET_ONE_PROFILE', owner: id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckContainer);
