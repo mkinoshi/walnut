@@ -20,7 +20,7 @@ class Directory extends React.Component {
     return (
         <div>
           <h1 style={styles.header}>I am the directory</h1>
-          {/* <DeckContainer />*/}
+           {/* <DeckContainer /> */}
         </div>
     );
   }
