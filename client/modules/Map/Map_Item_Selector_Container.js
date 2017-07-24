@@ -8,6 +8,7 @@ class MapItemSelectorContainer extends React.Component {
             <div>
                 <a className="waves-effect waves-light btn" onClick={() => this.props.changeCategory('live')}>live</a>
                 <a className="waves-effect waves-light btn" onClick={() => this.props.changeCategory('college')}>college</a>
+                <a className="waves-effect waves-light btn" onClick={() => this.props.changeCategory('homeTown')}>from</a>
             </div>
         );
   }

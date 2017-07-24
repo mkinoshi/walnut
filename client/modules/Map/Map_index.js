@@ -48,43 +48,6 @@ class MapContainer extends React.Component {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
       clicked: [],
-      users: [
-        {
-          name: 'Alex Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 38.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Omid Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Makoto Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 36.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Otto Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.8775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.77757],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        }
-      ]};
       // users: [
       //   {
       //     name: 'Eli Badgio',
@@ -121,12 +84,17 @@ class MapContainer extends React.Component {
       //   {
       //     name: 'Eli Badgio',
       //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      //     location: [-122.4199537, 37.77757],
+      //     location: {
+            //     college: [123123, 12123],
+            //     homeTown: [123123, 12123],
+            //     live: [12312, 12313]
+            //  }
       //     year: 'Summer 2017',
       //     career: 'Rice University',
       //     liveData: true
       //   }
       // ]};
+    };
   }
 
   componentDidMount() {
@@ -147,6 +115,8 @@ class MapContainer extends React.Component {
     );
   }
   render() {
+    console.log(this.props.users);
+    console.log(this.props);
     return (
       <div style={styles.outer}>
         <div style={styles.inner}>
@@ -166,11 +136,13 @@ class MapContainer extends React.Component {
             <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
-                  this.state.users.map((feature, index) => {
+                  this.props.users.filter((user) => {
+                    return user.location[this.props.selected].length > 0;
+                  }).map((feature, index) => {
                     return (
                       <Marker
                         key={uuidv4()}
-                        coordinates={feature.location}
+                        coordinates={feature.location[this.props.selected]}
                         style={styles.cluster}
                         onClick={this.handleClick.bind(this, index)}
                         >
@@ -194,13 +166,15 @@ MapContainer.propTypes = {
   updateZoom: PropTypes.func,
   updateClicked: PropTypes.func,
   getAllUsersMap: PropTypes.func,
-  users: PropTypes.array
+  users: PropTypes.array,
+  selected: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   users: state.mapReducer.users,
   center: state.mapReducer.center,
-  zoom: state.mapReducer.zoom
+  zoom: state.mapReducer.zoom,
+  selected: state.mapReducer.selected
 });
 
 const mapDispatchToProps = (dispatch) => ({

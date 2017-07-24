@@ -50,7 +50,9 @@ router.post('/join/community', (req, res) => {
   let joined;
   Community.findById(req.body.communityId)
     .then((community) => {
-      community.users.push(req.user._id);
+      if (!community.includes(req.user._id)) {
+        community.users.push(req.user._id);
+      }
       joined = community;
       return community.save();
     })
@@ -59,7 +61,9 @@ router.post('/join/community', (req, res) => {
     })
     .then((user) => {
       console.log('current 1', req.body.communityId);
-      user.communities.push(req.body.communityId);
+      if (!user.communities.includes(req.body.communityId)) {
+        user.communities.push(req.body.commentId);
+      }
       user.currentCommunity = req.body.communityId;
       return user.save();
     })
@@ -481,7 +485,7 @@ router.get('/get/allusersmap', (req, res) => {
           return {
             name: user.fullName,
             profileURL: user.pictureURL,
-            location: user.location.homeTown,
+            location: user.location,
             career: user.currentOccupation
           };
         });
