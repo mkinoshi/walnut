@@ -64,8 +64,17 @@ class WalnutHomeContainer extends React.Component {
             <div>
                 <h1>I am the Walnut Home</h1>
             </div>
+             <div>
+               <h2>Your Communities</h2>
+               <div style={styles.communities}>
+                   {this.props.userCommunities.map((community, idx) => <div onClick={() => {this.props.joinCommunity(community._id);}} key={idx}>
+                     <img src={community.icon} style={styles.image} />
+                     <p>{community.title}</p>
+                   </div> )}
+               </div>
+             </div>
             <div>
-                <h2>Find Communities here:</h2>
+                <h2>Search For new Communities</h2>
                 <div style={styles.communities}>
                     {this.props.communities.map((community, idx) => <div key={idx}>
                       <img src={community.icon} style={styles.image} />
@@ -96,11 +105,13 @@ WalnutHomeContainer.propTypes = {
   getUser: PropTypes.func,
   communities: PropTypes.array,
   joinCommunity: PropTypes.func,
-  getCommunities: PropTypes.func
+  getCommunities: PropTypes.func,
+  userCommunities: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
+  userCommunities: state.userReducer.communities,
   communities: state.getCommunityReducer.communities
 });
 
