@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 
-// TODO Filter component box style
-// TODO button onClick dispatches toggleChecked(index) 17
-// TODO pre define checked box from filter.checked
-
 class FilterPrefContainer extends React.Component {
   constructor(props) {
     super(props);
