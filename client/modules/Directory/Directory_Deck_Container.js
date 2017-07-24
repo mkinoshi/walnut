@@ -20,10 +20,12 @@ class DeckContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.profiles);
     return (
         <div>
             <h1>I am the Deck</h1>
-            {this.props.profiles.map((prof, idx) => <Card key={uuidv4()} handleClick={this.handleClick} />)}
+            {this.props.profiles.map((profile, idx) =>
+              <Card key={uuidv4()} handleClick={this.handleClick} profile={profile}/>)}
         </div>
     );
   }
@@ -36,7 +38,7 @@ DeckContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  profiles: state.deckReducer
+  profiles: state.deckReducer.profiles
 });
 
 const mapDispatchToProps = (dispatch) => ({

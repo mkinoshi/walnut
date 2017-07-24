@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import DeckContainer from './Directory_Deck_Container';
 import Profile from './Directory_Profile';
 
@@ -15,7 +16,7 @@ const styles = {
   },
   page: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'row'
   },
   container: {
     flex: 1,
@@ -28,13 +29,18 @@ const styles = {
 };
 
 class Directory extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentIndex: 0
+    };
+  }
 
   render() {
-    console.log('made it to directory');
     return (
         <div style={styles.page}>
           <DeckContainer style={styles.container}/>
-          <Profile style={styles.profile}/>
+          <Profile style={styles.profile} user={this.props.users[this.state.currentIndex]}/>
         </div>
     );
   }
@@ -42,6 +48,14 @@ class Directory extends React.Component {
 
 
 Directory.propTypes = {
+  users: PropTypes.array
 };
 
-export default Directory;
+const mapStateToProps = (state) => ({
+  users: state.deckReducer.profiles
+});
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Directory);
