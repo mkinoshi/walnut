@@ -30,13 +30,12 @@ class UploadsContainer extends React.Component {
   }
 
   onDrop(files) {
-    console.log('inenenenene', files);
     this.setState({files: this.state.files.concat(files), onEdit: true});
   }
 
   nameChange(update, i) {
     const filesArr = this.state.files.slice();
-    filesArr[i].newName = update;
+    filesArr[i].newName = update || '';
     this.setState({files: filesArr});
   }
 

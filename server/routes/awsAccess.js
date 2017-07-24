@@ -21,7 +21,6 @@ const upload = multer({
 
 router.post('/upload', upload.single('demo'), (req, res) => {
   const toSave = req.user._id + (req.query.name || req.file.originalname);
-  console.log('htuhuhdusdsudhushudshdsd', req.file);
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,

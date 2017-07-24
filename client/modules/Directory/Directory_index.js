@@ -38,6 +38,7 @@ class Directory extends React.Component {
 
   render() {
     return (
+
         <div style={styles.page}>
           <DeckContainer style={styles.container}/>
           <Profile style={styles.profile} user={this.props.users[this.state.currentIndex]}/>
