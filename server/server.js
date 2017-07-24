@@ -31,6 +31,7 @@ var models = require('./models/models');
 
 //put in dbRoutes
 var dbRoutes = require('./routes/databaseAccess.js');
+var awsRoutes = require('./routes/awsAccess.js');
 var auth = require('./routes/authorization');
 var app = express();
 
@@ -149,6 +150,7 @@ app.set('view engine', 'hbs');
 
 app.use('/', auth(passport));
 app.use('/db', dbRoutes);
+app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/app', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux

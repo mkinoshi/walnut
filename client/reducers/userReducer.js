@@ -10,9 +10,10 @@ const userObj = {
   preferences: [],
   from: '',
   location: {
-    college: '',
-    homeTown: '',
-    occupation: ''
+    college: [],
+    homeTown: [],
+    occupation: [],
+    live: []
   },
   phone: '',
   currentOccupation: '',
@@ -21,7 +22,12 @@ const userObj = {
   links: [],
   interests: [],
   projects: [],
-  portfolio: [],
+  portfolio: {
+    media: [],
+    documents: [],
+    code: [],
+    design: []
+  },
   education: {
     college: '',
     majors: [],
@@ -43,6 +49,16 @@ const userReducer = (state = userObj, action) => {
         preferences: action.data.preferences
       };
     case 'GET_USER_DATA_ERROR':
+      return state;
+    case 'UPDATE_LOCATION_DONE':
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          live: action.location
+        }
+      };
+    case 'UPDATE_LOCATION_DONE_ERR':
       return state;
     default:
       return state;

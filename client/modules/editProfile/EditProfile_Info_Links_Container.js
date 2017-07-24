@@ -31,6 +31,9 @@ class LinksContainer extends React.Component {
   }
 
   changeLinks(link, i) {
+    if (link === '') {
+      return;
+    }
     const obj = JSON.parse(JSON.stringify(this.state));
     obj.links[i] = link;
     this.setState(obj);

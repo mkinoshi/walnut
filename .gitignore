@@ -4,3 +4,4 @@ env.sh
 *app.bundle.js
 *app.bundle.js.map
 .idea
+*npm-debug.log

@@ -124,7 +124,7 @@ const dummyData = {
   ]
 };
 
-const deckReducer = (state = [], action) => {
+const deckReducer = (state = dummyData, action) => {
   switch(action.type) {
     case 'GET_ALL_PROFILES_DONE':
       console.log('in deckReducer', action.data);
