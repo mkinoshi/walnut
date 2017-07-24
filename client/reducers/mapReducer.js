@@ -18,7 +18,7 @@ const mapReducer = (state = {
     case 'UPDATE_ZOOM':
       return {
         ...state,
-        zoom: [10]
+        zoom: [action.num]
       };
     case 'CHANGE_CATEGORY':
       return {
@@ -32,6 +32,7 @@ const mapReducer = (state = {
       };
     case 'GET_ALL_USERS_MAP_DONE':
       return {
+        ...state,
         users: action.data.data
       };
     default:
