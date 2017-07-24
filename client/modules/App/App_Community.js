@@ -76,12 +76,10 @@ Community.propTypes = {
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
 });
-const mapDispatchToProps = (dispatch) => ({
-  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
-});
 
 const mapDispatchToProps = (dispatch) => ({
-  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'})
+  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'}),
+  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
 });
 
 
