@@ -295,7 +295,7 @@ export const apiMiddleware = store => next => action => {
           store.dispatch({type: 'UPDATE_LOCATION_DONE', location: action.location});
         })
         .catch((err) => {
-          console.lgo(err);
+          console.log(err);
           store.dispatch({type: 'UPDATE_LOCATION_DONE_ERR'});
         });
       } else {
