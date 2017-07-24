@@ -55,7 +55,8 @@ const UserSchema = new mongoose.Schema({
     type: String
   },
   pictureURL: {
-    type: String
+    type: String,
+    default: ''
   },
   preferences: [
     {

@@ -224,6 +224,16 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_ALL_USERS_ERROR'});
       });
       break;
+    case 'GET_ALL_USERS_MAP':
+      axios.get(URL + 'db/get/allusersmap')
+      .then((response) => {
+        store.dispatch({type: 'GET_ALL_USERS_MAP_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_ERROR'});
+      });
+      break;
     case 'GET_ALL_COMMUNITIES':
       axios.get(URL + 'db/get/allcommunities')
       .then((response) => {

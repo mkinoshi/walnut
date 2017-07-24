@@ -47,58 +47,54 @@ class MapContainer extends React.Component {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
       clicked: [],
-      users: [
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 38.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University',
-          liveData: true
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University',
-          liveData: true
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 36.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University',
-          liveData: true
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.8775032],
-          year: 'Summer 2017',
-          career: 'Rice University',
-          liveData: true
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.77757],
-          year: 'Summer 2017',
-          career: 'Rice University',
-          liveData: true
-        }
-      ]};
+      // users: [
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 38.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 36.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.8775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.77757],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   }
+      // ]};
+    };
   }
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
-    this.getCurrentLocations();
-  }
-  getCurrentLocations() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position.coords.latitude, position.coords.longitude);
-    });
+    this.props.getAllUsersMap();
   }
   // changeCenter(coordinates) {
   //   // coordinates given in array format
@@ -120,7 +116,7 @@ class MapContainer extends React.Component {
       <div style={styles.outer}>
         <div style={styles.inner}>
           <MapItemSelector />
-          <MapFilter users={this.state.users}
+          <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
           changeZoom={(num) => {this.props.updateZoom();}}/>
         </div>
@@ -135,7 +131,7 @@ class MapContainer extends React.Component {
             <ZoomControl style={styles.zoom}/>
             <Cluster ClusterMarkerFactory={this.clusterMarker}>
               {
-                  this.state.users.map((feature, key) => {
+                  this.props.users.map((feature, key) => {
                     return (
                       <Marker
                         key={key}
@@ -163,10 +159,13 @@ MapContainer.propTypes = {
   center: PropTypes.array,
   zoom: PropTypes.array,
   updateCenter: PropTypes.func,
-  updateZoom: PropTypes.func
+  updateZoom: PropTypes.func,
+  getAllUsersMap: PropTypes.func,
+  users: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
+  users: state.mapReducer.users,
   center: state.mapReducer.center,
   zoom: state.mapReducer.zoom
 });
@@ -178,6 +177,9 @@ const mapDispatchToProps = (dispatch) => ({
   }),
   updateZoom: () => dispatch({
     type: 'UPDATE_ZOOM',
+  }),
+  getAllUsersMap: () => dispatch({
+    type: 'GET_ALL_USERS_MAP'
   })
 });
 

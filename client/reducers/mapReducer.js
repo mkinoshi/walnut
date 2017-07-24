@@ -2,6 +2,7 @@
 // our states will be center and zoom
 
 const mapReducer = (state = {
+  users: [],
   selected: 'live',
   center: [-103.59179687498357, 40.66995747013945],
   zoom: [3],
@@ -22,6 +23,10 @@ const mapReducer = (state = {
       return {
         ...state,
         selected: action.selected
+      };
+    case 'GET_ALL_USERS_MAP_DONE':
+      return {
+        users: action.data.data
       };
     default:
       return state;
