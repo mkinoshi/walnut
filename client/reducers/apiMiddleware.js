@@ -133,7 +133,6 @@ export const apiMiddleware = store => next => action => {
     case 'SAVE_ABOUT':
       axios.post(URL + 'db/save/about', {
         education: action.about.education,
-        majors: action.about.majors,
         currentOccupation: action.about.currentOccupation,
         currentOccupationCity: action.about.currentOccupationCity,
         pastOccupations: action.about.pastOccupations

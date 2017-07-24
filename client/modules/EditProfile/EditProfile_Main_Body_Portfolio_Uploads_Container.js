@@ -17,8 +17,6 @@ const styles = {
   }
 };
 
-const bucketUrl = 'https://s3-us-west-1.amazonaws.com/walnut-test/';
-
 class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +28,7 @@ class UploadsContainer extends React.Component {
   }
 
   onDrop(files) {
+    console.log('files', files[0]);
     this.setState({files: this.state.files.concat(files), onEdit: true});
   }
 
@@ -42,8 +41,8 @@ class UploadsContainer extends React.Component {
   uploadFiles() {
     const files = this.state.files.slice();
     files.forEach((file) => {
-      superagent.post('/aws/upload')
-        .attach('demo', file)
+      superagent.post('/aws/upload/portfolio')
+        .attach('portfolio', file)
         .query('port=' + this.props.tab + '&&name=' + (file.newName || file.name))
         .end((err, res) => {
           if (err) {

@@ -10,7 +10,7 @@ router.get('/user', (req, res) => {
   console.log('req.user', req.user);
   User.findById(req.user._id)
       .then((response) => {
-        console.log('get user success', response);
+        console.log('get user success response in middleware', response);
         res.json({data: response});
       })
       .catch((err) => {

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactUploadFile from 'react-upload-file';
+import superagent from 'superagent';
+import Slider from 'react-slick';
 
 const styles = {
   head: {
@@ -9,6 +12,9 @@ const styles = {
     width: '65%'
   }
 };
+
+const defaulProfileUrl = 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png';
+
 class HeadContainer extends React.Component {
   constructor() {
     super();
@@ -17,6 +23,7 @@ class HeadContainer extends React.Component {
       editTags: false,
       editBlurb: false
     };
+
     this.handleChangeBlurb = this.handleChangeBlurb.bind(this);
     this.handleChangeTag = this.handleChangeTag.bind(this);
     this.onSubmitBlurb = this.onSubmitBlurb.bind(this);
@@ -25,6 +32,7 @@ class HeadContainer extends React.Component {
     this.saveTags = this.saveTags.bind(this);
     this.removeTag = this.removeTag.bind(this);
   }
+
   // ComponentDidMount() {
   //   this.props.getUser();
   //   console.log('edit mount');
@@ -35,46 +43,99 @@ class HeadContainer extends React.Component {
       blurbInput: input,
     });
   }
+
   handleChangeTag(event) {
     const input = event.target.value;
     this.setState({
       tagInput: input,
     });
   }
+
   toggleBlurb() {
     this.setState({editBlurb: true});
   }
+
   onSubmitBlurb() {
     console.log('blurb', this.state.blurbInput);
     this.setState({editBlurb: false});
     // this.props.saveBlurb(this.state.blurbInput);
   }
+
   toggleTags() {
     this.setState({editTags: true, newTags: this.props.tags});
   }
+
   addTag(tag) {
     const tags = this.state.newTags;
     tags.push(tag);
     this.setState({newTags: tags, tagInput: ''});
   }
+
   removeTag(tag) {
     const tags = this.state.newTags;
     tags.splice(tags.indexOf(tag), 1);
     this.setState({newTags: tags});
   }
+
   saveTags(tags) {
     console.log('tags', tags);
     this.setState({editTags: false});
     this.props.saveTags(tags);
   }
+
+  handleUpload(file) {
+    console.log('inside handle file', file);
+    this.setState({file: file});
+  }
+
+  saveImage() {
+    console.log('in here save button');
+    superagent.post('/aws/upload/profile')
+    .attach('profile', this.state.file)
+    .end((err, res) => {
+      if (err) {
+        console.log(err);
+        alert('failed uploaded!');
+      }
+      console.log('response from aws save', res);
+      this.setState({pic: res.body.pictureURL, file: {}});
+    });
+  }
+
+  srcImg() {
+    if(this.state.pic) {
+      return this.state.pic;
+    }
+    if(this.props.pictureURL !== '') {
+      return this.props.pictureURL;
+    }
+    return defaulProfileUrl;
+  }
+
   render() {
-    console.log('hello', this.props);
+    const optionsForUpload = {
+      baseUrl: 'xxx',
+      multiple: false,
+      accept: 'image/*',
+      didChoose: (files) => {
+        console.log('this is the file', files[0]);
+        this.handleUpload(files[0]);
+      },
+    };
+
+    const img = this.srcImg();
+
     return (
       <div style={styles.head}>
-          <div>
-            <div style={{height: '200px', width: '150px', backgroundColor: 'blue'}}>X</div>
-            <button value="Change your Profile Picture" onClick={() => {}}>Change your Profile picture</button>
-          </div>
+           <img style={{height: '60px', width: '50px'}} src={img} />
+            <div style={{width: '170px', height: '40px'}}>
+            <ReactUploadFile
+              style={{width: '80px', height: '40px'}}
+              chooseFileButton={<button value="Change">Change</button>}
+              options={optionsForUpload}/>
+              {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
+            </div>
+
         <h1>{this.props.fullName}</h1>
         <div>
           {this.state.editTags ?
@@ -116,13 +177,17 @@ HeadContainer.propTypes = {
   fullName: PropTypes.string,
   saveBlurb: PropTypes.func,
   saveTags: PropTypes.func,
+  pictureURL: PropTypes.string,
+  userId: PropTypes.string,
   // getUser: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   blurb: state.userReducer.blurb,
   tags: state.userReducer.tags,
-  fullName: state.userReducer.fullName
+  fullName: state.userReducer.fullName,
+  pictureURL: state.userReducer.pictureURL,
+  userId: state.userReducer._id
 });
 
 const mapDispatchToProps = (dispatch) => ({

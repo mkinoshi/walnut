@@ -22,8 +22,10 @@ class AboutContainer extends React.Component {
   toggleEdit() {
     this.setState({
       edit: !this.state.edit,
-      education: this.props.education,
-      majors: this.props.majors,
+      education: {
+        college: this.props.education,
+        majors: this.props.majors
+      },
       currentOccupation: this.props.currentOccupation,
       currentOccupationCity: this.props.currentOccupationCity,
       pastOccupations: this.props.pastOccupations
@@ -32,7 +34,11 @@ class AboutContainer extends React.Component {
 
   aboutChange(val, key, index) {
     const obj = JSON.parse(JSON.stringify(this.state));
-    if(key === 'majors' || key === 'pastOccupations') {
+    if(key === 'education') {
+      obj.education.college = val;
+    } else if(key === 'majors') {
+      obj.education.majors[index] = val;
+    } else if(key === 'pastOccupations') {
       obj[key][index] = val;
     } else {
       obj[key] = val;
@@ -42,8 +48,11 @@ class AboutContainer extends React.Component {
 
   add(key) {
     if(key === 'majors') {
-      console.log('in here');
-      this.setState({majors: this.state.majors.concat([''])});
+      console.log('inside here');
+      const obj = JSON.parse(JSON.stringify(this.state.education));
+      obj.majors.push('');
+      console.log(obj);
+      this.setState({education: obj});
     } else if(key === 'pastOccupations') {
       this.setState({pastOccupations: this.state.pastOccupations.concat([''])});
     }
@@ -60,26 +69,28 @@ class AboutContainer extends React.Component {
       value: this.state.currentOccupationCity,
       onChange: (e) => this.aboutChange(e, 'currentOccupationCity')
     };
+    console.log('this is a the user state rn', this.state);
     return (
       <div style={styles.about}>
         <h1>About</h1>
         <p onClick={() => (this.toggleEdit())}>E</p>
         <p>Education</p>
         {this.state.edit ?
-          <input value={this.state.education}
+          <input value={this.state.education.college}
             onChange={(e) => (this.aboutChange(e.target.value, 'education'))} />
            :
-           <p>{this.state.education ? this.state.education : this.props.education}</p>}
+           <p>{this.state.education ? this.state.education.college : this.props.education}</p>}
+
         <p>Majors</p>
         {this.state.edit ?
         <p onClick={() => (this.add('majors'))}>Add</p> : <p></p>}
         <div>
-          {this.state.majors ?
-            this.state.majors.map((major, i) => {
+          {this.state.education ?
+            this.state.education.majors.map((major, i) => {
               return this.state.edit ?
             <input
               key={i}
-              value={this.state.majors[i]}
+              value={this.state.education.majors[i]}
               onChange={(e) => (this.aboutChange(e.target.value, 'majors', i))} />
              :
              <p key={i}>{major}</p>;}) :
@@ -87,11 +98,12 @@ class AboutContainer extends React.Component {
               return this.state.edit ?
             <input
               key={i}
-              value={this.state.majors[i]}
+              value={this.state.education.majors[i]}
               onChange={(e) => (this.aboutChange(e.target.value, 'majors', i))} />
              :
              <p key={i}>{major}</p>;})}
            </div>
+
         <p>Current Occupation</p>
         {this.state.edit ?
           <input value={this.state.currentOccupation}
