@@ -68,7 +68,8 @@ const UserSchema = new mongoose.Schema({
   location: {
     college: [Number],
     homeTown: [Number],
-    occupation: [Number]
+    occupation: [Number],
+    live: [Number]
   },
   phone: {
     type: String

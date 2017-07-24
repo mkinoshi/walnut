@@ -51,7 +51,7 @@ router.post('/join/community', (req, res) => {
   Community.findById(req.body.communityId)
     .then((community) => {
       community.users.push(req.user._id);
-      joined = community
+      joined = community;
       return community.save();
     })
     .then((response) => {
@@ -522,6 +522,19 @@ router.get('/get/specprofile', (req, res) => {
          });
 });
 
+router.post('/update/location', (req, res) => {
+  User.findById(req.user._id)
+      .then((response) => {
+        response.location.live = req.body.location;
+        return response.save();
+      })
+      .then((resp) => {
+        res.json({success: true});
+      })
+      .catch((err) => {
+        res.json({success: false});
+      });
+});
 
 router.get('/get/allusers', (req, res) => {
   User.find()
