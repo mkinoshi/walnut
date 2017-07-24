@@ -2,6 +2,7 @@
 // our states will be center and zoom
 
 const mapReducer = (state = {
+  users: [],
   selected: 'live',
   center: [-103.59179687498357, 40.66995747013945],
   zoom: [3],
@@ -29,12 +30,9 @@ const mapReducer = (state = {
         ...state,
         clicked: action.clicked
       };
-    case 'GET_USERS_DATA_MAP':
-      // get user data with axios request
-      // convert the data to objects that can be used in the Map components
+    case 'GET_ALL_USERS_MAP_DONE':
       return {
-        ...state,
-        // adds the userData to the store
+        users: action.data.data
       };
     default:
       return state;

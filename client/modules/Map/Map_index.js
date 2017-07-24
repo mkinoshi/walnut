@@ -85,11 +85,55 @@ class MapContainer extends React.Component {
           career: 'Rice University'
         }
       ]};
+      // users: [
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 38.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 36.7775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.8775032],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   },
+      //   {
+      //     name: 'Eli Badgio',
+      //     profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      //     location: [-122.4199537, 37.77757],
+      //     year: 'Summer 2017',
+      //     career: 'Rice University',
+      //     liveData: true
+      //   }
+      // ]};
+    };
   }
 
   componentDidMount() {
     // Dispatch fucntion to get all of data
     // TODO we have to get data from the server side through reducers
+    this.props.getAllUsersMap();
   }
 
   handleClick(index) {
@@ -110,7 +154,7 @@ class MapContainer extends React.Component {
       <div style={styles.outer}>
         <div style={styles.inner}>
           <MapItemSelector />
-          <MapFilter users={this.state.users}
+          <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
           changeZoom={(num) => {this.props.updateZoom();}}/>
         </div>
@@ -152,9 +196,12 @@ MapContainer.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
   updateClicked: PropTypes.func
+  getAllUsersMap: PropTypes.func,
+  users: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
+  users: state.mapReducer.users,
   center: state.mapReducer.center,
   zoom: state.mapReducer.zoom
 });
@@ -170,6 +217,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateClicked: (index) => dispatch({
     type: 'UPDATE_CLICKED',
     clicked: index
+  getAllUsersMap: () => dispatch({
+    type: 'GET_ALL_USERS_MAP'
   })
 });
 

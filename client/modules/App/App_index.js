@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
+import EditProfile from '../EditProfile/EditProfile_index';
+
 
 const styles = {
   App: {
@@ -27,6 +29,9 @@ class App extends React.Component {
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
             <Route path="/app/community/discover" component={Community} />
+            <Route path="/app/community/editprofile" render={(props) =>
+              <EditProfile isCreating={!null} {...props} />
+            } />
           </Switch>
         </div>
       </BrowserRouter>

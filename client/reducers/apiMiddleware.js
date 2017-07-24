@@ -95,6 +95,11 @@ export const apiMiddleware = store => next => action => {
       axios.post(URL + 'db/save/blurb', {
         blurbBody: action.blurb
       })
+      .then((success) => {
+        console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
+      })
       .catch((err) =>{
         console.log('error in saving blurb', err);
       });
@@ -105,6 +110,8 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in saving tags', err);
@@ -116,6 +123,8 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
+        next(action);
       })
       .catch((err) =>{
         console.log('error in saving interests', err);
@@ -131,7 +140,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{
@@ -146,7 +155,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{
@@ -159,7 +168,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then((success) => {
         console.log('success in save', success);
-        next(action(store.dispatch({type: 'GET_PROFILE_INFO'})));
+        next(action(store.dispatch({type: 'GET_USER_DATA'})));
         next(action);
       })
       .catch((err) =>{
@@ -182,10 +191,21 @@ export const apiMiddleware = store => next => action => {
         console.log('error in saving story', err);
       });
       break;
+    case 'CREATE_PROFILE':
+      axios.post(URL + 'db/save/iscreated', {
+      })
+      .then((response) => {
+        console.log('Profile Done', response);
+      })
+      .catch((err) => {
+        console.log('Profile Done Error', err);
+      });
+      break;
     case 'GET_DISCOVER_INFO':
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
-        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', data: response.data});
+        console.log('discover response', response);
+        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.filters, posts: response.posts});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
@@ -198,6 +218,16 @@ export const apiMiddleware = store => next => action => {
         // console.log('deck middleware', response);
         // store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data.data});
         store.dispatch({type: 'GET_ALL_USERS_DONE', data: response.data});
+      })
+      .catch((err) =>{
+        console.log('error in getting users', err);
+        store.dispatch({type: 'GET_ALL_USERS_ERROR'});
+      });
+      break;
+    case 'GET_ALL_USERS_MAP':
+      axios.get(URL + 'db/get/allusersmap')
+      .then((response) => {
+        store.dispatch({type: 'GET_ALL_USERS_MAP_DONE', data: response.data});
       })
       .catch((err) =>{
         console.log('error in getting users', err);
@@ -254,6 +284,23 @@ export const apiMiddleware = store => next => action => {
         console.log('probably failed to create community', err);
         store.dispatch({type: 'GET_COMMUNITY_ERROR'});
       });
+      break;
+    case 'UPDATE_LOCATION':
+      if (action.location.length > 0) {
+        axios.post(URL + 'db/update/location', {
+          location: action.location
+        })
+        .then((response) => {
+          console.log(response);
+          store.dispatch({type: 'UPDATE_LOCATION_DONE', location: action.location});
+        })
+        .catch((err) => {
+          console.lgo(err);
+          store.dispatch({type: 'UPDATE_LOCATION_DONE_ERR'});
+        });
+      } else {
+        store.dispatch({type: 'UPDATE_LOCATION_DONE', location: action.location});
+      }
       break;
     default:
       break;
