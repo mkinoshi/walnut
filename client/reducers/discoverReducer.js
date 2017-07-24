@@ -6,7 +6,8 @@ const discoverReducer = (state = {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
       const newState1 = Object.assign({}, state);
-      newState1.posts.push(action.data);
+      newState1.posts = newState1.posts.concat(action.posts);
+      newState1.filters = newState1.posts.concat(action.filters);
       return newState1;
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
