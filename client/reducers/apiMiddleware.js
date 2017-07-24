@@ -47,7 +47,7 @@ export const apiMiddleware = store => next => action => {
       })
       .then(() => {
         next(action(store.dispatch({type: 'GET_DISCOVER_INFO'})));
-        next(action);
+        // next(action);
       })
       .catch((err) =>{
         console.log('error in newTag', err);
@@ -202,7 +202,8 @@ export const apiMiddleware = store => next => action => {
       });
       break;
     case 'GET_DISCOVER_INFO':
-      axios.get(URL + 'db/get/discoverinfo')
+      axios.get(URL + 'db/get/discoverinfo', {
+      })
       .then((response) => {
         console.log('discover response', response);
         store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.data.filters, posts: response.data.posts});
