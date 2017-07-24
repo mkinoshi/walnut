@@ -8,8 +8,10 @@ class NewTagContainer extends React.Component {
     this.state = {tag: ''};
   }
 
+
   handleClick(event) {
     event.preventDefault();
+    console.log('trying to add a new tag');
     this.props.addNewTag(this.state.tag);
     this.setState({tag: ''});
   }

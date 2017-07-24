@@ -14,13 +14,13 @@ class FilterPrefContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filters: this.props.preferences.slice(),
+      filters: this.props.filters.map((filter) => filter.name),
       value: [],
     };
   }
 
   componentDidMount() {
-    this.props.getUserData();
+    this.props.getDiscoverData();
   }
 
   handleChange(e) {
@@ -49,16 +49,17 @@ class FilterPrefContainer extends React.Component {
   }
 
   render() {
+    console.log('filters', this.props.filters, this.props.preferences);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '40px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.preferences.map((filter, index) => (
+          {this.props.filters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
               checked={(this.state.filters.includes(filter)) ? 'checked' : ''}
-              value={filter}
+              value={filter.name}
               onChange={(e) => {this.handleChange(e);}}/>
-              <label htmlFor={index} style={{color: 'black'}}># {filter}</label>
+              <label htmlFor={index} style={{color: 'black'}}># {filter.name}</label>
             </p>
             ))}
         </form>
@@ -83,7 +84,7 @@ FilterPrefContainer.propTypes = {
   filters: PropTypes.array,
   preferences: PropTypes.array,
   toggleChecked: PropTypes.func,
-  getUserData: PropTypes.func,
+  getDiscoverData: PropTypes.func,
   updateUser: PropTypes.func
 };
 
@@ -94,7 +95,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (name, index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name, index: index}),
-  getUserData: () => dispatch({type: 'GET_USER_DATA'}),
+  getDiscoverData: () => dispatch({type: 'GET_DISCOVER_INFO'}),
   updateUser: (updateObj) => dispatch({type: 'UPDATE_USER', data: updateObj})
   // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
 });

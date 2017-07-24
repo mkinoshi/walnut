@@ -205,7 +205,7 @@ export const apiMiddleware = store => next => action => {
       axios.get(URL + 'db/get/discoverinfo')
       .then((response) => {
         console.log('discover response', response);
-        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.filters, posts: response.posts});
+        store.dispatch({type: 'GET_DISCOVER_DATA_DONE', filters: response.data.filters, posts: response.data.posts});
       })
       .catch((err) =>{
         console.log('error in newComment', err);
@@ -281,7 +281,7 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_COMMUNITY_DONE', community: response.data.community});
       })
       .catch((err) => {
-        console.log('probably failed to create community', err);
+        console.log('probably failed to join community', err);
         store.dispatch({type: 'GET_COMMUNITY_ERROR'});
       });
       break;

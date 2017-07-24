@@ -24,8 +24,8 @@ class TagPref extends React.Component {
           {this.props.filters.map((filter, index) => (
             <div key={index}>
               <input type="checkbox" id={filter.name}
-                checked={(this.props.tags.includes(filter.name)) ? 'checked' : ''}
-                value={filter.name}
+                checked={(this.props.tags.includes(filter._id)) ? 'checked' : ''}
+                value={filter._id}
                 onClick={(e) => {this.handleChange(e);}}
               />
               <label htmlFor={filter.name}># {filter.name}</label>

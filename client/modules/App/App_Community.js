@@ -25,6 +25,7 @@ class Community extends React.Component {
   }
 
   componentDidMount() {
+    // this.props.getDiscoverContent();
     console.log('ehhehehehehehehehehe');
     console.log(this.props);
     if (navigator.geolocation) {
@@ -68,6 +69,7 @@ class Community extends React.Component {
 
 Community.propTypes = {
   hasProfile: PropTypes.bool,
+  getDiscoverContent: PropTypes.func
   updateLocation: PropTypes.func
 };
 
@@ -77,5 +79,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
 });
+
+const mapDispatchToProps = (dispatch) => ({
+  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'})
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community);

@@ -58,6 +58,7 @@ router.post('/join/community', (req, res) => {
       return User.findById(req.user._id);
     })
     .then((user) => {
+      console.log('current 1', req.body.communityId);
       user.communities.push(req.body.communityId);
       user.currentCommunity = req.body.communityId;
       return user.save();
@@ -67,6 +68,7 @@ router.post('/join/community', (req, res) => {
       res.json({success: true, community: joined});
     })
     .catch((err) => {
+      console.log('join error', err);
       res.json({error: err});
     });
 });
@@ -97,7 +99,9 @@ router.get('/get/allcommunities', (req, res) => {
 
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
-  Community.findById({community: req.user.currentCommunity})
+  console.log('id', req.user.currentCommunity);
+  Community.findById(req.user.currentCommunity)
+      .populate('tags')
       .then((community) => {
         community.users.filter((user) => {
           return user === req.user._id;
@@ -106,61 +110,49 @@ router.get('/get/discoverinfo', (req, res) => {
           console.log('not in community error');
           res.json({error: 'No authorization'});
         } else{
-          let filters = [];
+          const filters = community.tags;
           let posts = [];
-          Tag.find({community: req.user.currentCommunity})
-            .then((tags) => {
-              filters = tags.map((tagObj) => {
-                    // ['general', 'technology'] for testing
-                if (req.user.preferences.includes(tagObj.name)) {
-                  return {name: tagObj.name, checked: true};
-                }
-                return {name: tagObj.name, checked: false};
-              });
-              Post.find({community: req.user.currentCommunity})
-                .sort({createdAt: -1})
-                .populate('comments')
-                .populate('comments.createdBy')
-                .populate('createdBy')
-                .then((postArr) => {
-                  posts = postArr.map((postObj) => {
+          Post.find({community: req.user.currentCommunity})
+            .sort({createdAt: -1})
+            .populate('tags')
+            .populate('comments')
+            .populate('comments.createdBy')
+            .populate('createdBy')
+            .then((postArr) => {
+              console.log('posts', postArr);
+              posts = postArr.map((postObj) => {
+                return {
+                  postId: postObj._id,
+                  username: postObj.createdBy.username,
+                  pictureURL: postObj.createdBy.pictureURL,
+                  content: postObj.content,
+                  createdAt: postObj.createdAt,
+                  tags: postObj.tags,
+                  likes: postObj.likes,
+                  commentNumber: postObj.commentNumber,
+                  comments: postObj.comments.map((commentObj) => {
                     return {
-                      postId: postObj._id,
-                      username: postObj.createdBy.username,
-                      pictureURL: postObj.createdBy.pictureURL,
-                      content: postObj.content,
-                      createdAt: postObj.createdAt,
-                      tags: postObj.tags,
-                      likes: postObj.likes,
-                      commentNumber: postObj.commentNumber,
-                      comments: postObj.comments.map((commentObj) => {
-                        return {
-                          commentId: commentObj._id,
-                          username: commentObj.createdBy.username,
-                          pictureURL: commentObj.createdBy.pictureURL,
-                          content: commentObj.content,
-                          createdAt: commentObj.createdAt,
-                          likes: commentObj.likes
-                        };
-                      })
+                      commentId: commentObj._id,
+                      username: commentObj.createdBy.username,
+                      pictureURL: commentObj.createdBy.pictureURL,
+                      content: commentObj.content,
+                      createdAt: commentObj.createdAt,
+                      likes: commentObj.likes
                     };
-                  });
-                  console.log('here', filters, posts);
-                  res.json({filters: filters, posts: posts});
-                })
-                .catch((err) => {
-                  console.log('error 1', err);
-                  res.json(err);
-                });
+                  })
+                };
+              });
+              console.log('here', filters, posts);
+              res.json({filters: filters, posts: posts});
             })
             .catch((err) => {
-              console.log('error 2', err);
-              res.json({error: err});
+              console.log('error 1', err);
+              res.json(err);
             });
         }
       })
       .catch((err) => {
-        console.log('error 3', err);
+        console.log('error 2', err);
         res.json({error: err});
       });
 });
@@ -570,15 +562,36 @@ router.get('/get/allusers', (req, res) => {
 
 
 router.post('/save/tag', (req, res) => {
-  const newTag = new Tag({
-    name: req.body.tag
-  });
-  newTag.save()
-  .then(() => {
-    res.json({success: true});
+  Tag.findOne({name: req.body.tag})
+  .then((tag) => {
+    if (tag) {
+      tag.communities.push(req.user.currentCommunity);
+      return tag.save();
+    } else {
+      const newTag = new Tag({
+        communities: [req.user.currentCommunity],
+        name: req.body.tag
+      });
+      return newTag.save();
+    }
+  })
+  .then((response) => {
+    Community.findById(req.user.currentCommunity)
+        .then((community) => {
+          community.tags.push(response._id);
+          return community.save();
+        })
+        .then((response2) => {
+          console.log('saving tag success', response2);
+          res.json({success: true});
+        })
+        .catch((err) => {
+          console.log('error 1 saving tag', err);
+          res.json({success: false});
+        });
   })
   .catch((e) => {
-    console.log(e);
+    console.log('error saving tag', e);
     res.json({success: false});
   });
 });
