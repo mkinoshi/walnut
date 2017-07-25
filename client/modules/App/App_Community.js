@@ -8,6 +8,8 @@ import Directory from '../Directory/Directory_index';
 import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
 import EditProfile from '../EditProfile/EditProfile_index';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
+import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
 
 const styles = {
   App: {
@@ -24,6 +26,11 @@ class Community extends React.Component {
     };
   }
 
+  componentWillMount() {
+    console.log('will community');
+    this.props.getDiscoverContent();
+  }
+
   componentDidMount() {
     // this.props.getDiscoverContent();
     if (navigator.geolocation) {
@@ -32,7 +39,6 @@ class Community extends React.Component {
   }
 
   handlePosition(position) {
-    console.log(this);
     console.log(position);
     this.props.updateLocation([position.coords.longitude, position.coords.latitude]);
   }
@@ -62,18 +68,16 @@ class Community extends React.Component {
 
 
 Community.propTypes = {
-  hasProfile: PropTypes.bool,
   getDiscoverContent: PropTypes.func,
   updateLocation: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  hasProfile: state.userReducer.hasProfile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDiscoverContent: () => dispatch({type: 'GET_DISCOVER_INFO'}),
-  updateLocation: (params) => {dispatch({type: 'UPDATE_LOCATION', location: params});}
+  getDiscoverContent: () => discoverLoadThunk(dispatch),
+  updateLocation: (params) => updateLocationThunk(params)(dispatch)
 });
 
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import NewTagContainer from './Feed_NewPost_NewTag_Container';
+import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -91,10 +92,14 @@ class NewPostContainer extends React.Component {
                   onClick={() => (this.toggleTagPref())}>Add Tags</a>
               </div>
               {this.state.showTagPref ?
-                <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
-                tags={this.state.postTags}/> : <p></p>}
+                <div>
+                  <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
+                    tags={this.state.postTags}/>
+                  <NewTagContainer />
+                </div>
+                 : <p></p>}
             </div>
-            <div className="newTags">
+            {/* <div className="newTags">
               <div className="newTagsButton" style={{}}>
                 <a style={{backgroundColor: '#FF5657'}}
                   className="waves-effect waves-light btn"
@@ -105,7 +110,7 @@ class NewPostContainer extends React.Component {
                 // tags={this.state.postTags}/>
                 <NewTagContainer />
                 : <p></p>}
-            </div>
+            </div> */}
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
@@ -128,8 +133,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => dispatch(
-    {type: 'NEW_POST', postTags: postTags, postBody: postBody})
+  newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

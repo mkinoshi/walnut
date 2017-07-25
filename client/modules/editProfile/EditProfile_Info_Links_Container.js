@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveLinksThunk from '../../thunks/profile_thunks/saveLinksThunk';
 
 const styles = {
   links: {
@@ -94,7 +95,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveLinks: (links) => dispatch({type: 'SAVE_LINKS', links: links})
+  saveLinks: (links) => saveLinksThunk(links)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LinksContainer);

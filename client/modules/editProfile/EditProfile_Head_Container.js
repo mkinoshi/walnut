@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveBlurbThunk from '../../thunks/profile_thunks/saveBlurbThunk';
+import saveTagsThunk from '../../thunks/profile_thunks/saveTagsThunk';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
 import Slider from 'react-slick';
@@ -45,10 +47,6 @@ class HeadContainer extends React.Component {
     this.removeTag = this.removeTag.bind(this);
   }
 
-  // ComponentDidMount() {
-  //   this.props.getUser();
-  //   console.log('edit mount');
-  // }
   handleChangeBlurb(event) {
     const input = event.target.value;
     this.setState({
@@ -191,7 +189,7 @@ HeadContainer.propTypes = {
   saveTags: PropTypes.func,
   pictureURL: PropTypes.string,
   userId: PropTypes.string,
-  // getUser: PropTypes.func
+
 };
 
 const mapStateToProps = (state) => ({
@@ -203,9 +201,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveBlurb: (blurb) => dispatch({type: 'SAVE_BLURB', blurb: blurb}),
-  saveTags: (tags) => dispatch({type: 'SAVE_TAGS', tags: tags}),
-  // getUser: () => dispatch({type: 'GET_USER_DATA'})
+  saveBlurb: (blurb) => saveBlurbThunk(blurb)(dispatch),
+  saveTags: (tags) => saveTagsThunk(tags)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeadContainer);

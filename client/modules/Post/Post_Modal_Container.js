@@ -5,6 +5,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import newCommentThunk from '../../thunks/post_thunks/newCommentThunk';
+import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 
 // TODO import modal
 // TODO newComment input and button that dispatches newComment
@@ -91,10 +93,8 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newComment: (commentBody, postId) => dispatch(
-    {type: 'NEW_COMMENT', commentBody: commentBody,
-      postId: postId}),
-  newCommentLike: (postId, commentId) => dispatch({type: 'NEW_COMMENT_LIKE', postId: postId, commentId: commentId})
+  newComment: (commentBody, postId) => newCommentThunk(commentBody, postId)(dispatch),
+  newCommentLike: (postId, commentId) => newCommentLikeThunk(postId, commentId)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalInstance);
