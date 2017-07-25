@@ -119,14 +119,14 @@ router.get('/get/discoverinfo', (req, res) => {
           const filters = community.tags;
           let posts = [];
           Post.find({community: req.user.currentCommunity})
-            .sort({createdAt: -1})
             .limit(20)
+            .sort({createdAt: -1})
             .populate('tags')
             .populate('comments')
             .populate('comments.createdBy')
             .populate('createdBy')
             .then((postArr) => {
-              console.log('posts', postArr);
+              console.log('posts length', postArr.length);
               posts = postArr.map((postObj) => {
                 return {
                   postId: postObj._id,
@@ -149,7 +149,7 @@ router.get('/get/discoverinfo', (req, res) => {
                   })
                 };
               });
-              console.log('here', filters, posts);
+              // console.log('here', filters, posts);
               res.json({filters: filters, posts: posts});
             })
             .catch((err) => {
@@ -165,6 +165,7 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/next10', (req, res) => {
+  console.log(req.query);
   Community.findById(req.user.currentCommunity)
         .populate('tags')
         .then((community) => {
@@ -179,14 +180,14 @@ router.get('/get/next10', (req, res) => {
             let posts = [];
             Post.find({community: req.user.currentCommunity})
                     .sort({createdAt: -1})
-                    .skip(req.query.lastOne)
-                    .limit(10)
+                    .skip(Number(req.query.lastOne))
+                    .limit(20)
                     .populate('tags')
                     .populate('comments')
                     .populate('comments.createdBy')
                     .populate('createdBy')
                     .then((postArr) => {
-                      console.log('posts', postArr);
+                      console.log('next post', postArr);
                       posts = postArr.map((postObj) => {
                         return {
                           postId: postObj._id,
@@ -209,7 +210,6 @@ router.get('/get/next10', (req, res) => {
                           })
                         };
                       });
-                      console.log('here', filters, posts);
                       res.json({filters: filters, posts: posts});
                     })
                     .catch((err) => {
@@ -327,7 +327,14 @@ router.post('/toggle/checked', (req, res) => {
 router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)
     .then((response) => {
-      response.likes.push(req.user._id);
+      if (response.likes.indexOf(req.user._id) > -1) {
+        const idx = response.likes.indexOf(req.user._id);
+        console.log('inside', idx);
+        response.likes.splice(idx, 1);
+      } else {
+        console.log('outside', response.likes, req.user._id, response.likes.indexOf(req.user._id));
+        response.likes.push(req.user._id);
+      }
       response.save()
       .then((resp) => {
         res.json({success: true});
@@ -532,7 +539,6 @@ router.get('/get/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
       .populate('users')
       .then((community) => {
-        console.log(community.users);
         res.json({data: community.users});
       })
       .catch((err) => {
@@ -546,6 +552,7 @@ router.get('/get/allusersmap', (req, res) => {
       .then((community) => {
         const users = community.users.map((user) => {
           return {
+            id: user._id,
             fullName: user.fullName,
             pictureURL: user.pictureURL,
             location: user.location,
@@ -553,7 +560,7 @@ router.get('/get/allusersmap', (req, res) => {
             education: user.education
           };
         });
-        console.log(users);
+        console.log('got here');
         res.json({data: users});
       })
       .catch((err) => {
@@ -645,13 +652,12 @@ router.post('/save/tag', (req, res) => {
     if (tag) {
       tag.communities.push(req.user.currentCommunity);
       return tag.save();
-    } else {
-      const newTag = new Tag({
-        communities: [req.user.currentCommunity],
-        name: req.body.tag
-      });
-      return newTag.save();
     }
+    const newTag = new Tag({
+      communities: [req.user.currentCommunity],
+      name: req.body.tag
+    });
+    return newTag.save();
   })
   .then((response) => {
     Community.findById(req.user.currentCommunity)

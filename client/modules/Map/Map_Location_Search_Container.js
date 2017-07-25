@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 class LocationSearch extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: 'San Francisco, CA' };
+    this.state = { address: '' };
     this.onChange = (address) => this.setState({ address });
   }
 
@@ -42,6 +42,7 @@ class LocationSearch extends React.Component {
     const inputProps = {
       value: this.state.address,
       onChange: this.onChange,
+      placeholder: 'Enter location'
     };
 
     return (

@@ -81,10 +81,15 @@ function auth(passport) {
       res.redirect('/auth/login')
     } else {
       if(req.user.hasProfile) {
-          console.log('has it');
-          res.redirect('/app/walnuthome');
+          if (req.user.currentCommunity) {
+              User.findById(req.user._id)
+                  .populate('currentCommunity')
+                  .then((user) => {
+                      const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+                      res.redirect(url);
+                  })
+          }
       } else{
-          console.log('doesnt have it')
           res.redirect('/app/editprofile');
       }
     }

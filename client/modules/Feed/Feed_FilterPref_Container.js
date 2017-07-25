@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
+import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
+import updateUserThunk from '../../thunks/user_thunks/updateUserThunk';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -13,10 +15,6 @@ class FilterPrefContainer extends React.Component {
       filters: [],
       value: [],
     };
-  }
-
-  componentDidMount() {
-    this.props.getDiscoverData();
   }
 
   handleChange(e) {
@@ -92,10 +90,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleChecked: (name, index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name, index: index}),
-  getDiscoverData: () => dispatch({type: 'GET_DISCOVER_INFO'}),
-  updateUser: (updateObj) => dispatch({type: 'UPDATE_USER', data: updateObj})
-  // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
+  toggleChecked: (name, index) => toggleFilterCheckedThunk(name, index)(dispatch),
+  updateUser: (updateObj) => updateUserThunk(updateObj)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPrefContainer);

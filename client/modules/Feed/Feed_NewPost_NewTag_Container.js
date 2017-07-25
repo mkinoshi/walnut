@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
 class NewTagContainer extends React.Component {
   constructor(props) {
@@ -40,8 +41,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewTag: (tag) => dispatch(
-    {type: 'NEW_TAG', tag: tag})
+  addNewTag: (tag) => newTagThunk(tag)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTagContainer);

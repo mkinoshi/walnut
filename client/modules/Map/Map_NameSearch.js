@@ -13,49 +13,37 @@ class NameSearch extends React.Component {
     this.state = {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
-      selectValue: 'lonely',
+      value: 'lonely',
     };
   }
   componentDidMount() {
     // this.props.getUserData();
   }
   handleChange(value) {
-    console.log(value);
-    console.log(this);
-    this.setState({selectValue: value.fullName});
-    console.log('this.state.selectValue', this.state.selectValue);
+    this.setState({value: value});
   }
   handleNew(event) {
     event.preventDefault();
-    // this.props.updateUser({preferences: this.props.preferences.concat(this.state.value)});
-    // console.log('value')
-    // const index = this.state.users.indexOf(this.state.value);
-    // console.log(index);
-    console.log(this.state.selectValue);
-    const center = this.props.users.find((user) => {return user.fullName === this.state.selectValue;}).location[this.props.selected];
-    console.log(center);
+    const center = this.props.users.find((user) => {return user.fullName === this.state.value;}).location[this.props.selected];
     this.props.updateCenter(center);
     this.props.updateZoom(10);
-    this.setState({selectValue: ''});
+    this.setState({value: ''});
   }
   render() {
-    console.log('here', this.state.selectValue);
-    console.log(this.props.users);
     return (
-      <div>
       <form onSubmit={(e) => this.handleNew(e)}>
          <Select
+          style={styles}
           name="selected-state"
-          value={this.state.selectValue}
+          value={this.state.value}
           simpleValue
           autofocus
           clearable
           options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
-            return {value: user, label: user.fullName};
+            return {value: user.fullName, label: user.fullName};
           })}
           onChange={this.handleChange.bind(this)}
           placeholder="test"
-          onInputKeyDown={() => {console.log('hey', this.state.selectValue);}}
         />
         {/* <Select
             name="selected-state"
@@ -68,7 +56,6 @@ class NameSearch extends React.Component {
           /> */}
         <button type="submit">Search by Name</button>
       </form>
-      </div>
     );
   }
 }

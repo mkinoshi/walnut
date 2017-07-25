@@ -4,7 +4,6 @@ import LocationSearch from './Map_Location_Search_Container';
 import NameSearch from './Map_NameSearch';
 import MapCard from './Map_Card';
 import uuidv4 from 'uuid/v4';
-import { Menu, Message, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 
@@ -53,19 +52,18 @@ class MapFilter extends React.Component {
   // }
 
   render() {
-    console.log(this.props.users);
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
-        <LocationSearch />
+          <LocationSearch />
         </div>
         <div style={styles.filter}>
-        <NameSearch />
+          <NameSearch />
         </div>
         <div style={styles.filterOuter}>
-          {this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user, index) => (
+          {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
             <MapCard
-              index={index}
+              id={user.id}
               key={uuidv4()}
               profileURL={user.pictureURL}
               name={user.fullName}
@@ -85,6 +83,7 @@ MapFilter.propTypes = {
   changeCenter: PropTypes.func,
   changeZoom: PropTypes.func,
   users: PropTypes.array,
+  clicked: PropTypes.string,
   selected: PropTypes.string
 };
 

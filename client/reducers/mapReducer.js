@@ -7,7 +7,7 @@ const mapReducer = (state = {
   center: [-103.59179687498357, 40.66995747013945],
   zoom: [3],
   usersData: [],
-  clicked: -1
+  clicked: ''
 }, action) => {
   switch (action.type) {
     case 'NEW_CENTER':

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
 import EditProfile from '../EditProfile/EditProfile_index';
-
+import userDataThunk from '../../thunks/user_thunks/userDataThunk';
 
 const styles = {
   App: {
@@ -20,6 +20,11 @@ class App extends React.Component {
     super();
     this.state = {
     };
+  }
+
+  componentWillMount() {
+    console.log('will App');
+    this.props.getUser();
   }
 
   render() {
@@ -41,6 +46,15 @@ class App extends React.Component {
 
 
 App.propTypes = {
+  getUser: PropTypes.func
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getUser: () => userDataThunk(dispatch)
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
