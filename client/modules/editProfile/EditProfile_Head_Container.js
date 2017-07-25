@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveBlurbThunk from '../../thunks/profile_thunks/saveBlurbThunk';
+import saveTagsThunk from '../../thunks/profile_thunks/saveTagsThunk';
 
 const styles = {
   head: {
@@ -25,10 +27,7 @@ class HeadContainer extends React.Component {
     this.saveTags = this.saveTags.bind(this);
     this.removeTag = this.removeTag.bind(this);
   }
-  // ComponentDidMount() {
-  //   this.props.getUser();
-  //   console.log('edit mount');
-  // }
+
   handleChangeBlurb(event) {
     const input = event.target.value;
     this.setState({
@@ -116,7 +115,6 @@ HeadContainer.propTypes = {
   fullName: PropTypes.string,
   saveBlurb: PropTypes.func,
   saveTags: PropTypes.func,
-  // getUser: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -126,9 +124,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveBlurb: (blurb) => dispatch({type: 'SAVE_BLURB', blurb: blurb}),
-  saveTags: (tags) => dispatch({type: 'SAVE_TAGS', tags: tags}),
-  // getUser: () => dispatch({type: 'GET_USER_DATA'})
+  saveBlurb: (blurb) => saveBlurbThunk(blurb)(dispatch),
+  saveTags: (tags) => saveTagsThunk(tags)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeadContainer);

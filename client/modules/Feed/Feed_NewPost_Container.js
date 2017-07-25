@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import NewTagContainer from './Feed_NewPost_NewTag_Container';
+import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -128,8 +129,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => dispatch(
-    {type: 'NEW_POST', postTags: postTags, postBody: postBody})
+  newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

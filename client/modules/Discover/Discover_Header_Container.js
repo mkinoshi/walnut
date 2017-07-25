@@ -85,7 +85,7 @@ HeaderContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  community: state.getCommunityReducer.currentCommunity
+  community: state.userReducer.currentCommunity
 });
 
 const mapDispatchToProps = (dispatch) => ({

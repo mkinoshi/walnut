@@ -5,6 +5,7 @@ import MainBody from './EditProfile_Main_Body';
 import Info from './EditProfile_Info_Component';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
+import createProfileThunk from '../../thunks/profile_thunks/createProfileThunk';
 
 const styles = {
   done: {
@@ -18,10 +19,6 @@ class EditProfileContainer extends React.Component {
   constructor() {
     super();
     this.create = this.create.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.getUser();
   }
 
   create() {
@@ -51,8 +48,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createProfile: () => dispatch({type: 'CREATE_PROFILE'}),
-  getUser: () => dispatch({type: 'GET_USER_DATA'}),
+  createProfile: () => createProfileThunk(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileContainer);

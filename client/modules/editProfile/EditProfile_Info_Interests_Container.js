@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveInterestsThunk from '../../thunks/profile_thunks/saveInterestsThunk';
 
 const styles = {
   interestsContainer: {
@@ -109,7 +110,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveInterests: (interests) => dispatch({type: 'SAVE_INTERESTS', interests: interests})
+  saveInterests: (interests) => saveInterestsThunk(interests)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterestsContainer);
