@@ -165,6 +165,7 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/next10', (req, res) => {
+  console.log(req.query);
   Community.findById(req.user.currentCommunity)
         .populate('tags')
         .then((community) => {
@@ -179,8 +180,8 @@ router.get('/get/next10', (req, res) => {
             let posts = [];
             Post.find({community: req.user.currentCommunity})
                     .sort({createdAt: -1})
-                    .skip(req.query.lastOne)
-                    .limit(10)
+                    .skip(Number(req.query.lastOne))
+                    .limit(20)
                     .populate('tags')
                     .populate('comments')
                     .populate('comments.createdBy')

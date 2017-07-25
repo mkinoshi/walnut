@@ -21,10 +21,9 @@ class Post extends React.Component {
   }
 
   render() {
-    console.log('posts', this.props.postData);
     const commentNum = this.props.postData.comments.length;
     return (
-      <div className="card" style={{backgroundColor: '#ececec', width: '66%', float: 'right', marginRight: '2%'}}>
+      <div className="card" style={{backgroundColor: '#ececec', width: '100%', float: 'right', marginRight: '2%'}}>
         <div style={{textAlign: 'center'}}>
           {this.props.postData.tags.map((tag, index) => (<text key={index} style={{fontSize: '14px'}}><text
                     style={{color: '#0D9ED3', fontSize: '14px'}}>#</text>{tag.name}   </text>))}
