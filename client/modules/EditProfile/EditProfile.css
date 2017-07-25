@@ -1,0 +1,61 @@
+.ReactModal__Overlay--after-open {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.ReactModal__Content--after-open {
+    position: absolute !important;
+    top: 8vw !important;
+    left: 10vw !important;
+    right: 10vw !important;
+    bottom: 1vw !important;
+    overflow: auto !important;
+    border-radius: 4px !important;
+    outline: none !important;
+    padding: 20px !important;
+}
+
+.close-modal {
+    float: right;
+}
+
+.portfolioBox {
+    background-color: lightblue;
+    width: 65%;
+    padding-left: 2%;
+}
+
+.tab-links {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2vw;
+}
+
+.pdfViewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.files {
+    display: inline-block;
+    margin-bottom: 2vw;
+}
+
+.dropzone {
+    height: 5vw;
+    width: 5vw !important;
+    background-color: blanchedalmond;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.picThumb {
+    background-color: lightblue;
+    width: 30px;
+}
+
+.download {
+    float: right;
+}

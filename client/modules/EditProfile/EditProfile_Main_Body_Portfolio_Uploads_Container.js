@@ -4,21 +4,6 @@ import PropTypes from 'prop-types';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
 
-const styles = {
-  pic: {
-    backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
-  },
-  picType: {
-    backgroundColor: 'lightblue',
-    width: '30px'
-  },
-  files: {
-    display: 'inline-block'
-  }
-};
-
 class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -56,22 +41,45 @@ class UploadsContainer extends React.Component {
     });
   }
 
+  thumbChoice(file) {
+    if(file.fileType === 'image/png') {
+      return 'https://maxcdn.icons8.com/Share/icon/ios7/Files//image_file1600.png';
+    }
+    if(file.fileType === 'application/pdf') {
+      return 'https://d30y9cdsu7xlg0.cloudfront.net/png/67120-200.png';
+    }
+    return 'https://maxcdn.icons8.com/Share/icon/Network//download_from_cloud1600.png';
+  }
+
   render() {
     const filesArr = (Object.keys(this.state.sneakyFront).length > 0) ? this.state.sneakyFront[this.props.tab] : this.props.portfolio[this.props.tab];
     return (
-          <div style={styles.files} className="col-xs-12">
-            {filesArr.map((file, i) => (
-              <div key={i}
-              className="col-xs-4"
-              style={styles.file}
-              onClick={() => (this.props.renderFile(file.fileUrl))}>
-                <img style={styles.picType} src={ (file.fileType === 'image/png') ? 'http://wfarm3.dataknet.com/static/resources/icons/set112/f2afb6f7.png' : 'https://cdn.shopify.com/s/files/1/1061/1924/files/Poop_Emoji.png?9898922749706957214' }/>
-                <p>{file.fileName}</p>
-              </div>
-            ))}
+          <div className="col-xs-12">
+            {filesArr.map((file, i) => {
+              if (file.fileType !== 'application/pdf' && file.fileType !== 'image/png') {
+                return (
+                  <a key={i} href={file.fileUrl}>
+                  <div
+                    className="col-xs-4 files">
+                    <img className="picThumb"
+                    src={this.thumbChoice(file)}/>
+                    <p>{file.fileName}</p>
+                  </div>
+                  </a>
+                );
+              }
+              return (
+                <div key={i}
+                  className="col-xs-4 files"
+                  onClick={() => (this.props.renderFile(file))}>
+                  <img className="picThumb"
+                  src={this.thumbChoice(file)}/>
+                  <p>{file.fileName}</p>
+                </div>
+              );
+            })}
             <Dropzone
-            className="col-xs-4"
-            style={{height: '100px', width: '100px', backgroundColor: 'blanchedalmond'}}
+            className="col-xs-4 dropzone"
             onDrop={this.onDrop.bind(this)} multiple={true}>
               <div>Click/drop --> upload</div>
             </Dropzone>

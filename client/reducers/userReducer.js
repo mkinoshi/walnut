@@ -60,6 +60,10 @@ const userReducer = (state = userObj, action) => {
       };
     case 'UPDATE_LOCATION_DONE_ERR':
       return state;
+    case 'ADD_TAB':
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.portfolio[action.name] = [];
+      return newState;
     default:
       return state;
   }
