@@ -50,12 +50,12 @@ class MapCard extends React.Component {
     // TODO highlight the user's tab and center the map on their location
     // change the people on the list based on nearby location
     this.props.updateCenter(this.props.location);
-    this.props.updateZoom(10);
-    this.props.updateClicked(this.props.index);
+    this.props.updateZoom(Math.max(10, this.props.zoom));
+    this.props.updateClicked(this.props.id);
   }
 
   render() {
-    return (this.props.clicked === this.props.index) ?
+    return (this.props.clicked === this.props.id) ?
         <div style={styles.listOuterClicked} onClick={this.handleClick.bind(this)}>
           <img src={this.props.profileURL} style={styles.image} />
             <div style={styles.disc}>
@@ -77,6 +77,7 @@ class MapCard extends React.Component {
 MapCard.propTypes = {
   changeCenter: PropTypes.func,
   changeZoom: PropTypes.func,
+  id: PropTypes.string,
   profileURL: PropTypes.string,
   name: PropTypes.string,
   year: PropTypes.string,
@@ -85,12 +86,15 @@ MapCard.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
   updateClicked: PropTypes.func,
-  clicked: PropTypes.number,
-  index: PropTypes.number
+  clicked: PropTypes.string,
+  selected: PropTypes.string,
+  zoom: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
   clicked: state.mapReducer.clicked,
+  selected: state.mapReducer.selected,
+  zoom: state.mapReducer.zoom
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -102,9 +106,9 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'UPDATE_ZOOM',
     num: num
   }),
-  updateClicked: (index) => dispatch({
+  updateClicked: (id) => dispatch({
     type: 'UPDATE_CLICKED',
-    clicked: index
+    clicked: id
   })
 });
 

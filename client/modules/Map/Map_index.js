@@ -47,7 +47,7 @@ class MapContainer extends React.Component {
     this.state = {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
-      clicked: [],
+      clicked: '',
     };
   }
 
@@ -55,10 +55,12 @@ class MapContainer extends React.Component {
     this.props.getAllUsersMap();
   }
 
-  handleClick(index) {
-    this.props.updateCenter(this.state.users[index].location);
-    this.props.updateZoom(10);
-    this.props.updateClicked(index);
+  handleClick(id) {
+    const index = this.props.users.findIndex((person) => {return person.id === id;});
+    this.props.updateCenter(this.props.users[index].location[this.props.selected]);
+    // WEIRD: this line was causing an error for some reason: (figured it out now)
+    // this.props.updateZoom(10);
+    this.props.updateClicked(id);
   }
 
   clusterMarker(coordinates) {
@@ -69,8 +71,6 @@ class MapContainer extends React.Component {
     );
   }
   render() {
-    console.log(this.props.users);
-    console.log(this.props);
     return (
       <div style={styles.outer}>
         <div style={styles.inner}>
@@ -88,17 +88,17 @@ class MapContainer extends React.Component {
             width: '80vw'
           }}>
             <ZoomControl style={styles.zoom}/>
-            <Cluster ClusterMarkerFactory={this.clusterMarker}>
+            <Cluster ClusterMarkerFactory={this.clusterMarker} maxZoom={10}>
               {
                   this.props.users.filter((user) => {
                     return user.location[this.props.selected].length > 0;
-                  }).map((feature, index) => {
+                  }).map((feature) => {
                     return (
                       <Marker
                         key={uuidv4()}
                         coordinates={feature.location[this.props.selected]}
                         style={styles.cluster}
-                        onClick={this.handleClick.bind(this, index)}
+                        onClick={this.handleClick.bind(this, feature.id)}
                         >
                         <CircleIcon />
                       </Marker>
@@ -136,9 +136,13 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'NEW_CENTER',
     center: newCenter,
   }),
-  updateClicked: (index) => dispatch({
+  updateZoom: (newZoom) => dispatch({
+    type: 'UPDATE_ZOOM',
+    num: newZoom
+  }),
+  updateClicked: (id) => dispatch({
     type: 'UPDATE_CLICKED',
-    clicked: index
+    clicked: id
   }),
   getAllUsersMap: () => dispatch({
     type: 'GET_ALL_USERS_MAP'

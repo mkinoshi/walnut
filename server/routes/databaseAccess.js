@@ -539,7 +539,6 @@ router.get('/get/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
       .populate('users')
       .then((community) => {
-        console.log(community.users);
         res.json({data: community.users});
       })
       .catch((err) => {
@@ -553,6 +552,7 @@ router.get('/get/allusersmap', (req, res) => {
       .then((community) => {
         const users = community.users.map((user) => {
           return {
+            id: user._id,
             fullName: user.fullName,
             pictureURL: user.pictureURL,
             location: user.location,
@@ -560,7 +560,7 @@ router.get('/get/allusersmap', (req, res) => {
             education: user.education
           };
         });
-        console.log(users);
+        console.log('got here');
         res.json({data: users});
       })
       .catch((err) => {
