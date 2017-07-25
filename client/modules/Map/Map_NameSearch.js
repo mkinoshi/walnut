@@ -13,7 +13,7 @@ class NameSearch extends React.Component {
     this.state = {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
-      selectValue: 'lonely',
+      value: 'lonely',
     };
   }
   componentDidMount() {
@@ -22,8 +22,8 @@ class NameSearch extends React.Component {
   handleChange(value) {
     console.log(value);
     console.log(this);
-    this.setState({selectValue: value.fullName});
-    console.log('this.state.selectValue', this.state.selectValue);
+    this.setState({value: value.fullName});
+    console.log('this.state.value', this.state.value);
   }
   handleNew(event) {
     event.preventDefault();
@@ -31,22 +31,21 @@ class NameSearch extends React.Component {
     // console.log('value')
     // const index = this.state.users.indexOf(this.state.value);
     // console.log(index);
-    console.log(this.state.selectValue);
-    const center = this.props.users.find((user) => {return user.fullName === this.state.selectValue;}).location[this.props.selected];
+    console.log(this.state.value);
+    const center = this.props.users.find((user) => {return user.fullName === this.state.value;}).location[this.props.selected];
     console.log(center);
     this.props.updateCenter(center);
     this.props.updateZoom(10);
-    this.setState({selectValue: ''});
+    this.setState({value: ''});
   }
   render() {
-    console.log('here', this.state.selectValue);
-    console.log(this.props.users);
+    console.log('here', this.state.value);
     return (
       <div>
       <form onSubmit={(e) => this.handleNew(e)}>
          <Select
           name="selected-state"
-          value={this.state.selectValue}
+          value={this.state.value}
           simpleValue
           autofocus
           clearable
@@ -55,7 +54,6 @@ class NameSearch extends React.Component {
           })}
           onChange={this.handleChange.bind(this)}
           placeholder="test"
-          onInputKeyDown={() => {console.log('hey', this.state.selectValue);}}
         />
         {/* <Select
             name="selected-state"
