@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const styles = {
+  story: {
+    backgroundColor: 'lightblue',
+    width: '65%',
+    paddingLeft: '2%'
+  }
+};
+
 class StoryContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>Story</p>
+      <div style={styles.story} className="row col-xs-12">
+        <h2>Story</h2>
       </div>
     );
   }

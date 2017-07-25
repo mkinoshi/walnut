@@ -7,25 +7,44 @@ import { connect } from 'react-redux';
 import Card from './Directory_Deck_Card';
 import uuidv4 from 'uuid/v4';
 
+const styles = {
+  header: {
+    backgroundColor: 'lightblue',
+    marginLeft: '100px',
+    width: '65%'
+  },
+  page: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'blue',
+  },
+  profile: {
+    flex: 3,
+    backgroundColor: 'red',
+  }
+};
+
 class DeckContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(id) {
-        // this.props.renderProfile(id)
-  }
+  // handleClick(id) {
+  //       // this.props.renderProfile(id)
+  // }
 
   render() {
-    console.log(this.props.profiles);
+    // console.log(this.props.profiles);
     return (
-        <div>
-            <h1>I am the Deck</h1>
-            {this.props.profiles.map((profile, idx) =>
-              <Card key={uuidv4()} handleClick={this.handleClick} profile={profile}/>)}
+        <div style={styles.container}>
+          <h1> I am the deck </h1>
+            {this.props.profiles.map((profile, index) =>
+              <Card key={uuidv4()} handleClick={this.handleClick} profile={profile} index={index}/>)}
         </div>
     );
   }
@@ -38,7 +57,6 @@ DeckContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  profiles: state.deckReducer.profiles
 });
 
 const mapDispatchToProps = (dispatch) => ({

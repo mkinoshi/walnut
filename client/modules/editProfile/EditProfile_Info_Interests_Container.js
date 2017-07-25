@@ -6,9 +6,11 @@ import saveInterestsThunk from '../../thunks/profile_thunks/saveInterestsThunk';
 const styles = {
   interestsContainer: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
     width: '65%',
-    marginBottom: '100px'
+    marginBottom: '100px',
+    paddingLeft: '2%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   interests: {
     border: '1px solid white',

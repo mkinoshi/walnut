@@ -14,52 +14,15 @@ class NameSearch extends React.Component {
       center: [-103.59179687498357, 40.66995747013945],
       zoom: [3],
       selectValue: 'lonely',
-      users: [
-        {
-          name: 'Alex Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 38.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Omid Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Makoto Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 36.7775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Otto Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.8775032],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        },
-        {
-          name: 'Eli Badgio',
-          profileURL: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-          location: [-122.4199537, 37.77757],
-          year: 'Summer 2017',
-          career: 'Rice University'
-        }
-      ]
     };
   }
   componentDidMount() {
     // this.props.getUserData();
   }
   handleChange(value) {
-    console.log('value', value);
+    console.log(value);
     console.log(this);
-    this.setState({selectValue: value.name});
+    this.setState({selectValue: value.fullName});
     console.log('this.state.selectValue', this.state.selectValue);
   }
   handleNew(event) {
@@ -69,30 +32,40 @@ class NameSearch extends React.Component {
     // const index = this.state.users.indexOf(this.state.value);
     // console.log(index);
     console.log(this.state.selectValue);
-    const center = this.state.users.find((user) => {return user.name === this.state.selectValue;}).location;
+    const center = this.props.users.find((user) => {return user.fullName === this.state.selectValue;}).location[this.props.selected];
     console.log(center);
     this.props.updateCenter(center);
-    this.props.updateZoom();
+    this.props.updateZoom(10);
     this.setState({selectValue: ''});
   }
   render() {
     console.log('here', this.state.selectValue);
+    console.log(this.props.users);
     return (
       <div>
       <form onSubmit={(e) => this.handleNew(e)}>
-        <Select
+         <Select
           name="selected-state"
           value={this.state.selectValue}
           simpleValue
           autofocus
           clearable
-          options={this.state.users.map((user) => {
-            return {value: user, label: user.name};
+          options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
+            return {value: user, label: user.fullName};
           })}
           onChange={this.handleChange.bind(this)}
           placeholder="test"
           onInputKeyDown={() => {console.log('hey', this.state.selectValue);}}
         />
+        {/* <Select
+            name="selected-state"
+            value={this.state.selectValue}
+            simpleValue
+            options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
+              return {value: user, label: user.fullName};
+            })}
+            onChange={this.handleChange.bind(this)}
+          /> */}
         <button type="submit">Search by Name</button>
       </form>
       </div>
@@ -118,17 +91,22 @@ class NameSearch extends React.Component {
 // export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);
 NameSearch.propTypes = {
   updateCenter: PropTypes.func,
-  updateZoom: PropTypes.func
+  updateZoom: PropTypes.func,
+  users: PropTypes.array,
+  selected: PropTypes.string
 };
 const mapStateToProps = (state) => ({
+  users: state.mapReducer.users,
+  selected: state.mapReducer.selected
 });
 const mapDispatchToProps = (dispatch) => ({
   updateCenter: (newCenter) => dispatch({
     type: 'NEW_CENTER',
     center: newCenter,
   }),
-  updateZoom: () => dispatch({
+  updateZoom: (num) => dispatch({
     type: 'UPDATE_ZOOM',
+    num: num
   })
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);

@@ -53,6 +53,7 @@ class MapFilter extends React.Component {
   // }
 
   render() {
+    console.log(this.props.users);
     return (
       <div style={styles.outer}>
         <div style={styles.filter}>
@@ -62,15 +63,16 @@ class MapFilter extends React.Component {
         <NameSearch />
         </div>
         <div style={styles.filterOuter}>
-          {this.props.users.map((user, index) => (
+          {this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user, index) => (
             <MapCard
               index={index}
               key={uuidv4()}
-              profileURL={user.profileURL}
-              name={user.name}
-              year={user.year}
-              career={user.career}
-              location={user.location}
+              profileURL={user.pictureURL}
+              name={user.fullName}
+              year={user.education.classYear}
+              college={user.education.college}
+              career={user.currentOccupation}
+              location={user.location[this.props.selected]}
             />
           ))}
         </div>
@@ -82,11 +84,13 @@ class MapFilter extends React.Component {
 MapFilter.propTypes = {
   changeCenter: PropTypes.func,
   changeZoom: PropTypes.func,
-  users: PropTypes.array
+  users: PropTypes.array,
+  selected: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   clicked: state.mapReducer.clicked,
+  selected: state.mapReducer.selected
 });
 
 const mapDispatchToProps = (dispatch) => ({

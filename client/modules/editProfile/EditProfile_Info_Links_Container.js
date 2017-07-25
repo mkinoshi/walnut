@@ -6,8 +6,10 @@ import saveLinksThunk from '../../thunks/profile_thunks/saveLinksThunk';
 const styles = {
   links: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
+    width: '65%',
+    paddingLeft: '2%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 };
 

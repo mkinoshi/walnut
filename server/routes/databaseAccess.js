@@ -12,7 +12,7 @@ router.get('/user', (req, res) => {
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success', response);
+        console.log('get user success response in middleware', response);
         res.json({data: response});
       })
       .catch((err) => {
@@ -551,10 +551,11 @@ router.get('/get/allusersmap', (req, res) => {
       .then((community) => {
         const users = community.users.map((user) => {
           return {
-            name: user.fullName,
-            profileURL: user.pictureURL,
+            fullName: user.fullName,
+            pictureURL: user.pictureURL,
             location: user.location,
-            career: user.currentOccupation
+            career: user.currentOccupation,
+            education: user.education
           };
         });
         console.log(users);
@@ -565,6 +566,16 @@ router.get('/get/allusersmap', (req, res) => {
       });
 });
 
+router.get('/get/allusersdirectory', (req, res) => {
+  Community.findById(req.user.currentCommunity)
+      .populate('users')
+      .then((community) => {
+        res.json({data: community.users});
+      })
+      .catch((err) => {
+        res.json({data: null});
+      });
+})
 
 router.get('/get/specprofile', (req, res) => {
   User.findById(req.user._id)

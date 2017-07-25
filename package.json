@@ -70,6 +70,8 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "react-select": "^1.0.0-rc.5",
+    "react-slick": "^0.14.11",
+    "react-upload-file": "^2.0.0-beta.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",

@@ -8,10 +8,6 @@ import styles from 'react-select/dist/react-select.css';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserThunk from '../../thunks/user_thunks/updateUserThunk';
 
-// TODO Filter component box style
-// TODO button onClick dispatches toggleChecked(index) 17
-// TODO pre define checked box from filter.checked
-
 class FilterPrefContainer extends React.Component {
   constructor(props) {
     super(props);
