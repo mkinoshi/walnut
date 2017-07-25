@@ -23,7 +23,7 @@ const discoverReducer = (state = {
       // return newState2;
       return {
         ...state,
-        posts: state.posts[state.posts.length - 1].postId !== action.posts[action.posts.length - 1].postId ?
+        posts: action.posts.length > 0 && state.posts[state.posts.length - 1].postId !== action.posts[action.posts.length - 1].postId ?
         state.posts.concat(action.posts) : state.posts,
         hasMore: action.posts.length > 0 ? true : false
       };
