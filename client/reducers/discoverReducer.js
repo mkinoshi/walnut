@@ -1,7 +1,8 @@
 
 const discoverReducer = (state = {
   filters: [],
-  posts: []
+  posts: [],
+  hasMore: true
 }, action) => {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
@@ -17,9 +18,14 @@ const discoverReducer = (state = {
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'GET_NEXT_TEN_DONE':
-      const newState2 = Object.assign({}, state);
-      newState2.posts = newState2.posts.concat(action.posts);
-      return newState2;
+      // const newState2 = Object.assign({}, state);
+      // newState2.posts = newState2.posts.concat(action.posts);
+      // return newState2;
+      return {
+        ...state,
+        posts: state.posts.concat(action.posts),
+        hasMore: action.posts.length > 0 ? true : false
+      };
     case 'GET_NEXT_TEN_ERROR':
       return state;
     case 'TOGGLE_FILTER_FRONT':

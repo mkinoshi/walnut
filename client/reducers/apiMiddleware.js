@@ -212,7 +212,7 @@ export const apiMiddleware = store => next => action => {
         store.dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
       });
       break;
-    case 'GET_NEXT_TEN':
+    case 'GET_NEXT_10':
       axios.get(URL + 'db/get/next10' + '?lastOne=' + action.lastOne)
       .then((response) => {
         console.log('discover response', response);

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Post from '../Post/Post_index';
 import FilterPrefContainer from './Feed_FilterPref_Container';
+import InfiniteScroll from 'react-infinite-scroller';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 
@@ -86,13 +87,23 @@ class Feed extends React.Component {
     super(props);
     this.state = {
       showFilterPref: false,
-      filters: []
+      filters: [],
+      count: 0
     };
   }
-
   componentDidMount() {
     console.log('this one');
     // this.props.getData();
+  }
+
+  handleScroll(e) {
+    console.log(this.refs);
+    console.log(window.innerHeight);
+    console.log(window.scrollY);
+    console.log(document.body.offsetHeight);
+    // if (window.innerHeight - window.scrollY < 500 && window.innerHeight - window.scrollY > 450) {
+    //   this.props.getNext10(this.props.data.posts.length);
+    // }
   }
 
   toggleFilterPref() {
@@ -125,11 +136,16 @@ class Feed extends React.Component {
     return {filters: filters, posts: final};
   }
 
+  _loadMore() {
+    this.props.getNext10(this.props.data.posts.length);
+  }
+
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
+    console.log(filteredPosts.length);
     return (
       <div>
-          <div className="col-xs-12" style={styles.feed}>
+          <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
             <div className="col-xs-3">
               <div className="discoverButton left" style={{}}>
                 <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
@@ -138,10 +154,18 @@ class Feed extends React.Component {
               </div>
             {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
             </div>
-            <div>
-              {filteredPosts.map((post) => (
-                <Post key={post.postId} currentUser={this.props.user} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
-              ))}
+            <div className="col-xs-9" >
+               <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => this._loadMore()}
+                    hasMore={this.props.hasMore}
+                    threshold={500}
+                    loader={<div className="loader">Loading ...</div>}
+                >
+                  {filteredPosts.map((post) => (
+                    <Post ref="card" key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+                  ))}
+                </InfiniteScroll>
             </div>
           </div>
       </div>
@@ -153,11 +177,14 @@ Feed.propTypes = {
   data: PropTypes.object,
   newLike: PropTypes.func,
   getData: PropTypes.func,
+  getNext10: PropTypes.func,
+  hasMore: PropTypes.bool
   user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer,
+  hasMore: state.discoverReducer.hasMore
   user: state.userReducer
 });
 
