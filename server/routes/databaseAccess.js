@@ -646,13 +646,12 @@ router.post('/save/tag', (req, res) => {
     if (tag) {
       tag.communities.push(req.user.currentCommunity);
       return tag.save();
-    } else {
-      const newTag = new Tag({
-        communities: [req.user.currentCommunity],
-        name: req.body.tag
-      });
-      return newTag.save();
     }
+    const newTag = new Tag({
+      communities: [req.user.currentCommunity],
+      name: req.body.tag
+    });
+    return newTag.save();
   })
   .then((response) => {
     Community.findById(req.user.currentCommunity)
