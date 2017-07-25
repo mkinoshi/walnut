@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveContactThunk from '../../thunks/profile_thunks/saveContactThunk';
 
 const styles = {
   contact: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
+    width: '65%',
+    paddingLeft: '2%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 };
 
@@ -91,7 +94,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveContact: (contactObj) => dispatch({type: 'SAVE_CONTACT', contact: contactObj})
+  saveContact: (contactObj) => saveContactThunk(contactObj)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactContainer);

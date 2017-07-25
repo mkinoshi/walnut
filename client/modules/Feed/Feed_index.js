@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Post from '../Post/Post_index';
 import FilterPrefContainer from './Feed_FilterPref_Container';
-import ReactDOM from 'react-dom';
 import InfiniteScroll from 'react-infinite-scroller';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
+import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 
 const styles = {
   outer: {
@@ -92,8 +93,7 @@ class Feed extends React.Component {
   }
   componentDidMount() {
     console.log('this one');
-    // window.addEventListener('scroll', (e)=>this.handleScroll(e));
-    this.props.getData();
+    // this.props.getData();
   }
 
   handleScroll(e) {
@@ -136,14 +136,6 @@ class Feed extends React.Component {
     return {filters: filters, posts: final};
   }
 
-  _renderMessages(posts) {
-    return posts.map((post) => {
-      return(
-          <Post ref="card" key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
-      );
-    });
-  }
-
   _loadMore() {
     this.props.getNext10(this.props.data.posts.length);
   }
@@ -174,9 +166,6 @@ class Feed extends React.Component {
                     <Post ref="card" key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
                 </InfiniteScroll>
-               {/* {filteredPosts.map((post) => (
-                <Post ref="card" key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
-              ))} */}
             </div>
           </div>
       </div>
@@ -190,17 +179,18 @@ Feed.propTypes = {
   getData: PropTypes.func,
   getNext10: PropTypes.func,
   hasMore: PropTypes.bool
+  user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer,
   hasMore: state.discoverReducer.hasMore
+  user: state.userReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newLike: (id) => dispatch({type: 'NEW_LIKE', postId: id}),
-  getData: () => dispatch({type: 'GET_DISCOVER_INFO'}),
-  getNext10: (last) => dispatch({type: 'GET_NEXT_10', lastOne: last})
+  newLike: (id) => newLikeThunk(id)(dispatch),
+  getData: () => discoverLoadThunk(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

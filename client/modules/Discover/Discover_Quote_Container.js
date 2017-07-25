@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+
 // TODO Quote content
 
 const styles = {
@@ -43,8 +44,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // filter.name
-  toggleChecked: (name) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuoteContainer);

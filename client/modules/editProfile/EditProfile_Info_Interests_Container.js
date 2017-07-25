@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import saveInterestsThunk from '../../thunks/profile_thunks/saveInterestsThunk';
 
 const styles = {
   interestsContainer: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
     width: '65%',
-    marginBottom: '100px'
+    marginBottom: '100px',
+    paddingLeft: '2%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   },
   interests: {
     border: '1px solid white',
@@ -109,7 +112,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveInterests: (interests) => dispatch({type: 'SAVE_INTERESTS', interests: interests})
+  saveInterests: (interests) => saveInterestsThunk(interests)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterestsContainer);
