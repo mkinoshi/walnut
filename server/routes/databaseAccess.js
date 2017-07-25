@@ -119,6 +119,7 @@ router.get('/get/discoverinfo', (req, res) => {
           const filters = community.tags;
           let posts = [];
           Post.find({community: req.user.currentCommunity})
+            .limit(20)
             .sort({createdAt: -1})
             .populate('tags')
             .populate('comments')
