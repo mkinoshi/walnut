@@ -12,8 +12,10 @@ const styles = {
   },
   picType: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '15%'
+    width: '30px'
+  },
+  files: {
+    display: 'inline-block'
   }
 };
 
@@ -57,16 +59,21 @@ class UploadsContainer extends React.Component {
   render() {
     const filesArr = (Object.keys(this.state.sneakyFront).length > 0) ? this.state.sneakyFront[this.props.tab] : this.props.portfolio[this.props.tab];
     return (
-          <div>
+          <div style={styles.files} className="col-xs-12">
             {filesArr.map((file, i) => (
               <div key={i}
+              className="col-xs-4"
+              style={styles.file}
               onClick={() => (this.props.renderFile(file.fileUrl))}>
                 <img style={styles.picType} src={ (file.fileType === 'image/png') ? 'http://wfarm3.dataknet.com/static/resources/icons/set112/f2afb6f7.png' : 'https://cdn.shopify.com/s/files/1/1061/1924/files/Poop_Emoji.png?9898922749706957214' }/>
                 <p>{file.fileName}</p>
               </div>
             ))}
-            <Dropzone onDrop={this.onDrop.bind(this)} multiple={true}>
-              <div>Try dropping a file here, or click to select a file to upload.</div>
+            <Dropzone
+            className="col-xs-4"
+            style={{height: '100px', width: '100px', backgroundColor: 'blanchedalmond'}}
+            onDrop={this.onDrop.bind(this)} multiple={true}>
+              <div>Click/drop --> upload</div>
             </Dropzone>
             {this.state.files.map((file, i) => (
               <input key={i}

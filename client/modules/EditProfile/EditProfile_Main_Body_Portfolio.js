@@ -5,8 +5,12 @@ import Uploads from './EditProfile_Main_Body_Portfolio_Uploads_Container';
 const styles = {
   portfolio: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
+    width: '65%',
+    paddingLeft: '2%'
+  },
+  links: {
+    display: 'flex',
+    justifyContent: 'space-around',
   }
 };
 
@@ -36,12 +40,14 @@ class Portfolio extends React.Component {
   render() {
     // TODO currUrl needs to deploy modal to show all file types and not just image
     return (
-      <div style={styles.portfolio}>
+      <div style={styles.portfolio} className="row col-xs-12">
         <h2>Portfolio</h2>
-        <p onClick={()=> (this.tabChange('media'))}>Media</p>
-        <p onClick={()=> (this.tabChange('documents'))}>Documents</p>
-        <p onClick={()=> (this.tabChange('code'))}>Code</p>
-        <p onClick={()=> (this.tabChange('design'))}>Design</p>
+        <div style={styles.links}>
+          <p onClick={()=> (this.tabChange('media'))}>Media</p>
+          <p onClick={()=> (this.tabChange('documents'))}>Documents</p>
+          <p onClick={()=> (this.tabChange('code'))}>Code</p>
+          <p onClick={()=> (this.tabChange('design'))}>Design</p>
+        </div>
         {(this.state.currUrl !== '') ? <img style={styles.pic} src={this.state.currUrl} /> : <p></p>}
         <Uploads
         tab={this.state.tab}

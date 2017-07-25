@@ -8,8 +8,20 @@ import Slider from 'react-slick';
 const styles = {
   head: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
+    width: '70%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  profilePic: {
+    height: '150px',
+    width: '120px',
+    float: 'left',
+  },
+  picture: {
+    height: '105px',
+    width: 'auto',
+    marginLeft: '10px',
+    marginTop: '10px',
   }
 };
 
@@ -127,14 +139,14 @@ class HeadContainer extends React.Component {
 
     return (
       <div style={styles.head}>
-           <img style={{height: '60px', width: '50px'}} src={img} />
-            <div style={{width: '170px', height: '40px'}}>
-            <ReactUploadFile
-              style={{width: '80px', height: '40px'}}
-              chooseFileButton={<button value="Change">Change</button>}
-              options={optionsForUpload}/>
-              {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
-            </div>
+        <div style={styles.profilePic}>
+        <img style={styles.picture} src={img} />
+          <ReactUploadFile
+            style={{width: '80px', height: '40px'}}
+            chooseFileButton={<button value="Change">Change</button>}
+            options={optionsForUpload}/>
+            {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
+        </div>
 
         <h1>{this.props.fullName}</h1>
         <div>
