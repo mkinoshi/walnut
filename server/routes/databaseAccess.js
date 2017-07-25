@@ -12,7 +12,7 @@ router.get('/user', (req, res) => {
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success', response);
+        console.log('get user success response in middleware', response);
         res.json({data: response});
       })
       .catch((err) => {

@@ -115,9 +115,18 @@ const UserSchema = new mongoose.Schema({
     }
   },
   education: {
-    college: String,
-    majors: Array,
-    classYear: String,
+    college: {
+      type: String,
+      default: ''
+    },
+    majors: {
+      type: Array,
+      default: []
+    },
+    classYear: {
+      type: String,
+      default: ''
+    }
   },
   tags: {
     type: Array

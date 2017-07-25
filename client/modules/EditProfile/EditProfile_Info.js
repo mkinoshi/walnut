@@ -9,8 +9,7 @@ class Info extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Info</h1>
+      <div className="col-xs-6">
         <AboutContainer />
         <ContactContainer />
         <LinksContainer />
