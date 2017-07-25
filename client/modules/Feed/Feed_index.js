@@ -8,7 +8,7 @@ import FilterPrefContainer from './Feed_FilterPref_Container';
 import InfiniteScroll from 'react-infinite-scroller';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
-
+import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 const styles = {
   outer: {
     borderWidth: '1px',
@@ -163,7 +163,7 @@ class Feed extends React.Component {
                     loader={<div className="loader">Loading ...</div>}
                 >
                   {filteredPosts.map((post) => (
-                    <Post ref="card" key={post.postId} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+                    <Post ref="card" key={post.postId} currentUser={this.props.user} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
                 </InfiniteScroll>
             </div>
@@ -178,19 +178,20 @@ Feed.propTypes = {
   newLike: PropTypes.func,
   getData: PropTypes.func,
   getNext10: PropTypes.func,
-  hasMore: PropTypes.bool
+  hasMore: PropTypes.bool,
   user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer,
-  hasMore: state.discoverReducer.hasMore
+  hasMore: state.discoverReducer.hasMore,
   user: state.userReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
   getData: () => discoverLoadThunk(dispatch),
+  getNext10: (param) => nextTenThunk(param)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);
