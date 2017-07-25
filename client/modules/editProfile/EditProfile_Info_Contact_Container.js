@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 const styles = {
   contact: {
     backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
+    width: '65%',
+    paddingLeft: '2%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 };
 
