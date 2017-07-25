@@ -91,10 +91,14 @@ class NewPostContainer extends React.Component {
                   onClick={() => (this.toggleTagPref())}>Add Tags</a>
               </div>
               {this.state.showTagPref ?
-                <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
-                tags={this.state.postTags}/> : <p></p>}
+                <div>
+                  <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
+                    tags={this.state.postTags}/>
+                  <NewTagContainer />
+                </div>
+                 : <p></p>}
             </div>
-            <div className="newTags">
+            {/* <div className="newTags">
               <div className="newTagsButton" style={{}}>
                 <a style={{backgroundColor: '#FF5657'}}
                   className="waves-effect waves-light btn"
@@ -105,7 +109,7 @@ class NewPostContainer extends React.Component {
                 // tags={this.state.postTags}/>
                 <NewTagContainer />
                 : <p></p>}
-            </div>
+            </div> */}
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
