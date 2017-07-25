@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { connect } from 'react-redux';
+import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 
 const styles = {
   about: {
@@ -171,7 +172,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveAbout: (about) => dispatch({type: 'SAVE_ABOUT', about: about})
+  saveAbout: (about) => saveAboutThunk(about)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AboutContainer);
