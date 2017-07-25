@@ -20,37 +20,27 @@ class NameSearch extends React.Component {
     // this.props.getUserData();
   }
   handleChange(value) {
-    console.log(value);
-    console.log(this);
-    this.setState({value: value.fullName});
-    console.log('this.state.value', this.state.value);
+    this.setState({value: value});
   }
   handleNew(event) {
     event.preventDefault();
-    // this.props.updateUser({preferences: this.props.preferences.concat(this.state.value)});
-    // console.log('value')
-    // const index = this.state.users.indexOf(this.state.value);
-    // console.log(index);
-    console.log(this.state.value);
     const center = this.props.users.find((user) => {return user.fullName === this.state.value;}).location[this.props.selected];
-    console.log(center);
     this.props.updateCenter(center);
     this.props.updateZoom(10);
     this.setState({value: ''});
   }
   render() {
-    console.log('here', this.state.value);
     return (
-      <div>
       <form onSubmit={(e) => this.handleNew(e)}>
          <Select
+          style={styles}
           name="selected-state"
           value={this.state.value}
           simpleValue
           autofocus
           clearable
           options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
-            return {value: user, label: user.fullName};
+            return {value: user.fullName, label: user.fullName};
           })}
           onChange={this.handleChange.bind(this)}
           placeholder="test"
@@ -66,7 +56,6 @@ class NameSearch extends React.Component {
           /> */}
         <button type="submit">Search by Name</button>
       </form>
-      </div>
     );
   }
 }

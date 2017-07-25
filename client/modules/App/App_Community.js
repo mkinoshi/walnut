@@ -26,8 +26,6 @@ class Community extends React.Component {
 
   componentDidMount() {
     // this.props.getDiscoverContent();
-    console.log('ehhehehehehehehehehe');
-    console.log(this.props);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }
