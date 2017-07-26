@@ -7,11 +7,14 @@ const URL = 'http://localhost:3000/';
 const nextTenThunk = (lastOne) => (dispatch) => {
   axios.get(URL + 'db/get/next10' + '?lastOne=' + lastOne)
     .then((response) => {
-      console.log('discover response', response);
-      dispatch({type: 'GET_NEXT_TEN_DONE', filters: response.data.filters, posts: response.data.posts});
+      console.log('nextTen response', response);
+      dispatch({type: 'GET_NEXT_TEN_DONE',
+          defaultFilters: response.data.defaultFilters,
+          otherFilters: response.data.defaultFilters,
+          posts: response.data.posts});
     })
     .catch((err) =>{
-      console.log('error in newComment', err);
+      console.log('error in nextTen', err);
       dispatch({type: 'GET_NEXT_TEN_ERROR'});
     });
 };

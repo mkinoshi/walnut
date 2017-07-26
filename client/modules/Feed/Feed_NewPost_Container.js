@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import NewTagContainer from './Feed_NewPost_NewTag_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
+import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -40,7 +41,9 @@ class NewPostContainer extends React.Component {
       postBody: '',
       postTags: [],
       showTagPref: false,
-      showNewTag: false
+      showNewTag: false,
+      newTags: [],
+      tempTags: []
     };
   }
 
@@ -56,6 +59,29 @@ class NewPostContainer extends React.Component {
     }
   }
 
+  addNewTags(tag) {
+    this.props.newTag(tag);
+  }
+
+  addTempTags(tags) {
+    const whole = [].concat(tags);
+    const tempTagsCopy = this.state.tempTags.slice();
+    const postTagsCopy = this.state.postTags.slice();
+    whole.forEach((tag) => {
+      if(!tempTagsCopy.includes(tag)) {
+        tempTagsCopy.push(tag);
+        postTagsCopy.push(tag._id);
+        this.setState({tempTags: tempTagsCopy, postTags: postTagsCopy});
+      }
+    });
+  }
+
+  removeTag(tag) {
+    const newTagsCopy = this.state.newTags.slice();
+    newTagsCopy.splice(newTagsCopy.indexOf(tag), 1);
+    this.setState({newTags: newTagsCopy});
+  }
+
   toggleNewTag() {
     this.setState({showNewTag: !this.state.showNewTag});
   }
@@ -69,7 +95,7 @@ class NewPostContainer extends React.Component {
   }
 
   handleClick() {
-    this.props.newPost(this.state.postBody, this.state.postTags);
+    this.props.newPost(this.state.postBody, this.state.postTags, this.state.newTags);
     this.setState({postBody: '', postTags: [], showTagPref: false});
   }
 
@@ -93,24 +119,15 @@ class NewPostContainer extends React.Component {
               </div>
               {this.state.showTagPref ?
                 <div>
-                  <TagPrefContainer addTags={(tagsArray) => (this.addTags(tagsArray))}
-                    tags={this.state.postTags}/>
-                  <NewTagContainer />
+                  <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
+                                    tags={this.state.postTags}
+                                    addTempTags={(tag) => (this.addTempTags(tag))}
+                                    tempTags={this.state.tempTags}
+                                    newTags={this.state.newTags} />
+                  <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
                 </div>
                  : <p></p>}
             </div>
-            {/* <div className="newTags">
-              <div className="newTagsButton" style={{}}>
-                <a style={{backgroundColor: '#FF5657'}}
-                  className="waves-effect waves-light btn"
-                  onClick={() => (this.toggleNewTag())}>New Tags</a>
-              </div>
-              {this.state.showNewTag ?
-                // <TagPref addTags={(tagsArray) => (this.addTags(tagsArray))}
-                // tags={this.state.postTags}/>
-                <NewTagContainer />
-                : <p></p>}
-            </div> */}
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
@@ -126,14 +143,16 @@ class NewPostContainer extends React.Component {
 }
 
 NewPostContainer.propTypes = {
-  newPost: PropTypes.func
+  newPost: PropTypes.func,
+  newTag: PropTypes.func
 };
 
 const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch)
+  newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch),
+  newTag: (tag) => newTagThunk(tag)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

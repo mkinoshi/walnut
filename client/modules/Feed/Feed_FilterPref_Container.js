@@ -14,12 +14,11 @@ class FilterPrefContainer extends React.Component {
     this.state = {
       filters: [],
       value: [],
+      useFilters: this.props.defaultFilters
     };
   }
 
   handleChange(e) {
-    // this.props.toggleCheckedFront(e.target.value, index);
-    // this.props.toggleChecked(e.target.value, index);
     const index = this.state.filters.indexOf(e.target.value);
     this.props.filterChange(e.target.value);
     if (!this.state.filters.includes(e.target.value)) {
@@ -34,21 +33,24 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    this.setState({value});
+    this.setState({value: value});
   }
 
   handleNew(event) {
     event.preventDefault();
     this.props.updateUser({preferences: this.props.preferences.concat(this.state.value)});
+    const newOne = this.state.useFilters.concat(this.state.value);
+    const newChecked = this.state.filters.concat(this.state.value);
+    this.setState({useFilters: newOne, filters: newChecked});
     this.setState({value: []});
   }
 
   render() {
-    console.log('filters', this.props.filters, this.props.preferences);
+    console.log('filters', this.props.defaultFilters, this.props.otherFilters);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '40px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.filters.map((filter, index) => (
+          {this.state.useFilters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
               checked={(this.state.filters.includes(filter.name)) ? 'checked' : ''}
@@ -63,7 +65,7 @@ class FilterPrefContainer extends React.Component {
             name="form-field-name"
             value={this.state.value}
             multi simpleValue
-            options={this.props.filters.map((tag) => {
+            options={this.props.otherFilters.map((tag) => {
               return {value: tag.name, label: '#' + tag.name};
             })}
             onChange={this.handleSelectChange.bind(this)}
@@ -76,7 +78,8 @@ class FilterPrefContainer extends React.Component {
 }
 
 FilterPrefContainer.propTypes = {
-  filters: PropTypes.array,
+  defaultFilters: PropTypes.array,
+  otherFilters: PropTypes.array,
   preferences: PropTypes.array,
   toggleChecked: PropTypes.func,
   getDiscoverData: PropTypes.func,
@@ -85,13 +88,14 @@ FilterPrefContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filters: state.discoverReducer.filters,
+  defaultFilters: state.discoverReducer.defaultFilters,
+  otherFilters: state.discoverReducer.otherFilters,
   preferences: state.userReducer.preferences
 });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (name, index) => toggleFilterCheckedThunk(name, index)(dispatch),
-  updateUser: (updateObj) => updateUserThunk(updateObj)
+  updateUser: (updateObj) => updateUserThunk(updateObj)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPrefContainer);

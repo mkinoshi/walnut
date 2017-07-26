@@ -89,6 +89,9 @@ function auth(passport) {
                       res.redirect(url);
                   })
           }
+          else {
+            res.redirect('/app/walnuthome')
+          }
       } else{
           res.redirect('/app/editprofile');
       }
