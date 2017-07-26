@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
-import updateUserThunk from '../../thunks/user_thunks/updateUserThunk';
+import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (name, index) => toggleFilterCheckedThunk(name, index)(dispatch),
-  updateUser: (updateObj) => updateUserThunk(updateObj)
+  updateUser: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterPrefContainer);

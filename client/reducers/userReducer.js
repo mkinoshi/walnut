@@ -22,12 +22,12 @@ const userObj = {
   links: [],
   interests: [],
   projects: [],
-  portfolio: {
-    media: [],
-    documents: [],
-    code: [],
-    design: []
-  },
+  portfolio: [
+    {name: 'media', data: []},
+    {name: 'documents', data: []},
+    {name: 'code', data: []},
+    {name: 'design', data: []}
+  ],
   education: {
     college: '',
     majors: [],
@@ -62,8 +62,20 @@ const userReducer = (state = userObj, action) => {
       return state;
     case 'ADD_TAB':
       const newState = JSON.parse(JSON.stringify(state));
-      newState.portfolio[action.name] = [];
+      const obj = {
+        name: action.data,
+        data: []
+      };
+      newState.portfolio.push(obj);
       return newState;
+    case 'UPDATE_TAB':
+      const newState1 = JSON.parse(JSON.stringify(state));
+      newState1.portfolio[action.index].name = action.name;
+      return newState1;
+    case 'REMOVE_TAB':
+      const newState2 = JSON.parse(JSON.stringify(state));
+      newState2.portfolio.splice(action.index, 1);
+      return newState2;
     default:
       return state;
   }

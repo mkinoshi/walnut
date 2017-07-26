@@ -97,22 +97,7 @@ const UserSchema = new mongoose.Schema({
     type: Array
   },
   portfolio: {
-    media: {
-      type: Array,
-      default: []
-    },
-    documents: {
-      type: Array,
-      default: []
-    },
-    code: {
-      type: Array,
-      default: []
-    },
-    design: {
-      type: Array,
-      default: []
-    }
+    type: Array
   },
   education: {
     college: {

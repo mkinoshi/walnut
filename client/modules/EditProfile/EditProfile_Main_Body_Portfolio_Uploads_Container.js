@@ -8,7 +8,7 @@ class UploadsContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sneakyFront: {},
+      sneakyFront: [],
       files: [],
       onEdit: false
     };
@@ -36,6 +36,7 @@ class UploadsContainer extends React.Component {
             console.log(err);
             alert('failed uploaded!');
           }
+          console.log('save success', res.body.portfolio);
           this.setState({sneakyFront: res.body.portfolio, files: [], onEdit: false});
         });
     });
@@ -52,7 +53,9 @@ class UploadsContainer extends React.Component {
   }
 
   render() {
-    const filesArr = (Object.keys(this.state.sneakyFront).length > 0) ? this.state.sneakyFront[this.props.tab] : this.props.portfolio[this.props.tab];
+    const portArr = (this.state.sneakyFront.length > 0) ? this.state.sneakyFront.filter((i) => (this.props.tab === i.name)) :
+    this.props.portfolio.filter((i) => (this.props.tab === i.name));
+    const filesArr = portArr[0] ? portArr[0].data : [];
     return (
           <div className="col-xs-12">
             {filesArr.map((file, i) => {
@@ -95,7 +98,7 @@ class UploadsContainer extends React.Component {
 }
 
 UploadsContainer.propTypes = {
-  portfolio: PropTypes.object,
+  portfolio: PropTypes.array,
   tab: PropTypes.string,
   userId: PropTypes.string,
   renderFile: PropTypes.func

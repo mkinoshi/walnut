@@ -5,8 +5,12 @@ import Lightbox from 'react-image-lightbox';
 import PdfViewer from './EditProfile_Main_Body_Portfolio_Uploads_PDF.js';
 import Modal from 'react-modal';
 import css from './EditProfile.css';
+import addUserPortTabsThunk from '../../thunks/user_thunks/addUserPortTabsThunk';
+import updateUserPortTabsThunk from '../../thunks/user_thunks/updateUserPortTabsThunk';
+import removeUserPortTabsThunk from '../../thunks/user_thunks/removeUserPortTabsThunk';
+import { connect } from 'react-redux';
 
-class Portfolio extends React.Component {
+class PortfolioContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,9 +19,8 @@ class Portfolio extends React.Component {
       pdfUrl: '',
       page: 1,
       pages: 100,
-      tabs: [],
-      editTab: false,
       currTabChange: '',
+      newTab: false
     };
     this.onDocumentComplete = this.onDocumentComplete.bind(this);
     this.onPageComplete = this.onPageComplete.bind(this);
@@ -70,27 +73,44 @@ class Portfolio extends React.Component {
   }
 
   addTab() {
-    this.setState({tabs: this.state.tabs.concat(['Change Name']), editTab: true});
+    this.setState({newTab: true});
   }
 
-  editTab() {
-    this.setState({editTab: true});
-  }
-
-  tabName(i) {
-    const tabsC = this.state.tabs;
-    tabsC[i] = this.state.currTabChange;
-    this.setState({tabs: tabsC, editTab: false});
-  }
-
-  removeTab(i) {
-    const tabsC = this.state.tabs;
-    tabsC.splice(i, 1);
-    this.setState({tabs: tabsC});
+  editTab(i) {
+    this.setState({editTab: i});
   }
 
   newName(name) {
     this.setState({currTabChange: name});
+  }
+
+  tabName() {
+    if(this.state.currTabChange === '') {
+      return;
+    }
+    this.setState({newTab: false});
+    this.props.addTabs({data: this.state.currTabChange});
+    this.setState({currTabChange: ''});
+  }
+
+  removeTab(i) {
+    this.setState({newTab: false});
+  }
+
+  newTabName(name) {
+    this.setState({saveTab: name});
+  }
+
+  tabNameChange(i) {
+    if(this.state.saveTab) {
+      this.props.changeTabName(this.state.saveTab, i);
+    }
+    this.setState({saveTab: '', editTab: -1 });
+  }
+
+  removeTabBack(i) {
+    this.props.removeTabName(i);
+    this.setState({editTab: -1});
   }
 
 
@@ -99,25 +119,26 @@ class Portfolio extends React.Component {
       <div className="row col-xs-12 portfolioBox">
         <h2>Portfolio</h2>
         <div className="tab-links">
-          <p onClick={()=> (this.tabChange('media'))}>Media</p>
-          <p onClick={()=> (this.tabChange('documents'))}>Documents</p>
-          <p onClick={()=> (this.tabChange('code'))}>Code</p>
-          <p onClick={()=> (this.tabChange('design'))}>Design</p>
-          {this.state.tabs.map((tab, i) => {
-            if(this.state.editTab) {
+          {this.props.tabs.map((tab, i) => {
+            if(this.state.editTab === i && tab.name !== 'media' && tab.name !== 'documents' && tab.name !== 'code' && tab.name !== 'design') {
               return (
-                <form key={i}>
-                  <input placeholder={tab} onChange={(e) => this.newName(e.target.value)}/>
-                  <button onClick={(e) => {e.preventDefault(); this.tabName(i);}}>save</button>
-                  <button onClick={(e) => {e.preventDefault(); this.removeTab(i);}}>remove</button>
-                </form>
+                <div key={i}>
+                  <input placeholder={tab.name} onChange={(e) => this.newTabName(e.target.value)}/>
+                  <button onClick={(e) => {e.preventDefault(); this.tabNameChange(i);}}>save</button>
+                  <button onClick={(e) => {e.preventDefault(); this.removeTabBack(i);}}>remove</button>
+                </div>
               );
             }
-            return (
-              <p key={i} onClick={()=> (this.tabChange(tab))}
-              onDoubleClick={() =>(this.editTab())}>{tab}</p>
-            );
+            return <p key={i} onClick={()=> (this.tabChange(tab.name))} onDoubleClick={() =>(this.editTab(i))}>{tab.name}</p>;
           })}
+          {this.state.newTab ?
+                <form>
+                  <input placeholder="Change tab name" onChange={(e) => this.newName(e.target.value)}/>
+                  <button onClick={(e) => {e.preventDefault(); this.tabName();}}>save</button>
+                  <button onClick={(e) => {e.preventDefault(); this.removeTab();}}>remove</button>
+                </form>
+                : null
+            }
           <p onClick={()=> (this.addTab())}>...</p>
         </div>
 
@@ -160,7 +181,22 @@ class Portfolio extends React.Component {
   }
 }
 
-Portfolio.propTypes = {
+PortfolioContainer.propTypes = {
+  addTabs: PropTypes.func,
+  tabs: PropTypes.array,
+  changeTabName: PropTypes.func,
+  removeTabName: PropTypes.func
 };
 
-export default Portfolio;
+const mapStateToProps = (state) => ({
+  tabs: state.userReducer.portfolio
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addTabs: (obj) => addUserPortTabsThunk(obj)(dispatch),
+  changeTabName: (name, i) => updateUserPortTabsThunk(name, i)(dispatch),
+  removeTabName: (i) => removeUserPortTabsThunk(i)(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);
+

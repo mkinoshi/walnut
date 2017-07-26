@@ -44,7 +44,13 @@ function auth(passport) {
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
-        preferences: req.body.tags
+        preferences: req.body.tags,
+        portfolio: [
+          {name: 'media', data: []},
+          {name: 'documents', data: []},
+          {name: 'code', data: []},
+          {name: 'design', data: []}
+        ]
       });
       return new_user.save()
       .then((doc) => {
