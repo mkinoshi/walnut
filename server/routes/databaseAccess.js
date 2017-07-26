@@ -733,9 +733,18 @@ router.post('/update/removeportfoliotabs', (req, res) => {
   console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
-        user.portfolio.splice(req.body.index, 1);
-        user.markModified('portfolio');
-        return user.save();
+        let index = - 1;
+        for(let i = 0; i < user.portfolio.length; i += 1) {
+          if(user.portfolio[i].name === req.body.tab) {
+            index = i;
+          }
+        }
+        if(index > - 1) {
+          user.portfolio[index].data.splice(req.body.index, 1);
+          user.markModified('portfolio');
+          return user.save();
+        }
+        return null;
       })
       .then((user) => {
         console.log('userobj after save', user);

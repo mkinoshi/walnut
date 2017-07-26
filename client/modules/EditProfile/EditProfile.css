@@ -38,8 +38,11 @@
 }
 
 .files {
-    display: inline-block;
     margin-bottom: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .dropzone {

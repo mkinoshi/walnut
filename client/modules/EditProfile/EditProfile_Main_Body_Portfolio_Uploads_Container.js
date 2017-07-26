@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import PropTypes from 'prop-types';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
+import removeFileThunk from '../../thunks/user_thunks/removeFileThunk';
 
 class UploadsContainer extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class UploadsContainer extends React.Component {
     this.state = {
       sneakyFront: [],
       files: [],
-      onEdit: false
+      onEdit: false,
+      editFiles: false,
     };
   }
 
@@ -52,32 +54,47 @@ class UploadsContainer extends React.Component {
     return 'https://maxcdn.icons8.com/Share/icon/Network//download_from_cloud1600.png';
   }
 
+  editFiles() {
+    this.setState({editFiles: !this.state.editFiles});
+  }
+
+  removeFile(i) {
+    this.props.removeFile(this.props.tab, i);
+  }
+
   render() {
     const portArr = (this.state.sneakyFront.length > 0) ? this.state.sneakyFront.filter((i) => (this.props.tab === i.name)) :
     this.props.portfolio.filter((i) => (this.props.tab === i.name));
     const filesArr = portArr[0] ? portArr[0].data : [];
     return (
           <div className="col-xs-12">
+            <p onClick={() => this.editFiles()}>E</p>
             {filesArr.map((file, i) => {
               if (file.fileType !== 'application/pdf' && file.fileType !== 'image/png') {
                 return (
-                  <a key={i} href={file.fileUrl}>
+                  <div key={i}>
+                    {this.state.editFiles ? <p onClick={() => this.removeFile(i)}>D</p> : null}
+                    <a href={file.fileUrl}>
+                      <div
+                        className="col-xs-4 files">
+                        <img className="picThumb"
+                        src={this.thumbChoice(file)}/>
+                        <p>{file.fileName}</p>
+                      </div>
+                    </a>
+                  </div>
+                );
+              }
+              return (
+                <div key={i}>
+                {this.state.editFiles ? <p onClick={() => this.removeFile(i)}>D</p> : null}
                   <div
-                    className="col-xs-4 files">
+                    className="col-xs-4 files"
+                    onClick={() => (this.props.renderFile(file))}>
                     <img className="picThumb"
                     src={this.thumbChoice(file)}/>
                     <p>{file.fileName}</p>
                   </div>
-                  </a>
-                );
-              }
-              return (
-                <div key={i}
-                  className="col-xs-4 files"
-                  onClick={() => (this.props.renderFile(file))}>
-                  <img className="picThumb"
-                  src={this.thumbChoice(file)}/>
-                  <p>{file.fileName}</p>
                 </div>
               );
             })}
@@ -101,7 +118,8 @@ UploadsContainer.propTypes = {
   portfolio: PropTypes.array,
   tab: PropTypes.string,
   userId: PropTypes.string,
-  renderFile: PropTypes.func
+  renderFile: PropTypes.func,
+  removeFile: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -109,7 +127,8 @@ const mapStateToProps = (state) => ({
   userId: state.userReducer._id
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  removeFile: (tab, i) => removeFileThunk(tab, i)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadsContainer);

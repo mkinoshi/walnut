@@ -76,6 +76,20 @@ const userReducer = (state = userObj, action) => {
       const newState2 = JSON.parse(JSON.stringify(state));
       newState2.portfolio.splice(action.index, 1);
       return newState2;
+    case 'REMOVE_FILE':
+      const newState3 = JSON.parse(JSON.stringify(state));
+      let index = - 1;
+      for(let i = 0; i < newState3.portfolio.length; i += 1) {
+        if(newState3.portfolio[i].name === action.tab) {
+          index = i;
+        }
+      }
+      if(index > - 1) {
+        newState3.portfolio[index].data.splice(action.index, 1);
+        console.log('sdffsddsfsfdffs', newState3);
+        return newState3;
+      }
+      return newState3;
     default:
       return state;
   }
