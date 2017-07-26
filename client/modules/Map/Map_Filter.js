@@ -5,7 +5,7 @@ import NameSearch from './Map_NameSearch';
 import MapCard from './Map_Card';
 import uuidv4 from 'uuid/v4';
 import { connect } from 'react-redux';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const styles = {
   outer: {
@@ -60,20 +60,22 @@ class MapFilter extends React.Component {
         <div style={styles.filter}>
           <NameSearch />
         </div>
-        <div style={styles.filterOuter}>
-          {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
-            <MapCard
-              id={user.id}
-              key={uuidv4()}
-              profileURL={user.pictureURL}
-              name={user.fullName}
-              year={user.education.classYear}
-              college={user.education.college}
-              career={user.currentOccupation}
-              location={user.location[this.props.selected]}
-            />
-          ))}
-        </div>
+        <Scrollbars style={{ width: '20vw', height: '60vh' }}>
+          <div style={styles.filterOuter}>
+            {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
+              <MapCard
+                id={user.id}
+                key={uuidv4()}
+                profileURL={user.pictureURL}
+                name={user.fullName}
+                year={user.education.classYear}
+                college={user.education.college}
+                career={user.currentOccupation}
+                location={user.location[this.props.selected]}
+              />
+            ))}
+          </div>
+        </Scrollbars>
       </div>
     );
   }
