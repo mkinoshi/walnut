@@ -20,7 +20,7 @@ const upload = multer({
 });
 
 router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
-  const toSave = req.user._id + (req.query.name || req.file.originalname);
+  const toSave = req.user._id + (req.query.name || req.file.originalname) + Date.now();
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,
@@ -53,7 +53,7 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
-  const toSave = req.user._id + req.file.originalname;
+  const toSave = req.user._id + req.file.originalname + Date.now();
   console.log('in backend', toSave);
   s3.putObject({
     Bucket: 'walnut-test',
