@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StoryContainer from './EditProfile_Main_Body_Story_Container';
-import Portfolio from './EditProfile_Main_Body_Portfolio';
+import PortfolioContainer from './EditProfile_Main_Body_Portfolio_Container';
 
 const styles = {
   main: {
@@ -15,7 +15,7 @@ class MainBody extends React.Component {
   render() {
     return (
       <div className="col-xs-6" style={styles.main}>
-        <Portfolio />
+        <PortfolioContainer />
         <StoryContainer />
       </div>
     );

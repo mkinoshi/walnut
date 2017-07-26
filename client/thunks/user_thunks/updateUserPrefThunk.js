@@ -6,9 +6,8 @@ const URL = 'http://localhost:3000/';
 import userDataThunk from './userDataThunk';
 import discoverLoadThunk from '../discover_thunks/discoverLoadThunk';
 
-const updateUserThunk = (data) => (dispatch) => {
+const updateUserPrefThunk = (data) => (dispatch) => {
   // dispatch({type: 'GET_FILTERS_UPDATE_FRONT', data: data});
-  console.log('here with data', data);
   axios.post(URL + 'db/update/user', {
     data: data
   })
@@ -21,4 +20,4 @@ const updateUserThunk = (data) => (dispatch) => {
       console.log('error in newTag', err);
     });
 };
-export default updateUserThunk;
+export default updateUserPrefThunk;

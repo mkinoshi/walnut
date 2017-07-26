@@ -7,7 +7,7 @@ import _ from 'underscore';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
-import updateUserThunk from '../../thunks/user_thunks/updateUserThunk';
+import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 
 
 const styles = {
@@ -147,7 +147,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => joinCommunityThunk(id)(dispatch),
   createCommunity: (image, title, filters) => createCommunityThunk(image, title, filters)(dispatch),
-  changeCommunity: (updateObj) => updateUserThunk(updateObj)(dispatch)
+  changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

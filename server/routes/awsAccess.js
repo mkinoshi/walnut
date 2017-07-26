@@ -39,11 +39,12 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
         fileType: req.file.mimetype,
         fileUrl: process.env.AWS_BUCKET_URL + toSave
       };
-      user.portfolio[req.query.port].push(newFile);
+      user.portfolio.filter((i) => (i.name === req.query.port))[0].data.push(newFile);
+      user.markModified('portfolio');
       return user.save();
     })
     .then((user) => {
-      console.log('user object after save. check new name!!!!', user);
+      console.log('user object after save. check new name!!!!', user.portfolio[0]);
       res.json({portfolio: user.portfolio});
     })
     .catch((error) => console.log('error in aws db save', error));
