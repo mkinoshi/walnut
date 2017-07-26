@@ -33,20 +33,22 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    this.setState({value: value});
+    this.setState({value});
   }
 
   handleNew(event) {
     event.preventDefault();
-    this.props.updateUser({preferences: this.props.preferences.concat(this.state.value)});
-    const newOne = this.state.useFilters.concat(this.state.value);
-    const newChecked = this.state.filters.concat(this.state.value);
-    this.setState({useFilters: newOne, filters: newChecked});
-    this.setState({value: []});
+    const options = this.state.value.split(',');
+    const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
+    const newOne = this.state.useFilters.concat(send);
+    // const newChecked = this.state.filters.concat(options);
+
+    this.props.updateUser({preferences: this.props.preferences.concat(send)});
+    this.setState({useFilters: newOne, value: []});
   }
 
   render() {
-    console.log('filters', this.props.defaultFilters, this.props.otherFilters);
+    console.log('filters', this.state.useFilters, this.state.filters);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '40px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
