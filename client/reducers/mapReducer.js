@@ -13,7 +13,8 @@ const mapReducer = (state = {
     case 'NEW_CENTER':
       return {
         ...state,
-        center: action.center
+        center: action.center,
+        zoom: [10]
       };
     case 'UPDATE_ZOOM':
       return {

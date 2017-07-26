@@ -1,18 +1,18 @@
 
 const discoverReducer = (state = {
-  filters: [],
+  defaultFilters: [],
+  otherFilters: [],
   posts: [],
   hasMore: true
 }, action) => {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
       console.log('discover action', action);
-      // const newState1 = Object.assign({}, state);
-      // newState1.posts = newState1.posts.concat(action.posts);
-      // newState1.filters = newState1.filters.concat(action.filters);
       const newState1 = {
-        filters: action.filters,
-        posts: action.posts
+        defaultFilters: action.defaultFilters,
+        otherFilters: action.otherFilters,
+        posts: action.posts,
+        hasMore: true
       };
       return newState1;
     case 'GET_DISCOVER_DATA_ERROR':

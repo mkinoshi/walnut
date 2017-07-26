@@ -16,9 +16,8 @@ class LocationSearch extends React.Component {
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        console.log('Success', latLng);
-        this.props.updateCenter(latLng);
-        this.props.updateZoom();
+        this.props.updateCenter([latLng.lng, latLng.lat]);
+        this.props.updateZoom(10);
       })
       .catch(error => console.error('Error', error));
   }
@@ -31,9 +30,8 @@ class LocationSearch extends React.Component {
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        console.log('Success', latLng);
-        this.props.updateCenter(latLng);
-        this.props.updateZoom();
+        // console.log('here', latLng);
+        this.props.updateCenter([latLng.lng, latLng.lat]);
       })
       .catch(error => console.error('Error', error));
   }
@@ -67,8 +65,9 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'NEW_CENTER',
     center: newCenter,
   }),
-  updateZoom: () => dispatch({
+  updateZoom: (newZoom) => dispatch({
     type: 'UPDATE_ZOOM',
+    num: newZoom
   })
 });
 

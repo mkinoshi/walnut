@@ -10,6 +10,7 @@ import MapContainer from '../Map/Map_index';
 import EditProfile from '../EditProfile/EditProfile_index';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
+import userDataThunk from '../../thunks/user_thunks/userDataThunk';
 
 const styles = {
   App: {
@@ -27,7 +28,6 @@ class Community extends React.Component {
   }
 
   componentWillMount() {
-    console.log('will community');
     this.props.getDiscoverContent();
   }
 
@@ -39,12 +39,10 @@ class Community extends React.Component {
   }
 
   handlePosition(position) {
-    console.log(position);
     this.props.updateLocation([position.coords.longitude, position.coords.latitude]);
   }
 
   handleError(msg) {
-    console.log(msg);
     this.props.updateLocation([]);
   }
 
@@ -69,15 +67,17 @@ class Community extends React.Component {
 
 Community.propTypes = {
   getDiscoverContent: PropTypes.func,
-  updateLocation: PropTypes.func
+  updateLocation: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
+  user: state.userReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDiscoverContent: () => discoverLoadThunk(dispatch),
-  updateLocation: (params) => updateLocationThunk(params)(dispatch)
+  updateLocation: (params) => updateLocationThunk(params)(dispatch),
+  getDiscoverContent: () => discoverLoadThunk(dispatch)
 });
 
 

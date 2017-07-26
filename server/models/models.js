@@ -21,7 +21,13 @@ const CommunitySchema = new mongoose.Schema({
   icon: {
     type: String,
   },
-  tags: [
+  defaultTags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tag'
+    }
+  ],
+  otherTags: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Tag'
@@ -38,7 +44,7 @@ const UserSchema = new mongoose.Schema({
   ],
   currentCommunity: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Community'
+    ref: 'Community',
   },
   username: {
     type: String
@@ -188,12 +194,10 @@ const PostSchema = new mongoose.Schema({
 
 
 const TagSchema = new mongoose.Schema({
-  communities: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Community'
-    }
-  ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Community'
+  },
   name: {
     type: String,
   },

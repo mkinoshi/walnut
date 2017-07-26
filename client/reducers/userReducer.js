@@ -1,6 +1,6 @@
 const userObj = {
   communities: [],
-  currentCommunity: '',
+  currentCommunity: {},
   username: '',
   fullName: '',
   facebookId: '',

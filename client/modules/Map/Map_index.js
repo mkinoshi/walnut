@@ -8,6 +8,7 @@ import CircleIcon from 'react-icons/lib/fa/circle';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
+import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
 
 const styles = {
   mapContainer: {
@@ -38,21 +39,18 @@ const styles = {
   }
 };
 const Map = ReactMapboxGl({
-  accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg'
+  accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg',
+  attributionControl: false,
+  logoPosition: 'bottom-right'
 });
 
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      center: [-103.59179687498357, 40.66995747013945],
-      zoom: [3],
-      clicked: '',
-    };
   }
 
   componentDidMount() {
-    this.props.getAllUsersMap();
+    this.props.getAllUsers();
   }
 
   handleClick(id) {
@@ -71,6 +69,7 @@ class MapContainer extends React.Component {
     );
   }
   render() {
+    console.log('re-rendering map', this.props.center);
     return (
       <div style={styles.outer}>
         <div style={styles.inner}>
@@ -80,9 +79,10 @@ class MapContainer extends React.Component {
           changeZoom={(num) => {this.props.updateZoom(num);}} />
         </div>
         <Map
-          style="mapbox://styles/mapbox/dark-v9"
+          style="mapbox://styles/mapbox/streets-v10"
           center={this.props.center}
           zoom={this.props.zoom}
+          attributionControl={false}
           containerStyle={{
             height: '100vh',
             width: '80vw'
@@ -119,9 +119,9 @@ MapContainer.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
   updateClicked: PropTypes.func,
-  getAllUsersMap: PropTypes.func,
+  getAllUsers: PropTypes.func,
   users: PropTypes.array,
-  selected: PropTypes.string
+  selected: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
@@ -144,9 +144,7 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'UPDATE_CLICKED',
     clicked: id
   }),
-  getAllUsersMap: () => dispatch({
-    type: 'GET_ALL_USERS_MAP'
-  })
+  getAllUsers: () => getAllUsersMapThunk(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer);

@@ -6,6 +6,10 @@ import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
 import EditProfile from '../EditProfile/EditProfile_index';
 import userDataThunk from '../../thunks/user_thunks/userDataThunk';
+import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
+
+
 
 const styles = {
   App: {
@@ -25,6 +29,7 @@ class App extends React.Component {
   componentWillMount() {
     console.log('will App');
     this.props.getUser();
+    this.props.getComs();
   }
 
   render() {
@@ -46,14 +51,18 @@ class App extends React.Component {
 
 
 App.propTypes = {
-  getUser: PropTypes.func
+  getUser: PropTypes.func,
+  getComs: PropTypes.func,
+  getDiscoverContent: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => userDataThunk(dispatch)
+  getUser: () => userDataThunk(dispatch),
+  getComs: () => getAllCommunitiesThunk(dispatch),
+  getDiscoverContent: () => discoverLoadThunk(dispatch)
 });
 
 

@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import EditProfile from '../EditProfile/EditProfile_index';
 import _ from 'underscore';
+import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
+import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
+import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
+import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+
 
 const styles = {
   communities: {
@@ -22,7 +27,9 @@ class WalnutHomeContainer extends React.Component {
     this.state = {
       showInputs: false,
       titleValue: '',
-      image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg'
+      image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      defaultFilters: [],
+      filterValue: '',
     };
     this.handleStart = this.handleStart.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,14 +37,8 @@ class WalnutHomeContainer extends React.Component {
     this.joinCommunity = this.joinCommunity.bind(this);
   }
 
-  componentWillMount() {
-    this.props.getCommunities();
-    this.props.getUser();
-    console.log('trying to get communities');
-    console.log('mounted', this.props.hasProfile);
-  }
-
-  componentDidMount() {
+  toggleCommunity(com) {
+    this.props.changeCommunity({currentCommunity: com._id});
   }
 
   handleStart() {
@@ -48,9 +49,19 @@ class WalnutHomeContainer extends React.Component {
     this.setState({titleValue: e.target.value});
   }
 
+  handleFilterChange(e) {
+    this.setState({filterValue: e.target.value});
+  }
+
   handleSubmit() {
-    console.log('submission', this.state);
-    this.props.createCommunity(this.state.image, this.state.titleValue);
+    this.props.createCommunity(this.state.image, this.state.titleValue, this.state.defaultFilters);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const copy = this.state.defaultFilters;
+    copy.push(this.state.filterValue);
+    this.setState({defaultFilters: copy, filterValue: ''});
   }
 
   joinCommunity(id) {
@@ -60,7 +71,8 @@ class WalnutHomeContainer extends React.Component {
 
   // TODO HORIZONS
   render() {
-    console.log('coms', this.props.communities, this.props.userCommunities);
+    const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
+    console.log('coms', this.props.communities, this.props.userCommunities, userCommunityTitles);
     return (
         <div>
            <div>
@@ -70,7 +82,7 @@ class WalnutHomeContainer extends React.Component {
              <div>
                <h2>Your Communities</h2>
                <div style={styles.communities}>
-                   {this.props.userCommunities.map((community, idx) => <Link to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div onClick={() => {this.props.joinCommunity(community._id);}} key={idx}>
+                   {this.props.userCommunities.map((community, idx) => <Link onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
                      <img src={community.icon} style={styles.image} />
                      <p>{community.title}</p>
                    </div></Link> )}
@@ -80,15 +92,11 @@ class WalnutHomeContainer extends React.Component {
                 <h2>Search For new Communities</h2>
                 <div style={styles.communities}>
                     {this.props.communities.filter((com) => {
-                      let found = false;
-                      this.props.userCommunities.forEach((com2) => {
-                        found = _.isEqual(com, com2);
-                      });
-                      return !found;
+                      return !(userCommunityTitles.indexOf(com.title) > -1);
                     }).map((community, idx) => <div key={idx}>
                         <img src={community.icon} style={styles.image} />
                         <p>{community.title}</p>
-                        <button onClick={() => {this.joinCommunity(community._id);}}><Link to={'/app/community/' + community.title.split(' ').join('') + '/discover'}>+ Join</Link></button>
+                        <button onClick={() => {this.joinCommunity(community._id);}}>+ Join</button>
                     </div> )
                     }
                 </div>
@@ -101,7 +109,17 @@ class WalnutHomeContainer extends React.Component {
                 <input type="text"
                        value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
                 </label>
-                <button onClick={() => {this.handleSubmit();}}><Link to={'/app/community/' + this.state.titleValue.split(' ').join('') + '/discover'}>Create</Link></button>
+                <ul>
+                    {this.state.defaultFilters.map((filter, idx) => <li key={idx}>#{' '}{filter}</li>)}
+                </ul>
+                <form>
+                    <label> Create default Filters:
+                        <input type="text"
+                               value={this.state.filterValue} onChange={(e) => {this.handleFilterChange(e);}} />
+                    </label>
+                    <input type="submit" value="Add" onClick={(e) => {this.handleClick(e);}} />
+                </form>
+                <button onClick={() => {this.handleSubmit();}}>Create</button>
             </div> : null}
           </div>
         </div>
@@ -116,7 +134,8 @@ WalnutHomeContainer.propTypes = {
   communities: PropTypes.array,
   joinCommunity: PropTypes.func,
   getCommunities: PropTypes.func,
-  userCommunities: PropTypes.array
+  userCommunities: PropTypes.array,
+  changeCommunity: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -126,10 +145,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  joinCommunity: (id) => dispatch({type: 'JOIN_COMMUNITY', id: id}),
-  createCommunity: (image, title) => dispatch({type: 'CREATE_COMMUNITY', image: image, title: title}),
-  getUser: () => dispatch({type: 'GET_USER_DATA'}),
-  getCommunities: () => dispatch({type: 'GET_ALL_COMMUNITIES'})
+  joinCommunity: (id) => joinCommunityThunk(id)(dispatch),
+  createCommunity: (image, title, filters) => createCommunityThunk(image, title, filters)(dispatch),
+  changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

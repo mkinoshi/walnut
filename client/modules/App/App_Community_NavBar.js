@@ -24,13 +24,19 @@ const styles = {
 class Navbar extends React.Component {
 
   render() {
-    const title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
+    let title;
+    if (this.props.community) {
+      title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
+    } else {
+      title = 'missing';
+    }
     console.log('title', title);
     return (
       <div className="navbar-fixed">
         <nav style={styles.ribbon}>
           <div className="nav-wrapper">
             <ul id="nav-mobile" className="left hide-on-med-and-down">
+              <li><Link to={'/app/walnuthome'} style={styles.links}>Walnut Home</Link></li>
               <li><Link to={'/app/community/' + title + '/discover'} > Discover
             {/* <img src={this.props.community.icon} style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/> */}
               </Link></li>

@@ -22,24 +22,47 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  const community = new Community({
-    title: req.body.title,
-    users: [req.user._id],
-    admins: [req.user._id],
-    icon: req.body.image
-  });
-  return community.save()
-    .then((response) => {
+  console.log('body', req.body);
+  const tagModels = req.body.defaultFilters.map((filter) =>
+      new Tag({
+        name: filter
+      })
+  );
+  Promise.all(tagModels.map((tag) => tag.save()))
+  .then((values) => {
+    const community = new Community({
+      title: req.body.title,
+      users: [req.user._id],
+      admins: [req.user._id],
+      icon: req.body.image,
+      defaultTags: values.map((val) => val._id),
+      otherTags: []
+    });
+    console.log('upper', values);
+    return community.save();
+  })
+    .then((community) => {
       User.findById(req.user._id)
             .then((user) => {
-              console.log(user);
-              user.communities.push(response._id);
-              user.currentCommunity = response._id;
+              user.communities.push(community._id);
+              user.currentCommunity = community._id;
               return user.save();
             })
-            .then((resp) => {
-              console.log(resp);
-              res.json({success: true, community: response});
+            .then((userSave) => {
+              Community.findById(community._id)
+                  .populate('defaultTags')
+                  .then((com) => {
+                    const tags = [];
+                    com.defaultTags.forEach((tag) => {
+                      tag.owner = community._id;
+                      tags.push(tag);
+                    });
+                    Promise.all(tags.map((tag) => tag.save()))
+                    .then((values) => {
+                      console.log('lowest layer', values, community);
+                      res.json({success: true, community: community});
+                    });
+                  });
             });
     })
     .catch((err) => {
@@ -107,7 +130,8 @@ router.get('/get/allcommunities', (req, res) => {
 router.get('/get/discoverinfo', (req, res) => {
   console.log('id', req.user.currentCommunity);
   Community.findById(req.user.currentCommunity)
-      .populate('tags')
+      .populate('defaultTags')
+      .populate('otherTags')
       .then((community) => {
         community.users.filter((user) => {
           return user === req.user._id;
@@ -116,7 +140,8 @@ router.get('/get/discoverinfo', (req, res) => {
           console.log('not in community error');
           res.json({error: 'No authorization'});
         } else{
-          const filters = community.tags;
+          const defaultFilters = community.defaultTags;
+          const otherFilters = community.otherTags;
           let posts = [];
           Post.find({community: req.user.currentCommunity})
             .limit(20)
@@ -150,7 +175,7 @@ router.get('/get/discoverinfo', (req, res) => {
                 };
               });
               // console.log('here', filters, posts);
-              res.json({filters: filters, posts: posts});
+              res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
             })
             .catch((err) => {
               console.log('error 1', err);
@@ -167,7 +192,8 @@ router.get('/get/discoverinfo', (req, res) => {
 router.get('/get/next10', (req, res) => {
   console.log(req.query);
   Community.findById(req.user.currentCommunity)
-        .populate('tags')
+        .populate('defaultTags')
+        .populate('otherTags')
         .then((community) => {
           community.users.filter((user) => {
             return user === req.user._id;
@@ -527,6 +553,7 @@ router.post('/save/iscreated', (req, res) => {
                return response.save();
              })
             .then((userProfile) => {
+              console.log('user profile', userProfile);
               res.json({success: true, data: userProfile});
             })
             .catch((err) => {
@@ -577,7 +604,7 @@ router.get('/get/allusersdirectory', (req, res) => {
       .catch((err) => {
         res.json({data: null});
       });
-})
+});
 
 router.get('/get/specprofile', (req, res) => {
   User.findById(req.user._id)
@@ -647,27 +674,25 @@ router.get('/get/allusers', (req, res) => {
 
 
 router.post('/save/tag', (req, res) => {
-  Tag.findOne({name: req.body.tag})
-  .then((tag) => {
-    if (tag) {
-      tag.communities.push(req.user.currentCommunity);
-      return tag.save();
-    }
-    const newTag = new Tag({
-      communities: [req.user.currentCommunity],
-      name: req.body.tag
-    });
-    return newTag.save();
-  })
+  const newTag = new Tag({
+    owner: req.user.currentCommunity,
+    name: req.body.tag
+  });
+  newTag.save()
   .then((response) => {
     Community.findById(req.user.currentCommunity)
         .then((community) => {
-          community.tags.push(response._id);
-          return community.save();
+          if (req.body.isDefault) {
+            community.defaultTags.push(response._id);
+            return community.save();
+          } else {
+            community.otherTags.push(response._id);
+            return community.save();
+          }
         })
         .then((response2) => {
-          console.log('saving tag success', response2);
-          res.json({success: true});
+          console.log('saving tag success', response, response2);
+          res.json({success: true, tag: response});
         })
         .catch((err) => {
           console.log('error 1 saving tag', err);
@@ -684,7 +709,7 @@ router.post('/update/user', (req, res) => {
   console.log('req.body', req.body);
   User.findByIdAndUpdate(req.user._id, req.body.data)
       .then((response) => {
-        res.json({success: true});
+        res.json({success: true, data: response});
       })
       .catch((err) => {
         res.json({success: false});
