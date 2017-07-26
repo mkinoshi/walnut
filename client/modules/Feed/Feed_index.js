@@ -91,9 +91,8 @@ class Feed extends React.Component {
       count: 0
     };
   }
-  componentDidMount() {
-    console.log('this one');
-    // this.props.getData();
+  componentWillMount() {
+    console.log('feed willing');
   }
 
   handleScroll(e) {
@@ -123,7 +122,7 @@ class Feed extends React.Component {
 
   filterData(filters, posts) {
     // if the array zero return the entire unfiltered array
-    if(filters.length === 0 || filters.length === this.props.data.filters.length) {
+    if(filters.length === 0 || filters.length === this.props.data.defaultFilters.length) {
       return {filters: filters, posts: posts};
     }
     const final = posts.filter((post) => {

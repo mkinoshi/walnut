@@ -3,6 +3,8 @@
  */
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
+import userDataThunk from '../../thunks/user_thunks/userDataThunk';
 
 const joinCommunityThunk = (id) => (dispatch) => {
   axios.post(URL + 'db/join/community', {
@@ -10,11 +12,11 @@ const joinCommunityThunk = (id) => (dispatch) => {
   })
     .then((response) => {
       console.log('Community Joined', response);
-      dispatch({type: 'GET_COMMUNITY_DONE', community: response.data.community});
+      discoverLoadThunk(dispatch);
+      userDataThunk(dispatch);
     })
     .catch((err) => {
       console.log('probably failed to join community', err);
-      dispatch({type: 'GET_COMMUNITY_ERROR'});
     });
 };
 export default joinCommunityThunk;

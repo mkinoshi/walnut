@@ -8,11 +8,13 @@ const newTagThunk = (tag) => (dispatch) => {
   axios.post(URL + 'db/save/tag', {
     tag: tag
   })
-    .then(() => {
-      dispatch({type: 'GET_DISCOVER_INFO'});
+    .then((response) => {
+      console.log('new tag', response);
+      dispatch({type: 'NEW_TAG', tag: response.data.tag});
     })
     .catch((err) => {
       console.log('error in newTag', err);
+      dispatch({type: 'NEW_TAG_ERROR'});
     });
 };
 export default newTagThunk;

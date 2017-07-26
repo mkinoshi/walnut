@@ -13,7 +13,7 @@ class NewTagContainer extends React.Component {
   handleClick(event) {
     event.preventDefault();
     console.log('trying to add a new tag');
-    this.props.addNewTag(this.state.tag);
+    this.props.addToPost(this.state.tag);
     this.setState({tag: ''});
   }
 
@@ -25,7 +25,6 @@ class NewTagContainer extends React.Component {
           placeholder="Type new tag"
           onChange={(e) => this.setState({tag: e.target.value})}/>
         <input type="submit" value="Add" onClick={(e, tag) => {
-          console.log('hi');
           this.handleClick(e);
         }} />
       </form>
@@ -34,14 +33,13 @@ class NewTagContainer extends React.Component {
 }
 
 NewTagContainer.propTypes = {
-  addNewTag: PropTypes.func
+  addToPost: PropTypes.func
 };
 
 const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewTag: (tag) => newTagThunk(tag)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTagContainer);

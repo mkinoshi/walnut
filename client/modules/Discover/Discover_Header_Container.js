@@ -3,6 +3,7 @@ import QuoteContainer from './Discover_Quote_Container';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 
 // TODO Header content
 // TODO Google drive link
@@ -81,7 +82,8 @@ class HeaderContainer extends React.Component {
 }
 
 HeaderContainer.propTypes = {
-  community: PropTypes.object
+  community: PropTypes.object,
+  refreshFeed: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

@@ -10,12 +10,13 @@ const discoverLoadThunk = (dispatch) => {
           console.log('discover response', response);
           dispatch({
             type: 'GET_DISCOVER_DATA_DONE',
-            filters: response.data.filters,
+            defaultFilters: response.data.defaultFilters,
+            otherFilters: response.data.otherFilters,
             posts: response.data.posts
           });
         })
         .catch((err) => {
-          console.log('error in newComment', err);
+          console.log('error in discoverThunk', err);
           dispatch({type: 'GET_DISCOVER_DATA_ERROR'});
         });
 };
