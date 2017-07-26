@@ -124,7 +124,7 @@ UploadsContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   portfolio: state.userReducer.portfolio,
-  userId: state.userReducer._id
+  userId: state.userReducer._id,
 });
 
 const mapDispatchToProps = (dispatch) => ({

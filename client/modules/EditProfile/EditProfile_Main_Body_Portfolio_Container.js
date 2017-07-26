@@ -105,7 +105,7 @@ class PortfolioContainer extends React.Component {
     if(this.state.saveTab) {
       this.props.changeTabName(this.state.saveTab, i);
     }
-    this.setState({saveTab: '', editTab: -1 });
+    this.setState({tab: this.state.saveTab, saveTab: '', editTab: -1});
   }
 
   removeTabBack(i) {

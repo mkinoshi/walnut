@@ -82,7 +82,7 @@ class WalnutHomeContainer extends React.Component {
              <div>
                <h2>Your Communities</h2>
                <div style={styles.communities}>
-                   {this.props.userCommunities.map((community, idx) => <Link onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
+                   {this.props.userCommunities.map((community, idx) => <Link key={idx} onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
                      <img src={community.icon} style={styles.image} />
                      <p>{community.title}</p>
                    </div></Link> )}
