@@ -1,13 +1,15 @@
-// comment button action renders modal
-
 import React from 'react';
 import PropTypes from 'prop-types';
-// import {Link, Route} from 'react-router-dom';
 import ModalContainer from './Post_Modal_Container';
+import { Card, Icon, Image, Button } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
+const styles = {
+  post: {
+    width: '30%',
+  }
+};
 
-// TODO on action of comment button dispatch modal
-// TODO pass postData down
 
 class Post extends React.Component {
   constructor(props) {
@@ -34,36 +36,28 @@ class Post extends React.Component {
   }
 
   render() {
-    const commentNum = this.props.postData.comments.length;
+    console.log(this.props.postData);
     return (
-      <div className="card" style={{backgroundColor: '#ececec', width: '100%', float: 'right', marginRight: '2%'}}>
-        <div style={{textAlign: 'center'}}>
-          {this.props.postData.tags.map((tag, index) => (<text key={index} style={{fontSize: '14px'}}><text
-                    style={{color: '#0D9ED3', fontSize: '14px'}}>#</text>{tag.name}   </text>))}
+      <Card style={styles.post}>
+      <Card.Content>
+        <Image floated="left" size="mini" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+        <Card.Header>
+          {this.props.postData.username}
+        </Card.Header>
+        <Card.Meta>
+          {this.props.postData.tags.map((tag, index) => {return tag.name;})}
+        </Card.Meta>
+        <Card.Description>
+          {this.props.postData.content}
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <div className="ui two buttons">
+          <Button basic color="green">Approve</Button>
+          <Button basic color="red">Decline</Button>
         </div>
-        <div className="card-block">
-          <span>
-          <img style={{borderRadius: '50%', float: 'left', height: '40px'}}
-                  src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg"
-                  alt="5" />
-          <h4 className="card-title" style={{fontSize: '14px'}}>{this.props.postData.username}</h4> </span>
-          <p className="card-text" style={{paddingLeft: '10%'}}><br/>{this.props.postData.content}</p>
-          <div>
-            <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
-              className="waves-effect waves-light btn btn-primary"
-              onClick={() => this.toggleLike()}><i
-                className="material-icons left">thumb_up</i>{this.state.likeCount}</a>
-          </div>
-          <div>
-            <a style={{backgroundColor: '#0D9ED3', float: 'right'}}
-              className="waves-effect waves-light btn btn-primary" onClick={() => this.handleClick()}><i
-                className="material-icons left">comment</i>{commentNum}</a>
-          </div>
-          <br/> <br/>
-          <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
-        </div>
-      </div>
-
+      </Card.Content>
+    </Card>
     );
   }
 }
