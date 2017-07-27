@@ -21,6 +21,13 @@ const MediaAttachment = ({data, renderLightBox, renderPdfModal}) => {
         </div>
     );
   }
+  if(data.type === 'video/mp4') {
+    return (
+        <div className="mediaVideoAttachment" onClick={() => renderPdfModal(data)}>
+            <p>video</p>
+        </div>
+    );
+  }
   return null;
 };
 
