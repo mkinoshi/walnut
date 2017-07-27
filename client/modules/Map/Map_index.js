@@ -1,7 +1,7 @@
 import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
@@ -61,15 +61,24 @@ class MapContainer extends React.Component {
     this.props.updateClicked(id);
   }
 
+  handleClusterClick() {
+    console.log('ohohohohohohohohohohohoh');
+  }
+
   clusterMarker(coordinates) {
+    console.log(coordinates);
     return (
-      <Marker coordinates={coordinates} style={styles.marker}>
+      <Marker onMouseEnter={() => {console.log('yoyoyoyoyoyoyoyo');}} coordinates={coordinates} style={styles.marker}>
         <CircleIcon />
       </Marker>
     );
   }
   render() {
     console.log('re-rendering map', this.props.center);
+    console.log(Cluster);
+    const users = this.props.users.filter((user) => {
+      return user.location[this.props.selected].length > 0;
+    });
     return (
       <div style={styles.outer}>
         <div style={styles.inner}>
@@ -88,19 +97,18 @@ class MapContainer extends React.Component {
             width: '80vw'
           }}>
             <ZoomControl style={styles.zoom}/>
-            <Cluster ClusterMarkerFactory={this.clusterMarker} maxZoom={10}>
+            <Cluster ClusterMarkerFactory={this.clusterMarker} maxZoom={12}>
               {
-                  this.props.users.filter((user) => {
-                    return user.location[this.props.selected].length > 0;
-                  }).map((feature) => {
+                  users.map((feature) => {
                     return (
                       <Marker
                         key={uuidv4()}
+                        user={feature}
                         coordinates={feature.location[this.props.selected]}
                         style={styles.cluster}
                         onClick={this.handleClick.bind(this, feature.id)}
                         >
-                        <CircleIcon />
+                        <img src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" style={{width: '60px', height: '60px', borderRadius: '30px'}} />
                       </Marker>
                     );
                   }
