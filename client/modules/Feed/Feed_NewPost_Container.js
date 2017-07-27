@@ -178,7 +178,7 @@ class NewPostContainer extends React.Component {
               <div className="fileUpload">
               <ReactUploadFile
                 style={{width: '80px', height: '40px'}}
-                chooseFileButton={<button value="Change">Change</button>}
+                chooseFileButton={<i className="fa fa-paperclip uploadButtonIcon" aria-hidden="false"></i>}
                 options={optionsForUpload}/>
                 {(this.state.file !== '') ?
                 <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}

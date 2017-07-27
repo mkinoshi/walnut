@@ -79,6 +79,7 @@
     "react-scrollbar": "^0.5.1",
     "react-select": "^1.0.0-rc.5",
     "react-slick": "^0.14.11",
+    "react-upload-button-v2": "^0.6.1",
     "react-upload-file": "^2.0.0-beta.6",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",

@@ -1,10 +1,10 @@
-import React from 'react';
-import Discover from './Discover';
-import Header from './Header';
-import PropTypes from 'prop-types';
 
-// TODO call header components quote container
-// TODO and feed modules
+import React from 'react';
+import PropTypes from 'prop-types';
+import Feed from '../Feed/Feed_index';
+import HeaderContainer from './Discover_Header_Container';
+
+
 
 class Home extends React.Component {
   constructor() {
@@ -15,8 +15,8 @@ class Home extends React.Component {
     console.log('at home');
     return (
       <div>
-        <Header />
-        {/* <Discover />*/}
+        <HeaderContainer />
+        <Feed />
       </div>
     );
   }
@@ -26,3 +26,5 @@ Home.propTypes = {
 };
 
 export default Home;
+
+
