@@ -27,8 +27,6 @@ const styles = {
   }
 };
 
-const defaulProfileUrl = 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png';
-
 class HeadContainer extends React.Component {
   constructor() {
     super();
@@ -112,15 +110,6 @@ class HeadContainer extends React.Component {
     });
   }
 
-  srcImg() {
-    if(this.state.pic) {
-      return this.state.pic;
-    }
-    if(this.props.pictureURL !== '') {
-      return this.props.pictureURL;
-    }
-    return defaulProfileUrl;
-  }
 
   render() {
     const optionsForUpload = {
@@ -133,12 +122,10 @@ class HeadContainer extends React.Component {
       },
     };
 
-    const img = this.srcImg();
-
     return (
       <div style={styles.head}>
         <div style={styles.profilePic}>
-        <img style={styles.picture} src={img} />
+        <img style={styles.picture} src={this.props.pictureURL} />
           <ReactUploadFile
             style={{width: '80px', height: '40px'}}
             chooseFileButton={<button value="Change">Change</button>}

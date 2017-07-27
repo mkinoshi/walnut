@@ -141,7 +141,6 @@ class Feed extends React.Component {
 
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
-    console.log(filteredPosts.length);
     return (
       <div>
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>

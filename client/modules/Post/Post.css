@@ -1,0 +1,32 @@
+.mediaAttachment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lightBoxImage {
+    width: 700px;
+}
+
+.mediaPDFAttachment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.pdfThumb {
+    width: 100%;
+}
+
+.pdfModalFooter {
+    display: flex;
+    justify-content: center;
+}
+
+.mediaVideoAttachment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
