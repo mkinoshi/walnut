@@ -254,46 +254,6 @@ router.get('/get/next10', (req, res) => {
         });
 });
 
-router.get('/get/profilecreate', (req, res) => {
-  User.findById(req.user._id)
-        .then((userProfile) => {
-          const data = {
-            isCreated: userProfile.isCreated,
-            head: {
-              fullName: userProfile.fullName,
-              tags: userProfile.tags,
-              blurb: userProfile.blurb,
-              profileURL: userProfile.profileURL
-            },
-            info: {
-              about: {
-                education: userProfile.education,
-                majors: userProfile.majors,
-                currentOccupation: userProfile.currentOccupation,
-                currentOccupationCity: userProfile.currentOccupationCity,
-                pastOccupations: userProfile.pastOccupations
-              },
-              contact: {
-                email: userProfile.email,
-                address: userProfile.address,
-                phone: userProfile.phone
-              },
-              interests: userProfile.interests,
-              projects: userProfile.projects,
-              links: userProfile.links
-            },
-            main: {
-              portfolio: userProfile.portfolio,
-              story: userProfile.story
-            }
-          };
-          res.json({data: data});
-        })
-        .catch((err) => {
-          console.log(err);
-          res.json({data: null});
-        });
-});
 
 router.post('/save/post', (req, res) => {
   const newPost = new Post({

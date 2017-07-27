@@ -9,6 +9,7 @@ import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import ReactUploadFile from 'react-upload-file';
+import { Icon } from 'semantic-ui-react';
 import superagent from 'superagent';
 
 // TODO input that takes in content of post with # dropdown selector
@@ -178,7 +179,7 @@ class NewPostContainer extends React.Component {
               <div className="fileUpload">
               <ReactUploadFile
                 style={{width: '80px', height: '40px'}}
-                chooseFileButton={<i className="fa fa-paperclip uploadButtonIcon" aria-hidden="false"></i>}
+                chooseFileButton={<Icon name="attach" size="large" />}
                 options={optionsForUpload}/>
                 {(this.state.file !== '') ?
                 <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
