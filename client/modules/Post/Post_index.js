@@ -35,6 +35,7 @@ class Post extends React.Component {
 
   render() {
     const commentNum = this.props.postData.comments.length;
+    console.log(this.props.postData);
     return (
       <div className="card" style={{backgroundColor: '#ececec', width: '100%', float: 'right', marginRight: '2%'}}>
         <div style={{textAlign: 'center'}}>
@@ -48,6 +49,11 @@ class Post extends React.Component {
                   alt="5" />
           <h4 className="card-title" style={{fontSize: '14px'}}>{this.props.postData.username}</h4> </span>
           <p className="card-text" style={{paddingLeft: '10%'}}><br/>{this.props.postData.content}</p>
+          {(this.props.postData.attachment.name !== '') ?
+          <div className="attachment">
+            <p>this is my attachment</p>
+          </div>
+          : null}
           <div>
             <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
               className="waves-effect waves-light btn btn-primary"

@@ -162,6 +162,8 @@ router.get('/get/discoverinfo', (req, res) => {
                   tags: postObj.tags,
                   likes: postObj.likes,
                   commentNumber: postObj.commentNumber,
+                  link: postObj.link,
+                  attachment: postObj.attachment,
                   comments: postObj.comments.map((commentObj) => {
                     return {
                       commentId: commentObj._id,
@@ -224,6 +226,8 @@ router.get('/get/next10', (req, res) => {
                           tags: postObj.tags,
                           likes: postObj.likes,
                           commentNumber: postObj.commentNumber,
+                          link: postObj.link,
+                          attachment: postObj.attachment,
                           comments: postObj.comments.map((commentObj) => {
                             return {
                               commentId: commentObj._id,
@@ -290,7 +294,7 @@ router.get('/get/profilecreate', (req, res) => {
           res.json({data: null});
         });
 });
-// adding a new post
+
 router.post('/save/post', (req, res) => {
   const newPost = new Post({
     content: req.body.postBody,
@@ -300,10 +304,17 @@ router.post('/save/post', (req, res) => {
     tags: req.body.postTags,
     comments: [],
     commentNumber: 0,
-    community: req.user.currentCommunity
+    community: req.user.currentCommunity,
+    link: '',
+    attachments: {
+      name: '',
+      url: '',
+      type: ''
+    }
   });
   newPost.save()
-  .then(() => {
+  .then((r) => {
+    console.log(r);
     res.json({success: true});
   })
   .catch((e) => {
@@ -311,6 +322,7 @@ router.post('/save/post', (req, res) => {
     res.json({success: false});
   });
 });
+
 // new comment
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
