@@ -6,7 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 
 const styles = {
   post: {
-    width: '30%'
+    width: '100%'
   },
   comment: {
     float: 'right'
@@ -27,7 +27,7 @@ class Post extends React.Component {
     this.state = {
       isOpen: false,
       likeCount: this.props.postData.likes.length,
-      isLiked: this.props.postData.likes.indexOf(this.props.currentUser._id) > 0
+      // isLiked: this.props.postData.likes.indexOf(this.props.currentUser._id) > 0
     };
   }
 
@@ -69,12 +69,9 @@ class Post extends React.Component {
           <Icon name="thumbs outline up" />
           {this.state.likeCount}
         </a>
-        <a style={styles.comment} onClick={() => this.handleClick()} floated="right">
-          <Icon name="comment outline" />
-          {this.props.postData.comments.length}
-        </a>
+        <ModalContainer postData={this.props.postData} />
       </Card.Content>
-      <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/>
+      {/* <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/> */}
     </Card>
     );
   }
@@ -113,7 +110,7 @@ class Post extends React.Component {
 Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
-  currentUser: PropTypes.object
+  // currentUser: PropTypes.object
 };
 
 export default Post;
