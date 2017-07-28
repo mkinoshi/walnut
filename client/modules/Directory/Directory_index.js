@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DeckContainer from './Directory_Deck_Container';
 import Profile from './Directory_Profile';
-
+import getAllUsersThunk from '../../thunks/user_thunks/getAllUsersThunk';
 
 // TODO needs to call deck container and profile container
 // TODO profile only dispatches different search actions
@@ -35,8 +35,8 @@ class Directory extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getAllUsersDirectory();
+  componentWillMount() {
+    this.props.getAllUsers();
   }
 
   handleClick() {
@@ -46,7 +46,7 @@ class Directory extends React.Component {
     return (
         <div style={styles.page}>
           <DeckContainer profiles={this.props.users} handleClick={this.handleClick.bind(this)}/>
-          <Profile user={this.props.users[this.props.clicked]}/>
+          {/* <Profile user={this.props.users[this.props.clicked]}/>*/}
         </div>
     );
   }
@@ -55,19 +55,15 @@ class Directory extends React.Component {
 
 Directory.propTypes = {
   users: PropTypes.array,
-  getAllUsersDirectory: PropTypes.func,
-  clicked: PropTypes.number
+  getAllUsers: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
-  users: state.deckReducer.profiles,
-  clicked: state.deckReducer.clicked
+  users: state.deckReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getAllUsersDirectory: () => dispatch({
-    type: 'GET_ALL_USERS_DIRECTORY'
-  })
+  getAllUsers: () => getAllUsersThunk(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Directory);
