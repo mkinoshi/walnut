@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
 import removeFileThunk from '../../thunks/user_thunks/removeFileThunk';
+import {Image, Card, Icon} from 'semantic-ui-react';
 
 class UploadsContainer extends React.Component {
   constructor(props) {
@@ -101,7 +102,7 @@ class UploadsContainer extends React.Component {
             <Dropzone
             className="col-xs-4 dropzone"
             onDrop={this.onDrop.bind(this)} multiple={true}>
-              <div>Click/drop --> upload</div>
+              {/* <Icon>Click/drop --> upload</Icon> */}
             </Dropzone>
             {this.state.files.map((file, i) => (
               <input key={i}

@@ -99,8 +99,12 @@ class Post extends React.Component {
     this.setState({pdfModalData: ''});
   }
 
+  closeDownloadModal() {
+    this.setState({downloadUrl: ''});
+  }
+
   render() {
-    console.log(this.props.postData.attachment);
+    console.log('scscscscscscsc', this.state.downloadUrl);
     return (
       <Card style={styles.post}>
       <Card.Content>
@@ -200,7 +204,7 @@ class Post extends React.Component {
 Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
-  // currentUser: PropTypes.object
+  currentUser: PropTypes.object
 };
 
 export default Post;

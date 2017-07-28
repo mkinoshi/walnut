@@ -2,3 +2,7 @@
 .uploadButtonIcon {
     font-size: 30px !important;
 } 
+
+.attachFileIcon:hover {
+    color: greenyellow !important;
+}
