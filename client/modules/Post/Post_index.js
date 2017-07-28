@@ -44,11 +44,10 @@ class Post extends React.Component {
   }
 
   toggleLike() {
+    this.props.newLike();
     if (this.state.isLiked) {
-      this.props.newLike();
       this.setState({likeCount: this.state.likeCount - 1, isLiked: false});
     } else {
-      this.props.newLike();
       this.setState({likeCount: this.state.likeCount + 1, isLiked: true});
     }
   }

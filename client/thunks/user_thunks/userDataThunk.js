@@ -4,7 +4,7 @@
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
-const userDataThunk = (dispatch) => {
+const userDataThunk = () => (dispatch) => {
   axios.get(URL + 'db/user')
     .then((response) => {
       console.log('got user:', response);

@@ -193,10 +193,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addTabs: (obj) => addUserPortTabsThunk(obj)(dispatch),
+  addTabs: (obj) => dispatch(addUserPortTabsThunk(obj)),
   changeTabName: (name, i) => updateUserPortTabsThunk(name, i)(dispatch),
   removeTabName: (i) => removeUserPortTabsThunk(i)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);
-

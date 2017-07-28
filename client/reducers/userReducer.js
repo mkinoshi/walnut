@@ -60,7 +60,7 @@ const userReducer = (state = userObj, action) => {
       };
     case 'UPDATE_LOCATION_DONE_ERR':
       return state;
-    case 'ADD_TAB':
+    case 'ADD_TAB': {
       const newState = JSON.parse(JSON.stringify(state));
       const obj = {
         name: action.data,
@@ -68,14 +68,17 @@ const userReducer = (state = userObj, action) => {
       };
       newState.portfolio.push(obj);
       return newState;
-    case 'UPDATE_TAB':
-      const newState1 = JSON.parse(JSON.stringify(state));
-      newState1.portfolio[action.index].name = action.name;
-      return newState1;
-    case 'REMOVE_TAB':
-      const newState2 = JSON.parse(JSON.stringify(state));
-      newState2.portfolio.splice(action.index, 1);
-      return newState2;
+    }
+    case 'UPDATE_TAB': {
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.portfolio[action.index].name = action.name;
+      return newState;
+    }
+    case 'REMOVE_TAB': {
+      const newPortfolio = [...state.portfolio];
+      newPortfolio.splice(action.index, 1);
+      return Object.assign({}, state, { portfolio: newPortfolio });
+    }
     case 'REMOVE_FILE':
       const newState3 = JSON.parse(JSON.stringify(state));
       let index = - 1;

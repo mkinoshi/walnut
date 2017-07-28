@@ -11,10 +11,7 @@ const getCommunityReducer = (state = { communities: [], currentCommunity: {}}, a
 
     case 'GET_COMMUNITY_DONE':
       console.log('action community', state, action.community);
-      const newState = Object.assign({}, state);
-      newState.currentCommunity = action.community;
-      return newState;
-
+      return Object.assign({}, state, { currentCommunity: action.community });
     case 'GET_COMMUNITY_ERROR':
       return state;
 

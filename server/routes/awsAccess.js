@@ -43,7 +43,7 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
       user.markModified('portfolio');
       return user.save();
     })
-    .then((user) => {
+    .then(user => {
       console.log('user object after save. check new name!!!!', user.portfolio[0]);
       res.json({portfolio: user.portfolio});
     })

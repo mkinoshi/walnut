@@ -6,15 +6,16 @@ const discoverReducer = (state = {
   hasMore: true
 }, action) => {
   switch (action.type) {
-    case 'GET_DISCOVER_DATA_DONE':
+    case 'GET_DISCOVER_DATA_DONE': {
       console.log('discover action', action);
-      const newState1 = {
+      const newState = {
         defaultFilters: action.defaultFilters,
         otherFilters: action.otherFilters,
         posts: action.posts,
         hasMore: true
       };
-      return newState1;
+      return newState;
+    }
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'GET_NEXT_TEN_DONE':
@@ -25,11 +26,11 @@ const discoverReducer = (state = {
         ...state,
         posts: action.posts.length > 0 && state.posts[state.posts.length - 1].postId !== action.posts[action.posts.length - 1].postId ?
         state.posts.concat(action.posts) : state.posts,
-        hasMore: action.posts.length > 0 ? true : false
+        hasMore: action.posts.length > 0
       };
     case 'GET_NEXT_TEN_ERROR':
       return state;
-    case 'TOGGLE_FILTER_FRONT':
+    case 'TOGGLE_FILTER_FRONT': {
       const newState = JSON.parse(JSON.stringify(state));
       newState.filters[action.index].checked = !newState.filters[action.index].checked;
       // return {
@@ -39,6 +40,7 @@ const discoverReducer = (state = {
       //   }
       // }
       return newState;
+    }
     default:
       return state;
   }

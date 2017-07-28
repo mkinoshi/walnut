@@ -10,6 +10,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         enforce: "pre",
         loader: "eslint-loader",
         query: {
@@ -28,11 +29,13 @@ module.exports = {
         }
       },
       {
-         test: /\.css$/, 
+         test: /\.css$/,
+         exclude: /node_modules/,
          use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
+        exclude: /node_modules/,
         loaders: [
             'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
             'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
@@ -40,6 +43,7 @@ module.exports = {
       },
       {
           loader: 'url-loader',
+          exclude: /node_modules/,
           test: /\.(svg|eot|ttf|woff|woff2)?$/
       },
     ]

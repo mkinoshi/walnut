@@ -3,7 +3,6 @@ const quoteReducer = (state = {
   quote: 'Stay Hungry Stay Foolish',
   createdBy: 'Steve Jobs'
 }, action) => {
-  const newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case 'UPDATE_QUOTE':
       return {
@@ -12,9 +11,9 @@ const quoteReducer = (state = {
         createdBy: action.data.createdBy
       };
     case 'UPDATE_QUOTE_ERROR':
-      return newState;
+      return state;
     default:
-      return newState;
+      return state;
   }
 };
 
