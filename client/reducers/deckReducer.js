@@ -1,21 +1,10 @@
 
 
-const deckReducer = (state = {
-  profiles: [],
-  clicked: 0
-}, action) => {
+const deckReducer = (state = [], action) => {
   switch(action.type) {
-    case 'UPDATE_CLICKED':
-      return {
-        ...state,
-        clicked: action.clicked
-      };
-    case 'GET_ALL_USERS_DIRECTORY_DONE':
-      // console.log('in deckReducer', action.data);
-      return {
-        profiles: action.data.data
-      };
-    case 'GET_ALL_USERS_DIRECTORY_ERROR':
+    case 'GET_ALL_USERS_DONE':
+      return action.users;
+    case 'GET_ALL_USERS_ERROR':
       return state;
     default:
       return state;
@@ -47,17 +36,16 @@ export default deckReducer;
 //           from: 'PA',
 //           phone: '4324546',
 //         },
-//         // TODO : ELI INTERESTS ALSO TO DO THE ON CLICK FILTER
 //         interests: ['react', 'marketing'],
 //         Projects: [
-//           // {
-//           //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
-//           //   name: 'Project1'
-//           // },
-//           // {
-//           //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
-//           //   name: 'Project2'
-//           // }
+//           {
+//             picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
+//             name: 'Project1'
+//           },
+//           {
+//             picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
+//             name: 'Project2'
+//           }
 //         ],
 //         links: ['https://www.facebook.com/aglk1'],
 //       },
@@ -90,14 +78,14 @@ export default deckReducer;
 //         },
 //         interests: ['react'],
 //         Projects: [
-//           // {
-//           //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
-//           //   name: 'Project1'
-//           // },
-//           // {
-//           //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
-//           //   name: 'Project2'
-//           // }
+//           {
+//             picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
+//             name: 'Project1'
+//           },
+//           {
+//             picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
+//             name: 'Project2'
+//           }
 //         ],
 //         links: ['https://www.google.com'],
 //       },
@@ -130,14 +118,14 @@ export default deckReducer;
 //         },
 //         interests: ['react', 'tech'],
 //         Projects: [
-//           // {
-//           //   picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
-//           //   name: 'Project1'
-//           // },
-//           // {
-//           //   picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
-//           //   name: 'Project2'
-//           // }
+//           {
+//             picture: 'https://s-media-cache-ak0.pinimg.com/originals/fb/76/5b/fb765b8752d50de50cfa15203f9a7acd.png',
+//             name: 'Project1'
+//           },
+//           {
+//             picture: 'https://cdn.colorlib.com/wp/wp-content/uploads/sites/2/2014/02/Olympic-logo.png',
+//             name: 'Project2'
+//           }
 //         ],
 //         links: ['https://www.facebook.com/aglk1'],
 //       },

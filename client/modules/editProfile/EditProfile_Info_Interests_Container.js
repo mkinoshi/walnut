@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import saveInterestsThunk from '../../thunks/profile_thunks/saveInterestsThunk';
+import Paper from 'material-ui/Paper';
 
 const styles = {
   interestsContainer: {
-    backgroundColor: 'lightblue',
-    width: '65%',
+    backgroundColor: '#fff',
+    width: 'auto',
+    height: 'auto',
+    minWidth: '200px',
     marginBottom: '100px',
-    paddingLeft: '2%',
-    marginLeft: 'auto',
+    paddingLeft: '10%',
+    marginLeft: '100px',
     marginRight: 'auto'
   },
   interests: {
@@ -72,7 +75,7 @@ class InterestsContainer extends React.Component {
 
   render() {
     return (
-      <div style={styles.interestsContainer}>
+      <Paper style={styles.interestsContainer}>
         <p>Interests</p>
           {!this.state.isEditing ? <div style={styles.inline}>
               {this.state.newInterests ?
@@ -97,7 +100,7 @@ class InterestsContainer extends React.Component {
             <div>
             {this.state.isEditing ? <button onClick={() => {this.saveChanges();}}>Save changes</button> : null}
             </div>
-      </div>
+      </Paper>
     );
   }
 }

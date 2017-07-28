@@ -6,13 +6,12 @@ const URL = 'http://localhost:3000/';
 
 const saveContactThunk = (contact) => (dispatch) => {
   axios.post(URL + 'db/save/contact', {
-    email: contact.email,
-    address: contact.address,
-    phone: contact.phone
+    phones: contact.phones,
+    email: contact.email
   })
-    .then((success) => {
-      console.log('success in save', success);
-      dispatch({type: 'GET_USER_DATA'});
+    .then((response) => {
+      console.log('success in save Contact', response);
+      dispatch({type: 'GET_USER_DATA_DONE', data: response.data.user});
     })
     .catch((err) =>{
       console.log('error in saving contact', err);
