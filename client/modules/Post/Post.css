@@ -30,3 +30,37 @@
     align-items: center;
     flex-direction: column;
 }
+
+.postOuter {
+    width: 100% !important;
+}
+
+.postContent {
+}
+
+.tag {
+    font-size: 20px;
+}
+
+.hashtag {
+    color: #0D9ED3;
+    font-size: 18px;
+}
+
+.likeIcon {
+    float: left;
+}
+
+.commentButton {
+    float: right !important;
+}
+
+.scroll {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.commentWidth {
+    width: 100% !important;
+    /*overflow: auto;*/
+}

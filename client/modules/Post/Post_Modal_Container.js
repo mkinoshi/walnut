@@ -5,24 +5,10 @@ import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import newCommentThunk from '../../thunks/post_thunks/newCommentThunk';
 import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 import Post from './Post_index';
+import './Post.css';
 import { Button, Header, Icon, Image, Modal, Card } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-const styles = {
-  icon: {
-    float: 'right'
-  },
-  scroll: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  post: {
-    width: '100%'
-  },
-  comment: {
-    width: '100%'
-  }
-};
 
 class ModalInstance extends React.Component {
   constructor(props) {
@@ -43,18 +29,21 @@ class ModalInstance extends React.Component {
 
   render() {
     return (
-      <Modal trigger={
-        <a style={styles.icon}>
-          <Icon name="comment outline" />
-          {this.props.postData.comments.length}
+      <Modal scrolling trigger={
+        <a className="commentButton">
+          <span> <Icon name="comment outline" />
+          {this.props.postData.comments.length} </span>
         </a>}>
         <Modal.Header>What goes here?</Modal.Header>
-        <Modal.Content image scrolling style={styles.scroll}>
+        <Modal.Content image className="scroll">
           <Modal.Description >
-            <Post style={styles.post} postData={this.props.postData} newLike={() => (this.props.newLike(this.props.postData.postId))}/>
+            <Post className="post"
+            currentUser={this.props.currentUser}
+            postData={this.props.postData}
+            newLike={() => (this.props.newLike(this.props.postData.postId))}/>
           </Modal.Description>
-          <Card style={styles.comment}>
           {this.props.postData.comments.map((comment) => (
+            <Card className="commentWidth">
               <Card.Content >
                 <Image floated="left" size="mini" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
                   <Card.Header>
@@ -70,9 +59,9 @@ class ModalInstance extends React.Component {
                     <Icon name="thumbs outline up" />
                     {comment.likes.length}
                   </a>
-                  </Card.Content>
+              </Card.Content>
+            </Card>
             ))}
-        </Card>
         </Modal.Content>
         <Modal.Actions>
           <Button primary>
@@ -89,7 +78,8 @@ ModalInstance.propTypes = {
   newComment: PropTypes.func,
   onClick: PropTypes.func,
   newLike: PropTypes.func,
-  newCommentLike: PropTypes.func
+  newCommentLike: PropTypes.func,
+  currentUser: PropTypes.object
 };
 
 const mapStateToProps = () => ({

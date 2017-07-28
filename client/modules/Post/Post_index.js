@@ -8,22 +8,6 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import Lightbox from 'react-images';
 import PDF from 'react-pdf-js';
 
-const styles = {
-  post: {
-    width: '100%'
-  },
-  comment: {
-    float: 'right'
-  },
-  tag: {
-    fontSize: '20px'
-  },
-  hashtag: {
-    color: '#0D9ED3',
-    fontSize: '18px'
-  }
-};
-
 
 class Post extends React.Component {
   constructor(props) {
@@ -102,16 +86,16 @@ class Post extends React.Component {
   render() {
     console.log(this.props.postData.attachment);
     return (
-      <Card style={styles.post}>
-      <Card.Content>
-        <Image floated="left" size="mini" src={this.props.postData.profileUrl} />
+      <Card className="postOuter">
+      <Card.Content className="postContent">
+        <Image floated="left" size="mini" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
         <Card.Header>
           {this.props.postData.username}
         </Card.Header>
         <Card.Meta>
           {this.props.postData.tags.map((tag, index) => (
-            <text key={index} style={styles.tag}>
-              <text style={styles.hashtag}>#</text>
+            <text key={index} className="tag">
+              <text className="hashtag">#</text>
             {tag.name}   </text>))}
         </Card.Meta>
         <Card.Description>
@@ -156,10 +140,10 @@ class Post extends React.Component {
       </Card.Content>
       <Card.Content extra>
         <a onClick={() => this.toggleLike()}>
-          <Icon name="thumbs outline up" />
+          <Icon className="like" name="thumbs outline up" />
           {this.state.likeCount}
         </a>
-        <ModalContainer postData={this.props.postData} />
+        <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
       </Card.Content>
       {/* <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/> */}
     </Card>
@@ -200,7 +184,7 @@ class Post extends React.Component {
 Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
-  // currentUser: PropTypes.object
+  currentUser: PropTypes.object
 };
 
 export default Post;
