@@ -1,0 +1,43 @@
+.Card {
+    height:70px;
+    margin: 5px 0 5px 0;
+    width: 100%;
+    border-radius: 0px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.Meta {
+    line-height: 1.2em;
+    font-size: 12px;
+}
+
+.Deck {
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 320px;
+    max-width: 340px;
+    overflow: auto;
+    flex: 1;
+    margin-right: 50px;
+    margin-left: 50px;
+    justify-content: center;
+    background-color: #ffffff;
+    border-style: solid;
+    border-color: #c9c9c9;
+    border-width: 1px;
+}
+
+.ProfileContainer {
+    flex: 2;
+    margin-right: 50px;
+    background-color: aqua;
+    min-width: 700px;
+}
+
+.Page {
+    height: 640px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+}

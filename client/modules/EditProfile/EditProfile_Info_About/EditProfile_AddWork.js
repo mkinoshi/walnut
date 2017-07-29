@@ -43,9 +43,9 @@ class AddWork extends React.Component {
     console.log('saved!', this.state);
     this.props.addWork(this.state);
     this.setState({
-        isCurrent: false,
-        address: '',
-        open: false
+      isCurrent: false,
+      address: '',
+      open: false
     });
   }
 

@@ -101,7 +101,7 @@ class ContactContainer extends React.Component {
   }
 
   render() {
-    console.log('state', this.state)
+    console.log('state', this.state);
     return (
             <Paper style={styles.contact}>
                 <h1>Contact</h1>
@@ -113,9 +113,8 @@ class ContactContainer extends React.Component {
                             <p>{email}</p>
                             <Button secondary onClick={() => {this.removeEmail(email, idx);}}>X</Button>
                         </div>);
-                  } else {
-                    return <p>{email}</p>;
                   }
+                  return <p>{email}</p>;
                 }) : null}
                 {this.state.edit && !this.state.addingEmail ? <Button primary onClick={() => this.setState({addingEmail: true})}> + Add an Email</Button> : null}
                 {this.state.addingEmail ? <div>
@@ -126,7 +125,7 @@ class ContactContainer extends React.Component {
 
                 <h2>Phone</h2>
                 {this.state.phones.length > 0 ? this.state.phones.map((phone, idx) => {
-                  let formatted = ''
+                  let formatted = '';
                   phone.number.split('').forEach((char, i) => {
                     if (i === 0) {
                       formatted += ('(' + char);
@@ -143,9 +142,8 @@ class ContactContainer extends React.Component {
                             <p>{phone.use}:{' '}{formatted}</p>
                             <Button secondary onClick={() => {this.removePhone(idx);}}>X</Button>
                         </div>);
-                  } else {
-                    return <p>{phone.use}:{' '}{formatted}</p>;
                   }
+                  return <p>{phone.use}:{' '}{formatted}</p>;
                 }) : null}
                 {this.state.edit && !this.state.addingPhone ? <Button primary onClick={() => this.setState({addingPhone: true})}> + Add a Phone</Button> : null}
 
