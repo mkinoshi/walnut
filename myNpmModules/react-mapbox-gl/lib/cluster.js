@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var PropTypes = require('prop-types');
-var supercluster = require('supercluster');
+var supercluster = require('../../supercluster');
 var bbox = require("@turf/bbox");
 var helpers_1 = require("@turf/helpers");
 var Cluster = (function (_super) {
@@ -56,7 +56,7 @@ var Cluster = (function (_super) {
         };
         _this.childrenToFeatures = function (children) {
             return children.map(function (child) {
-                var feature = _this.feature(child && child.props.coordinates);
+                var feature = _this.feature(child && child.props.coordinates, child.props.data);
                 _this.featureClusterMap.set(feature, child);
                 return feature;
             });
@@ -80,13 +80,14 @@ var Cluster = (function (_super) {
             this.mapChange(true);
         }
     };
-    Cluster.prototype.feature = function (coordinates) {
+    Cluster.prototype.feature = function (coordinates, data) {
         return {
             type: 'Feature',
             geometry: {
                 type: 'point',
                 coordinates: coordinates
             },
+            data: data,
             properties: {}
         };
     };
@@ -94,11 +95,9 @@ var Cluster = (function (_super) {
         var _this = this;
         var ClusterMarkerFactory = this.props.ClusterMarkerFactory;
         var clusterPoints = this.state.clusterPoints;
-        console.log(this.state);
-        console.log(this.props);
         return (React.createElement("div", null, clusterPoints.map(function (feature) {
             if (feature.properties.cluster) {
-                return ClusterMarkerFactory(feature.geometry.coordinates, feature.properties.point_count);
+                return ClusterMarkerFactory(feature.geometry.coordinates, feature.properties.point_count, feature.data);
             }
             return _this.featureClusterMap.get(feature);
         })));

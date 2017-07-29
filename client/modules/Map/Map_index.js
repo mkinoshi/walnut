@@ -9,7 +9,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
-
+import './Map.css';
+import 'semantic-ui-css/semantic.min.css';
+import {Icon, Popup, Image} from 'semantic-ui-react';
 const styles = {
   mapContainer: {
     height: '100%'
@@ -47,6 +49,9 @@ const Map = ReactMapboxGl({
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isShow: true,
+    };
   }
 
   componentDidMount() {
@@ -65,11 +70,21 @@ class MapContainer extends React.Component {
     console.log('ohohohohohohohohohohohoh');
   }
 
-  clusterMarker(coordinates) {
-    console.log(coordinates);
+  clusterMarker(coordinates, count, data) {
     return (
-      <Marker onMouseEnter={() => {console.log('yoyoyoyoyoyoyoyo');}} coordinates={coordinates} style={styles.marker}>
-        <CircleIcon />
+      <Marker coordinates={coordinates} className="marker">
+          <div>
+            <Popup
+              trigger={<CircleIcon />}
+              content="Hello. This is a mini popup"
+            >
+              <Popup.Content>
+                <Image.Group className="wrapper" >
+                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="image" />))}
+                </Image.Group>
+              </Popup.Content>
+            </Popup>
+          </div>
       </Marker>
     );
   }
@@ -80,8 +95,8 @@ class MapContainer extends React.Component {
       return user.location[this.props.selected].length > 0;
     });
     return (
-      <div style={styles.outer}>
-        <div style={styles.inner}>
+      <div className="outer" >
+        <div className="inner" >
           <MapItemSelector />
           <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
@@ -97,18 +112,27 @@ class MapContainer extends React.Component {
             width: '80vw'
           }}>
             <ZoomControl style={styles.zoom}/>
-            <Cluster ClusterMarkerFactory={this.clusterMarker} maxZoom={12}>
+            <Cluster ClusterMarkerFactory={this.clusterMarker.bind(this)} maxZoom={12}>
               {
                   users.map((feature) => {
                     return (
                       <Marker
                         key={uuidv4()}
-                        user={feature}
+                        data={feature}
                         coordinates={feature.location[this.props.selected]}
-                        style={styles.cluster}
+                        className="cluster"
                         onClick={this.handleClick.bind(this, feature.id)}
                         >
-                        <img src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" style={{width: '60px', height: '60px', borderRadius: '30px'}} />
+                        <Popup
+                          trigger={<CircleIcon />}
+                          content="Hello. This is a mini popup"
+                        >
+                          <Popup.Content>
+                            <Image.Group className="wrapper" >
+                              <Image src={feature.pictureURL} className="image" />
+                            </Image.Group>
+                          </Popup.Content>
+                        </Popup>
                       </Marker>
                     );
                   }

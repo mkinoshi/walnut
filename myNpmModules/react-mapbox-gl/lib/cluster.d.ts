@@ -45,7 +45,7 @@ export default class Cluster extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps: Props): void;
     private childrenChange;
     private mapChange;
-    private feature(coordinates);
+    private feature(coordinates, user);
     private childrenToFeatures;
     render(): JSX.Element;
 }

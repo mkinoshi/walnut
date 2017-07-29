@@ -22,7 +22,10 @@ class NameSearch extends React.Component {
   handleChange(value) {
     console.log(value);
     if (value) {
-      const center = this.props.users.find((user) => {return user.fullName === value;}).location[this.props.selected];
+      const u = this.props.users.find((user) => {return user.fullName === value;});
+      const center = u.location[this.props.selected];
+      console.log(u);
+      this.props.updateClicked(u.id);
       this.props.updateCenter(center);
       this.props.updateZoom(10);
       this.setState({value: value});
@@ -60,7 +63,8 @@ NameSearch.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
   users: PropTypes.array,
-  selected: PropTypes.string
+  selected: PropTypes.string,
+  updateClicked: PropTypes.func
 };
 const mapStateToProps = (state) => ({
   users: state.mapReducer.users,
@@ -74,6 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
   updateZoom: (num) => dispatch({
     type: 'UPDATE_ZOOM',
     num: num
-  })
+  }),
+  updateClicked: (id) => dispatch({
+    type: 'UPDATE_CLICKED',
+    clicked: id
+  }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);

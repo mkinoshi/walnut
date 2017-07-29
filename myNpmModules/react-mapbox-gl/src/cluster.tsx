@@ -3,7 +3,7 @@ const PropTypes = require('prop-types'); // tslint:disable-line
 
 import { Map } from 'mapbox-gl';
 import { Props as MarkerProps } from './marker';
-const supercluster = require('supercluster'); // tslint:disable-line
+import  supercluster from '../../supercluster'; // tslint:disable-line
 import * as GeoJSON from 'geojson';
 import { Feature } from './util/types';
 import * as bbox from '@turf/bbox';
@@ -12,7 +12,8 @@ import { polygon } from '@turf/helpers';
 export interface Props {
   ClusterMarkerFactory(
     coordinates: GeoJSON.Position,
-    pointCount: number
+    pointCount: number,
+    data: any[]
   ): JSX.Element;
   radius?: number;
   maxZoom?: number;
@@ -150,7 +151,8 @@ export default class Cluster extends React.Component<Props, State> {
           if (feature.properties.cluster) {
             return ClusterMarkerFactory(
               feature.geometry.coordinates,
-              feature.properties.point_count
+              feature.properties.point_count,
+              feature.data
             );
           }
           return this.featureClusterMap.get(feature);
