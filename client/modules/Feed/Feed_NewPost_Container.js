@@ -7,6 +7,10 @@ import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import NewTagContainer from './Feed_NewPost_NewTag_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
+import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
+import ReactUploadFile from 'react-upload-file';
+import { Icon } from 'semantic-ui-react';
+import superagent from 'superagent';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -43,7 +47,9 @@ class NewPostContainer extends React.Component {
       showTagPref: false,
       showNewTag: false,
       newTags: [],
-      tempTags: []
+      tempTags: [],
+      newFileName: null,
+      file: ''
     };
   }
 
@@ -94,12 +100,47 @@ class NewPostContainer extends React.Component {
     this.setState({postBody: e.target.value});
   }
 
-  handleClick() {
-    this.props.newPost(this.state.postBody, this.state.postTags, this.state.newTags);
-    this.setState({postBody: '', postTags: [], showTagPref: false});
+  submitPost() {
+    console.log(this.state.postTags);
+    if (this.state.file !== '') {
+      superagent.post('/aws/upload/post')
+      .field('body', this.state.postBody ? this.state.postBody : '')
+      .field('tags', this.state.postTags ? this.state.postTags : [])
+      .field('name', this.state.newFileName ? this.state.newFileName : '')
+      .attach('attach', this.state.file)
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          alert('failed uploaded!');
+        }
+        console.log('save success', res.body);
+        this.props.discoverLoader();
+        this.setState({postBody: '', postTags: [], showTagPref: false, file: ''});
+      });
+    } else {
+      this.props.newPost(this.state.postBody, this.state.postTags);
+      this.setState({postBody: '', postTags: [], showTagPref: false, file: ''});
+    }
+  }
+
+  handleUpload(file) {
+    console.log('inside handle file', file);
+    this.setState({file: file});
+  }
+
+  changeFileName(name) {
+    this.setState({newFileName: name});
   }
 
   render() {
+    const optionsForUpload = {
+      baseUrl: 'xxx',
+      multiple: false,
+      didChoose: (files) => {
+        this.handleUpload(files[0]);
+      },
+    };
+
     return (
       <div className="col-xs-6 col-xs-offset-3" style={styles.outer}>
         <div className="newPost" style={styles.post}>
@@ -131,9 +172,20 @@ class NewPostContainer extends React.Component {
             <div className="newPostFooter">
               <div className="submitButton col-xs-12">
                 <button className="btn waves-effect waves-light" type="submit" name="action"
-                onClick={() => this.handleClick()}>Submit
+                onClick={() => this.submitPost()}>Submit
                   <i className="material-icons right">send</i>
                 </button>
+              </div>
+              <div className="fileUpload">
+              <ReactUploadFile
+                style={{width: '80px', height: '40px'}}
+                chooseFileButton={<Icon name="attach" size="large" />}
+                options={optionsForUpload}/>
+                {(this.state.file !== '') ?
+                <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
+                onChange={(e) => this.changeFileName(e.target.value)}/>
+                 :
+                  null}
               </div>
           </div>
           </div>
@@ -144,7 +196,8 @@ class NewPostContainer extends React.Component {
 
 NewPostContainer.propTypes = {
   newPost: PropTypes.func,
-  newTag: PropTypes.func
+  newTag: PropTypes.func,
+  discoverLoader: PropTypes.func
 };
 
 const mapStateToProps = () => ({
@@ -152,7 +205,8 @@ const mapStateToProps = () => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch),
-  newTag: (tag) => newTagThunk(tag)(dispatch)
+  newTag: (tag) => newTagThunk(tag)(dispatch),
+  discoverLoader: () => discoverLoadThunk(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

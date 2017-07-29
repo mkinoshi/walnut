@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Feed from '../Feed/Feed_index';
@@ -25,3 +26,5 @@ Home.propTypes = {
 };
 
 export default Home;
+
+

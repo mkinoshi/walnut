@@ -247,7 +247,25 @@ const PostSchema = new mongoose.Schema({
   ],
   commentNumber: {
     type: Number
-  }
+  },
+  link: {
+    type: String,
+    default: ''
+  },
+  attachment: {
+    name: {
+      type: String,
+      default: ''
+    },
+    url: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    }
+  },
 });
 
 

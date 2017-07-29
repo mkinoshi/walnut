@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
+
 const styles = {
   outer: {
     borderWidth: '1px',
@@ -92,14 +93,9 @@ class Feed extends React.Component {
     };
   }
   componentWillMount() {
-    console.log('feed willing');
   }
 
   handleScroll(e) {
-    console.log(this.refs);
-    console.log(window.innerHeight);
-    console.log(window.scrollY);
-    console.log(document.body.offsetHeight);
     // if (window.innerHeight - window.scrollY < 500 && window.innerHeight - window.scrollY > 450) {
     //   this.props.getNext10(this.props.data.posts.length);
     // }
@@ -141,7 +137,6 @@ class Feed extends React.Component {
 
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
-    console.log(filteredPosts.length);
     return (
       <div>
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
@@ -162,7 +157,12 @@ class Feed extends React.Component {
                     loader={<div className="loader">Loading ...</div>}
                 >
                   {filteredPosts.map((post) => (
-                    <Post ref="card" key={post.postId} currentUser={this.props.user} postData={post} newLike={() => (this.props.newLike(post.postId))}/>
+                    <Post ref="card"
+                    key={post.postId}
+                    isOpen={false}
+                    currentUser={this.props.user}
+                    postData={post}
+                    newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
                 </InfiniteScroll>
             </div>

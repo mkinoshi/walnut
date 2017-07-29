@@ -66,7 +66,7 @@ class HeaderContainer extends React.Component {
           <img src={this.props.community.icon} style={styles.logs}/>
         <div style={styles.middle}>
             <div id="title" style={styles.title}><h1 style={styles.company}>{this.props.community.title}</h1></div>
-            <QuoteContainer />
+            {/* <QuoteContainer /> */}
           </div>
           <div style={styles.links}>
             <img style={styles.linkLogo} src="https://www.google.com/drive/static/images/drive/logo-drive.png" />

@@ -132,7 +132,6 @@ router.get('/get/allcommunities', (req, res) => {
 
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
-  console.log('id', req.user.currentCommunity);
   Community.findById(req.user.currentCommunity)
       .populate('defaultTags')
       .populate('otherTags')
@@ -141,7 +140,6 @@ router.get('/get/discoverinfo', (req, res) => {
           return user === req.user._id;
         });
         if (community.length === 0) {
-          console.log('not in community error');
           res.json({error: 'No authorization'});
         } else{
           const defaultFilters = community.defaultTags;
@@ -166,6 +164,8 @@ router.get('/get/discoverinfo', (req, res) => {
                   tags: postObj.tags,
                   likes: postObj.likes,
                   commentNumber: postObj.commentNumber,
+                  link: postObj.link,
+                  attachment: postObj.attachment,
                   comments: postObj.comments.map((commentObj) => {
                     return {
                       commentId: commentObj._id,
@@ -228,6 +228,8 @@ router.get('/get/next10', (req, res) => {
                           tags: postObj.tags,
                           likes: postObj.likes,
                           commentNumber: postObj.commentNumber,
+                          link: postObj.link,
+                          attachment: postObj.attachment,
                           comments: postObj.comments.map((commentObj) => {
                             return {
                               commentId: commentObj._id,
@@ -254,47 +256,7 @@ router.get('/get/next10', (req, res) => {
         });
 });
 
-router.get('/get/profilecreate', (req, res) => {
-  User.findById(req.user._id)
-        .then((userProfile) => {
-          const data = {
-            isCreated: userProfile.isCreated,
-            head: {
-              fullName: userProfile.fullName,
-              tags: userProfile.tags,
-              blurb: userProfile.blurb,
-              profileURL: userProfile.profileURL
-            },
-            info: {
-              about: {
-                education: userProfile.education,
-                majors: userProfile.majors,
-                currentOccupation: userProfile.currentOccupation,
-                currentOccupationCity: userProfile.currentOccupationCity,
-                pastOccupations: userProfile.pastOccupations
-              },
-              contact: {
-                email: userProfile.email,
-                address: userProfile.address,
-                phone: userProfile.phone
-              },
-              interests: userProfile.interests,
-              projects: userProfile.projects,
-              links: userProfile.links
-            },
-            main: {
-              portfolio: userProfile.portfolio,
-              story: userProfile.story
-            }
-          };
-          res.json({data: data});
-        })
-        .catch((err) => {
-          console.log(err);
-          res.json({data: null});
-        });
-});
-// adding a new post
+
 router.post('/save/post', (req, res) => {
   const newPost = new Post({
     content: req.body.postBody,
@@ -305,9 +267,16 @@ router.post('/save/post', (req, res) => {
     comments: [],
     commentNumber: 0,
     community: req.user.currentCommunity,
+    link: '',
+    attachments: {
+      name: '',
+      url: '',
+      type: ''
+    }
   });
   newPost.save()
-  .then(() => {
+  .then((r) => {
+    console.log(r);
     res.json({success: true});
   })
   .catch((e) => {
@@ -315,6 +284,7 @@ router.post('/save/post', (req, res) => {
     res.json({success: false});
   });
 });
+
 // new comment
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
