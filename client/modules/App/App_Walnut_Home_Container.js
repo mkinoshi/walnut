@@ -105,7 +105,7 @@ class WalnutHomeContainer extends React.Component {
                 <button onClick={() => {this.handleStart();}}>Start New Community</button>
             </div>
             {this.state.showInputs ? <div>
-                <label> Tile:
+                <label> Title:
                 <input type="text"
                        value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
                 </label>

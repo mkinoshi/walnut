@@ -86,10 +86,10 @@ class AddSchool extends React.Component {
                     <br></br>
                     <div style={styles.inline}>
                         <p style={styles.title}>Started at</p>
-                        <YearSelect year={1956} handleSelect={this.handleStart} />
+                        <YearSelect year={'1956'} handleSelect={this.handleStart} />
                     </div>
                     <div style={styles.inline}>
-                        <p style={styles.title}>Ended at</p> <YearSelect year={1956} handleSelect={this.handleEnd}/>
+                        <p style={styles.title}>Ended at</p> <YearSelect year={'1956'} handleSelect={this.handleEnd}/>
                     </div>
                     <br></br>
                     <Checkbox
