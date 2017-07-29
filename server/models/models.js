@@ -70,28 +70,24 @@ const UserSchema = new mongoose.Schema({
       type: String
     }
   ],
-  from: {
-    type: String
+  placesLived: {
+    from: {
+      type: String
+    },
+    current: {
+      type: String
+    },
+    other: [
+      {
+        type: String
+      }
+    ]
   },
   location: {
     college: [Number],
     homeTown: [Number],
     occupation: [Number],
     live: [Number]
-  },
-  phone: {
-    type: String
-  },
-  currentOccupation: {
-    type: String,
-    default: ''
-  },
-  currentOccupationCity: {
-    type: String,
-    default: null
-  },
-  pastOccupations: {
-    type: Array
   },
   links: {
     type: Array
@@ -105,19 +101,81 @@ const UserSchema = new mongoose.Schema({
   portfolio: {
     type: Array
   },
-  education: {
-    college: {
-      type: String,
-      default: ''
-    },
-    majors: {
-      type: Array,
-      default: []
-    },
-    classYear: {
-      type: String,
-      default: ''
+  contact: {
+    phones: [
+      {
+        use: {
+          type: String
+        },
+        number: {
+          type: String
+        }
+      }
+    ],
+    email: [
+      {
+        type: String
+      }
+    ]
+  },
+  work: [
+    {
+      company: {
+        type: String,
+      },
+      position: {
+        type: String,
+      },
+      location: {
+        type: String,
+      },
+      isCurrent: {
+        type: Boolean
+      }
     }
+  ],
+  education: {
+    colleges: [
+      {
+        name: {
+          type: String,
+        },
+        attendedFor: {
+          type: String,
+        },
+        concentrations: {
+          type: Array,
+        },
+        startedAt: {
+          type: String,
+        },
+        endedAt: {
+          type: String,
+        },
+        isGraduated: {
+          type: Boolean,
+        },
+        degreeType: {
+          type: String
+        }
+      },
+    ],
+    schools: [
+      {
+        name: {
+          type: String,
+        },
+        startedAt: {
+          type: String,
+        },
+        endedAt: {
+          type: String,
+        },
+        isGraduated: {
+          type: Boolean,
+        }
+      }
+    ]
   },
   tags: {
     type: Array

@@ -8,17 +8,30 @@ const userObj = {
   password: '',
   pictureURL: '',
   preferences: [],
-  from: '',
   location: {
     college: [],
     homeTown: [],
     occupation: [],
     live: []
   },
-  phone: '',
-  currentOccupation: '',
-  currentOccupationCity: '',
-  pastOccupations: [],
+  placesLived: {
+    from: '',
+    current: '',
+    other: []
+  },
+  contact: {
+    phones: [
+    ],
+    email: []
+  },
+  work: [
+  ],
+  education: {
+    colleges: [
+    ],
+    schools: [
+    ]
+  },
   links: [],
   interests: [],
   projects: [],
@@ -28,11 +41,6 @@ const userObj = {
     {name: 'code', data: []},
     {name: 'design', data: []}
   ],
-  education: {
-    college: '',
-    majors: [],
-    classYear: '',
-  },
   tags: [],
   hasProfile: false
 };

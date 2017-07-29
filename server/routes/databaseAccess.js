@@ -52,6 +52,7 @@ router.post('/create/community', (req, res) => {
               Community.findById(community._id)
                   .populate('defaultTags')
                   .then((com) => {
+                    com.queries.push(userSave.queries);
                     const tags = [];
                     com.defaultTags.forEach((tag) => {
                       tag.owner = community._id;
@@ -77,6 +78,9 @@ router.post('/join/community', (req, res) => {
     .then((community) => {
       if (community.users.indexOf(req.user._id) === -1) {
         community.users.push(req.user._id);
+        // req.user.queries.forEach((quer) => {
+        //     if (!community.queries.)
+        // })
       }
       joined = community;
       return community.save();
@@ -420,35 +424,36 @@ router.post('/save/about', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            globalResponse = response;
-           globalResponse.education = req.body.education;
-           globalResponse.currentOccupation = req.body.currentOccupation;
-           globalResponse.currentOccupationCity = req.body.currentOccupationCity;
-           globalResponse.pastOccupations = req.body.pastOccupations;
-           if (req.body.education.college) {
-             const addr = req.body.education.college.split(' ').join('+');
+           globalResponse.education.colleges = req.body.colleges;
+           globalResponse.work = req.body.works;
+           globalResponse.education.schools = req.body.schools;
+           globalResponse.placesLived = req.body.placesLived;
+           if (req.body.colleges) {
+             let addr;
+             req.body.colleges.forEach((college) => {
+               if (college.attendedFor === 'Undergraduate' && !addr) {
+                 addr = college.name.split(' ').join('+');
+               }
+             });
+
              const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
              return axios.get(locationUrl);
            }
            return null;
          })
          .then((resp) => {
-           if (resp && req.body.currentOccupationCity) {
+           if (resp) {
              const jsonResp = resp.data.results[0];
              globalResponse.location.college = [jsonResp.geometry.location.lng,
             jsonResp.geometry.location.lat];
-             const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
-             const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
-             return axios.get(locationOccupationUrl);
-           } else if (req.body.currentOccupationCity) {
-             const occupationaddr = req.body.currentOccupationCity.split(' ').join('+');
-             const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + occupationaddr + '&key=' + process.env.LOCATION_API;
-             return axios.get(locationOccupationUrl);
-           } else if (resp) {
-             const jsonResp = resp.data.results[0];
-             globalResponse.location.college = [jsonResp.geometry.location.lng,
-            jsonResp.geometry.location.lat];
-             return null;
            }
+           req.body.works.forEach((work) => {
+             if (work.isCurrent) {
+               const workAddr = work.location.split(' ').join('+');
+               const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + workAddr + '&key=' + process.env.LOCATION_API;
+               return axios.get(locationOccupationUrl);
+             }
+           });
            return null;
          })
          .then((respond) => {
@@ -459,8 +464,9 @@ router.post('/save/about', (req, res) => {
            }
            return globalResponse.save();
          })
-         .then((data) => {
-           res.json({success: true});
+         .then((user) => {
+           console.log('about', user);
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -473,27 +479,13 @@ router.post('/save/contact', (req, res) => {
   User.findById(req.user._id)
             .then((response) => {
               globalResponse = response;
-              globalResponse.email = req.body.email;
-              globalResponse.address = req.body.address;
-              globalResponse.phone = req.body.phone;
+              globalResponse.contact.email = req.body.email;
+              globalResponse.contact.phones = req.body.phones;
               globalResponse.location = req.body.location;
-              if (response.address) {
-                const addr = req.body.address.split(' ').join('+');
-                const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
-                return axios.get(locationUrl);
-              }
-              return null;
+              return globalResponse.save();
             })
-             .then((resp) => {
-               if (resp) {
-                 const jsonResp = resp.data.results[0];
-                 globalResponse.location.homeTown = [jsonResp.geometry.location.lng,
-                jsonResp.geometry.location.lat];
-               }
-               return globalResponse.save();
-             })
-             .then((data) => {
-               res.json({success: true});
+             .then((user) => {
+               res.json({success: true, user: user});
              })
              .catch((err) => {
                console.log(err);
@@ -635,7 +627,7 @@ router.post('/update/location', (req, res) => {
 router.get('/get/allusers', (req, res) => {
   User.find()
       .then((response) => {
-        res.json({data: response});
+        res.json({users: response});
       })
       .catch((err) => {
         res.json({data: null});
