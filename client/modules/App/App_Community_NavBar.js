@@ -27,7 +27,7 @@ class Navbar extends React.Component {
       title = 'missing';
     }
     return (
-      <Menu icon size="small">
+      <Menu icon size="small" style={{width: '100%'}}>
         <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
           <Link to={'/app/walnuthome'}>
             <Icon name="home" />
