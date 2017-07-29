@@ -60,7 +60,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => userDataThunk(dispatch),
+  getUser: () => dispatch(userDataThunk()),
   getComs: () => getAllCommunitiesThunk(dispatch),
   getDiscoverContent: () => discoverLoadThunk(dispatch)
 });

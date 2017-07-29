@@ -29,6 +29,76 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.video-react-controls-enabled {
+    padding-top: 60% !important;
+}
+
+.video-react-big-play-button {
+    top: 50% !important;
+    left: 50% !important;
+}
+
+.big-play-button-hide {
+    display: none !important;
+}
+
+.pdfCard {
+    width: 50% !important;
+    text-align: center;
+}
+
+.mediaDownloadAttachment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ .downloadButton{
+    position: relative;
+    right: -32% !important;
+    margin-top: 3% !important;
+} 
+
+
+ .downloadButton:hover {
+    position: relative;
+    right: -32% !important;
+    margin-top: 3% !important;
+    color: darkblue;
+} 
+
+.downloadCard {
+    width: 40% !important;
+    width: 40% !important;
+    flex-direction: row !important;
+    padding: 0.5% !important;
+}
+
+.ui.dimmer {
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.downloadConfirm:hover {
+    color: blue;
+}
+
+.downloadCancel:hover {
+    color: red;
+}
+
+.downloadConfirm {
+    color: whitesmoke;
+}
+
+.downloadCancel {
+    color: whitesmoke;
 }
 
 .postOuter {

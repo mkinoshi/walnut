@@ -10,6 +10,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         enforce: "pre",
         loader: "eslint-loader",
         query: {

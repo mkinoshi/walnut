@@ -101,7 +101,6 @@ class ContactContainer extends React.Component {
   }
 
   render() {
-    console.log('state', this.state);
     return (
             <Paper style={styles.contact}>
                 <h1>Contact</h1>

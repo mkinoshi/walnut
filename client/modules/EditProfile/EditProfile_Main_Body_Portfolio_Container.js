@@ -9,6 +9,8 @@ import addUserPortTabsThunk from '../../thunks/user_thunks/addUserPortTabsThunk'
 import updateUserPortTabsThunk from '../../thunks/user_thunks/updateUserPortTabsThunk';
 import removeUserPortTabsThunk from '../../thunks/user_thunks/removeUserPortTabsThunk';
 import { connect } from 'react-redux';
+import {Image, Card, Icon, Tab} from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 class PortfolioContainer extends React.Component {
   constructor(props) {
@@ -117,65 +119,73 @@ class PortfolioContainer extends React.Component {
   render() {
     return (
       <div className="row col-xs-12 portfolioBox">
-        <h2>Portfolio</h2>
-        <div className="tab-links">
-          {this.props.tabs.map((tab, i) => {
-            if(this.state.editTab === i && tab.name !== 'media' && tab.name !== 'documents' && tab.name !== 'code' && tab.name !== 'design') {
-              return (
-                <div key={i}>
-                  <input placeholder={tab.name} onChange={(e) => this.newTabName(e.target.value)}/>
-                  <button onClick={(e) => {e.preventDefault(); this.tabNameChange(i);}}>save</button>
-                  <button onClick={(e) => {e.preventDefault(); this.removeTabBack(i);}}>remove</button>
-                </div>
-              );
-            }
-            return <p key={i} onClick={()=> (this.tabChange(tab.name))} onDoubleClick={() =>(this.editTab(i))}>{tab.name}</p>;
-          })}
-          {this.state.newTab ?
-                <form>
-                  <input placeholder="Change tab name" onChange={(e) => this.newName(e.target.value)}/>
-                  <button onClick={(e) => {e.preventDefault(); this.tabName();}}>save</button>
-                  <button onClick={(e) => {e.preventDefault(); this.removeTab();}}>remove</button>
-                </form>
-                : null
-            }
-          <p onClick={()=> (this.addTab())}>...</p>
-        </div>
+        <Card className="portfolioCard">
+          <Card.Content>
+            <Card.Header>
+              <h2>Portfolio</h2>
+            </Card.Header>
+             <div className="tab-links">
+              {this.props.tabs.map((tab, i) => {
+                if(this.state.editTab === i && tab.name !== 'media' && tab.name !== 'documents' && tab.name !== 'code' && tab.name !== 'design') {
+                  return (
+                    <div key={i}>
+                      <input placeholder={tab.name} onChange={(e) => this.newTabName(e.target.value)}/>
+                      <button onClick={(e) => {e.preventDefault(); this.tabNameChange(i);}}>save</button>
+                      <button onClick={(e) => {e.preventDefault(); this.removeTabBack(i);}}>remove</button>
+                    </div>
+                  );
+                }
+                return <p key={i} onClick={()=> (this.tabChange(tab.name))} onDoubleClick={() =>(this.editTab(i))}>{tab.name}</p>;
+              })}
+              {this.state.newTab ?
+                    <form>
+                      <input placeholder="Change tab name" onChange={(e) => this.newName(e.target.value)}/>
+                      <button onClick={(e) => {e.preventDefault(); this.tabName();}}>save</button>
+                      <button onClick={(e) => {e.preventDefault(); this.removeTab();}}>remove</button>
+                    </form>
+                    : null
+                }
+              <p onClick={()=> (this.addTab())}>...</p>
+            </div>
+          </Card.Content>
 
-        {(this.state.currUrl !== '') ?
-        <Lightbox
-          mainSrc={this.state.currUrl}
-          onCloseRequest={() => this.setState({ currUrl: '' })}
-          toolbarButtons={[<a className="download" href={this.state.currUrl}>download</a>]}
-          />
-         :
-          <p></p>}
+          {(this.state.currUrl !== '') ?
+          <Lightbox
+            mainSrc={this.state.currUrl}
+            onCloseRequest={() => this.setState({ currUrl: '' })}
+            toolbarButtons={[<a className="download" href={this.state.currUrl}>download</a>]}
+            />
+           :
+            <p></p>}
 
-          <Modal
-            isOpen={(this.state.pdfUrl !== '') ? true : false}
-            onRequestClose={() => this.closeModal()}
-            contentLabel="Example Modal"
-            >
-            <button className="close-modal" onClick={() => this.closeModal()}>close</button>
-            {(this.state.pdfUrl !== '') ?
-            <PdfViewer
-              file={this.state.pdfUrl}
-              page={this.state.page}
-              pages={this.state.pages}
-              onDocumentComplete={this.onDocumentComplete}
-              onPageComplete={this.onPageComplete}
-              /> : <p></p>}
-            <form>
-              <input />
-              <button onClick={(e) => {e.preventDefault(); this.handlePrevious();}}>Previous</button>
-              <button onClick={(e) => {e.preventDefault(); this.handleNext();}}>Next</button>
-            </form>
-             <a className="download" href={this.state.pdfUrl}>download</a>
-          </Modal>
+            <Modal
+              isOpen={(this.state.pdfUrl !== '') ? true : false}
+              onRequestClose={() => this.closeModal()}
+              contentLabel="Example Modal"
+              >
+              <button className="close-modal" onClick={() => this.closeModal()}>close</button>
+              {(this.state.pdfUrl !== '') ?
+              <PdfViewer
+                file={this.state.pdfUrl}
+                page={this.state.page}
+                pages={this.state.pages}
+                onDocumentComplete={this.onDocumentComplete}
+                onPageComplete={this.onPageComplete}
+                /> : <p></p>}
+              <form>
+                <input />
+                <button onClick={(e) => {e.preventDefault(); this.handlePrevious();}}>Previous</button>
+                <button onClick={(e) => {e.preventDefault(); this.handleNext();}}>Next</button>
+              </form>
+               <a className="download" href={this.state.pdfUrl}>download</a>
+            </Modal>
 
-        <Uploads
-        tab={this.state.tab}
-        renderFile={(file) => (this.renderFile(file))}/>
+           <Card.Content>
+            <Uploads
+            tab={this.state.tab}
+            renderFile={(file) => (this.renderFile(file))}/>
+          </Card.Content>
+        </Card>
       </div>
     );
   }
@@ -193,10 +203,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addTabs: (obj) => addUserPortTabsThunk(obj)(dispatch),
+  addTabs: (obj) => dispatch(addUserPortTabsThunk(obj)),
   changeTabName: (name, i) => updateUserPortTabsThunk(name, i)(dispatch),
   removeTabName: (i) => removeUserPortTabsThunk(i)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);
-
