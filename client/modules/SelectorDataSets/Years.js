@@ -23,7 +23,7 @@ class YearSelect extends React.Component {
     return (
         <select value={this.state.value} onChange={(e) => this.handleChange(e)} style={{'display': 'block'}}>
             <option value="first">Year:</option>
-            {_.range(Year, 2027).map((year) => <option value={year}>{year}</option>)}
+            {_.range(Year, 2027).map((year, idx) => <option key={idx} value={year}>{year}</option>)}
         </select>
     );
   }

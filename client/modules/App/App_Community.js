@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
 import Directory from '../Directory/Directory_index';
 import NavBar from './App_Community_NavBar';
-import MapContainer from '../Map/Map_index';
+// import MapContainer from '../Map/Map_index';
 import EditProfile from '../EditProfile/EditProfile_index';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
@@ -55,7 +55,7 @@ class Community extends React.Component {
             <Route path="/app/community/:communityName/editprofile" component={EditProfile}/>
             {/* <Route path="/app/projects" component={Home}/> */}
             <Route path="/app/community/:communityName/directory" component={Directory} />
-            <Route path="/app/community/:communityName/map" component={MapContainer}/>
+            {/* <Route path="/app/community/:communityName/map" component={MapContainer}/> */}
             <Route path="/app/community/:communityName/discover" component={Discover} />
          </Switch>
          </div>

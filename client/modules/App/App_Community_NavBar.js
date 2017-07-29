@@ -27,51 +27,51 @@ class Navbar extends React.Component {
       title = 'missing';
     }
     return (
-      <Menu icon size="small" style={{width: '100%'}}>
-        <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
-          <Link to={'/app/walnuthome'}>
-            <Icon name="home" />
-          </Link>
-        </Menu.Item>
+            <Menu icon size="small">
+              <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
+                <Link to={'/app/walnuthome'}>
+                  <Icon name="home" />
+                </Link>
+              </Menu.Item>
 
-        <Menu.Item name="Discover" active={this.state.activeItem === 'Discover'} onClick={() => this.handleItemClick}>
-          <Link to={'/app/community/' + title + '/discover'}>
-            <Icon name="star" /> <p>Discover</p>
-          </Link>
-        </Menu.Item>
+              <Menu.Item name="Discover" active={this.state.activeItem === 'Discover'} onClick={() => this.handleItemClick}>
+                <Link to={'/app/community/' + title + '/discover'}>
+                  <Icon name="star" /> <p>Discover</p>
+                </Link>
+              </Menu.Item>
 
-        <Menu.Item name="Directory" active={this.state.activeItem === 'Directory'} onClick={() => this.handleItemClick}>
-          <Link to={'/app/community/' + title + '/directory'}>
-            <Icon name="address book"/> <p>Directory</p>
-          </Link>
-        </Menu.Item>
+              <Menu.Item name="Directory" active={this.state.activeItem === 'Directory'} onClick={() => this.handleItemClick}>
+                <Link to={'/app/community/' + title + '/directory'}>
+                  <Icon name="address book"/> <p>Directory</p>
+                </Link>
+              </Menu.Item>
 
-        <Menu.Item name="Map" active={this.state.activeItem === 'Map'} onClick={() => this.handleItemClick}>
-          <Link to={'/app/community/' + title + '/map'}>
-            <Icon name="marker" /> <p>Map</p>
-          </Link>
-        </Menu.Item>
+              <Menu.Item name="Map" active={this.state.activeItem === 'Map'} onClick={() => this.handleItemClick}>
+                <Link to={'/app/community/' + title + '/map'}>
+                  <Icon name="marker" /> <p>Map</p>
+                </Link>
+              </Menu.Item>
 
-        <Menu.Item name="Edit" active={this.state.activeItem === 'Edit'} onClick={() => this.handleItemClick}>
-          <Link to={'/app/community/' + title + '/editprofile'}>
-            <Icon name="edit" /> <p>Edit Profile</p>
-          </Link>
-        </Menu.Item>
+              <Menu.Item name="Edit" active={this.state.activeItem === 'Edit'} onClick={() => this.handleItemClick}>
+                <Link to={'/app/community/' + title + '/editprofile'}>
+                  <Icon name="edit" /> <p>Edit Profile</p>
+                </Link>
+              </Menu.Item>
 
-        <a href="#" style={{marginLeft: 'auto', marginRight: 'auto'}}>
-          <Image src="http://i.imgur.com/TbhIBEJ.png" size="small"/>
-        </a>
+              <a href="#" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+                <Image src="http://i.imgur.com/TbhIBEJ.png" size="small"/>
+              </a>
 
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <a href="/logout">
-            <Icon name="log out" />
-            Logout</a>
-          </Menu.Item>
-          <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
-        </Menu.Menu>
-      </Menu>
-    );
+              <Menu.Menu position="right">
+                <Menu.Item>
+                  <a href="/logout">
+                    <Icon name="log out" />
+                    Logout</a>
+                </Menu.Item>
+                <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
+              </Menu.Menu>
+            </Menu>
+        );
   }
 }
 

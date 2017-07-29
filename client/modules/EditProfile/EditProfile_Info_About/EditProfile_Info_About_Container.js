@@ -203,26 +203,26 @@ class AboutContainer extends React.Component {
             }
             if (this.state.isEditing) {
               return (<div>
-                    <p>Earning a {college.degreeType} from {college.name}</p>
-                    <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
-                  </div>);
+                  <p>Earning a {college.degreeType} from {college.name}</p>
+                  <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
+                </div>);
             }
             return <p>Earning a {college.degreeType} from {college.name}</p>;
           }
           if (college.attendedFor === 'Undergraduate') {
             if (this.state.isEditing) {
               return (<div>
-                  <p>Graduated from {college.name} in {college.endedAt}</p>
-                  <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
-                </div>);
+                <p>Graduated from {college.name} in {college.endedAt}</p>
+                <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
+              </div>);
             }
             return (<p>Graduated from {college.name} in {college.endedAt}</p>);
           }
           if (this.state.isEditing) {
             return (<div>
-                    <p>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>
-                    <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
-                  </div>);
+                <p>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>
+                <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
+              </div>);
           }
           return <p>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>;
         }) : null}
@@ -242,11 +242,11 @@ class AboutContainer extends React.Component {
           }
           if (this.state.isEditing) {
             return (<div>
-                          <p>Graduated from {school.name} in {school.endedAt} </p>
-                          <Button secondary onClick={() => {
-                            this.handleSchoolRemove(school, idx);
-                          }}>X</Button>
-                        </div>);
+                        <p>Graduated from {school.name} in {school.endedAt} </p>
+                        <Button secondary onClick={() => {
+                          this.handleSchoolRemove(school, idx);
+                        }}>X</Button>
+                      </div>);
           }
           return <p>Graduated from {school.name} in {school.endedAt} </p>;
         }) : null}

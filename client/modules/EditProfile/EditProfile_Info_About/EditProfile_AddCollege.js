@@ -37,6 +37,7 @@ class AddCollege extends React.Component {
     this.handleChangeRadio = this.handleChangeRadio.bind(this);
     this.handleChangeGraduated = this.handleChangeGraduated.bind(this);
     this.handleChangeCollege = this.handleChangeCollege.bind(this);
+    this.handleChangeDegree = this.handleChangeDegree.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleEnd = this.handleEnd.bind(this);
     this.handleChangeCon1 = this.handleChangeCon1.bind(this);
@@ -101,10 +102,10 @@ class AddCollege extends React.Component {
                         <br></br>
                         <div style={styles.inline}>
                             <p style={styles.title}>Started at</p>
-                            <YearSelect year={1956} handleSelect={this.handleStart} />
+                            <YearSelect year={'1956'} handleSelect={this.handleStart} />
                         </div>
                         <div style={styles.inline}>
-                            <p style={styles.title}>Ended at</p> <YearSelect year={1956} handleSelect={this.handleEnd}/>
+                            <p style={styles.title}>Ended at</p> <YearSelect year={'1956'} handleSelect={this.handleEnd}/>
                         </div>
                         <br></br>
                         <div style={styles.inline}>
