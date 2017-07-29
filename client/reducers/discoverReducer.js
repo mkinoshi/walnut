@@ -7,7 +7,6 @@ const discoverReducer = (state = {
 }, action) => {
   switch (action.type) {
     case 'GET_DISCOVER_DATA_DONE':
-      console.log('discover action', action);
       const newState1 = {
         defaultFilters: action.defaultFilters,
         otherFilters: action.otherFilters,

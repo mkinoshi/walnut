@@ -128,7 +128,6 @@ router.get('/get/allcommunities', (req, res) => {
 
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
-  console.log('id', req.user.currentCommunity);
   Community.findById(req.user.currentCommunity)
       .populate('defaultTags')
       .populate('otherTags')
@@ -137,7 +136,6 @@ router.get('/get/discoverinfo', (req, res) => {
           return user === req.user._id;
         });
         if (community.length === 0) {
-          console.log('not in community error');
           res.json({error: 'No authorization'});
         } else{
           const defaultFilters = community.defaultTags;

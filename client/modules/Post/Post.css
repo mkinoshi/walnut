@@ -55,7 +55,7 @@
     float: right !important;
 }
 
-.scroll {
+.scrollContentClass {
     display: flex !important;
     flex-direction: column !important;
 }
@@ -64,3 +64,28 @@
     width: 100% !important;
     /*overflow: auto;*/
 }
+
+#inputBoxHolder {
+    display: flex;
+}
+
+#commentInput {
+    flex: 10;
+}
+
+#commentSubmit {
+    flex: 1;
+}
+
+.commentColor {
+    background-color: #d4d4d5 !important;
+}
+
+.walnutLogo {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+

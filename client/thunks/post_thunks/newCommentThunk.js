@@ -2,6 +2,7 @@
  * Created by ebadgio on 7/24/17.
  */
 import axios from 'axios';
+import discoverLoadThunk from '../discover_thunks/discoverLoadThunk';
 const URL = 'http://localhost:3000/';
 
 const newCommentThunk = (commentBody, postId) => (dispatch) => {
@@ -10,7 +11,7 @@ const newCommentThunk = (commentBody, postId) => (dispatch) => {
     postId: postId
   })
     .then(() => {
-     // dispatch({type: 'GET_DISCOVER_INFO'})));
+      discoverLoadThunk(dispatch);
     })
     .catch((err) =>{
       console.log('error in newComment', err);
