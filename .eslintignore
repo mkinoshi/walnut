@@ -4,3 +4,4 @@ webpack.*.js
 *server.js
 *test.js
 *authorization.js
+*myNpmModules*

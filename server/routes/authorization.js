@@ -50,7 +50,8 @@ function auth(passport) {
           {name: 'documents', data: []},
           {name: 'code', data: []},
           {name: 'design', data: []}
-        ]
+        ],
+        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
       });
       return new_user.save()
       .then((doc) => {
