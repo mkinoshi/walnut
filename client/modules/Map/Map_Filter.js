@@ -6,41 +6,15 @@ import MapCard from './Map_Card';
 import uuidv4 from 'uuid/v4';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-
-const styles = {
-  outer: {
-    width: '20vw',
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  filter: {
-    borderWidth: 1,
-    height: '15vh'
-  },
-  filterOuter: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: '10%'
-  },
-  image: {
-    width: '15%',
-    height: '15%'
-  },
-  listOuter: {
-    display: 'flex',
-    flexDirection: 'row',
-    borderWidth: '1px',
-    marginBottom: '10px'
-  },
-  disc: {
-    display: 'flex',
-    flexDirection: 'column'
-  }
-};
+import 'semantic-ui-css/semantic.min.css';
+import {Button} from 'semantic-ui-react';
 
 class MapFilter extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      search: 'place'
+    };
   }
 
   // handleClick(index) {
@@ -53,15 +27,28 @@ class MapFilter extends React.Component {
 
   render() {
     return (
-      <div style={styles.outer}>
-        <div style={styles.filter}>
-          <LocationSearch />
-        </div>
-        <div style={styles.filter}>
-          <NameSearch />
-        </div>
+      <div className="outerfilterall" >
+        <Button.Group>
+          {this.state.search === 'place' ?
+            <Button positive>Place</Button> :
+            <Button onClick={() => this.setState({search: 'place'})}>Place</Button>
+          }
+          <Button.Or />
+          {this.state.search === 'place' ?
+            <Button onClick={() => this.setState({search: 'person'})}>Person</Button> :
+            <Button positive>Person</Button>
+          }
+        </Button.Group>
+        {this.state.search === 'place' ?
+          <div className="filter" >
+            <LocationSearch />
+          </div> :
+          <div className="filter" >
+            <NameSearch />
+          </div>
+        }
         <Scrollbars style={{ width: '20vw', height: '60vh' }}>
-          <div style={styles.filterOuter}>
+          <div className="filterOuter" >
             {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
               <MapCard
                 id={user.id}

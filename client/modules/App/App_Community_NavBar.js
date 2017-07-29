@@ -3,25 +3,21 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Icon, Menu, Image } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
-// TODO navbar links to react routes
-// TODO navbar
-const styles = {
-  links: {
-    color: '#FFFFFF',
-    fontFamily: 'Apple Symbols',
-    fontSize: '2.1rem',
-    margin: '7px 30px 7px, 30px'
-  },
-  ribbon: {
-    backgroundColor: '#0D9ED3',
-    position: 'fixed',
-    top: '0px',
-    height: '7%'
-  }
-};
 
 class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: 'home'
+    };
+  }
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name });
+  }
 
   render() {
     let title;
@@ -30,35 +26,51 @@ class Navbar extends React.Component {
     } else {
       title = 'missing';
     }
-    console.log('title', title);
     return (
-      <div className="navbar-fixed">
-        <nav style={styles.ribbon}>
-          <div className="nav-wrapper">
-            <ul id="nav-mobile" className="left hide-on-med-and-down">
-              <li><Link to={'/app/walnuthome'} style={styles.links}>Walnut Home</Link></li>
-              <li><Link to={'/app/community/' + title + '/discover'} > Discover
-            {/* <img src={this.props.community.icon} style={{maxHeight: '50px', maxWidth: '50px', margin: '7px 15px 7px 30px'}}/> */}
-              </Link></li>
-              <li><Link to={'/app/community/' + title + '/directory'} style={styles.links}>Directory</Link></li>
-              <li><Link to={'/app/community/' + title + '/map'} style={styles.links}>Map</Link></li>
-              <li><Link to={'/app/community/' + title + '/editprofile'} style={styles.links}>Edit</Link></li>
-            </ul>
-            <a href="#" className="brand-logo center"><img src="http://i.imgur.com/TbhIBEJ.png" style={{maxHeight: '50px', margin: '7px 15px 7px 30px'}} /></a>
-            <a href="/logout">logout</a>
-            <div className="right col s8">
-              <div className="left input-field s6">
-                <i className="small material-icons prefix">search</i>
-                <input id="icon_search" type="tel" className="validate" />
-                <label htmlFor="icon_search" style={{color: 'white'}}>Search</label>
-              </div>
-              <div className="right col s2" style={{margin: '7px 30px 7px 30px'}}>
-                <img src={this.props.pictureURL} style={{maxHeight: '50px', borderRadius: '45%'}} />
-              </div>
-            </div>
-          </div>
-        </nav>
-      </div>
+      <Menu icon size="small">
+        <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
+          <Link to={'/app/walnuthome'}>
+            <Icon name="home" />
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="Discover" active={this.state.activeItem === 'Discover'} onClick={() => this.handleItemClick}>
+          <Link to={'/app/community/' + title + '/discover'}>
+            <Icon name="star" /> <p>Discover</p>
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="Directory" active={this.state.activeItem === 'Directory'} onClick={() => this.handleItemClick}>
+          <Link to={'/app/community/' + title + '/directory'}>
+            <Icon name="address book"/> <p>Directory</p>
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="Map" active={this.state.activeItem === 'Map'} onClick={() => this.handleItemClick}>
+          <Link to={'/app/community/' + title + '/map'}>
+            <Icon name="marker" /> <p>Map</p>
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="Edit" active={this.state.activeItem === 'Edit'} onClick={() => this.handleItemClick}>
+          <Link to={'/app/community/' + title + '/editprofile'}>
+            <Icon name="edit" /> <p>Edit Profile</p>
+          </Link>
+        </Menu.Item>
+
+        <a href="#" style={{marginLeft: 'auto', marginRight: 'auto'}}>
+          <Image src="http://i.imgur.com/TbhIBEJ.png" size="small"/>
+        </a>
+
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <a href="/logout">
+            <Icon name="log out" />
+            Logout</a>
+          </Menu.Item>
+          <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
+        </Menu.Menu>
+      </Menu>
     );
   }
 }

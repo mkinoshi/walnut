@@ -101,3 +101,61 @@
     color: whitesmoke;
 }
 
+.postOuter {
+    width: 100% !important;
+}
+
+.postContent {
+}
+
+.tag {
+    font-size: 20px;
+}
+
+.hashtag {
+    color: #0D9ED3;
+    font-size: 18px;
+}
+
+.likeIcon {
+    float: left;
+}
+
+.commentButton {
+    float: right !important;
+}
+
+.scrollContentClass {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.commentWidth {
+    width: 100% !important;
+    /*overflow: auto;*/
+}
+
+#inputBoxHolder {
+    display: flex;
+}
+
+#commentInput {
+    flex: 10;
+}
+
+#commentSubmit {
+    flex: 1;
+}
+
+.commentColor {
+    background-color: #d4d4d5 !important;
+}
+
+.walnutLogo {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+

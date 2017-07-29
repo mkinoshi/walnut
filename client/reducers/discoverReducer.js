@@ -6,16 +6,14 @@ const discoverReducer = (state = {
   hasMore: true
 }, action) => {
   switch (action.type) {
-    case 'GET_DISCOVER_DATA_DONE': {
-      console.log('discover action', action);
-      const newState = {
+    case 'GET_DISCOVER_DATA_DONE':
+      const newState1 = {
         defaultFilters: action.defaultFilters,
         otherFilters: action.otherFilters,
         posts: action.posts,
         hasMore: true
       };
-      return newState;
-    }
+      return newState1;
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'GET_NEXT_TEN_DONE':
