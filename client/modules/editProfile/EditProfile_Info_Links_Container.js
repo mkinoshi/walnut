@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import saveLinksThunk from '../../thunks/profile_thunks/saveLinksThunk';
+import Paper from 'material-ui/Paper';
 
 const styles = {
   links: {
-    backgroundColor: 'lightblue',
-    width: '65%',
-    paddingLeft: '2%',
-    marginLeft: 'auto',
+    backgroundColor: '#fff',
+    width: 'auto',
+    height: 'auto',
+    minWidth: '200px',
+    paddingLeft: '10%',
+    marginLeft: '100px',
     marginRight: 'auto'
   }
 };
@@ -50,7 +53,7 @@ class LinksContainer extends React.Component {
 
   render() {
     return (
-      <div style={styles.links}>
+      <Paper style={styles.links}>
         <h1>Links</h1>
         <p onClick={() => (this.toggleEdit())}>E</p>
         {this.state.edit ?
@@ -80,7 +83,7 @@ class LinksContainer extends React.Component {
             save</a>
           :
         <p></p>}
-      </div>
+      </Paper>
     );
   }
 }
