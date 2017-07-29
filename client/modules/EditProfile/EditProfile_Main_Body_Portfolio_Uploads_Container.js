@@ -70,47 +70,57 @@ class UploadsContainer extends React.Component {
     const filesArr = portArr[0] ? portArr[0].data : [];
     return (
           <div className="col-xs-12">
-            <p onClick={() => this.editFiles()}>E</p>
-            {filesArr.map((file, i) => {
-              if (file.fileType !== 'application/pdf' && file.fileType !== 'image/png') {
+            <div className="row col-xs-12 settingsUploads">
+              <Icon onClick={() => this.editFiles()} name="setting" size="big" />
+            </div>
+            <div className="row col-xs-12 fileCards">
+              {filesArr.map((file, i) => {
+                if (file.fileType !== 'application/pdf' && file.fileType !== 'image/png') {
+                  return (
+                    <Card className="fileContainer">
+                      <div key={i}>
+                        {this.state.editFiles ? <p onClick={() => this.removeFile(i)}>D</p> : null}
+                        <a href={file.fileUrl}>
+                          <div
+                            className="files">
+                            <img className="picThumb"
+                            src={this.thumbChoice(file)}/>
+                            <p className="fileName">{file.fileName}</p>
+                          </div>
+                        </a>
+                      </div>
+                    </Card>
+                  );
+                }
                 return (
-                  <div key={i}>
+                  <Card className="fileContainer">
+                    <div key={i}>
                     {this.state.editFiles ? <p onClick={() => this.removeFile(i)}>D</p> : null}
-                    <a href={file.fileUrl}>
                       <div
-                        className="col-xs-4 files">
+                        className="files"
+                        onClick={() => (this.props.renderFile(file))}>
                         <img className="picThumb"
                         src={this.thumbChoice(file)}/>
-                        <p>{file.fileName}</p>
+                        <p className="fileName">{file.fileName}</p>
                       </div>
-                    </a>
-                  </div>
+                    </div>
+                  </Card>
                 );
-              }
-              return (
-                <div key={i}>
-                {this.state.editFiles ? <p onClick={() => this.removeFile(i)}>D</p> : null}
-                  <div
-                    className="col-xs-4 files"
-                    onClick={() => (this.props.renderFile(file))}>
-                    <img className="picThumb"
-                    src={this.thumbChoice(file)}/>
-                    <p>{file.fileName}</p>
-                  </div>
-                </div>
-              );
-            })}
-            <Dropzone
-            className="col-xs-4 dropzone"
-            onDrop={this.onDrop.bind(this)} multiple={true}>
-              <Icon name="add circle" inverted className="dropIcon"/>
-            </Dropzone>
-            {this.state.files.map((file, i) => (
-              <input key={i}
-              value={file.newName || file.name}
-              onChange={(e) => (this.nameChange(e.target.value, i))}/>
-            ))}
-            {this.state.onEdit ? <button onClick={() => {this.uploadFiles();}}>Upload</button> : null}
+              })}
+            </div>
+            <div className="row col-xs-12 addFile">
+              <Dropzone
+              className="dropzone"
+              onDrop={this.onDrop.bind(this)} multiple>
+                <Icon name="add circle" inverted className="dropIcon" size="big" color="black"/>
+              </Dropzone>
+              {this.state.files.map((file, i) => (
+                <input key={i}
+                value={file.newName || file.name}
+                onChange={(e) => (this.nameChange(e.target.value, i))}/>
+              ))}
+              {this.state.onEdit ? <button onClick={() => {this.uploadFiles();}}>Upload</button> : null}
+            </div>
           </div>
       );
   }

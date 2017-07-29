@@ -6,11 +6,13 @@ import saveTagsThunk from '../../thunks/profile_thunks/saveTagsThunk';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
 import Slider from 'react-slick';
+import Paper from 'material-ui/Paper';
 
 const styles = {
   head: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#fff',
     width: '70%',
+    marginBottom: '10px',
     marginLeft: 'auto',
     marginRight: 'auto'
   },
@@ -123,7 +125,7 @@ class HeadContainer extends React.Component {
     };
 
     return (
-      <div style={styles.head}>
+      <Paper style={styles.head}>
         <div style={styles.profilePic}>
         <img style={styles.picture} src={this.props.pictureURL} />
           <ReactUploadFile
@@ -163,7 +165,7 @@ class HeadContainer extends React.Component {
             <div>
               <p>{!!this.state.blurbInput ? this.state.blurbInput : this.props.blurb}</p>
           <button onClick={() => {this.toggleBlurb();}}>Edit Blurb</button></div> }
-      </div>
+      </Paper>
     );
   }
 }

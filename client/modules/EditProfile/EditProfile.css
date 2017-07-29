@@ -19,15 +19,16 @@
 }
 
 .portfolioBox {
-    background-color: lightblue;
     width: 65%;
     padding-left: 2%;
+    display: flex;
+    justify-content: center;
 }
 
 .tab-links {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 2vw;
+    margin-top: 2vw;
 }
 
 .pdfViewer {
@@ -38,27 +39,50 @@
 }
 
 .files {
-    margin-bottom: 2vw;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 .dropzone {
-    height: 5vw;
-    width: 5vw !important;
-    background-color: blanchedalmond;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 1.7vw;
+    width: 1.7vw !important;
 }
 
 .picThumb {
-    background-color: lightblue;
     width: 30px;
+    margin-left: 1%;
 }
 
 .download {
     float: right;
+}
+
+.portfolioCard {
+    width: 100% !important;
+}
+
+.settingsUploads {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addFile {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1%;
+}
+
+.fileContainer {
+    width: 30% !important;
+}
+
+.fileName {
+    margin-left: 3% !important;
 }
