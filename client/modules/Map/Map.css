@@ -1,0 +1,99 @@
+.mapContainer {
+  height: 100%;
+}
+
+.map {
+  height: 92vh;
+  width: 80vw;
+}
+
+.outer {
+  display: flex;
+  flex-direction: row;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.marker {
+  color: #37d67a;
+  font-size: 40px;
+}
+
+.cluster {
+  color: #ff6f00;
+}
+
+.zoom {
+  margin-top: 5%;
+  margin-right: 1%;
+}
+
+.my-autocomplete-container {
+  position: fixed;
+  z-index: 2;
+  width: 20vw;
+}
+
+.outerfilterall  {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter {
+  border-width: 1;
+  height: 10vh;
+}
+
+.filterOuter {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+image {
+  width: 15%;
+  height: 15%;
+}
+
+listOuter {
+  display: flex;
+  flex-direction: row;
+  border-width: 1px;
+  margin-bottom: 10px;
+}
+
+disc {
+  display: flex;
+  flex-direction: column;
+}
+
+.outerpopup {
+  border: 1px;
+}
+
+.icon {
+  width: 34.6px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.image {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+}
+
+.clicked {
+  background: orange;
+}

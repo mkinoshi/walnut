@@ -1,7 +1,7 @@
 import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
@@ -9,7 +9,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
-
+import './Map.css';
+import 'semantic-ui-css/semantic.min.css';
+import {Icon, Popup, Image} from 'semantic-ui-react';
 const styles = {
   mapContainer: {
     height: '100%'
@@ -47,6 +49,9 @@ const Map = ReactMapboxGl({
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isShow: true,
+    };
   }
 
   componentDidMount() {
@@ -61,18 +66,37 @@ class MapContainer extends React.Component {
     this.props.updateClicked(id);
   }
 
-  clusterMarker(coordinates) {
+  handleClusterClick() {
+    console.log('ohohohohohohohohohohohoh');
+  }
+
+  clusterMarker(coordinates, count, data) {
     return (
-      <Marker coordinates={coordinates} style={styles.marker}>
-        <CircleIcon />
+      <Marker coordinates={coordinates} className="marker">
+          <div>
+            <Popup
+              trigger={<CircleIcon />}
+              content="Hello. This is a mini popup"
+            >
+              <Popup.Content>
+                <Image.Group className="wrapper" >
+                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="image" />))}
+                </Image.Group>
+              </Popup.Content>
+            </Popup>
+          </div>
       </Marker>
     );
   }
   render() {
     console.log('re-rendering map', this.props.center);
+    console.log(Cluster);
+    const users = this.props.users.filter((user) => {
+      return user.location[this.props.selected].length > 0;
+    });
     return (
-      <div style={styles.outer}>
-        <div style={styles.inner}>
+      <div className="outer" >
+        <div className="inner" >
           <MapItemSelector />
           <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
@@ -88,19 +112,27 @@ class MapContainer extends React.Component {
             width: '80vw'
           }}>
             <ZoomControl style={styles.zoom}/>
-            <Cluster ClusterMarkerFactory={this.clusterMarker} maxZoom={10}>
+            <Cluster ClusterMarkerFactory={this.clusterMarker.bind(this)} maxZoom={12}>
               {
-                  this.props.users.filter((user) => {
-                    return user.location[this.props.selected].length > 0;
-                  }).map((feature) => {
+                  users.map((feature) => {
                     return (
                       <Marker
                         key={uuidv4()}
+                        data={feature}
                         coordinates={feature.location[this.props.selected]}
-                        style={styles.cluster}
+                        className="cluster"
                         onClick={this.handleClick.bind(this, feature.id)}
                         >
-                        <CircleIcon />
+                        <Popup
+                          trigger={<CircleIcon />}
+                          content="Hello. This is a mini popup"
+                        >
+                          <Popup.Content>
+                            <Image.Group className="wrapper" >
+                              <Image src={feature.pictureURL} className="image" />
+                            </Image.Group>
+                          </Popup.Content>
+                        </Popup>
                       </Marker>
                     );
                   }

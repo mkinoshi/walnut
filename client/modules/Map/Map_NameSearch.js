@@ -20,7 +20,18 @@ class NameSearch extends React.Component {
     // this.props.getUserData();
   }
   handleChange(value) {
-    this.setState({value: value});
+    console.log(value);
+    if (value) {
+      const u = this.props.users.find((user) => {return user.fullName === value;});
+      const center = u.location[this.props.selected];
+      console.log(u);
+      this.props.updateClicked(u.id);
+      this.props.updateCenter(center);
+      this.props.updateZoom(10);
+      this.setState({value: value});
+    } else {
+      this.setState({value: ''});
+    }
   }
   handleNew(event) {
     event.preventDefault();
@@ -31,7 +42,6 @@ class NameSearch extends React.Component {
   }
   render() {
     return (
-      <form onSubmit={(e) => this.handleNew(e)}>
          <Select
           style={styles}
           name="selected-state"
@@ -43,44 +53,18 @@ class NameSearch extends React.Component {
             return {value: user.fullName, label: user.fullName};
           })}
           onChange={this.handleChange.bind(this)}
-          placeholder="test"
+          placeholder="Search by Name"
         />
-        {/* <Select
-            name="selected-state"
-            value={this.state.selectValue}
-            simpleValue
-            options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
-              return {value: user, label: user.fullName};
-            })}
-            onChange={this.handleChange.bind(this)}
-          /> */}
-        <button type="submit">Search by Name</button>
-      </form>
     );
   }
 }
-// FilterPref.propTypes = {
-//   preferences: PropTypes.array,
-//   toggleChecked: PropTypes.func,
-//   getUserData: PropTypes.func,
-//   updateUser: PropTypes.func
-// };
-// const mapStateToProps = (state) => ({
-//   filters: state.discoverReducer.filters,
-//   preferences: state.userReducer.preferences
-// });
-// const mapDispatchToProps = (dispatch) => ({
-//   toggleChecked: (name, index) => dispatch({type: 'TOGGLE_FILTER_CHECKED', name: name, index: index}),
-//   getUserData: () => dispatch({type: 'GET_USER_DATA'}),
-//   updateUser: (updateObj) => dispatch({type: 'UPDATE_USER', data: updateObj})
-//   // toggleCheckedFront: (name, index) => dispatch({type: 'TOGGLE_FILTER_FRONT', name: name, index: index})
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);
+
 NameSearch.propTypes = {
   updateCenter: PropTypes.func,
   updateZoom: PropTypes.func,
   users: PropTypes.array,
-  selected: PropTypes.string
+  selected: PropTypes.string,
+  updateClicked: PropTypes.func
 };
 const mapStateToProps = (state) => ({
   users: state.mapReducer.users,
@@ -94,6 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
   updateZoom: (num) => dispatch({
     type: 'UPDATE_ZOOM',
     num: num
-  })
+  }),
+  updateClicked: (id) => dispatch({
+    type: 'UPDATE_CLICKED',
+    clicked: id
+  }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(NameSearch);
