@@ -2,6 +2,7 @@ import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 // import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
@@ -9,7 +10,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
-// import './Map.css';
+import './Map.css';
 import 'semantic-ui-css/semantic.min.css';
 import {Icon, Popup, Image} from 'semantic-ui-react';
 const styles = {
@@ -40,11 +41,11 @@ const styles = {
     marginRigth: '1%'
   }
 };
-// const Map = ReactMapboxGl({
-//   accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg',
-//   attributionControl: false,
-//   logoPosition: 'bottom-right'
-// });
+const Map = ReactMapboxGl({
+  accessToken: 'pk.eyJ1Ijoib21lc2hvbWVzIiwiYSI6ImNqNTh2cXoxZjAxa2QzM3FxaWgxaDEzbzcifQ.rBTIS3ct7ZxUTR1HGW-cXg',
+  attributionControl: false,
+  logoPosition: 'bottom-right'
+});
 
 class MapContainer extends React.Component {
   constructor(props) {
@@ -72,20 +73,20 @@ class MapContainer extends React.Component {
 
   clusterMarker(coordinates, count, data) {
     return (
-      // <Marker coordinates={coordinates} className="marker">
-      //     <div>
-      //       <Popup
-      //         trigger={<CircleIcon />}
-      //         content="Hello. This is a mini popup"
-      //       >
-      //         <Popup.Content>
-      //           <Image.Group className="wrapper" >
-      //             {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="image" />))}
-      //           </Image.Group>
-      //         </Popup.Content>
-      //       </Popup>
-      //     </div>
-      // </Marker>
+      <Marker coordinates={coordinates} className="marker">
+          <div>
+            <Popup
+              trigger={<CircleIcon />}
+              content="Hello. This is a mini popup"
+            >
+              <Popup.Content>
+                <Image.Group className="wrapper" >
+                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="image" />))}
+                </Image.Group>
+              </Popup.Content>
+            </Popup>
+          </div>
+      </Marker>
     );
   }
   render() {
@@ -94,51 +95,53 @@ class MapContainer extends React.Component {
       return user.location[this.props.selected].length > 0;
     });
     return (
-      <div className="outer" >
-        <div className="inner" >
+      <div id="outer" >
+        <div id="inner" >
           <MapItemSelector />
           <MapFilter users={this.props.users}
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
           changeZoom={(num) => {this.props.updateZoom(num);}} />
         </div>
-        {/* <Map
-          style="mapbox://styles/mapbox/streets-v10"
-          center={this.props.center}
-          zoom={this.props.zoom}
-          attributionControl={false}
-          containerStyle={{
-            height: '100vh',
-            width: '80vw'
-          }}>
-            <ZoomControl style={styles.zoom}/>
-            <Cluster ClusterMarkerFactory={this.clusterMarker.bind(this)} maxZoom={12}>
-              {
-                  users.map((feature) => {
-                    return (
-                      <Marker
-                        key={uuidv4()}
-                        data={feature}
-                        coordinates={feature.location[this.props.selected]}
-                        className="cluster"
-                        onClick={this.handleClick.bind(this, feature.id)}
-                        >
-                        <Popup
-                          trigger={<CircleIcon />}
-                          content="Hello. This is a mini popup"
-                        >
-                          <Popup.Content>
-                            <Image.Group className="wrapper" >
-                              <Image src={feature.pictureURL} className="image" />
-                            </Image.Group>
-                          </Popup.Content>
-                        </Popup>
-                      </Marker>
-                    );
-                  }
-                )
-              }
-            </Cluster>
-        </Map> */}
+        <div>
+          <Map
+            style="mapbox://styles/mapbox/streets-v10"
+            center={this.props.center}
+            zoom={this.props.zoom}
+            attributionControl={false}
+            containerStyle={{
+              height: '100vh',
+              width: '80vw'
+            }}>
+              <ZoomControl style={styles.zoom}/>
+              <Cluster ClusterMarkerFactory={this.clusterMarker.bind(this)} maxZoom={12}>
+                {
+                    users.map((feature) => {
+                      return (
+                        <Marker
+                          key={uuidv4()}
+                          data={feature}
+                          coordinates={feature.location[this.props.selected]}
+                          className="cluster"
+                          onClick={this.handleClick.bind(this, feature.id)}
+                          >
+                          <Popup
+                            trigger={<CircleIcon />}
+                            content="Hello. This is a mini popup"
+                          >
+                            <Popup.Content>
+                              <Image.Group className="imageWrapper" >
+                                <Image src={feature.pictureURL} className="mapImage" />
+                              </Image.Group>
+                            </Popup.Content>
+                          </Popup>
+                        </Marker>
+                      );
+                    }
+                  )
+                }
+              </Cluster>
+          </Map>
+        </div>
       </div>
     );
   }
