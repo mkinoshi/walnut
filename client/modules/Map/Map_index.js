@@ -1,8 +1,8 @@
 import React from 'react';
 // import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-// import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
+// import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
@@ -47,11 +47,17 @@ const Map = ReactMapboxGl({
   logoPosition: 'bottom-right'
 });
 
+const mapList = [
+  'mapbox://styles/mapbox/streets-v10',
+  'mapbox://styles/mapbox/satellite-v9',
+  'mapbox://styles/mapbox/dark-v9'
+];
 class MapContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isShow: true,
+      mapInd: 0
     };
   }
 
@@ -81,7 +87,7 @@ class MapContainer extends React.Component {
             >
               <Popup.Content>
                 <Image.Group className="wrapper" >
-                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="image" />))}
+                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="mapImage" />))}
                 </Image.Group>
               </Popup.Content>
             </Popup>
@@ -94,6 +100,7 @@ class MapContainer extends React.Component {
     const users = this.props.users.filter((user) => {
       return user.location[this.props.selected].length > 0;
     });
+    console.log('mapind', this.state.mapInd);
     return (
       <div id="outer" >
         <div id="inner" >
@@ -104,15 +111,19 @@ class MapContainer extends React.Component {
         </div>
         <div>
           <Map
-            style="mapbox://styles/mapbox/streets-v10"
+            style={mapList[this.state.mapInd]}
             center={this.props.center}
             zoom={this.props.zoom}
             attributionControl={false}
+            id="realmap"
             containerStyle={{
-              height: '100vh',
+              height: '92vh',
               width: '80vw'
             }}>
-              <ZoomControl style={styles.zoom}/>
+              <ZoomControl style={styles.zoom} className="zoomControl" style={{right: '5%'}}/>
+              <div className="mapWrapper" onClick={() => {this.setState({mapInd: (this.state.mapInd + 1) % 3});}}>
+                <Icon name="map outline" className="mapIcon" />
+              </div>
               <Cluster ClusterMarkerFactory={this.clusterMarker.bind(this)} maxZoom={12}>
                 {
                     users.map((feature) => {
