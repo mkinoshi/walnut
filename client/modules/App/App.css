@@ -1,0 +1,18 @@
+.ui.menu {
+    border-radius: 0px;
+}
+
+.logoHolder {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+}
+
+.logo {
+    color: #a67759;
+    font-size: 42px;
+}
+
+.tabs {
+    color: #000000;
+}

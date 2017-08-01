@@ -22,14 +22,14 @@ const styles = {
   postOuter: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#0D9ED3'
+    backgroundColor: '#a67759'
   },
   outer: {
     paddingTop: '1%',
     paddingLeft: '1%',
     paddingRight: '1%',
     paddingBottom: '1%',
-    backgroundColor: '#0D9ED3',
+    backgroundColor: '#a67759',
     width: '50%',
     marginLeft: '25%'
   },
@@ -143,8 +143,8 @@ class NewPostContainer extends React.Component {
     };
 
     return (
-      <div className="col-xs-6 col-xs-offset-3" style={styles.outer}>
-        <div className="newPost" style={styles.post}>
+      <div className="newPost col-xs-6 col-xs-offset-3" style={styles.outer}>
+        <div style={styles.post}>
           <textarea id="textarea1"
             style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}
             value={this.state.postBody}
