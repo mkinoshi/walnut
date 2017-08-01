@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './modules/App/App_index';
+import Auth from './modules/Auth/Auth_index';
 import { createStore, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import rootReducer from './reducers/index';
@@ -21,7 +22,7 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider>
-        <App />
+        <Auth />
     </MuiThemeProvider>
   </Provider>,
    document.getElementById('root'));
