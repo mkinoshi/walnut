@@ -42,15 +42,29 @@ const userObj = {
     {name: 'design', data: []}
   ],
   tags: [],
-  hasProfile: false
+  hasProfile: false,
+  isFetching: false
 };
 
 
 
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
+    case 'USER_IS_FETCHING':
+      return {
+        ...state,
+        isFetching: true
+      };
     case 'GET_USER_DATA_DONE':
-      return action.data;
+      return {
+        ...action.user,
+        isFetching: false
+      };
+    case 'SET_USER':
+      return {
+        ...action.user,
+        isFetching: false
+      };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {
         ...state,

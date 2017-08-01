@@ -5,11 +5,8 @@ import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
 import EditProfile from '../EditProfile/EditProfile_index';
-import userDataThunk from '../../thunks/user_thunks/userDataThunk';
-import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
-import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
-
-
+import getApp from '../../thunks/app_thunks/getAppThunk';
+import getCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
 
 const styles = {
   App: {
@@ -20,16 +17,15 @@ const styles = {
 };
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
 
   componentWillMount() {
-    console.log('will App');
-    this.props.getUser();
-    this.props.getComs();
+    if (localStorage.getItem('user')) {
+      this.props.getCommunities();
+      this.props.setUser();
+    } else {
+      console.log('vfddv');
+      this.props.getApp();
+    }
   }
 
   render() {
@@ -51,18 +47,19 @@ class App extends React.Component {
 
 
 App.propTypes = {
-  getUser: PropTypes.func,
-  getComs: PropTypes.func,
-  getDiscoverContent: PropTypes.func
+  getApp: PropTypes.func,
+  checkApp: PropTypes.func,
+  getCommunities: PropTypes.func,
+  setUser: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => dispatch(userDataThunk()),
-  getComs: () => getAllCommunitiesThunk(dispatch),
-  getDiscoverContent: () => discoverLoadThunk(dispatch)
+  getApp: () => dispatch(getApp()),
+  getCommunities: () => dispatch(getApp()),
+  setUser: () => dispatch({type: 'SET_USER', user: JSON.parse(localStorage.getItem('user'))})
 });
 
 
