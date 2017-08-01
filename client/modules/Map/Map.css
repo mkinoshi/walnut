@@ -7,12 +7,13 @@
   width: 80vw;
 }
 
-.outer {
+#outer {
   display: flex;
   flex-direction: row;
+  height: 92vh
 }
 
-.inner {
+#inner {
   display: flex;
   flex-direction: column;
   margin-left: 1%;
@@ -32,6 +33,7 @@
   margin-top: 5%;
   margin-right: 1%;
 }
+
 
 .my-autocomplete-container {
   position: fixed;
@@ -56,17 +58,72 @@
   margin-top: 10%;
 }
 
-image {
+.mapImage {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+}
+
+.imageWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+#scrollbar {
+  height: 80vh;
+  width: 20vw;
+}
+
+.clicked {
+  background: orange;
+}
+
+.zoomControl {
+  right: 5%;
+}
+#PlacesAutocomplete__root {
+  height: 36px;
+}
+#PlacesAutocomplete__root input {
+  border-radius: 5px;
+}
+
+#PlacesAutocomplete__root input::placeholder {
+  font-family: 'Lato';
+  color: '#aaa';
+}
+
+.mapWrapper {
+  position: absolute !important;
+  z-index: 9 !important;
+  top: 70px !important;
+  right: 5% !important;
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  background-color: white;
+}
+i.icon.map {
+  font-size: 20px;
+  color: 'white';
+  margin: 2px 1px 2px 1px;
+}
+/* .mapboxgl-canvas {
+  height: calc(100vh - 58.12px);
+} */
+
+/*
+.image {
   width: 15%;
   height: 15%;
 }
 
-listOuter {
+.listOuter {
   display: flex;
   flex-direction: row;
   border-width: 1px;
   margin-bottom: 10px;
-}
+} 
 
 disc {
   display: flex;
@@ -83,17 +140,4 @@ disc {
   margin-right: auto;
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-.image {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-}
-
-.clicked {
-  background: orange;
-}
+*/

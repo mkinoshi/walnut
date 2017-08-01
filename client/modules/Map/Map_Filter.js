@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import 'semantic-ui-css/semantic.min.css';
 import {Button} from 'semantic-ui-react';
-
+import './Map.css';
 class MapFilter extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +47,7 @@ class MapFilter extends React.Component {
             <NameSearch />
           </div>
         }
-        <Scrollbars style={{ width: '20vw', height: '60vh' }}>
+        <Scrollbars id="scrollbar" style={{height: '80vh', width: '20vw'}}>
           <div className="filterOuter" >
             {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
               <MapCard

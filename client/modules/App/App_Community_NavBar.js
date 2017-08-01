@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Icon, Menu, Image } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-
+import './App_Nav.css';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Navbar extends React.Component {
       title = 'missing';
     }
     return (
-            <Menu icon size="small">
+            <Menu icon size="small" id="nav_wrapper">
               <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
                 <Link to={'/app/walnuthome'}>
                   <Icon name="home" />
