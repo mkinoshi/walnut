@@ -6,6 +6,27 @@ import Promise from 'promise';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
+
+router.get('/get/app', (req, res) => {
+  User.findById(req.user._id)
+      .populate('communities')
+      .populate('currentCommunity')
+      .then((response) => {
+        console.log('get user success response in middleware', response);
+        Community.find()
+          .then((communities) => {
+            res.json({user: response, communities: communities});
+          })
+          .catch((err) => {
+            res.json({error: err});
+          });
+      })
+      .catch((err) => {
+        console.log('get user error', err);
+        res.json({data: null});
+      });
+});
+
 router.get('/user', (req, res) => {
   console.log('req.user', req.user);
   User.findById(req.user._id)
