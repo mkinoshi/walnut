@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from '../Directory.css';
-
+import Header from './Directory_Profile_Header';
 
 
 class Profile extends React.Component {
@@ -12,15 +12,9 @@ class Profile extends React.Component {
   }
 
   render() {
-    if (this.props.user) {
-      return (
+    return (
         <div className="ProfileContainer">
-
-        </div>
-      );
-    } return (
-        <div className="ProfileContainer">
-          <h1> I am the Profile </h1>
+          <Header />
         </div>
     );
   }

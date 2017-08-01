@@ -2,7 +2,7 @@ import React from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import './Map.css';
 class LocationSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -26,8 +26,9 @@ class LocationSearch extends React.Component {
 
   handleFormSubmit(event) {
     // event.preventDefault();
-
-    geocodeByAddress(this.state.address)
+    console.log(event);
+    this.setState({address: event});
+    geocodeByAddress(event)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
         // console.log('here', latLng);

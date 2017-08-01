@@ -53,9 +53,9 @@ app.use(function(req, res, next) {
 });
 const corsOptions = {
   origin: 'http://localhost:3000'
-}
+};
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 // Passport
 app.use(session({

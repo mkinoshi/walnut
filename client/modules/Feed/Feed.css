@@ -1,4 +1,14 @@
-
+.newPost {
+    padding: 1%;
+    background-color: #a67759;
+    width: 50%;
+    margin-left: 25%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #a67759;
+    box-shadow: 0 1px 1px 1px #c9c9c9;
+    border-radius: 3px;
+}
 .uploadButtonIcon {
     font-size: 30px !important;
 } 
