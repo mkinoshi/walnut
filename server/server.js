@@ -14,6 +14,19 @@ var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
 
+//firebase stuff
+var firebase = require('firebase');
+var config = {
+        apiKey: "AIzaSyAlvJ_fjJc3-4vzMkDfG4EQ81f02n8_0eE",
+        authDomain: "walnut-1500128476052.firebaseapp.com",
+        databaseURL: "https://walnut-1500128476052.firebaseio.com",
+        projectId: "walnut-1500128476052",
+        storageBucket: "walnut-1500128476052.appspot.com",
+        messagingSenderId: "7094437893"
+      };
+firebase.initializeApp(config);
+var provider = new firebase.auth.GoogleAuthProvider();
+
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -56,6 +69,27 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+//firebase sdk
+firebase.auth().signInWithRedirect(provider);
+firebase.auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // ...
+  }
+  // The signed-in user info.
+  var user = result.user;
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
 
 // Passport
 app.use(session({
