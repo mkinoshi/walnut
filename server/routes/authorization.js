@@ -87,6 +87,7 @@ function auth(passport) {
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
+      console.log()
       if(req.user.hasProfile) {
           if (req.user.currentCommunity) {
               User.findById(req.user._id)
