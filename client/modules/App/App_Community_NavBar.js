@@ -7,7 +7,6 @@ import { Icon, Menu, Image } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './App.css';
 
-
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,7 @@ class Navbar extends React.Component {
       title = 'missing';
     }
     return (
-            <Menu icon size="small">
+            <Menu icon size="small" id="nav_wrapper">
               <Menu.Item name="Home" active={this.state.activeItem === 'Home'} onClick={() => this.handleItemClick}>
                 <Link className="tabs" to={'/app/walnuthome'}>
                   <Icon name="home" />
