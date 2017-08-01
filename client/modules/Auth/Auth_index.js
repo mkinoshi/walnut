@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Login from './Auth_Login';
 import Register from './Auth_Registration';
-import WalnutHomeContainer from './App_Walnut_Home_Container';
+import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 
 class Auth extends React.Component {
   constructor() {

@@ -7,27 +7,32 @@ class Register extends React.Component {
   constructor() {
     super();
     this.state = {
-        fName: '',
-        lName: '',
-        email: '',
-        password: '',
-        repeat: ''
+      fName: '',
+      lName: '',
+      email: '',
+      password: '',
+      repeat: ''
     };
   }
 
   handleFnameChange(e) {
+    this.setState({fName: e.target.value});
   }
 
   handleLnameChange(e) {
+    this.setState({lName: e.target.value});
   }
 
   handleEmailChange(e) {
+    this.setState({email: e.target.value});
   }
 
   handlePasswordChange(e) {
+    this.setState({password: e.target.value});
   }
 
   handleRepeatChange(e) {
+    this.setState({repeat: e.target.value});
   }
 
   register() {
