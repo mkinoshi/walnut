@@ -6,6 +6,7 @@ var Tag = models.Tag;
 const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
+var firebase = require('firebase');
 
 
 /* GET home page. */
@@ -39,6 +40,13 @@ function auth(passport) {
       res.status(400);
       //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
     } else {
+      firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log('firebase error', error);
+        // ...
+      });
       var new_user = new User({
         fullName: req.body.fname + ' ' + req.body.lname,
         email: req.body.email,
@@ -55,9 +63,9 @@ function auth(passport) {
       });
       return new_user.save()
       .then((doc) => {
-        console.log(doc);
+        // console.log(doc);
         res.status(200);
-        res.redirect('/auth/login')
+        res.redirect('/')
       })
       .catch((err) => {
         console.log(err);
@@ -69,12 +77,72 @@ function auth(passport) {
     res.render('login');
   });
 
-  router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/auth/login'
-  }));
+  router.post('/auth/login', function(req, res) {
+    firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
+    .then(() => {
+      console.log('login worked');
+      res.redirect('/');
+    })
+    .catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+      if (error) {
+        console.log('could not login', error);
+        res.redirect('/auth/login');
+      }
+    });
+  //   passport.authenticate('local', {
+  //   successRedirect: '/',
+  //   failureRedirect: '/auth/login'
+  // })
+  });
 
-  router.get('/auth/facebook', passport.authenticate('facebook'));
+  router.get('/auth/facebook', function(req, res) {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    console.log('got here');
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      var token = result.credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      console.log('facebook login worked', user);
+    }).catch(function(error) {
+      console.log('facebook login failed', error);
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+    // firebase.auth().signInWithRedirect(provider);
+    // firebase.auth().getRedirectResult().then(function(result) {
+    //   if (result.credential) {
+    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+    //     var token = result.credential.accessToken;
+    //     // ...
+    //   }
+    //   // The signed-in user info.
+    //   var user = result.user;
+    //   console.log('facebook login worked', user);
+    // }).catch(function(error) {
+    //   // Handle Errors here.
+    //   console.log('facebook login failed', error);
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // The email of the user's account used.
+    //   var email = error.email;
+    //   // The firebase.auth.AuthCredential type that was used.
+    //   var credential = error.credential;
+    //   // ...
+    // });
+
+    // passport.authenticate('facebook')
+  });
 
   router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {
@@ -84,25 +152,29 @@ function auth(passport) {
   );
 
   router.get('/', function(req, res, next) {
-    if (!req.user) {
-      res.redirect('/auth/login')
-    } else {
-      if(req.user.hasProfile) {
-          if (req.user.currentCommunity) {
-              User.findById(req.user._id)
-                  .populate('currentCommunity')
-                  .then((user) => {
-                      const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-                      res.redirect(url);
-                  })
-          }
-          else {
-            res.redirect('/app/walnuthome')
-          }
-      } else{
-          res.redirect('/app/editprofile');
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log('user was logged in', user);
+        // if(req.user.hasProfile) {
+        //   if (req.user.currentCommunity) {
+        //       User.findById(req.user._id)
+        //           .populate('currentCommunity')
+        //           .then((user) => {
+        //               const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+        //               res.redirect(url);
+        //           })
+        //   }
+        //   else {
+        //     res.redirect('/app/walnuthome')
+        //   }
+        // } else{
+        //   res.redirect('/app/editprofile');
+        // }
+      } else {
+        console.log('user not validated');
+        res.redirect('/auth/login')
       }
-    }
+    });
   });
 
   router.get('/logout', function(req, res) {
