@@ -88,7 +88,9 @@ class Post extends React.Component {
     return (
       <Card className="postOuter" >
       <Card.Content className="postContent">
-        <Image floated="left" size="mini" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+        <Image floated="left"
+               size="mini"
+               src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
         <Card.Header>
           {this.props.postData.username}
         </Card.Header>
