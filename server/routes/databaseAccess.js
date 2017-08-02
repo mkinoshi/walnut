@@ -110,8 +110,14 @@ router.post('/join/community', (req, res) => {
       user.currentCommunity = req.body.communityId;
       return user.save();
     })
-    .then((response2) => {
-      res.json({success: true, community: joined, user: response2});
+    .then((savedUser) => {
+      const opts = [
+        { path: 'communities'}
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({success: true, community: joined, user: populatedUser});
     })
     .catch((err) => {
       console.log('join error', err);
