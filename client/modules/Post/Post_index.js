@@ -108,6 +108,7 @@ class Post extends React.Component {
         renderPdfModal={(data) => this.renderPdfModal(data)}/>
         : null}
 
+        {(this.state.lightBoxData !== '') ?
         <Lightbox
           images={[{
             src: this.state.lightBoxData.url,
@@ -116,6 +117,8 @@ class Post extends React.Component {
           isOpen={this.state.lightBoxData !== ''}
           onClose={() => this.closeLightbox()}
           />
+          : null
+        }
 
         <Modal
         open={this.state.pdfModalData !== ''}
