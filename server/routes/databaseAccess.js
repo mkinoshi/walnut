@@ -22,7 +22,6 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('body', req.body);
   const tagModels = req.body.defaultFilters.map((filter) =>
       new Tag({
         name: filter

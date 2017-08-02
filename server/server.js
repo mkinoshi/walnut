@@ -14,6 +14,13 @@ var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
 
+var admin = require('firebase-admin');
+var serviceAccount = require('./serviceAccountKey.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://walnut-1500128476052.firebaseio.com'
+})
+
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {

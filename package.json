@@ -47,6 +47,7 @@
     "express-validator": "^3.2.1",
     "file-loader": "^0.11.2",
     "firebase": "^4.2.0",
+    "firebase-admin": "^5.1.0",
     "google-locations": "^0.2.0",
     "hbs": "^4.0.1",
     "history": "^4.6.3",
