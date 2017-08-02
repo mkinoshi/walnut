@@ -111,7 +111,7 @@ router.post('/join/community', (req, res) => {
       return user.save();
     })
     .then((response2) => {
-      res.json({success: true, community: joined});
+      res.json({success: true, community: joined, user: response2});
     })
     .catch((err) => {
       console.log('join error', err);

@@ -54,10 +54,11 @@ Community.propTypes = {
   updateLocation: PropTypes.func,
 };
 
-
+const mapStateToProps = () => ({
+});
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
 });
 
 
-export default connect(mapDispatchToProps)(Community);
+export default connect(mapStateToProps, mapDispatchToProps)(Community);
