@@ -93,9 +93,6 @@ router.post('/join/community', (req, res) => {
     .then((community) => {
       if (community.users.indexOf(req.user._id) === -1) {
         community.users.push(req.user._id);
-        // req.user.queries.forEach((quer) => {
-        //     if (!community.queries.)
-        // })
       }
       joined = community;
       return community.save();
@@ -111,7 +108,9 @@ router.post('/join/community', (req, res) => {
       return user.save();
     })
     .then((response2) => {
-      res.json({success: true, community: joined});
+      response2.populate('communities');
+      console.log(response2);
+      res.json({success: true, data: response2});
     })
     .catch((err) => {
       console.log('join error', err);
@@ -159,7 +158,7 @@ router.get('/get/discoverinfo', (req, res) => {
           const otherFilters = community.otherTags;
           let posts = [];
           Post.find({community: req.user.currentCommunity})
-            .limit(20)
+            .limit(10)
             .sort({createdAt: -1})
             .populate('tags')
             .populate('comments')
@@ -518,6 +517,8 @@ router.post('/save/iscreated', (req, res) => {
                return response.save();
              })
             .then((userProfile) => {
+              console.log(userProfile);
+              userProfile.populate('communities');
               res.json({success: true, data: userProfile});
             })
             .catch((err) => {
@@ -569,46 +570,6 @@ router.get('/get/allusersdirectory', (req, res) => {
       });
 });
 
-router.get('/get/specprofile', (req, res) => {
-  User.findById(req.user._id)
-         .then((userProfile) => {
-           const data = {
-             isCreated: userProfile.isCreated,
-             head: {
-               fullName: userProfile.fullName,
-               tags: userProfile.tags,
-               blurb: userProfile.blurb,
-               profileURL: userProfile.profileURL
-             },
-             info: {
-               about: {
-                 education: userProfile.education,
-                 majors: userProfile.majors,
-                 currentOccupation: userProfile.currentOccupation,
-                 currentOccupationCity: userProfile.currentOccupationCity,
-                 pastOccupations: userProfile.pastOccupations
-               },
-               contact: {
-                 email: userProfile.email,
-                 address: userProfile.address,
-                 phone: userProfile.phone
-               },
-               interests: userProfile.interests,
-               projects: userProfile.projects,
-               links: userProfile.links
-             },
-             main: {
-               portfolio: userProfile.portfolio,
-               story: userProfile.story
-             }
-           };
-           res.json({data: data});
-         })
-         .catch((err) => {
-           console.log(err);
-           res.json({data: null});
-         });
-});
 
 router.post('/update/location', (req, res) => {
   User.findById(req.user._id)

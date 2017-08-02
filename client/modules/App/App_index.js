@@ -49,8 +49,6 @@ App.propTypes = {
   setUser: PropTypes.func
 };
 
-const mapStateToProps = (state) => ({
-});
 
 const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
@@ -58,4 +56,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

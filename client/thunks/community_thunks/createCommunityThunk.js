@@ -3,8 +3,6 @@
  */
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
-import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
-import userDataThunk from '../../thunks/user_thunks/userDataThunk';
 
 const createCommunityThunk = (image, title, filters) => (dispatch) => {
   axios.post(URL + 'db/create/community', {
@@ -13,8 +11,7 @@ const createCommunityThunk = (image, title, filters) => (dispatch) => {
     defaultFilters: filters
   })
     .then((response) => {
-      discoverLoadThunk(dispatch);
-      userDataThunk(dispatch);
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) => {
       console.log('probably failed to create community', err);

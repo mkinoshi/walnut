@@ -59,5 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
 });
 
-
-export default connect(mapDispatchToProps)(Community);
+export default connect(null, mapDispatchToProps)(Community);

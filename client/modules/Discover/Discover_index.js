@@ -32,8 +32,8 @@ Home.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getDiscoverContent: () => discoverLoadThunk(dispatch)
+  getDiscoverContent: () => dispatch(discoverLoadThunk())
 });
 
-export default connect(mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);
 

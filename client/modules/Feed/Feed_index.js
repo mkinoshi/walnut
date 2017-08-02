@@ -149,12 +149,12 @@ class Feed extends React.Component {
             {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
             </div>
             <div className="col-xs-9" >
-              {(this.props.data.isFetching !== false) ?
+              {(this.props.data.isFetching !== true) ?
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={() => this._loadMore()}
                   hasMore={this.props.hasMore}
-                  threshold={500}
+                  threshold={600}
                   loader={<div className="loader">Loading ...</div>}
                   >
                   {filteredPosts.map((post) => (
@@ -193,7 +193,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
-  getData: () => discoverLoadThunk(dispatch),
+  getData: () => dispatch(discoverLoadThunk()),
   getNext10: (param) => nextTenThunk(param)(dispatch)
 });
 

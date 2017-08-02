@@ -151,7 +151,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  joinCommunity: (id) => joinCommunityThunk(id)(dispatch),
+  joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => createCommunityThunk(image, title, filters)(dispatch),
   changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch),
   getAllCommunities: () => dispatch(getAllCommunities())
