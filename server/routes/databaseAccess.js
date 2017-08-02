@@ -8,13 +8,31 @@ import firebaseApp from '../../client/firebase';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
-router.get('/user', (req, res) => {
-  console.log('req.user', req.user);
+
+router.get('/get/app', (req, res) => {
   User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success response in middleware', response);
+        Community.find()
+          .then((communities) => {
+            res.json({user: response, communities: communities});
+          })
+          .catch((err) => {
+            res.json({error: err});
+          });
+      })
+      .catch((err) => {
+        console.log('get user error', err);
+        res.json({data: null});
+      });
+});
+
+router.get('/user', (req, res) => {
+  User.findById(req.user._id)
+      .populate('communities')
+      .populate('currentCommunity')
+      .then((response) => {
         res.json({data: response});
       })
       .catch((err) => {
@@ -24,7 +42,6 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('body', req.body);
   const tagModels = req.body.defaultFilters.map((filter) =>
       new Tag({
         name: filter
@@ -40,7 +57,6 @@ router.post('/create/community', (req, res) => {
       defaultTags: values.map((val) => val._id),
       otherTags: []
     });
-    console.log('upper', values);
     return community.save();
   })
     .then((community) => {
@@ -62,7 +78,6 @@ router.post('/create/community', (req, res) => {
                     });
                     Promise.all(tags.map((tag) => tag.save()))
                     .then((values) => {
-                      console.log('lowest layer', values, community);
                       res.json({success: true, community: community});
                     });
                   });
@@ -80,9 +95,6 @@ router.post('/join/community', (req, res) => {
     .then((community) => {
       if (community.users.indexOf(req.user._id) === -1) {
         community.users.push(req.user._id);
-        // req.user.queries.forEach((quer) => {
-        //     if (!community.queries.)
-        // })
       }
       joined = community;
       return community.save();
@@ -91,16 +103,20 @@ router.post('/join/community', (req, res) => {
       return User.findById(req.user._id);
     })
     .then((user) => {
-      console.log('current 1', req.body.communityId);
       if (user.communities.indexOf(req.body.communityId) === -1) {
         user.communities.push(req.body.communityId);
       }
       user.currentCommunity = req.body.communityId;
       return user.save();
     })
-    .then((response2) => {
-      console.log(req.user.fullName + 'has successfully joined the community');
-      res.json({success: true, community: joined});
+    .then((savedUser) => {
+      const opts = [
+        { path: 'communities'}
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({success: true, community: joined, user: populatedUser});
     })
     .catch((err) => {
       console.log('join error', err);
@@ -148,14 +164,13 @@ router.get('/get/discoverinfo', (req, res) => {
           const otherFilters = community.otherTags;
           let posts = [];
           Post.find({community: req.user.currentCommunity})
-            .limit(20)
+            .limit(10)
             .sort({createdAt: -1})
             .populate('tags')
             .populate('comments')
             .populate('comments.createdBy')
             .populate('createdBy')
             .then((postArr) => {
-              console.log('posts length', postArr.length);
               posts = postArr.map((postObj) => {
                 return {
                   postId: postObj._id,
@@ -180,7 +195,6 @@ router.get('/get/discoverinfo', (req, res) => {
                   })
                 };
               });
-              // console.log('here', filters, posts);
               res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
             })
             .catch((err) => {
@@ -196,7 +210,6 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/next10', (req, res) => {
-  console.log(req.query);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
@@ -205,7 +218,6 @@ router.get('/get/next10', (req, res) => {
             return user === req.user._id;
           });
           if (community.length === 0) {
-            console.log('not in community error');
             res.json({error: 'No authorization'});
           } else{
             const filters = community.tags;
@@ -219,7 +231,6 @@ router.get('/get/next10', (req, res) => {
                     .populate('comments.createdBy')
                     .populate('createdBy')
                     .then((postArr) => {
-                      console.log('next post', postArr);
                       posts = postArr.map((postObj) => {
                         return {
                           postId: postObj._id,
@@ -338,10 +349,8 @@ router.post('/save/postlike', (req, res) => {
     .then((response) => {
       if (response.likes.indexOf(req.user._id) > -1) {
         const idx = response.likes.indexOf(req.user._id);
-        console.log('inside', idx);
         response.likes.splice(idx, 1);
       } else {
-        console.log('outside', response.likes, req.user._id, response.likes.indexOf(req.user._id));
         response.likes.push(req.user._id);
       }
       response.save()
@@ -383,14 +392,13 @@ router.get('/get/quote', (req, res) => {
 });
 
 router.post('/save/blurb', (req, res) => {
-  User.fidnById(req.user._id)
+  User.findById(req.user._id)
          .then((response) => {
            response.blurb = req.body.blurbBody;
            return response.save();
          })
-         .then((resp) => {
-           console.log(resp);
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -404,8 +412,8 @@ router.post('/save/tags', (req, res) => {
            response.tags = req.body.tagsArray;
            return response.save();
          })
-         .then(() => {
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -474,7 +482,6 @@ router.post('/save/about', (req, res) => {
            return globalResponse.save();
          })
          .then((user) => {
-           console.log('about', user);
            res.json({success: true, user: user});
          })
          .catch((err) => {
@@ -508,8 +515,8 @@ router.post('/save/links', (req, res) => {
            response.links = req.body.linksArray;
            return response.save();
          })
-         .then(() => {
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -524,7 +531,7 @@ router.post('/save/iscreated', (req, res) => {
                return response.save();
              })
             .then((userProfile) => {
-              console.log('user profile', userProfile);
+              userProfile.populate('communities');
               res.json({success: true, data: userProfile});
             })
             .catch((err) => {
@@ -558,7 +565,6 @@ router.get('/get/allusersmap', (req, res) => {
             education: user.education
           };
         });
-        console.log('got here');
         res.json({data: users});
       })
       .catch((err) => {
@@ -577,47 +583,6 @@ router.get('/get/allusersdirectory', (req, res) => {
       });
 });
 
-router.get('/get/specprofile', (req, res) => {
-  User.findById(req.user._id)
-         .then((userProfile) => {
-           console.log(userProfile);
-           const data = {
-             isCreated: userProfile.isCreated,
-             head: {
-               fullName: userProfile.fullName,
-               tags: userProfile.tags,
-               blurb: userProfile.blurb,
-               profileURL: userProfile.profileURL
-             },
-             info: {
-               about: {
-                 education: userProfile.education,
-                 majors: userProfile.majors,
-                 currentOccupation: userProfile.currentOccupation,
-                 currentOccupationCity: userProfile.currentOccupationCity,
-                 pastOccupations: userProfile.pastOccupations
-               },
-               contact: {
-                 email: userProfile.email,
-                 address: userProfile.address,
-                 phone: userProfile.phone
-               },
-               interests: userProfile.interests,
-               projects: userProfile.projects,
-               links: userProfile.links
-             },
-             main: {
-               portfolio: userProfile.portfolio,
-               story: userProfile.story
-             }
-           };
-           res.json({data: data});
-         })
-         .catch((err) => {
-           console.log(err);
-           res.json({data: null});
-         });
-});
 
 router.post('/update/location', (req, res) => {
   User.findById(req.user._id)
@@ -662,7 +627,6 @@ router.post('/save/tag', (req, res) => {
           }
         })
         .then((response2) => {
-          console.log('saving tag success', response, response2);
           res.json({success: true, tag: response});
         })
         .catch((err) => {
@@ -677,8 +641,9 @@ router.post('/save/tag', (req, res) => {
 });
 
 router.post('/update/user', (req, res) => {
-  console.log('req.body', req.body);
   User.findByIdAndUpdate(req.user._id, req.body.data)
+      .populate('currentCommunity')
+      .populate('communities')
       .then((response) => {
         res.json({success: true, data: response});
       })
@@ -688,10 +653,8 @@ router.post('/update/user', (req, res) => {
 });
 
 router.post('/update/portfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
-        console.log(user);
         const obj = {
           data: [],
           name: req.body.data
@@ -700,7 +663,6 @@ router.post('/update/portfoliotabs', (req, res) => {
         return user.save();
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {
@@ -709,7 +671,6 @@ router.post('/update/portfoliotabs', (req, res) => {
 });
 
 router.post('/update/changeportfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
         user.portfolio[req.body.index].name = req.body.name;
@@ -717,7 +678,6 @@ router.post('/update/changeportfoliotabs', (req, res) => {
         return user.save();
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {
@@ -726,7 +686,6 @@ router.post('/update/changeportfoliotabs', (req, res) => {
 });
 
 router.post('/update/removeportfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
         let index = - 1;
@@ -743,7 +702,6 @@ router.post('/update/removeportfoliotabs', (req, res) => {
         return null;
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {

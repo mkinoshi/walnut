@@ -11,8 +11,6 @@ class LocationSearch extends React.Component {
   }
 
   handleFormEnter(event) {
-    // event.preventDefault();
-    console.log(event);
     geocodeByAddress(this.state.address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
@@ -25,13 +23,10 @@ class LocationSearch extends React.Component {
 
 
   handleFormSubmit(event) {
-    // event.preventDefault();
-    console.log(event);
     this.setState({address: event});
     geocodeByAddress(event)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        // console.log('here', latLng);
         this.props.updateCenter([latLng.lng, latLng.lat]);
       })
       .catch(error => console.error('Error', error));

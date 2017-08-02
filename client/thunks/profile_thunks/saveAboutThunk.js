@@ -12,8 +12,7 @@ const saveAboutThunk = (about) => (dispatch) => {
     placesLived: about.places
   })
     .then((response) => {
-      console.log('success in save about', response);
-      dispatch({type: 'GET_USER_DATA_DONE', data: response.data.user});
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) =>{
       console.log('error in saving about', err);

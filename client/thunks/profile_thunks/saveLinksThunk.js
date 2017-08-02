@@ -9,7 +9,6 @@ const saveLinksThunk = (links) => (dispatch) => {
     linksArray: links
   })
     .then((success) => {
-      console.log('success in save', success);
       dispatch({type: 'GET_USER_DATA'});
     })
     .catch((err) =>{

@@ -65,12 +65,10 @@ class PortfolioContainer extends React.Component {
   }
 
   onDocumentComplete(pages) {
-    console.log('this should be called at end', pages);
     this.setState({ page: 1, pages: pages });
   }
 
   onPageComplete(page) {
-    console.log(page);
     this.setState({ page: page });
   }
 

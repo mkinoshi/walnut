@@ -47,7 +47,6 @@ class LinksContainer extends React.Component {
 
   handleSave() {
     this.setState({edit: false});
-    console.log('the state that gets sent to middleware', this.state);
     this.props.saveLinks(this.state.links);
   }
 

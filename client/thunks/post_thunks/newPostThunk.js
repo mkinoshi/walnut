@@ -9,7 +9,6 @@ const newPostThunk = (postBody, postTags) => (dispatch) => {
     postTags: postTags
   })
     .then((newPost) => {
-      console.log('new Post', newPost);
       discoverLoadThunk(dispatch);
     })
     .catch((err) =>{

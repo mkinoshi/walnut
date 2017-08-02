@@ -6,13 +6,7 @@ var Tag = models.Tag;
 const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
-var firebase = require('firebase');
-
-
-/* GET home page. */
-function auth(passport) {
-
-  console.log(__dirname);
+var adminApp = require('../firebaseAdmin');
 
   router.get('/auth/signup', function(req, res) {
     Tag.find({}, function(err, tags) {
@@ -27,29 +21,18 @@ function auth(passport) {
     })
   })
   // TODO: TEST REGISTRATION
-  router.post('/auth/signup', function(req, res) {
-    req.check('username', "username cannot be empty").notEmpty();
-    req.check('password', "password cannot be empty").notEmpty();
-    req.check('passwordRepeat', "password has to match with the one you typed").notEmpty().equals(req.body.password);
-    var errors = req.validationErrors();
-    if (errors) {
-      var error_msg = {};
-      errors.forEach(function(error) {
-        error_msg[error.param] = error.msg
-      })
-      res.status(400);
-      //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
-    } else {
-      firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log('firebase error', error);
-        // ...
-      });
+  router.post('/signup', function(req, res) {
+    console.log('req.body.token', req.body.token);
+    console.log('adminApp', adminApp);
+    req.session.userToken = req.body.token;
+    console.log('req.session.userToken', req.session.userToken);
+    adminApp.auth().verifyIdToken(req.body.token)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      console.log('uid', uid);
       var new_user = new User({
+        firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
-        email: req.body.email,
         username: req.body.username,
         password: req.body.password,
         preferences: req.body.tags,
@@ -59,18 +42,24 @@ function auth(passport) {
           {name: 'code', data: []},
           {name: 'design', data: []}
         ],
+        contact: {
+          phones: [],
+          email: [req.body.email]
+        },
         pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
       });
       return new_user.save()
       .then((doc) => {
-        // console.log(doc);
         res.status(200);
         res.redirect('/')
       })
       .catch((err) => {
         console.log(err);
       })
-    }
+    }).catch(function(error) {
+      // Handle error
+      console.log('error with admin auth', error);
+    });
   });
 
   router.get('/auth/login', function(req, res) {
@@ -144,12 +133,6 @@ function auth(passport) {
     // passport.authenticate('facebook')
   });
 
-  router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/app/walnuthome');
-    }
-  );
 
   // router.get('/', function(req, res, next) {
   //   firebase.auth().onAuthStateChanged(function(user) {
@@ -182,8 +165,5 @@ function auth(passport) {
     res.redirect('/auth/login');
   });
 
-  return router;
-}
-
-module.exports = auth;
+module.exports = router;
 //export default auth;

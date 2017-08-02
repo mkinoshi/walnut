@@ -7,68 +7,66 @@ import 'semantic-ui-css/semantic.min.css';
 import { Button, Header, Image, Modal, Input, Checkbox, Form, Icon } from 'semantic-ui-react';
 
 const styles = {
-    modal: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    form: {
-        flex: 1
-    },
-    loc: {
-        flex: 1
-    },
-    inline: {
-        paddingRight: '10px',
-        paddingLeft: '10px',
-        paddingBottom: '7px',
-        display: 'inline-flex'
-    },
-    title: {
-        paddingRight: '10px',
-        paddingLeft: '10px'
-    }
+  modal: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  form: {
+    flex: 1
+  },
+  loc: {
+    flex: 1
+  },
+  inline: {
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    paddingBottom: '7px',
+    display: 'inline-flex'
+  },
+  title: {
+    paddingRight: '10px',
+    paddingLeft: '10px'
+  }
 };
 
 
 class AddPlace extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            address: '',
-            open: false
-        };
+  constructor() {
+    super();
+    this.state = {
+      address: '',
+      open: false
+    };
 
-        this.onChange = (address) => this.setState({address: address});
-        this.handleChangeWhen = this.handleChangeWhen.bind(this);
-        this.addPlace = this.addPlace.bind(this);
-        this.handleLocation = this.handleLocation.bind(this);
-    }
+    this.onChange = (address) => this.setState({address: address});
+    this.handleChangeWhen = this.handleChangeWhen.bind(this);
+    this.addPlace = this.addPlace.bind(this);
+    this.handleLocation = this.handleLocation.bind(this);
+  }
 
-    addPlace() {
-        console.log('saved!', this.state);
-        this.props.addPlace(this.state);
-    }
+  addPlace() {
+    this.props.addPlace(this.state);
+  }
 
-    handleChangeWhen(e, { value }) {
-        this.setState({when: value});
-    }
+  handleChangeWhen(e, { value }) {
+    this.setState({when: value});
+  }
 
-    handleLocation(e) {
-        console.log('loc', e);
-        this.setState({address: e, location: e});
-    }
+  handleLocation(e) {
+    this.setState({address: e, location: e});
+  }
 
-    toggleModal() {
-        this.setState({open: !this.state.open});
-    }
+  toggleModal() {
+    this.setState({open: !this.state.open});
+  }
 
-    render() {
-        const inputProps = {
-            value: this.state.address,
-            onChange: this.onChange,
-            placeholder: 'Where did you live?'
-        };
-        return (
+  render() {
+    const inputProps = {
+      value: this.state.address,
+      onChange: this.onChange,
+      placeholder: 'Where did you live?'
+    };
+    return (
             <Modal trigger={<Button onClick={() => this.toggleModal()}> + Add a place you've lived</Button>} open={this.state.open}>
                 <Modal.Header>Places lived</Modal.Header>
                 <Modal.Content scrolling>
@@ -121,11 +119,11 @@ class AddPlace extends React.Component {
                 </Modal.Actions>
             </Modal>
         );
-    }
+  }
 }
 
 AddPlace.propTypes = {
-    addPlace: PropTypes.func
+  addPlace: PropTypes.func
 };
 
 

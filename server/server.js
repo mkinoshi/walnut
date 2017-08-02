@@ -14,6 +14,8 @@ var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
 
+import { adminApp } from './firebaseAdmin';
+
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -32,7 +34,7 @@ var models = require('./models/models');
 //put in dbRoutes
 var dbRoutes = require('./routes/databaseAccess.js');
 var awsRoutes = require('./routes/awsAccess.js');
-// var auth = require('./routes/authorization');
+var auth = require('./routes/authorization');
 var app = express();
 
 app.use(logger('tiny'));
@@ -53,16 +55,16 @@ app.use(function(req, res, next) {
 });
 const corsOptions = {
   origin: 'http://localhost:3000'
-}
+};
 
 app.use(cors(corsOptions));
 
 // Passport
 app.use(session({
   secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  // userToken: null
 }));
-
 
 // var hbs = require('express-handlebars')({
 //   defaultLayout: 'main',
@@ -137,16 +139,15 @@ app.use(session({
 //   }
 // ));
 
-// app.get('/', function(req,res) {
-//     res.redirect('/app/login')
-// });
-
+app.use('/auth', auth);
 app.use('/db', dbRoutes);
-app.use('/aws', awsRoutes);
+    app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
+
+
 
 
 // make this dbRoutes when we have the database running

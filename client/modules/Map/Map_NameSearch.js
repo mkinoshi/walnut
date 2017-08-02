@@ -20,11 +20,9 @@ class NameSearch extends React.Component {
     // this.props.getUserData();
   }
   handleChange(value) {
-    console.log(value);
     if (value) {
       const u = this.props.users.find((user) => {return user.fullName === value;});
       const center = u.location[this.props.selected];
-      console.log(u);
       this.props.updateClicked(u.id);
       this.props.updateCenter(center);
       this.props.updateZoom(10);

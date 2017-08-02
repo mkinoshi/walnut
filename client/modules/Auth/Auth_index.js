@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Login from './Auth_Login';
 import Register from './Auth_Registration';
-import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
+// import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
+import App from '../App/App_index';
 import { firebaseApp } from '../../firebase';
 
 const history = createBrowserHistory();
@@ -14,9 +15,9 @@ firebaseApp.auth().onAuthStateChanged(user => {
   console.log(user);
   if (user) {
     // this.context.history.push('/app/walnuthome');
-    history.push('/walnuthome');
+    history.push('/app/walnuthome');
   } else {
-    history.replace('/login');
+    history.replace('/app/login');
     // this.context.history.push('/app/login');
   }
 });
@@ -32,9 +33,9 @@ class Auth extends React.Component {
     return (
       <Router path="/" history={history}>
         <Switch>
-          <Route path="/walnuthome" component={WalnutHomeContainer} />
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/app/walnuthome" component={App} />
+          <Route path="/app/login" component={Login}/>
+          <Route path="/app/register" component={Register}/>
         </Switch>
       </Router>
     );

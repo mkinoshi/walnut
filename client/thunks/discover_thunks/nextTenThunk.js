@@ -7,7 +7,6 @@ const URL = 'http://localhost:3000/';
 const nextTenThunk = (lastOne) => (dispatch) => {
   axios.get(URL + 'db/get/next10' + '?lastOne=' + lastOne)
     .then((response) => {
-      console.log('nextTen response', response);
       dispatch({type: 'GET_NEXT_TEN_DONE',
           defaultFilters: response.data.defaultFilters,
           otherFilters: response.data.defaultFilters,

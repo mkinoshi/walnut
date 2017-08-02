@@ -116,7 +116,6 @@ class AboutContainer extends React.Component {
       degreeType: college.degreeType
     };
     copy.push(add);
-    console.log('made it college', add, copy);
     this.setState({colleges: copy});
   }
 
@@ -129,7 +128,6 @@ class AboutContainer extends React.Component {
       isCurrent: work.isCurrent
     };
     copy.push(add);
-    console.log('made it work', add, copy);
     this.setState({works: copy});
   }
 
@@ -140,7 +138,6 @@ class AboutContainer extends React.Component {
     } else {
       copy[place.when] = place.location;
     }
-    console.log('made it place', place, copy);
     this.setState({places: copy});
   }
 
@@ -153,7 +150,6 @@ class AboutContainer extends React.Component {
       isGraduated: school.graduated
     };
     copy.push(add);
-    console.log('made it School', add, copy);
     this.setState({schools: copy});
   }
 
@@ -165,20 +161,20 @@ class AboutContainer extends React.Component {
         {this.state.works.map((work, idx) => {
           if (work.isCurrent) {
             if (this.state.isEditing) {
-              return (<div>
+              return (<div key={idx}>
                 <p>Working as a {work.position} at {work.company}</p>
                 <Button secondary onClick={() => {this.handleWorkRemove(work, idx);}}>X</Button>
               </div>);
             }
-            return <p>Working as a {work.position} at {work.company}</p>;
+            return <p key={idx}>Working as a {work.position} at {work.company}</p>;
           }
           if (this.state.isEditing) {
-            return (<div>
+            return (<div key={idx}>
                 <p>Worked as a {work.position} at {work.company} </p>
                 <Button secondary onClick={() => {this.handleWorkRemove(work, idx);}}>X</Button>
               </div>);
           }
-          return <p>Worked as a {work.position} at {work.company} </p>;
+          return <p key={idx}>Worked as a {work.position} at {work.company} </p>;
         })}
         {this.state.isEditing ?
         <div>
@@ -194,37 +190,37 @@ class AboutContainer extends React.Component {
           if (!college.isGraduated) {
             if (college.attendedFor === 'Undergraduate') {
               if (this.state.isEditing) {
-                return (<div>
+                return (<div key={idx}>
                   <p>Studies {concentrations} at {college.name}</p>
                   <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
                 </div>);
               }
-              return <p>Studies {concentrations} at {college.name}</p>;
+              return <p key={idx}>Studies {concentrations} at {college.name}</p>;
             }
             if (this.state.isEditing) {
-              return (<div>
+              return (<div key={idx}>
                   <p>Earning a {college.degreeType} from {college.name}</p>
                   <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
                 </div>);
             }
-            return <p>Earning a {college.degreeType} from {college.name}</p>;
+            return <p key={idx}>Earning a {college.degreeType} from {college.name}</p>;
           }
           if (college.attendedFor === 'Undergraduate') {
             if (this.state.isEditing) {
-              return (<div>
+              return (<div key={idx}>
                 <p>Graduated from {college.name} in {college.endedAt}</p>
                 <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
               </div>);
             }
-            return (<p>Graduated from {college.name} in {college.endedAt}</p>);
+            return (<p key={idx}>Graduated from {college.name} in {college.endedAt}</p>);
           }
           if (this.state.isEditing) {
-            return (<div>
+            return (<div key={idx}>
                 <p>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>
                 <Button secondary onClick={() => {this.handleCollegeRemove(college, idx);}}>X</Button>
               </div>);
           }
-          return <p>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>;
+          return <p key={idx}>Earned a {college.degreeType} from {college.name} in {college.endedAt}</p>;
         }) : null}
         {this.state.isEditing ?
         <div>
@@ -233,22 +229,22 @@ class AboutContainer extends React.Component {
         {this.state.schools ? this.state.schools.map((school, idx) => {
           if (!school.isGraduated) {
             if (this.state.isEditing) {
-              return (<div>
+              return (<div key={idx}>
                           <p>Attends {school.name}</p>
                           <Button secondary onClick={() => {this.handleSchoolRemove(school, idx);}}>X</Button>
                         </div>);
             }
-            return <p>Attends {school.name}</p>;
+            return <p key={idx}>Attends {school.name}</p>;
           }
           if (this.state.isEditing) {
-            return (<div>
+            return (<div key={idx}>
                         <p>Graduated from {school.name} in {school.endedAt} </p>
                         <Button secondary onClick={() => {
                           this.handleSchoolRemove(school, idx);
                         }}>X</Button>
                       </div>);
           }
-          return <p>Graduated from {school.name} in {school.endedAt} </p>;
+          return <p key={idx}>Graduated from {school.name} in {school.endedAt} </p>;
         }) : null}
 
         {this.state.isEditing ? <div>
@@ -266,14 +262,14 @@ class AboutContainer extends React.Component {
 
         {this.state.places.other.map((place, idx) => {
           if (this.state.isEditing) {
-            return (<div>
+            return (<div key={idx}>
                   <p>Lived in {place}</p>
                   <Button secondary onClick={() => {
                     this.handlePlaceRemove('other', idx);
                   }}>X</Button>
                 </div>);
           }
-          return <p>Lived in {place}</p>;
+          return <p key={idx}>Lived in {place}</p>;
         })}
 
         {this.state.places.hometown ? <div>
