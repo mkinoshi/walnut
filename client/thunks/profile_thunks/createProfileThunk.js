@@ -3,13 +3,11 @@
  */
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
-import userDataThunk from '../user_thunks/userDataThunk';
 
-const createProfileThunk = (dispatch) => {
+const createProfileThunk = () => (dispatch) => {
   axios.post(URL + 'db/save/iscreated', {
   })
     .then((response) => {
-      console.log(response);
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
     })
     .catch((err) => {

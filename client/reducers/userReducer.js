@@ -4,7 +4,6 @@ const userObj = {
   username: '',
   fullName: '',
   facebookId: '',
-  email: '',
   password: '',
   pictureURL: '',
   preferences: [],
@@ -22,7 +21,7 @@ const userObj = {
   contact: {
     phones: [
     ],
-    email: []
+    email: ''
   },
   work: [
   ],

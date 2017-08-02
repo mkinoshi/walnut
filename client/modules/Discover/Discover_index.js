@@ -14,7 +14,6 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    console.log('heheheheheheheheh');
     this.props.getDiscoverContent();
   }
 

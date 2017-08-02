@@ -40,7 +40,6 @@ function auth(passport) {
     } else {
       var new_user = new User({
         fullName: req.body.fname + ' ' + req.body.lname,
-        email: req.body.email,
         username: req.body.username,
         password: req.body.password,
         preferences: req.body.tags,
@@ -50,6 +49,10 @@ function auth(passport) {
           {name: 'code', data: []},
           {name: 'design', data: []}
         ],
+        contact: {
+          phones: [],
+          email: ''
+        },
         pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
       });
       return new_user.save()

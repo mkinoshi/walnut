@@ -67,7 +67,6 @@ class HeadContainer extends React.Component {
 
   onSubmitBlurb() {
     this.setState({editBlurb: false});
-    console.log(this.state.blurbInput);
     this.props.saveBlurb(this.state.blurbInput);
   }
 
@@ -88,7 +87,6 @@ class HeadContainer extends React.Component {
   }
 
   saveTags(tags) {
-    console.log(tags);
     this.setState({editTags: false});
     this.props.saveTags(tags);
   }

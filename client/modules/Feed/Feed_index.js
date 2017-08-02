@@ -155,7 +155,7 @@ class Feed extends React.Component {
                   pageStart={0}
                   loadMore={() => this._loadMore()}
                   hasMore={this.props.hasMore}
-                  threshold={500}
+                  threshold={600}
                   loader={<div className="loader">Loading ...</div>}
                   >
                   {filteredPosts.map((post) => (
@@ -192,7 +192,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
-  getData: () => dispatch(discoverLoadThunk),
+  getData: () => dispatch(discoverLoadThunk()),
   getNext10: (param) => nextTenThunk(param)(dispatch)
 });
 

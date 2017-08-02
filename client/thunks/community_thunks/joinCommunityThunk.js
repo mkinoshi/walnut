@@ -3,8 +3,6 @@
  */
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
-import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
-import userDataThunk from '../../thunks/user_thunks/userDataThunk';
 
 const joinCommunityThunk = (id) => (dispatch) => {
   axios.post(URL + 'db/join/community', {
