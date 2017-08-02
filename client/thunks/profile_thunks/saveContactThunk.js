@@ -10,7 +10,7 @@ const saveContactThunk = (contact) => (dispatch) => {
     email: contact.email
   })
     .then((response) => {
-      dispatch({type: 'GET_USER_DATA_DONE', data: response.data.user});
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) =>{
       console.log('error in saving contact', err);

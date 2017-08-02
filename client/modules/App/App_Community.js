@@ -54,7 +54,6 @@ Community.propTypes = {
   updateLocation: PropTypes.func,
 };
 
-
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
 });

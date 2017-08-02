@@ -149,7 +149,8 @@ class Feed extends React.Component {
             {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
             </div>
             <div className="col-xs-9" >
-              {(this.props.data.isFetching !== true) ?
+              {this.props.data.isFetching ?
+               <p>loading is true inside the reducer</p> :
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={() => this._loadMore()}
@@ -166,8 +167,6 @@ class Feed extends React.Component {
                   newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
                   </InfiniteScroll>
-                  :
-                  <p>loading is true inside the reducer</p>
               }
             </div>
           </div>

@@ -42,7 +42,8 @@ const userObj = {
   ],
   tags: [],
   hasProfile: false,
-  isFetching: false
+  isFetching: false,
+  blurb: ''
 };
 
 

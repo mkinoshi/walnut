@@ -378,13 +378,13 @@ router.get('/get/quote', (req, res) => {
 });
 
 router.post('/save/blurb', (req, res) => {
-  User.fidnById(req.user._id)
+  User.findById(req.user._id)
          .then((response) => {
            response.blurb = req.body.blurbBody;
            return response.save();
          })
-         .then((resp) => {
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -398,8 +398,8 @@ router.post('/save/tags', (req, res) => {
            response.tags = req.body.tagsArray;
            return response.save();
          })
-         .then(() => {
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);
@@ -468,6 +468,7 @@ router.post('/save/about', (req, res) => {
            return globalResponse.save();
          })
          .then((user) => {
+           console.log(user);
            res.json({success: true, user: user});
          })
          .catch((err) => {
@@ -501,8 +502,8 @@ router.post('/save/links', (req, res) => {
            response.links = req.body.linksArray;
            return response.save();
          })
-         .then(() => {
-           res.json({success: true});
+         .then((user) => {
+           res.json({success: true, user: user});
          })
          .catch((err) => {
            console.log(err);

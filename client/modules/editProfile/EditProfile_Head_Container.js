@@ -67,7 +67,8 @@ class HeadContainer extends React.Component {
 
   onSubmitBlurb() {
     this.setState({editBlurb: false});
-    // this.props.saveBlurb(this.state.blurbInput);
+    console.log(this.state.blurbInput);
+    this.props.saveBlurb(this.state.blurbInput);
   }
 
   toggleTags() {
@@ -87,6 +88,7 @@ class HeadContainer extends React.Component {
   }
 
   saveTags(tags) {
+    console.log(tags);
     this.setState({editTags: false});
     this.props.saveTags(tags);
   }
@@ -184,8 +186,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveBlurb: (blurb) => saveBlurbThunk(blurb)(dispatch),
-  saveTags: (tags) => saveTagsThunk(tags)(dispatch)
+  saveBlurb: (blurb) => dispatch(saveBlurbThunk(blurb)),
+  saveTags: (tags) => dispatch(saveTagsThunk(tags))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeadContainer);

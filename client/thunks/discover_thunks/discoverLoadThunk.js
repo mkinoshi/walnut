@@ -5,6 +5,7 @@ import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
 const discoverLoadThunk = () => (dispatch) => {
+  console.log('youyoyoyoyoyoyoyo');
   dispatch({type: 'DISCOVER_IS_LOADING'});
   axios.get(URL + 'db/get/discoverinfo', {})
         .then((response) => {

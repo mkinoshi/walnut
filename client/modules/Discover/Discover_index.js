@@ -14,6 +14,7 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
+    console.log('heheheheheheheheh');
     this.props.getDiscoverContent();
   }
 
@@ -30,6 +31,9 @@ class Home extends React.Component {
 Home.propTypes = {
   getDiscoverContent: PropTypes.func
 };
+
+const mapStateToProps = () => ({
+});
 
 const mapDispatchToProps = (dispatch) => ({
   getDiscoverContent: () => dispatch(discoverLoadThunk())
