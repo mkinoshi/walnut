@@ -9,7 +9,8 @@ const createProfileThunk = (dispatch) => {
   axios.post(URL + 'db/save/iscreated', {
   })
     .then((response) => {
-      userDataThunk(dispatch);
+      console.log(response);
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
     })
     .catch((err) => {
       console.log('Profile Done Error', err);

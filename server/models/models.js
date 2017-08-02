@@ -182,6 +182,10 @@ const UserSchema = new mongoose.Schema({
   },
   hasProfile: {
     type: Boolean
+  },
+  blurb: {
+    type: String,
+    default: ''
   }
 });
 
