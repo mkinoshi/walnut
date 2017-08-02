@@ -58,15 +58,16 @@ class Navbar extends React.Component {
                 </Link>
               </Menu.Item>
 
-              <a href="#" className="logoHolder">
+              {/* <a href="#" className="logoHolder"> */}
                 <h1 className="logo">Walnut</h1>
-              </a>
+              {/* </a> */}
 
               <Menu.Menu position="right">
                 <Menu.Item>
-                  <a className="tabs" href="/logout">
+                  {/* <a className="tabs" href="/logout"> */}
                     <Icon name="log out" />
-                    Logout</a>
+                    Logout
+                    {/* </a> */}
                 </Menu.Item>
                 <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
               </Menu.Menu>

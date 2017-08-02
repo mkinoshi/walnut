@@ -12,7 +12,6 @@ router.get('/get/app', (req, res) => {
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success response in middleware', response);
         Community.find()
           .then((communities) => {
             res.json({user: response, communities: communities});
