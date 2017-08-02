@@ -66,9 +66,8 @@ class HeadContainer extends React.Component {
   }
 
   onSubmitBlurb() {
-    console.log('blurb', this.state.blurbInput);
     this.setState({editBlurb: false});
-    // this.props.saveBlurb(this.state.blurbInput);
+    this.props.saveBlurb(this.state.blurbInput);
   }
 
   toggleTags() {
@@ -88,18 +87,15 @@ class HeadContainer extends React.Component {
   }
 
   saveTags(tags) {
-    console.log('tags', tags);
     this.setState({editTags: false});
     this.props.saveTags(tags);
   }
 
   handleUpload(file) {
-    console.log('inside handle file', file);
     this.setState({file: file});
   }
 
   saveImage() {
-    console.log('in here save button');
     superagent.post('/aws/upload/profile')
     .attach('profile', this.state.file)
     .end((err, res) => {
@@ -107,7 +103,6 @@ class HeadContainer extends React.Component {
         console.log(err);
         alert('failed uploaded!');
       }
-      console.log('response from aws save', res);
       this.setState({pic: res.body.pictureURL, file: {}});
     });
   }
@@ -119,7 +114,6 @@ class HeadContainer extends React.Component {
       multiple: false,
       accept: 'image/*',
       didChoose: (files) => {
-        console.log('this is the file', files[0]);
         this.handleUpload(files[0]);
       },
     };
@@ -190,8 +184,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveBlurb: (blurb) => saveBlurbThunk(blurb)(dispatch),
-  saveTags: (tags) => saveTagsThunk(tags)(dispatch)
+  saveBlurb: (blurb) => dispatch(saveBlurbThunk(blurb)),
+  saveTags: (tags) => dispatch(saveTagsThunk(tags))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeadContainer);

@@ -4,7 +4,6 @@ const userObj = {
   username: '',
   fullName: '',
   facebookId: '',
-  email: '',
   password: '',
   pictureURL: '',
   preferences: [],
@@ -22,7 +21,7 @@ const userObj = {
   contact: {
     phones: [
     ],
-    email: []
+    email: ''
   },
   work: [
   ],
@@ -42,15 +41,25 @@ const userObj = {
     {name: 'design', data: []}
   ],
   tags: [],
-  hasProfile: false
+  hasProfile: false,
+  isFetching: false,
+  blurb: ''
 };
 
 
 
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
+    case 'USER_IS_FETCHING':
+      return {
+        ...state,
+        isFetching: true
+      };
     case 'GET_USER_DATA_DONE':
-      return action.data;
+      return {
+        ...action.user,
+        isFetching: false
+      };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {
         ...state,
@@ -97,7 +106,6 @@ const userReducer = (state = userObj, action) => {
       }
       if(index > - 1) {
         newState3.portfolio[index].data.splice(action.index, 1);
-        console.log('sdffsddsfsfdffs', newState3);
         return newState3;
       }
       return newState3;

@@ -8,9 +8,8 @@ const saveTagsThunk = (tags) => (dispatch) => {
   axios.post(URL + 'db/save/tags', {
     tagsArray: tags
   })
-    .then((success) => {
-      console.log('success in save', success);
-      dispatch({type: 'GET_USER_DATA'});
+    .then((response) => {
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) =>{
       console.log('error in saving tags', err);

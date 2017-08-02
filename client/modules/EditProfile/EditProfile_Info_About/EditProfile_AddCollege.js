@@ -46,7 +46,6 @@ class AddCollege extends React.Component {
   }
 
   addCollege() {
-    console.log('saved!', this.state);
     this.props.addCollege(this.state);
     this.setState({graduated: false,
         collegeValue: '',

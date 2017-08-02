@@ -16,7 +16,6 @@ class Comment extends React.Component {
   }
 
   toggleLike() {
-    console.log('hi');
     this.props.newCommentLike();
     if (this.state.isLiked) {
       this.setState({likeCount: this.state.likeCount - 1, isLiked: false});

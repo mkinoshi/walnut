@@ -9,7 +9,6 @@ const newTagThunk = (tag) => (dispatch) => {
     tag: tag
   })
     .then((response) => {
-      console.log('new tag', response);
       dispatch({type: 'NEW_TAG', tag: response.data.tag});
     })
     .catch((err) => {

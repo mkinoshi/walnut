@@ -9,14 +9,13 @@ const updateLocationThunk = (location) => (dispatch) => {
     axios.post(URL + 'db/update/location', {
       location: location
     })
-            .then((response) => {
-              console.log(response);
-              dispatch({type: 'UPDATE_LOCATION_DONE', location: location});
-            })
-            .catch((err) => {
-              console.log(err);
-              dispatch({type: 'UPDATE_LOCATION_DONE_ERR'});
-            });
+    .then((response) => {
+      dispatch({type: 'UPDATE_LOCATION_DONE', location: location});
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({type: 'UPDATE_LOCATION_DONE_ERR'});
+    });
   } else {
     dispatch({type: 'UPDATE_LOCATION_DONE', location: location});
   }

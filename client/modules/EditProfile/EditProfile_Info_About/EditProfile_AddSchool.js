@@ -44,7 +44,6 @@ class AddSchool extends React.Component {
   }
 
   addSchool() {
-    console.log('saved!', this.state);
     this.props.addSchool(this.state);
     this.setState({
       graduated: false,

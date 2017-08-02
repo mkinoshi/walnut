@@ -17,16 +17,13 @@ class TagPref extends React.Component {
   }
 
   handleSelectChange(value) {
-    console.log('select values', value, typeof(value), value.split(','));
     this.setState({value});
   }
 
   handleNew(event) {
     event.preventDefault();
-    console.log('state', this.state.value);
     const options = this.state.value.split(',');
     const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-    console.log('send', send);
     this.props.addTempTags(send);
     this.setState({value: []});
   }

@@ -40,7 +40,6 @@ class AddWork extends React.Component {
   }
 
   addWork() {
-    console.log('saved!', this.state);
     this.props.addWork(this.state);
     this.setState({
       isCurrent: false,
@@ -61,7 +60,6 @@ class AddWork extends React.Component {
   }
 
   handleLocation(e) {
-    console.log('loc', e);
     this.setState({address: e, location: e});
   }
 

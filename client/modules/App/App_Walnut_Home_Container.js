@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import EditProfile from '../EditProfile/EditProfile_index';
 import _ from 'underscore';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
-import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
+import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 
 
@@ -36,6 +35,12 @@ class WalnutHomeContainer extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.joinCommunity = this.joinCommunity.bind(this);
   }
+
+
+  componentWillMount() {
+    this.props.getAllCommunities();
+  }
+
 
   toggleCommunity(com) {
     this.props.changeCommunity({currentCommunity: com._id});
@@ -72,7 +77,6 @@ class WalnutHomeContainer extends React.Component {
   // TODO HORIZONS
   render() {
     const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
-    console.log('coms', this.props.communities, this.props.userCommunities, userCommunityTitles);
     return (
         <div>
            <div>
@@ -82,7 +86,8 @@ class WalnutHomeContainer extends React.Component {
              <div>
                <h2>Your Communities</h2>
                <div style={styles.communities}>
-                   {this.props.userCommunities.map((community, idx) => <Link key={idx} onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
+                   {this.props.userCommunities.map((community, idx) => <Link key={idx}
+                   onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
                      <img src={community.icon} style={styles.image} />
                      <p>{community.title}</p>
                    </div></Link> )}
@@ -135,7 +140,8 @@ WalnutHomeContainer.propTypes = {
   joinCommunity: PropTypes.func,
   getCommunities: PropTypes.func,
   userCommunities: PropTypes.array,
-  changeCommunity: PropTypes.func
+  changeCommunity: PropTypes.func,
+  getAllCommunities: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
@@ -145,9 +151,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  joinCommunity: (id) => joinCommunityThunk(id)(dispatch),
+  joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => createCommunityThunk(image, title, filters)(dispatch),
-  changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
+  changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch),
+  getAllCommunities: () => dispatch(getAllCommunities())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

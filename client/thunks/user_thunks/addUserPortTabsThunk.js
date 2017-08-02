@@ -8,7 +8,6 @@ const addUserPortTabsThunk = (data) => (dispatch) => {
     data: data.data
   })
     .then((response) => {
-      console.log('response', response);
     })
     .catch((err) =>{
       console.log('error in newTag', err);

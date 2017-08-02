@@ -46,8 +46,8 @@ class ModalInstance extends React.Component {
             postData={this.props.postData}
             newLike={() => (this.props.newLike(this.props.postData.postId))}/>
           </Modal.Description>
-          {this.props.postData.comments.map((comment) => (
-            <Modal.Description>
+          {this.props.postData.comments.map((comment, ind) => (
+            <Modal.Description key={ind}>
               <Comment
                 newCommentLike={() => this.props.newCommentLike(this.props.postData.postId, comment.commentId)}
                 username={comment.username}
@@ -81,57 +81,6 @@ class ModalInstance extends React.Component {
     );
   }
 }
-
-// render() {
-//     return this.props.isOpen ? (
-//       <div>
-//         {/* Render each comment */}
-//         {this.props.postData.comments.map((comment) => (
-//           <div className="card" style={{marginTop: '45'}}>
-//             <div className="card-block" style={{paddingTop: '0'}}>
-//               <img style={{height: '50', float: 'left'}}
-//                 src="http://clubrunner.blob.core.windows.net/00000010115/PhotoAlbum/4-way-test-speech-contest-finals-2016/_87A1813.jpg"
-//                 alt="5" className="circle"/>
-//               <div style={{marginLeft: '20'}}>
-//                 <span className="card-title"
-//                   style={{float: 'left', paddingLeft: '30', fontSize: '14', fontWeight: 'bold'}}>
-//                   {comment.username}</span>
-//                 <span className="card-title date" style={{float: 'right', fontSize: '10'}}>
-//                   {comment.createdAt.slice(11, 16)}</span>
-//               </div>
-//             </div>
-//             <p style={{clear: 'both', paddingLeft: '40', paddingTop: '10'}}>
-//               {comment.content}</p>
-//             <div className="card-action" style={{paddingBottom: '50'}}>
-//               <div>
-//                 <a style={{backgroundColor: '#0D9ED3', float: 'left'}}
-//                   className="waves-effect waves-light btn"
-//                   onClick={() => this.props.newCommentLike(this.props.postData.postId, comment.commentId)}><i
-//                     className="material-icons left">thumb_up</i>{comment.likes.length}</a>
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       {/* Text area for typing in comment */}
-//         <div className="input-field col s8">
-//           <textarea id="textarea1" className="textarea"
-//             style={{'paddingTop': 0, 'paddingBottom': 0}}
-//             value={this.state.commentBody}
-//             onChange={(e) => this.handleChange(e)}></textarea>
-//           <label htmlFor="textarea1">  Enter Your Comment</label>
-
-//         <button className="btn waves-effect waves-light" type="submit" name="action"
-//           onClick={() => this.handleClick(this.props.postData.postId)}>Submit
-//             <i className="material-icons right">send</i>
-//           </button>
-//         </div>
-//     </div>
-//     )
-//     : (
-//       <div></div>
-//     );
-//   }
-
 
 ModalInstance.propTypes = {
   postData: PropTypes.object,
