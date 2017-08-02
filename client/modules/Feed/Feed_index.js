@@ -149,22 +149,25 @@ class Feed extends React.Component {
             {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
             </div>
             <div className="col-xs-9" >
-               <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => this._loadMore()}
-                    hasMore={this.props.hasMore}
-                    threshold={500}
-                    loader={<div className="loader">Loading ...</div>}
-                >
+              {this.props.data.isFetching ?
+               <p>loading is true inside the reducer</p> :
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={() => this._loadMore()}
+                  hasMore={this.props.hasMore}
+                  threshold={600}
+                  loader={<div className="loader">Loading ...</div>}
+                  >
                   {filteredPosts.map((post) => (
-                    <Post ref="card"
-                    key={post.postId}
-                    isOpen={false}
-                    currentUser={this.props.user}
-                    postData={post}
-                    newLike={() => (this.props.newLike(post.postId))}/>
+                  <Post ref="card"
+                  key={post.postId}
+                  isOpen={false}
+                  currentUser={this.props.user}
+                  postData={post}
+                  newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
-                </InfiniteScroll>
+                  </InfiniteScroll>
+              }
             </div>
           </div>
       </div>
@@ -189,7 +192,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
-  getData: () => discoverLoadThunk(dispatch),
+  getData: () => dispatch(discoverLoadThunk()),
   getNext10: (param) => nextTenThunk(param)(dispatch)
 });
 

@@ -74,7 +74,6 @@ class MapContainer extends React.Component {
   }
 
   handleClusterClick() {
-    console.log('ohohohohohohohohohohohoh');
   }
 
   clusterMarker(coordinates, count, data) {
@@ -96,11 +95,9 @@ class MapContainer extends React.Component {
     );
   }
   render() {
-    console.log('re-rendering map', this.props.center);
     const users = this.props.users.filter((user) => {
       return user.location[this.props.selected].length > 0;
     });
-    console.log('mapind', this.state.mapInd);
     return (
       <div id="outer" >
         <div id="inner" >

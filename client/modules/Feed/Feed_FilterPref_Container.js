@@ -48,7 +48,6 @@ class FilterPrefContainer extends React.Component {
   }
 
   render() {
-    console.log('filters', this.state.useFilters, this.state.filters);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '40px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>

@@ -55,7 +55,7 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  createProfile: () => createProfileThunk(dispatch)
+  createProfile: () => dispatch(createProfileThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileContainer);

@@ -1,9 +1,7 @@
 import React from 'react';
-import QuoteContainer from './Discover_Quote_Container';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 
 // TODO Header content
 // TODO Google drive link
@@ -59,14 +57,12 @@ class HeaderContainer extends React.Component {
   }
 
   render() {
-    console.log('in Header', this.props.community);
     return (
       <div>
         <div style={styles.outer} >
           <img src={this.props.community.icon} style={styles.logs}/>
         <div style={styles.middle}>
             <div id="title" style={styles.title}><h1 style={styles.company}>{this.props.community.title}</h1></div>
-            {/* <QuoteContainer /> */}
           </div>
           <div style={styles.links}>
             <img style={styles.linkLogo} src="https://www.google.com/drive/static/images/drive/logo-drive.png" />
@@ -82,17 +78,13 @@ class HeaderContainer extends React.Component {
 }
 
 HeaderContainer.propTypes = {
-  community: PropTypes.object,
-  refreshFeed: PropTypes.func
+  community: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   community: state.userReducer.currentCommunity
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+export default connect(mapStateToProps)(HeaderContainer);
 
 

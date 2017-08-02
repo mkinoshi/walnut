@@ -44,7 +44,6 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
       return user.save();
     })
     .then(user => {
-      console.log('user object after save. check new name!!!!', user.portfolio[0]);
       res.json({portfolio: user.portfolio});
     })
     .catch((error) => console.log('error in aws db save', error));
@@ -54,7 +53,6 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
   const toSave = req.user._id + req.file.originalname + Date.now();
-  console.log('in backend', toSave);
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,
@@ -73,18 +71,14 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
       return user.save();
     })
     .then((user) => {
-      console.log('user object after save. check new name!!!!', user);
       res.json({pictureURL: user.pictureURL});
     })
     .catch((error) => console.log('error in aws db save', error));
   });
-  console.log('aws save', req.file, toSave);
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
-  console.log('testing', req.file, req.body.name, req.body.body, req.body.tags);
   const toSave = 'post/' + req.user._id + req.file.originalname + Date.now();
-  console.log('in backend', toSave);
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,

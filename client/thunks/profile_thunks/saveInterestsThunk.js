@@ -9,7 +9,6 @@ const saveInterestsThunk = (interests) => (dispatch) => {
     interestsArray: interests
   })
     .then((success) => {
-      console.log('success in save', success);
       dispatch({type: 'GET_USER_DATA'});
     })
     .catch((err) =>{

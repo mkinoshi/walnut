@@ -19,7 +19,6 @@ class UploadsContainer extends React.Component {
   }
 
   onDrop(files) {
-    console.log('files', files[0]);
     this.setState({files: this.state.files.concat(files), onEdit: true});
   }
 
@@ -40,7 +39,6 @@ class UploadsContainer extends React.Component {
             console.log(err);
             alert('failed uploaded!');
           }
-          console.log('save success', res.body.portfolio);
           this.setState({sneakyFront: res.body.portfolio, files: [], onEdit: false});
         });
     });
