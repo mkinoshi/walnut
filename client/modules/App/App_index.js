@@ -30,7 +30,6 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
         <div>
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
@@ -40,7 +39,6 @@ class App extends React.Component {
             } />
           </Switch>
         </div>
-      </BrowserRouter>
     );
   }
 }
