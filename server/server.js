@@ -70,79 +70,6 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-
-<<<<<<< HEAD
-var hbs = require('express-handlebars')({
-  defaultLayout: 'main',
-  extname: '.hbs'
-});
-app.engine('hbs', hbs);
-app.set('views', path.join(__dirname, '..', 'views'));
-app.set('view engine', 'hbs');
-
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
-
-passport.deserializeUser(function(id, done) {
-  models.User.findById(id, done);
-});
-
-// passport strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // Find the user with the given username
-  models.User.findOne({ username: username }, function (err, user) {
-    // if there's an error, finish trying to authenticate (auth failed)
-    if (err) {
-      console.error('Error fetching user in LocalStrategy', err);
-      return done(err);
-    }
-    // if no user present, auth failed
-    if (!user) {
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-    // TODO encrypt this!!!
-    // if passwords do not match, auth failed
-    if (user.password !== password) {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-    // auth has has succeeded
-    return done(null, user);
-  });
-}
-));
-
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-    // TODO scrape groups
-     profileFields: ['id', 'displayName', 'photos']
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.find({ facebookId: profile.id }, function(err, user) {
-      if (user.length === 0) {
-        var new_user = new User({
-          username: profile.displayName,
-          pictureURL: profile.photos[0].value,
-          facebookId: profile.id
-        })
-        new_user.save(function(err) {
-          if (!err) {
-            cb(err, new_user);
-          }
-        })
-      } else {
-        cb(err, user[0])
-      }
-    })
-  }
-));
-=======
 // var hbs = require('express-handlebars')({
 //   defaultLayout: 'main',
 //   extname: '.hbs'
@@ -219,7 +146,7 @@ passport.use(new FacebookStrategy({
 // app.get('/', function(req,res) {
 //     res.redirect('/app/login')
 // });
->>>>>>> b02286090524dfe6d8be7112b97e655d6ac79e1b
+
 
 app.use('/db', dbRoutes);
 app.use('/aws', awsRoutes);

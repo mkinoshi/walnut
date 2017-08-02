@@ -5,12 +5,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then(() => {
     console.log('successfully registered on firebase');
-	// firebase.auth().onAuthStateChanged(function(user) {
-	// 	axios.post(URL + 'auth/createUser', {user.uid, firstname, lastname, email, password})
-	// 	.then(() => {
-	// 		//redirect to homepage
-	// 	})
-	// });
+    // axios to backend to create mongo user
   })
   .catch(function(error) {
     // Handle Errors here.
@@ -22,7 +17,6 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
 	// need to create a backend route to create user:
 	// var new_user = new User({
  //        fullName: req.body.fname + ' ' + req.body.lname,
- //        email: req.body.email,
  //        username: req.body.username,
  //        password: req.body.password,
  //        preferences: req.body.tags,
@@ -32,6 +26,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
  //          {name: 'code', data: []},
  //          {name: 'design', data: []}
  //        ],
+ //
  //        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
  //      });
  //      return new_user.save()
