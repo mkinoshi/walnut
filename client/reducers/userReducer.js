@@ -21,7 +21,7 @@ const userObj = {
   contact: {
     phones: [
     ],
-    email: ''
+    email: []
   },
   work: [
   ],
