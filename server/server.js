@@ -14,19 +14,6 @@ var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
 
-//firebase stuff
-var firebase = require('firebase');
-var config = {
-        apiKey: "AIzaSyAlvJ_fjJc3-4vzMkDfG4EQ81f02n8_0eE",
-        authDomain: "walnut-1500128476052.firebaseapp.com",
-        databaseURL: "https://walnut-1500128476052.firebaseio.com",
-        projectId: "walnut-1500128476052",
-        storageBucket: "walnut-1500128476052.appspot.com",
-        messagingSenderId: "7094437893"
-      };
-firebase.initializeApp(config);
-
-
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -150,14 +137,14 @@ app.use(session({
 //   }
 // ));
 
-app.get('/', function(req,res) {
-    res.redirect('/app/login')
-});
+// app.get('/', function(req,res) {
+//     res.redirect('/app/login')
+// });
 
 app.use('/db', dbRoutes);
 app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/app', (request, response) => {
+app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 

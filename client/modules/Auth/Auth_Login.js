@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
+import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
+import signInThunk from '../../thunks/auth_thunks/signInThunk';
 
 class Login extends React.Component {
   constructor() {
@@ -21,12 +24,17 @@ class Login extends React.Component {
   }
 
   fbLogin() {
+    console.log('worked');
+    this.props.fbLogin();
   }
 
   googleLogin() {
+    console.log('worked');
+    this.props.googleLogin();
   }
 
   regLogin() {
+    this.props.signIn(this.state.emailVal, this.state.passwordVal);
   }
 
   render() {
@@ -34,8 +42,8 @@ class Login extends React.Component {
         <div>
           <h1 style={{textAlign: 'center'}}>Login</h1>
           <div className="container col-xs-4 col-xs-offset-4">
-            <button onClick={() => {this.fbLogin();}}>Continue with Facebook</button>
-            <button onClick={() => {this.googleLogin();}}>Continue with Google</button>
+            <button onClick={() => this.fbLogin()}>Continue with Facebook</button>
+            <button onClick={() => this.googleLogin()}>Continue with Google</button>
             <form>
               <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -66,12 +74,18 @@ class Login extends React.Component {
 
 
 Login.propTypes = {
+  fbLogin: PropTypes.func,
+  googleLogin: PropTypes.func,
+  signIn: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  fbLogin: () => facebookLoginThunk(dispatch),
+  googleLogin: () => googleLoginThunk(dispatch),
+  signIn: (email, password) => signInThunk(email, password)(dispatch)
 });
 
 

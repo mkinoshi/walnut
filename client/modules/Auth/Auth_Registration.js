@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
 
 class Register extends React.Component {
   constructor() {
@@ -35,7 +36,9 @@ class Register extends React.Component {
     this.setState({repeat: e.target.value});
   }
 
-  register() {
+  register(e) {
+    e.preventDefault();
+    this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
   }
 
   render() {
@@ -69,7 +72,7 @@ class Register extends React.Component {
                                type="text"
                                name="email"
                                value={this.state.email}
-                               onChange={(e) => this.handleEmailChange()}  />
+                               onChange={(e) => this.handleEmailChange(e)}  />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Choose Password</label>
@@ -90,7 +93,7 @@ class Register extends React.Component {
                     <div >
                         <h3 className="text-center">Check Your Preferences</h3>
                     </div>
-                    <button onClick={() => {this.register();}}>Register</button>
+                    <button onClick={(e) => {this.register(e);}}>Register</button>
                 </form>
             </div>
         </div>
@@ -100,12 +103,14 @@ class Register extends React.Component {
 
 
 Register.propTypes = {
+  emailRegistration: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  emailRegistration: (firstname, lastname, email, password) => emailRegistrationThunk(firstname, lastname, email, password)(dispatch)
 });
 
 

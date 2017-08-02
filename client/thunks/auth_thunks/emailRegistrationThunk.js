@@ -1,25 +1,24 @@
-
-import firebase from 'firebase';
+import { firebaseApp } from '../../firebase';
 const URL = 'http://localhost:3000/';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
-	firebase.auth().createUserWithEmailAndPassword(email, password)
-	.then(() => {
-		console.log('successfully registered on firebase');
-		// firebase.auth().onAuthStateChanged(function(user) {
-		// 	axios.post(URL + 'auth/createUser', {user.uid, firstname, lastname, email, password})
-		// 	.then(() => {
-		// 		//redirect to homepage
-		// 	})
-		// });
-	})
-	.catch(function(error) {
-	    // Handle Errors here.
-	    var errorCode = error.code;
-	    var errorMessage = error.message;
-	    console.log('firebase error', error);
-	    // ...
-	});
+  firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+  .then(() => {
+    console.log('successfully registered on firebase');
+	// firebase.auth().onAuthStateChanged(function(user) {
+	// 	axios.post(URL + 'auth/createUser', {user.uid, firstname, lastname, email, password})
+	// 	.then(() => {
+	// 		//redirect to homepage
+	// 	})
+	// });
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log('firebase error', error);
+    // ...
+  });
 	// need to create a backend route to create user:
 	// var new_user = new User({
  //        fullName: req.body.fname + ' ' + req.body.lname,
