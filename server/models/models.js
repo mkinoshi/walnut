@@ -55,9 +55,6 @@ const UserSchema = new mongoose.Schema({
   facebookId: {
     type: String
   },
-  email: {
-    type: String
-  },
   password: {
     type: String
   },
@@ -112,11 +109,9 @@ const UserSchema = new mongoose.Schema({
         }
       }
     ],
-    email: [
-      {
-        type: String
-      }
-    ]
+    email: {
+      type: String
+    }
   },
   work: [
     {

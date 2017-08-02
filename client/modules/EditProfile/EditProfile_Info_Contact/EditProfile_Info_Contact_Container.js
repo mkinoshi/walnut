@@ -108,12 +108,12 @@ class ContactContainer extends React.Component {
                 <h2>Email</h2>
                 {this.state.email.length > 0 ? this.state.email.map((email, idx) => {
                   if (this.state.edit) {
-                    return (<div>
+                    return (<div key={idx}>
                             <p>{email}</p>
                             <Button secondary onClick={() => {this.removeEmail(email, idx);}}>X</Button>
                         </div>);
                   }
-                  return <p>{email}</p>;
+                  return <p key={idx}>{email}</p>;
                 }) : null}
                 {this.state.edit && !this.state.addingEmail ? <Button primary onClick={() => this.setState({addingEmail: true})}> + Add an Email</Button> : null}
                 {this.state.addingEmail ? <div>
@@ -137,12 +137,12 @@ class ContactContainer extends React.Component {
                     }
                   });
                   if (this.state.edit) {
-                    return (<div>
+                    return (<div key={idx}>
                             <p>{phone.use}:{' '}{formatted}</p>
                             <Button secondary onClick={() => {this.removePhone(idx);}}>X</Button>
                         </div>);
                   }
-                  return <p>{phone.use}:{' '}{formatted}</p>;
+                  return <p key={idx}>{phone.use}:{' '}{formatted}</p>;
                 }) : null}
                 {this.state.edit && !this.state.addingPhone ? <Button primary onClick={() => this.setState({addingPhone: true})}> + Add a Phone</Button> : null}
 
@@ -169,7 +169,7 @@ class ContactContainer extends React.Component {
 
 ContactContainer.propTypes = {
   email: PropTypes.string,
-  phones: PropTypes.string,
+  phones: PropTypes.array,
   saveContact: PropTypes.func
 };
 
