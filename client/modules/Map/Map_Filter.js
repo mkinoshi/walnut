@@ -17,13 +17,6 @@ class MapFilter extends React.Component {
     };
   }
 
-  // handleClick(index) {
-  //   // TODO highlight the user's tab and center the map on their location
-  //   // change the people on the list based on nearby location
-  //   this.props.changeCenter(user.location);
-  //   this.props.changeZoom(10);
-  //   console.log('clicked');
-  // }
 
   render() {
     return (

@@ -60,11 +60,6 @@ const userReducer = (state = userObj, action) => {
         ...action.user,
         isFetching: false
       };
-    case 'SET_USER':
-      return {
-        ...action.user,
-        isFetching: false
-      };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {
         ...state,
@@ -111,7 +106,6 @@ const userReducer = (state = userObj, action) => {
       }
       if(index > - 1) {
         newState3.portfolio[index].data.splice(action.index, 1);
-        console.log('sdffsddsfsfdffs', newState3);
         return newState3;
       }
       return newState3;

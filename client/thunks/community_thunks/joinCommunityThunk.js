@@ -11,7 +11,6 @@ const joinCommunityThunk = (id) => (dispatch) => {
     communityId: id
   })
     .then((response) => {
-      console.log('Community Joined', response);
       discoverLoadThunk(dispatch);
       userDataThunk(dispatch);
     })

@@ -149,22 +149,26 @@ class Feed extends React.Component {
             {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
             </div>
             <div className="col-xs-9" >
-               <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => this._loadMore()}
-                    hasMore={this.props.hasMore}
-                    threshold={500}
-                    loader={<div className="loader">Loading ...</div>}
-                >
+              {(this.props.data.isFetching !== false) ?
+                <InfiniteScroll
+                  pageStart={0}
+                  loadMore={() => this._loadMore()}
+                  hasMore={this.props.hasMore}
+                  threshold={500}
+                  loader={<div className="loader">Loading ...</div>}
+                  >
                   {filteredPosts.map((post) => (
-                    <Post ref="card"
-                    key={post.postId}
-                    isOpen={false}
-                    currentUser={this.props.user}
-                    postData={post}
-                    newLike={() => (this.props.newLike(post.postId))}/>
+                  <Post ref="card"
+                  key={post.postId}
+                  isOpen={false}
+                  currentUser={this.props.user}
+                  postData={post}
+                  newLike={() => (this.props.newLike(post.postId))}/>
                   ))}
-                </InfiniteScroll>
+                  </InfiniteScroll>
+                  :
+                  <p>loading is true inside the reducer</p>
+              }
             </div>
           </div>
       </div>

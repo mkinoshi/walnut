@@ -13,7 +13,6 @@ const createCommunityThunk = (image, title, filters) => (dispatch) => {
     defaultFilters: filters
   })
     .then((response) => {
-      console.log('Community Created', response);
       discoverLoadThunk(dispatch);
       userDataThunk(dispatch);
     })

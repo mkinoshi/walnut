@@ -11,7 +11,6 @@ var path = require('path');
 /* GET home page. */
 function auth(passport) {
 
-  console.log(__dirname);
 
   router.get('/auth/signup', function(req, res) {
     Tag.find({}, function(err, tags) {
@@ -55,7 +54,6 @@ function auth(passport) {
       });
       return new_user.save()
       .then((doc) => {
-        console.log(doc);
         res.status(200);
         res.redirect('/auth/login')
       })
@@ -87,7 +85,6 @@ function auth(passport) {
     if (!req.user) {
       res.redirect('/auth/login')
     } else {
-      console.log()
       if(req.user.hasProfile) {
           if (req.user.currentCommunity) {
               User.findById(req.user._id)

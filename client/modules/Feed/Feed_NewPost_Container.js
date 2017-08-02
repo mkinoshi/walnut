@@ -102,7 +102,6 @@ class NewPostContainer extends React.Component {
   }
 
   submitPost() {
-    console.log(this.state.postTags);
     if (this.state.file !== '') {
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
@@ -114,7 +113,6 @@ class NewPostContainer extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
-        console.log('save success', res.body);
         this.props.discoverLoader();
         this.setState({postBody: '', postTags: [], showTagPref: false, file: ''});
       });
@@ -125,7 +123,6 @@ class NewPostContainer extends React.Component {
   }
 
   handleUpload(file) {
-    console.log('inside handle file', file);
     this.setState({file: file});
   }
 

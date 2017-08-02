@@ -11,7 +11,7 @@ const getCommunityReducer = (state = {
     case 'GET_ALL_COMMUNITIES_DONE':
       return {
         ...state,
-        communities: action.communities,
+        communities: action.communities.data,
         isFetching: false
       };
     case 'GET_ALL_COMMUNITIES_ERROR':
@@ -20,6 +20,5 @@ const getCommunityReducer = (state = {
       return state;
   }
 };
-
 
 export default getCommunityReducer;

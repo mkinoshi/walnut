@@ -45,7 +45,6 @@ class AddPlace extends React.Component {
     }
 
     addPlace() {
-        console.log('saved!', this.state);
         this.props.addPlace(this.state);
     }
 
@@ -54,7 +53,6 @@ class AddPlace extends React.Component {
     }
 
     handleLocation(e) {
-        console.log('loc', e);
         this.setState({address: e, location: e});
     }
 

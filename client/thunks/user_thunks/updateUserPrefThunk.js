@@ -3,8 +3,6 @@
  */
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
-import userDataThunk from './userDataThunk';
-import discoverLoadThunk from '../discover_thunks/discoverLoadThunk';
 
 const updateUserPrefThunk = (data) => (dispatch) => {
   // dispatch({type: 'GET_FILTERS_UPDATE_FRONT', data: data});
@@ -12,9 +10,8 @@ const updateUserPrefThunk = (data) => (dispatch) => {
     data: data
   })
     .then((response) => {
-      console.log('response', response);
-      userDataThunk(dispatch);
-      discoverLoadThunk(dispatch);
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+      dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
     })
     .catch((err) =>{
       console.log('error in newTag', err);

@@ -116,7 +116,6 @@ class AboutContainer extends React.Component {
       degreeType: college.degreeType
     };
     copy.push(add);
-    console.log('made it college', add, copy);
     this.setState({colleges: copy});
   }
 
@@ -129,7 +128,6 @@ class AboutContainer extends React.Component {
       isCurrent: work.isCurrent
     };
     copy.push(add);
-    console.log('made it work', add, copy);
     this.setState({works: copy});
   }
 
@@ -140,7 +138,6 @@ class AboutContainer extends React.Component {
     } else {
       copy[place.when] = place.location;
     }
-    console.log('made it place', place, copy);
     this.setState({places: copy});
   }
 
@@ -153,7 +150,6 @@ class AboutContainer extends React.Component {
       isGraduated: school.graduated
     };
     copy.push(add);
-    console.log('made it School', add, copy);
     this.setState({schools: copy});
   }
 

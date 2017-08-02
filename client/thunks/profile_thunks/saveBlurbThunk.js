@@ -9,7 +9,6 @@ const saveBlurbThunk = (blurb) => (dispatch) => {
     blurbBody: blurb
   })
     .then((success) => {
-      console.log('success in save', success);
       dispatch({type: 'GET_USER_DATA'});
     })
     .catch((err) =>{

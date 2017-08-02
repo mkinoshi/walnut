@@ -12,7 +12,6 @@ class NewTagContainer extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    console.log('trying to add a new tag');
     this.props.addToPost(this.state.tag);
     this.setState({tag: ''});
   }

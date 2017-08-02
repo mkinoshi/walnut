@@ -12,7 +12,6 @@ router.get('/get/app', (req, res) => {
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success response in middleware', response);
         Community.find()
           .then((communities) => {
             res.json({user: response, communities: communities});
@@ -28,12 +27,10 @@ router.get('/get/app', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-  console.log('req.user', req.user);
   User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
-        console.log('get user success response in middleware', response);
         res.json({data: response});
       })
       .catch((err) => {
@@ -43,7 +40,6 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('body', req.body);
   const tagModels = req.body.defaultFilters.map((filter) =>
       new Tag({
         name: filter
@@ -59,7 +55,6 @@ router.post('/create/community', (req, res) => {
       defaultTags: values.map((val) => val._id),
       otherTags: []
     });
-    console.log('upper', values);
     return community.save();
   })
     .then((community) => {
@@ -81,7 +76,6 @@ router.post('/create/community', (req, res) => {
                     });
                     Promise.all(tags.map((tag) => tag.save()))
                     .then((values) => {
-                      console.log('lowest layer', values, community);
                       res.json({success: true, community: community});
                     });
                   });
@@ -110,7 +104,6 @@ router.post('/join/community', (req, res) => {
       return User.findById(req.user._id);
     })
     .then((user) => {
-      console.log('current 1', req.body.communityId);
       if (user.communities.indexOf(req.body.communityId) === -1) {
         user.communities.push(req.body.communityId);
       }
@@ -118,7 +111,6 @@ router.post('/join/community', (req, res) => {
       return user.save();
     })
     .then((response2) => {
-      console.log(req.user.fullName + 'has successfully joined the community');
       res.json({success: true, community: joined});
     })
     .catch((err) => {
@@ -174,7 +166,6 @@ router.get('/get/discoverinfo', (req, res) => {
             .populate('comments.createdBy')
             .populate('createdBy')
             .then((postArr) => {
-              console.log('posts length', postArr.length);
               posts = postArr.map((postObj) => {
                 return {
                   postId: postObj._id,
@@ -199,7 +190,6 @@ router.get('/get/discoverinfo', (req, res) => {
                   })
                 };
               });
-              // console.log('here', filters, posts);
               res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
             })
             .catch((err) => {
@@ -215,7 +205,6 @@ router.get('/get/discoverinfo', (req, res) => {
 });
 
 router.get('/get/next10', (req, res) => {
-  console.log(req.query);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
@@ -224,7 +213,6 @@ router.get('/get/next10', (req, res) => {
             return user === req.user._id;
           });
           if (community.length === 0) {
-            console.log('not in community error');
             res.json({error: 'No authorization'});
           } else{
             const filters = community.tags;
@@ -238,7 +226,6 @@ router.get('/get/next10', (req, res) => {
                     .populate('comments.createdBy')
                     .populate('createdBy')
                     .then((postArr) => {
-                      console.log('next post', postArr);
                       posts = postArr.map((postObj) => {
                         return {
                           postId: postObj._id,
@@ -297,7 +284,6 @@ router.post('/save/post', (req, res) => {
   });
   newPost.save()
   .then((r) => {
-    console.log(r);
     res.json({success: true});
   })
   .catch((e) => {
@@ -350,10 +336,8 @@ router.post('/save/postlike', (req, res) => {
     .then((response) => {
       if (response.likes.indexOf(req.user._id) > -1) {
         const idx = response.likes.indexOf(req.user._id);
-        console.log('inside', idx);
         response.likes.splice(idx, 1);
       } else {
-        console.log('outside', response.likes, req.user._id, response.likes.indexOf(req.user._id));
         response.likes.push(req.user._id);
       }
       response.save()
@@ -401,7 +385,6 @@ router.post('/save/blurb', (req, res) => {
            return response.save();
          })
          .then((resp) => {
-           console.log(resp);
            res.json({success: true});
          })
          .catch((err) => {
@@ -486,7 +469,6 @@ router.post('/save/about', (req, res) => {
            return globalResponse.save();
          })
          .then((user) => {
-           console.log('about', user);
            res.json({success: true, user: user});
          })
          .catch((err) => {
@@ -536,7 +518,6 @@ router.post('/save/iscreated', (req, res) => {
                return response.save();
              })
             .then((userProfile) => {
-              console.log('user profile', userProfile);
               res.json({success: true, data: userProfile});
             })
             .catch((err) => {
@@ -570,7 +551,6 @@ router.get('/get/allusersmap', (req, res) => {
             education: user.education
           };
         });
-        console.log('got here');
         res.json({data: users});
       })
       .catch((err) => {
@@ -592,7 +572,6 @@ router.get('/get/allusersdirectory', (req, res) => {
 router.get('/get/specprofile', (req, res) => {
   User.findById(req.user._id)
          .then((userProfile) => {
-           console.log(userProfile);
            const data = {
              isCreated: userProfile.isCreated,
              head: {
@@ -674,7 +653,6 @@ router.post('/save/tag', (req, res) => {
           }
         })
         .then((response2) => {
-          console.log('saving tag success', response, response2);
           res.json({success: true, tag: response});
         })
         .catch((err) => {
@@ -689,7 +667,6 @@ router.post('/save/tag', (req, res) => {
 });
 
 router.post('/update/user', (req, res) => {
-  console.log('req.body', req.body);
   User.findByIdAndUpdate(req.user._id, req.body.data)
       .then((response) => {
         res.json({success: true, data: response});
@@ -700,10 +677,8 @@ router.post('/update/user', (req, res) => {
 });
 
 router.post('/update/portfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
-        console.log(user);
         const obj = {
           data: [],
           name: req.body.data
@@ -712,7 +687,6 @@ router.post('/update/portfoliotabs', (req, res) => {
         return user.save();
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {
@@ -721,7 +695,6 @@ router.post('/update/portfoliotabs', (req, res) => {
 });
 
 router.post('/update/changeportfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
         user.portfolio[req.body.index].name = req.body.name;
@@ -729,7 +702,6 @@ router.post('/update/changeportfoliotabs', (req, res) => {
         return user.save();
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {
@@ -738,7 +710,6 @@ router.post('/update/changeportfoliotabs', (req, res) => {
 });
 
 router.post('/update/removeportfoliotabs', (req, res) => {
-  console.log('req.body', req.body);
   User.findById(req.user._id)
       .then((user) => {
         let index = - 1;
@@ -755,7 +726,6 @@ router.post('/update/removeportfoliotabs', (req, res) => {
         return null;
       })
       .then((user) => {
-        console.log('userobj after save', user);
         res.json({success: true});
       })
       .catch((err) => {

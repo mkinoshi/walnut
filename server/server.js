@@ -117,8 +117,6 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.find({ facebookId: profile.id }, function(err, user) {
-      console.log(user)
-      console.log(profile)
       if (user.length === 0) {
         var new_user = new User({
           username: profile.displayName,

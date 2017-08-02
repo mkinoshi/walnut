@@ -9,7 +9,6 @@ const updateUserPortTabsThunk = (name, i) => (dispatch) => {
     index: i
   })
     .then((response) => {
-      console.log('response', response);
     })
     .catch((err) =>{
       console.log('error in newTag', err);

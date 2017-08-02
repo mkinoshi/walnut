@@ -4,7 +4,7 @@
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
-const getAllCommunitiesThunk = (dispatch) => {
+const getAllCommunitiesThunk = () => (dispatch) => {
   dispatch({type: 'COMMUNITIES_IS_FETCHING'});
   axios.get(URL + 'db/get/allcommunities')
     .then((response) => {
