@@ -4,9 +4,11 @@
 }
 
 .RightSideBar_Container {
+  flex: 4;
   background-color: #313D4D;
 }
 
 .LeftSidebar_Container {
+  flex: 3;
   background-color: #313D4D;
 }
