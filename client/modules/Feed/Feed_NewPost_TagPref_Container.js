@@ -59,7 +59,7 @@ class TagPref extends React.Component {
                          value={tag._id}
                          onClick={(e) => {this.handleChange(e);}}
                   />
-                  <label htmlFor={tag.name}># {tag.name}</label>
+                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
                 </div>
             ))}
             {this.props.newTags.map((tag, idx) => (
@@ -70,7 +70,7 @@ class TagPref extends React.Component {
                          value={tag._id}
                          onClick={(e) => {this.handleChange(e);}}
                   />
-                  <label htmlFor={tag.name}># {tag.name}</label>
+                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
                 </div>
             ))}
         </form>
