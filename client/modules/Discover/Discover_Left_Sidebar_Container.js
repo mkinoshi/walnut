@@ -12,6 +12,18 @@ class LeftSideBar extends React.Component {
     };
   }
 
+  filterChange(filterName) {
+    const filts = this.props.filters;
+    if (filts.indexOf(filterName) >= 0) {
+      const idx = filts.indexOf(filterName);
+      filts.splice(idx, 1);
+    } else {
+      filts.push(filterName);
+    }
+    // this.setState({filters: filts});
+    this.props.changeFilters(filts);
+  }
+
   render() {
     return (
       <div className="LeftSidebar_Container col-xs-3">
@@ -31,13 +43,22 @@ class LeftSideBar extends React.Component {
 }
 
 LeftSideBar.propTypes = {
-  community: PropTypes.object
+  community: PropTypes.object,
+  filters: PropTypes.array,
+  changeFilters: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
+  filters: state.discoverReducer.filters,
   community: state.userReducer.currentCommunity
 });
 
-export default connect(mapStateToProps)(LeftSideBar);
+const mapDispatchToProps = (dispatch) => ({
+  changeFilters: (filts) => {
+    dispatch({type: 'CHANGE_FILTERS', filters: filts});
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftSideBar);
 
 

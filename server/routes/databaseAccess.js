@@ -129,8 +129,15 @@ router.post('/toggle/community', (req, res) => {
       user.currentCommunity = req.body.communityId;
       return user.save();
     })
-    .then((response) => {
-      res.json({success: true});
+    .then((savedUser) => {
+      const opts = [
+          { path: 'communities'},
+          { path: 'currentCommunity'}
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({success: true, data: populatedUser});
     })
     .catch((err) => {
       res.json({error: err});
@@ -634,7 +641,7 @@ router.post('/save/tag', (req, res) => {
 router.post('/update/user', (req, res) => {
   User.findById(req.user._id)
       .then((user) => {
-        user.currentCommunity = req.body.data;
+        user.preferences = req.body.data.preferences;
         return user.save();
       })
       .then((savedUser) => {

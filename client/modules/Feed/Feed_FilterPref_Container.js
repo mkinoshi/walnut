@@ -14,7 +14,7 @@ class FilterPrefContainer extends React.Component {
     this.state = {
       filters: [],
       value: [],
-      useFilters: this.props.defaultFilters
+      useFilters: []
     };
   }
 
@@ -33,12 +33,16 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
+    console.log('hereeeeeeeeeeee');
+    console.log(value);
     if (value) {
       const options = value.split(',');
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-      const newOne = this.state.useFilters.concat(send);
+      const newOne = this.state.useFilters.length > 0 ? this.state.useFilters.concat(send) : this.props.defaultFilters.concat(send);
       // const newChecked = this.state.filters.concat(options);
-
+      console.log(options);
+      console.log(send);
+      console.log(newOne);
       this.props.updateUser({preferences: this.props.preferences.concat(send)});
       this.setState({useFilters: newOne, value: []});
     } else {
@@ -60,10 +64,11 @@ class FilterPrefContainer extends React.Component {
   render() {
     console.log('yoyoyoyoyoyoyoyo');
     console.log(this.state);
+    const filters = this.state.useFilters.length > 0 ? this.state.useFilters : this.props.defaultFilters;
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.defaultFilters.map((filter, index) => (
+          {filters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
               checked={(this.state.filters.includes(filter.name)) ? 'checked' : ''}

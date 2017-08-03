@@ -6,7 +6,7 @@ import _ from 'underscore';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
-import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
 
 
 const styles = {
@@ -153,7 +153,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => dispatch(createCommunityThunk(image, title, filters)),
-  changeCommunity: (updateObj) => dispatch(updateUserPrefThunk(updateObj)),
+  changeCommunity: (updateObj) => dispatch(updateUserCommunityThunk(updateObj)),
   getAllCommunities: () => dispatch(getAllCommunities())
 });
 

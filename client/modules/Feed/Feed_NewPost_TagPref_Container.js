@@ -42,7 +42,7 @@ class TagPref extends React.Component {
       <div>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {this.props.defaultFilters.map((filter, index) => (
-            <div key={index}>
+            <div key={index} className="choiceForm">
               <input type="checkbox" id={filter.name}
                 checked={(this.props.tags.includes(filter._id)) ? 'checked' : ''}
                 value={filter._id}
