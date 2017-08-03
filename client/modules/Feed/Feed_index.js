@@ -142,11 +142,10 @@ class Feed extends React.Component {
       <div className="Feed_Wrapper col-xs-5">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
             <div className="col-xs-3">
-              <div className="discoverButton left" style={{}}>
-                <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
-                  className="waves-effect waves-light btn"
-                  onClick={() => (this.toggleFilterPref())}>Discover</a>
+              <div className="discoverButton left">
+                Discover
               </div>
+              <hr style={{ width: '80%', float: 'left'}}></hr>
             {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
             </div>
             <div className="col-xs-9" >

@@ -9,7 +9,7 @@ import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import ReactUploadFile from 'react-upload-file';
-import { Icon, Button } from 'semantic-ui-react';
+import { Icon, Button, Input } from 'semantic-ui-react';
 import superagent from 'superagent';
 import css from './Feed.css';
 
@@ -113,11 +113,9 @@ class NewPostContainer extends React.Component {
       <div className="newPost">
         <h3 id="newPostHeader">New Conversation</h3>
         <div className="row newPostContent">
-          <textarea id="textarea1"
+          <Input id="textarea1"
             value={this.state.postBody}
-            onChange={(e) => this.handleChange(e)}>
-              <label htmlFor="textarea1">Enter Your Post</label>
-            </textarea>
+            onChange={(e) => this.handleChange(e)} />
         </div>
         <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
