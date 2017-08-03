@@ -16,3 +16,7 @@
 .attachFileIcon:hover {
     color: greenyellow !important;
 }
+
+.newPostFooter {
+    display: flex;
+}

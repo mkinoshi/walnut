@@ -111,7 +111,8 @@ router.post('/join/community', (req, res) => {
     })
     .then((savedUser) => {
       const opts = [
-        { path: 'communities'}
+        { path: 'communities'},
+        { path: 'currentCommunity'}
       ];
       return User.populate(savedUser, opts);
     })
