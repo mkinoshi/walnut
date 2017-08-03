@@ -1,12 +1,8 @@
 .newPost {
     padding: 1%;
-    background-color: #a67759;
-    width: 25%;
-    margin-left: 25%;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #a67759;
-    box-shadow: 0 1px 1px 1px #c9c9c9;
+    background-color: #F1F1EF;
+    width: 400px;
+    margin-top: 30px;
     border-radius: 3px;
 }
 .uploadButtonIcon {
@@ -14,7 +10,11 @@
 } 
 
 .attachFileIcon:hover {
-    color: greenyellow !important;
+    color: #0082B0 !important;
+}
+
+.attachFileIcon {
+    color: #837F8A !important;
 }
 
 .Feed_Wrapper {
@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     margin-top: 0.6vw;
+    margin-left: 1%;
 }
 
 .newPostTagsPref {
@@ -55,3 +56,76 @@
     margin-bottom: 14px;
 }
 
+.newPost_Container {
+    display: flex;
+    justify-content: center;    
+}
+
+.newPostContent {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+    border-style: solid;
+    border-width: 8px;
+    border-color: #a67759;
+    border-radius: 3px;
+}
+
+#textarea1 {
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    height: 100px;
+}
+
+#newPostHeader {
+    color: #837F8A;
+}
+
+#addingTags {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchTags {
+    width: 300px    
+}
+
+#addTagButton {
+    margin-right: 5px;
+}
+
+#tagPrefTitleHash {
+    color: #0082B0;
+    margin-top: 12px;
+}
+
+#tagHash {
+    color: #0082B0;
+}
+
+#tag {
+    background-color: #B3805C;
+    margin-left: 3%;
+    border-radius: 4px 3px 4px 3px;
+    color: #F1F1EF;
+    font-size: 14px;
+    line-height: 19px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+#tagPrefTitleDiv {
+    display: flex;
+    width: 100%;
+}
+
+#tagPrefTitle {
+    color: #837F8A;    
+    margin-top: 14px;
+    margin-bottom: 10px;
+    margin-left: 6px;
+}
