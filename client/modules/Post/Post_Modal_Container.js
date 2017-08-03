@@ -9,6 +9,7 @@ import Comment from './Post_Comment';
 import './Post.css';
 import { Button, Header, Icon, Image, Modal, Card, Form, TextArea } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
+import firebaseApp from '../../firebase';
 
 
 class ModalInstance extends React.Component {
@@ -16,7 +17,23 @@ class ModalInstance extends React.Component {
     super(props);
     this.state = {
       commentBody: '',
+      messages: []
     };
+  }
+
+  componentDidMount() {
+    if (this.prop.postData) {
+      const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData);
+      messagesRef.on('value', (snapshot) => {
+        if (snapshot.val()) {
+          this.setState({messages: snapshot.val()});
+        } else {
+          console.log('no snapshot val :(');
+        }
+      });
+    } else {
+      console.log('missing postData');
+    }
   }
 
   handleChange(e) {
@@ -24,8 +41,17 @@ class ModalInstance extends React.Component {
   }
 
   handleClick(id) {
-
-    // this.props.newComment(this.state.commentBody, id);
+    const user = firebaseApp.auth().currentUser;
+    const message = {
+      author: user.name,
+      content: this.state.commentBody,
+      createdAt: new Date(),
+      authorPhoto: user.profileUrl
+    };
+    const updates = {};
+    const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
+    updates['/messages/' + id + '/' + newMessageKey] = message;
+    firebaseApp.database().ref().update(updates);
     this.setState({commentBody: ''});
   }
 
@@ -47,15 +73,13 @@ class ModalInstance extends React.Component {
             postData={this.props.postData}
             newLike={() => (this.props.newLike(this.props.postData.postId))}/>
           </Modal.Description>
-          {this.props.postData.comments.map((comment, ind) => (
+          {this.state.messages.map((message, ind) => (
             <Modal.Description key={ind}>
               <Comment
-                newCommentLike={() => this.props.newCommentLike(this.props.postData.postId, comment.commentId)}
-                username={comment.username}
-                createdAt={comment.createdAt}
-                content={comment.content}
-                likes={comment.likes}
-                currentUser={this.props.currentUser}
+                name={message.name}
+                createdAt={message.createdAt}
+                content={message.content}
+                picture={message.authorPhoto}
               />
             </Modal.Description>
             ))}

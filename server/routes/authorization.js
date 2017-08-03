@@ -26,7 +26,7 @@ var adminApp = require('../firebaseAdmin');
     console.log('adminApp', adminApp);
     req.session.userToken = req.body.token;
     console.log('req.session.userToken', req.session.userToken);
-    adminApp.auth().verifyIdToken(req.body.token)
+    adminApp.adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
       console.log('uid', uid);
@@ -46,10 +46,12 @@ var adminApp = require('../firebaseAdmin');
           phones: [],
           email: [req.body.email]
         },
+        communities: [],
         pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
       });
       return new_user.save()
       .then((doc) => {
+        console.log('new user', doc);
         res.status(200);
         res.redirect('/')
       })
