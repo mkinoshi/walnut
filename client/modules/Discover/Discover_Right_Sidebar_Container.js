@@ -13,12 +13,9 @@ class RightSideBar extends React.Component {
 
   render() {
     return (
-      <div className="RightSideBar_Container">
-        <div className="RightSideBar_LogoContainer">
-          {/* <div id="Logo" className="RightSideBar"><img src={this.props.community.icon} /></div>
-          <div id="title" className="RightSideBar">><h1 className="discover" >{this.props.community.title}</h1></div> */}
-        </div>
-        <div className="RightSideBar_Preference">
+      <div className="RightSideBar_Container col-xs-4">
+        <div className="newPost_Container">
+          <NewPostContainer />
         </div>
       </div>
     );

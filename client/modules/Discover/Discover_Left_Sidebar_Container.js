@@ -12,7 +12,7 @@ class LeftSideBar extends React.Component {
 
   render() {
     return (
-      <div className="LeftSidebar_Container">
+      <div className="LeftSidebar_Container col-xs-3">
         <div className="LeftSideBar_LogoContainer">
           <div className="LeftSideBar_Logo"><img src={this.props.community.icon} /></div>
           <div className="LeftSideBar_title">><h1 className="discover" >{this.props.community.title}</h1></div>

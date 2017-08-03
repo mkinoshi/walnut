@@ -130,7 +130,7 @@ class NewPostContainer extends React.Component {
     };
 
     return (
-      <div className="newPost col-xs-4 col-xs-offset-3">
+      <div className="newPost">
         <div className="row newPostContent">
           <textarea id="textarea1"
             style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}

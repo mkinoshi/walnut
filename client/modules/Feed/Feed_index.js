@@ -139,7 +139,7 @@ class Feed extends React.Component {
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
     return (
-      <div className="Feed_Wrapper">
+      <div className="Feed_Wrapper col-xs-5">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
             <div className="col-xs-3">
               <div className="discoverButton left" style={{}}>
