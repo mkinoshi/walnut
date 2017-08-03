@@ -4,6 +4,7 @@ import {User, Tag, Post, Quote, Community} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
 import firebaseApp from '../../client/firebase';
+var adminApp = require('../firebaseAdmin');
 
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
@@ -29,16 +30,20 @@ router.get('/get/app', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-  User.findById(req.user._id)
-      .populate('communities')
-      .populate('currentCommunity')
-      .then((response) => {
-        res.json({data: response});
-      })
-      .catch((err) => {
-        console.log('get user error', err);
-        res.json({data: null});
-      });
+  adminApp.adminApp.auth().verifyIdToken(req.session.userToken)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      console.log('uid', uid);
+      User.findOne({firebaseId: uid})
+        .populate('communities')
+        .populate('currentCommunity')
+        .then((response) => {
+          res.json({data: response});
+        })
+    }).catch((err) => {
+      console.log('get user error', err);
+      res.json({data: null});
+    });
 });
 
 router.post('/create/community', (req, res) => {
@@ -90,36 +95,44 @@ router.post('/create/community', (req, res) => {
 });
 
 router.post('/join/community', (req, res) => {
-  let joined;
-  Community.findById(req.body.communityId)
-    .then((community) => {
-      if (community.users.indexOf(req.user._id) === -1) {
-        community.users.push(req.user._id);
-      }
-      joined = community;
-      return community.save();
-    })
-    .then((response) => {
-      return User.findById(req.user._id);
-    })
-    .then((user) => {
-      if (user.communities.indexOf(req.body.communityId) === -1) {
-        user.communities.push(req.body.communityId);
-      }
-      user.currentCommunity = req.body.communityId;
-      return user.save();
-    })
-    .then((savedUser) => {
-      const opts = [
-        { path: 'communities'},
-        { path: 'currentCommunity'}
-      ];
-      return User.populate(savedUser, opts);
-    })
-    .then((populatedUser) => {
-      res.json({success: true, community: joined, user: populatedUser});
-    })
-    .catch((err) => {
+  adminApp.adminApp.auth().verifyIdToken(req.session.userToken)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      console.log('uid', uid);
+      let joined;
+      let userId;
+      User.findOne({firebaseId: uid})
+      .then((userObj) => {
+        userId = userObj._id;
+        return Community.findById(req.body.communityId);
+      }).then((community) => {
+          if (community.users.indexOf(userId) === -1) {
+            community.users.push(userId);
+          }
+          joined = community;
+          return community.save();
+        })
+        .then((response) => {
+          return User.findById(userId);
+        })
+        .then((user) => {
+          if (user.communities.indexOf(req.body.communityId) === -1) {
+            user.communities.push(req.body.communityId);
+          }
+          user.currentCommunity = req.body.communityId;
+          return user.save();
+        })
+        .then((savedUser) => {
+          const opts = [
+            { path: 'communities'},
+            { path: 'currentCommunity'}
+          ];
+          return User.populate(savedUser, opts);
+        })
+        .then((populatedUser) => {
+          res.json({success: true, community: joined, user: populatedUser});
+        })
+    }).catch((err) => {
       console.log('join error', err);
       res.json({error: err});
     });

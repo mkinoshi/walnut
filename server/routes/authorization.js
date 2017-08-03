@@ -70,8 +70,8 @@ var adminApp = require('../firebaseAdmin');
 
   router.post('/auth/login', function(req, res) {
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
-    .then(() => {
-      console.log('login worked');
+    .then((result) => {
+      console.log('result', result);
       res.redirect('/');
     })
     .catch(function(error) {
@@ -90,26 +90,15 @@ var adminApp = require('../firebaseAdmin');
   // })
   });
 
-  router.get('/auth/facebook', function(req, res) {
-    var provider = new firebase.auth.FacebookAuthProvider();
-    console.log('got here');
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-      var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      console.log('facebook login worked', user);
-    }).catch(function(error) {
-      console.log('facebook login failed', error);
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
+  router.post('/facebook', function(req, res) {
+    req.session.userToken = req.body.token;
+    console.log('in facebook auth route', req.body.token);
+    adminApp.adminApp.auth().verifyIdToken(req.body.token)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      console.log('uid here: ', uid);
+      res.status(200);
+    }).catch((error) => {console.log('error', error);})
     // firebase.auth().signInWithRedirect(provider);
     // firebase.auth().getRedirectResult().then(function(result) {
     //   if (result.credential) {
