@@ -18,7 +18,7 @@
 }
 
 .Feed_Wrapper {
-  flex: 2;
+  flex: 5;
   background-color: #313D4D;
 }
 
@@ -37,3 +37,21 @@
 .newPostTagsPref {
     height: 15vw;
 }
+
+.tagItemLabel {
+    background-color: #B3805C;
+    margin-left: 3%;
+    border-radius: 4px 3px 4px 3px;
+    color: #F1F1EF;
+    font-size: 14px;
+    line-height: 19px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+#choice_form {
+    margin-bottom: 14px;
+}
+

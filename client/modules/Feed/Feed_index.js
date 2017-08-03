@@ -147,7 +147,7 @@ class Feed extends React.Component {
                   className="waves-effect waves-light btn"
                   onClick={() => (this.toggleFilterPref())}>Discover</a>
               </div>
-            {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+            {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
             </div>
             <div className="col-xs-9" >
               {this.props.data.isFetching ?

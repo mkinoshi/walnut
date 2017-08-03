@@ -1,12 +1,63 @@
 #Discover {
   display: flex;
   flex-direction: row;
+  margin-top: 20px;
 }
 
 .RightSideBar_Container {
+  flex: 4;
   background-color: #313D4D;
 }
 
 .LeftSidebar_Container {
+  flex: 3;
   background-color: #313D4D;
+  margin-top: 30px;
 }
+
+.LeftSideBar_LogoContainer {
+  display: flex;
+  flex-direction: row;
+}
+.LeftSideBar_Logo {
+  flex:1;
+  margin-left: 8%;
+  margin-right: 4%;
+}
+
+.LeftSideBar_title {
+  flex: 2;
+}
+
+.discoverTitle {
+  font-family: Avenir Next;
+  font-weight: bold;
+  margin-right: 30%;
+  font-size: 30px;
+  line-height: 41px;
+}
+
+.discoverImage {
+  width: 102px;
+  height: 108px;
+}
+
+.LeftSideBar_Preference {
+  margin-left: 8%;
+  background-color: #F1F1EF;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  margin-top: 10%;
+  border-radius: 4px;
+}
+
+.outeritem {
+  color: #837F8A;
+  font-family: Avenir Next;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 19px;
+  margin-left: 5%;
+  margin-top: 3%;
+}
+
