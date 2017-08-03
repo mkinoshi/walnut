@@ -16,3 +16,8 @@
 .attachFileIcon:hover {
     color: greenyellow !important;
 }
+
+.Feed_Wrapper {
+  flex: 2;
+  background-color: #313D4D;
+}

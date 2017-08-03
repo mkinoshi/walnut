@@ -632,11 +632,20 @@ router.post('/save/tag', (req, res) => {
 });
 
 router.post('/update/user', (req, res) => {
-  User.findByIdAndUpdate(req.user._id, req.body.data)
-      .populate('currentCommunity')
-      .populate('communities')
-      .then((response) => {
-        res.json({success: true, data: response});
+  User.findById(req.user._id)
+      .then((user) => {
+        user.currentCommunity = req.body.data;
+        return user.save();
+      })
+      .then((savedUser) => {
+        const opts = [
+          { path: 'communities'},
+          { path: 'currentCommunity'}
+        ];
+        return User.populate(savedUser, opts);
+      })
+      .then((populatedUser) => {
+        res.json({success: true, data: populatedUser});
       })
       .catch((err) => {
         res.json({success: false});

@@ -1,0 +1,14 @@
+#Discover {
+  display: flex;
+  flex-direction: row;
+}
+
+.RightSideBar_Container {
+  flex: 1;
+  background-color: #313D4D;
+}
+
+.LeftSidebar_Container {
+  flex: 1;
+  background-color: #313D4D;
+}

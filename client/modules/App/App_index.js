@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
@@ -16,6 +17,8 @@ const styles = {
   }
 };
 
+const history = createBrowserHistory();
+
 class App extends React.Component {
 
   componentWillMount() {
@@ -30,17 +33,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <Switch>
-            <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-            <Route path="/app/community" component={Community} />
-            <Route path="/app/editprofile" render={(props) =>
-              <EditProfile isCreating={!null} {...props} />
-            } />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <Router path="/" history={history}>
+        <Switch>
+          <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
+          <Route path="/app/community" component={Community} />
+          <Route path="/app/editprofile" render={(props) =>
+            <EditProfile isCreating={!null} {...props} />
+          } />
+        </Switch>
+      </Router>
     );
   }
 }

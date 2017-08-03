@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
+import './Feed.css';
 
 const styles = {
   outer: {
@@ -138,7 +139,7 @@ class Feed extends React.Component {
   render() {
     const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
     return (
-      <div>
+      <div className="Feed_Wrapper">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
             <div className="col-xs-3">
               <div className="discoverButton left" style={{}}>
