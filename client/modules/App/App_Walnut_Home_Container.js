@@ -43,7 +43,7 @@ class WalnutHomeContainer extends React.Component {
 
 
   toggleCommunity(com) {
-    this.props.changeCommunity({currentCommunity: com._id});
+    this.props.changeCommunity(com);
   }
 
   handleStart() {
@@ -101,7 +101,7 @@ class WalnutHomeContainer extends React.Component {
                     }).map((community, idx) => <div key={idx}>
                         <img src={community.icon} style={styles.image} />
                         <p>{community.title}</p>
-                        <button onClick={() => {this.joinCommunity(community._id);}}>+ Join</button>
+                        <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>
                     </div> )
                     }
                 </div>
