@@ -32,8 +32,11 @@ mongoose.Promise = global.Promise;
 var models = require('./models/models');
 
 //put in dbRoutes
-var dbRoutes = require('./routes/databaseAccess.js');
-var awsRoutes = require('./routes/awsAccess.js');
+var dbGeneralRoutes = require('./routes/dbRoutes/dbGeneralRoutes');
+var dbGetRoutes = require('./routes/dbRoutes/dbGetRoutes');
+var dbSaveRoutes = require('./routes/dbRoutes/dbSaveRoutes');
+var dbUpdateRoutes = require('./routes/dbRoutes/dbUpdateRoutes');
+var awsRoutes = require('./routes/awsAccess');
 var auth = require('./routes/authorization');
 var app = express();
 
@@ -140,7 +143,10 @@ app.use(session({
 // ));
 
 app.use('/auth', auth);
-app.use('/db', dbRoutes);
+app.use('/db', dbGeneralRoutes);
+app.use('/db/get', dbGetRoutes);
+app.use('/db/save', dbSaveRoutes);
+app.use('/db/update', dbUpdateRoutes);
     app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/', (request, response) => {

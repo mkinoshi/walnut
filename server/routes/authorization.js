@@ -6,7 +6,7 @@ var Tag = models.Tag;
 const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
-var adminApp = require('../firebaseAdmin');
+import adminApp from '../firebaseAdmin';
 
   router.get('/auth/signup', function(req, res) {
     Tag.find({}, function(err, tags) {
@@ -26,7 +26,7 @@ var adminApp = require('../firebaseAdmin');
     console.log('adminApp', adminApp);
     req.session.userToken = req.body.token;
     console.log('req.session.userToken', req.session.userToken);
-    adminApp.adminApp.auth().verifyIdToken(req.body.token)
+    adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
       console.log('uid', uid);
@@ -92,8 +92,7 @@ var adminApp = require('../firebaseAdmin');
 
   router.post('/facebook', function(req, res) {
     req.session.userToken = req.body.token;
-    console.log('in facebook auth route', req.body.token);
-    adminApp.adminApp.auth().verifyIdToken(req.body.token)
+    adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
       console.log('uid here: ', uid);

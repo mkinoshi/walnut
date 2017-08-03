@@ -41,6 +41,7 @@ class ModalInstance extends React.Component {
   }
 
   handleClick(id) {
+    console.log(firebaseApp);
     const user = firebaseApp.auth().currentUser;
     const message = {
       author: user.name,

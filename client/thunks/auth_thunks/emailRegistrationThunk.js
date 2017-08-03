@@ -1,4 +1,4 @@
-import { firebaseApp } from '../../firebase';
+import firebaseApp from '../../firebase';
 import axios from 'axios';
 const URL = 'http://localhost:3000';
 

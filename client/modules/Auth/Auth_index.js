@@ -7,7 +7,8 @@ import Login from './Auth_Login';
 import Register from './Auth_Registration';
 // import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import App from '../App/App_index';
-import { firebaseApp } from '../../firebase';
+import appCommunity from '../App/App_Community';
+import firebaseApp from '../../firebase';
 
 const history = createBrowserHistory();
 
@@ -34,6 +35,7 @@ class Auth extends React.Component {
       <Router path="/" history={history}>
         <Switch>
           <Route path="/app/walnuthome" component={App} />
+          <Route path="/app/community" component={appCommunity} />
           <Route path="/app/login" component={Login}/>
           <Route path="/app/register" component={Register}/>
         </Switch>
