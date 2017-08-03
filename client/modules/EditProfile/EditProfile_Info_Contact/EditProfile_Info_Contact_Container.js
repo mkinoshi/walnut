@@ -168,7 +168,7 @@ class ContactContainer extends React.Component {
 }
 
 ContactContainer.propTypes = {
-  email: PropTypes.string,
+  email: PropTypes.array,
   phones: PropTypes.array,
   saveContact: PropTypes.func
 };

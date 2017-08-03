@@ -116,8 +116,7 @@ class Post extends React.Component {
           }]}
           isOpen={this.state.lightBoxData !== ''}
           onClose={() => this.closeLightbox()}
-          />
-          : null
+          /> : null
         }
 
         <Modal

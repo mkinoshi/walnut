@@ -59,7 +59,7 @@ function auth(passport) {
         ],
         contact: {
           phones: [],
-          email: ''
+          email: []
         },
         pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
       });
