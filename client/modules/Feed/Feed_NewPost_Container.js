@@ -130,7 +130,7 @@ class NewPostContainer extends React.Component {
     };
 
     return (
-      <div className="newPost col-xs-6 col-xs-offset-3">
+      <div className="newPost col-xs-4 col-xs-offset-3">
         <div className="row newPostContent">
           <textarea id="textarea1"
             style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}
@@ -148,13 +148,7 @@ class NewPostContainer extends React.Component {
           <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
         </div>
           <div className="row newPostFooter">
-            <Button onClick={() => this.submitPost()} animated>
-              <Button.Content visible>create</Button.Content>
-              <Button.Content hidden>
-                <Icon name="send" />
-              </Button.Content>
-            </Button>
-            <div className="fileUpload">
+          <div className="fileUpload col-xs-6">
             <ReactUploadFile
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
@@ -164,6 +158,14 @@ class NewPostContainer extends React.Component {
               onChange={(e) => this.changeFileName(e.target.value)}/>
                 :
                 null}
+            </div>
+            <div className="col-xs-6">
+              <Button onClick={() => this.submitPost()} animated>
+                <Button.Content visible>create</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="send" />
+                </Button.Content>
+              </Button>
             </div>
           </div>
       </div>

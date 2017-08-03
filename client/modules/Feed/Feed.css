@@ -1,7 +1,7 @@
 .newPost {
     padding: 1%;
     background-color: #a67759;
-    width: 50%;
+    width: 25%;
     margin-left: 25%;
     border-width: 1px;
     border-style: solid;
@@ -19,4 +19,16 @@
 
 .newPostFooter {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.fileUpload {
+    display: flex;
+    align-items: center;
+    margin-top: 0.6vw;
+}
+
+.newPostTagsPref {
+    height: 15vw;
 }
