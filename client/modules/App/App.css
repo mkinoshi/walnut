@@ -1,11 +1,13 @@
-.ui.menu {
-    border-radius: 0px;
+
+#navBar {
+    display: flex;
+    height: 57px;
+    background-color: #303C4D;
 }
 
 .logoHolder {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 10px;
+    left: 6%;
+    position: absolute;
 }
 
 .logo {
@@ -19,4 +21,39 @@
 
 .Container {
     height: 100%;
+    color: #F1F1EF;
 }
+
+.navBarLinks {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    left: 35%;
+    right: 65%;
+    position: absolute;
+    margin-top: 1%;
+    color: #F1F1EF;
+}
+
+.navBarLinksRight {
+    right: 0.5%;
+    left: auto;
+    position: absolute;
+    color: #F1F1EF;
+}
+
+.navBarHome {
+    left: 0.5%;
+    right: auto;
+    position: absolute;
+    margin-top: 1%;
+    color: #F1F1EF;
+}
+
+.bar {
+    background-color: #B48059;
+    width: 40px;
+    height: 6px;
+    border-radius: 50px;
+    margin-top: 0.4vw;
+  }

@@ -7,6 +7,7 @@ import mapReducer from './mapReducer';
 import deckReducer from './deckReducer';
 import getCommunityReducer from './getCommunityReducer';
 import newTagsReducer from './newTagsReducer';
+import navBarReducer from './navBarReducer';
 
 const rootReducer = combineReducers({
   userReducer: userReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   deckReducer: deckReducer,
   getCommunityReducer: getCommunityReducer,
   newTagsReducer: newTagsReducer,
+  navBarReducer: navBarReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 
