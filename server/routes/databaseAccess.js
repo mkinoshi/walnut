@@ -3,6 +3,8 @@ const router = express.Router();
 import {User, Tag, Post, Quote, Community} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
+import firebaseApp from '../../client/firebase';
+
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
@@ -109,7 +111,8 @@ router.post('/join/community', (req, res) => {
     })
     .then((savedUser) => {
       const opts = [
-        { path: 'communities'}
+        { path: 'communities'},
+        { path: 'currentCommunity'}
       ];
       return User.populate(savedUser, opts);
     })
@@ -287,7 +290,15 @@ router.post('/save/post', (req, res) => {
   });
   newPost.save()
   .then((r) => {
-    res.json({success: true});
+    console.log('new post', r);
+    firebaseApp.database().ref('chats/' + r._id).set({
+      title: r.content,
+      createdAt: r.createdAt,
+    });
+    const start = {};
+    start[ ''/* firebaseId*/] = true;
+    firebaseApp.database().ref('members/' + r._id).set(start);
+    res.json({success: true, newPost: r});
   })
   .catch((e) => {
     console.log(e);

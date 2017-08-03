@@ -24,7 +24,8 @@ class ModalInstance extends React.Component {
   }
 
   handleClick(id) {
-    this.props.newComment(this.state.commentBody, id);
+
+    // this.props.newComment(this.state.commentBody, id);
     this.setState({commentBody: ''});
   }
 

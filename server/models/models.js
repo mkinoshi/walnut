@@ -112,9 +112,9 @@ const UserSchema = new mongoose.Schema({
         }
       }
     ],
-    email: {
+    email: [{
       type: String
-    }
+    }]
   },
   work: [
     {

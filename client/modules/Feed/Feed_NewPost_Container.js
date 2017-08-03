@@ -9,7 +9,7 @@ import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import ReactUploadFile from 'react-upload-file';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 import superagent from 'superagent';
 import css from './Feed.css';
 
@@ -45,8 +45,6 @@ class NewPostContainer extends React.Component {
     this.state = {
       postBody: '',
       postTags: [],
-      showTagPref: false,
-      showNewTag: false,
       newTags: [],
       tempTags: [],
       newFileName: null,
@@ -87,14 +85,6 @@ class NewPostContainer extends React.Component {
     const newTagsCopy = this.state.newTags.slice();
     newTagsCopy.splice(newTagsCopy.indexOf(tag), 1);
     this.setState({newTags: newTagsCopy});
-  }
-
-  toggleNewTag() {
-    this.setState({showNewTag: !this.state.showNewTag});
-  }
-
-  toggleTagPref() {
-    this.setState({showTagPref: !this.state.showTagPref});
   }
 
   handleChange(e) {
@@ -140,8 +130,8 @@ class NewPostContainer extends React.Component {
     };
 
     return (
-      <div className="newPost col-xs-6 col-xs-offset-3" style={styles.outer}>
-        <div style={styles.post}>
+      <div className="newPost col-xs-6 col-xs-offset-3">
+        <div className="row newPostContent">
           <textarea id="textarea1"
             style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}
             value={this.state.postBody}
@@ -149,43 +139,32 @@ class NewPostContainer extends React.Component {
               <label htmlFor="textarea1">Enter Your Post</label>
             </textarea>
         </div>
-          <div style={styles.postOuter}>
-            <div className="tagsPref">
-              <div className="addTagsButton" style={{}}>
-                <a style={{backgroundColor: '#FF5657'}}
-                  className="waves-effect waves-light btn"
-                  onClick={() => (this.toggleTagPref())}>Add Tags</a>
-              </div>
-              {this.state.showTagPref ?
-                <div>
-                  <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
-                                    tags={this.state.postTags}
-                                    addTempTags={(tag) => (this.addTempTags(tag))}
-                                    tempTags={this.state.tempTags}
-                                    newTags={this.state.newTags} />
-                  <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
-                </div>
-                 : <p></p>}
+        <div className="row newPostTagsPref">
+          <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
+                            tags={this.state.postTags}
+                            addTempTags={(tag) => (this.addTempTags(tag))}
+                            tempTags={this.state.tempTags}
+                            newTags={this.state.newTags} />
+          <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
+        </div>
+          <div className="row newPostFooter">
+            <Button onClick={() => this.submitPost()} animated>
+              <Button.Content visible>create</Button.Content>
+              <Button.Content hidden>
+                <Icon name="send" />
+              </Button.Content>
+            </Button>
+            <div className="fileUpload">
+            <ReactUploadFile
+              style={{width: '80px', height: '40px'}}
+              chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
+              options={optionsForUpload}/>
+              {(this.state.file !== '') ?
+              <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
+              onChange={(e) => this.changeFileName(e.target.value)}/>
+                :
+                null}
             </div>
-            <div className="newPostFooter">
-              <div className="submitButton col-xs-12">
-                <button className="btn waves-effect waves-light" type="submit" name="action"
-                onClick={() => this.submitPost()}>Submit
-                  <i className="material-icons right">send</i>
-                </button>
-              </div>
-              <div className="fileUpload">
-              <ReactUploadFile
-                style={{width: '80px', height: '40px'}}
-                chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
-                options={optionsForUpload}/>
-                {(this.state.file !== '') ?
-                <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
-                onChange={(e) => this.changeFileName(e.target.value)}/>
-                 :
-                  null}
-              </div>
-          </div>
           </div>
       </div>
     );
