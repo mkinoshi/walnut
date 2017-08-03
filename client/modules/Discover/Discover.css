@@ -18,6 +18,7 @@
 .LeftSideBar_LogoContainer {
   display: flex;
   flex-direction: row;
+  margin-right: 20%;
 }
 .LeftSideBar_Logo {
   flex:1;
@@ -49,6 +50,7 @@
   padding-bottom: 1%;
   margin-top: 10%;
   border-radius: 4px;
+  margin-right: 20%;
 }
 
 .outeritem {
