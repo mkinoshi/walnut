@@ -151,6 +151,7 @@ import adminApp from '../firebaseAdmin';
   // });
 
   router.get('/logout', function(req, res) {
+    localStorage.removeItem('isUserInCommunity');
     req.logout();
     res.redirect('/auth/login');
   });

@@ -21,6 +21,7 @@ const styles = {
 class Community extends React.Component {
 
   componentDidMount() {
+    localStorage.setItem('isUserInCommunity', true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }

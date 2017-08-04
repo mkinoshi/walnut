@@ -18,15 +18,15 @@ const styles = {
 
 class App extends React.Component {
 
-  componentWillMount() {
-    // if (localStorage.getItem('user')) {
-    //   console.log(JSON.parse(localStorage.getItem('user')));
-    //   this.props.setUser();
-    // } else {
-    //   this.props.getUser();
-    // }
-    this.props.getUser();
-  }
+  // componentWillMount() {
+  //   // if (localStorage.getItem('user')) {
+  //   //   console.log(JSON.parse(localStorage.getItem('user')));
+  //   //   this.props.setUser();
+  //   // } else {
+  //   //   this.props.getUser();
+  //   // }
+  //   this.props.getUser();
+  // }
 
   render() {
     return (
@@ -51,8 +51,7 @@ App.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => dispatch(getUser()),
-  setUser: () => dispatch({type: 'GET_USER_DATA_DONE', user: JSON.parse(localStorage.getItem('user'))})
+  getUser: () => dispatch(getUser())
 });
 
 

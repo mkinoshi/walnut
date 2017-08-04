@@ -3,6 +3,7 @@ import axios from 'axios';
 const URL = 'http://localhost:3000';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
+  dispatch({type: 'USER_IS_NOT_CREATED'});
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
     result.getToken(/* forceRefresh */ true)
@@ -14,7 +15,12 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
         lname: lastname,
         email: email,
         password: password
-      }).catch(function(error) {
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch({type: 'USER_IS_CREATED'});
+      })
+      .catch(function(error) {
         console.log('axios did not go through');
       });
     }).catch(function(error) {
