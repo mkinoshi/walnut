@@ -52,6 +52,9 @@ const UserSchema = new mongoose.Schema({
   fullName: {
     type: String
   },
+  firebaseId: {
+    type: String
+  },
   facebookId: {
     type: String
   },

@@ -14,6 +14,8 @@ var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
 
+import { adminApp } from './firebaseAdmin';
+
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
 REQUIRED_ENV.forEach(function(el) {
@@ -30,8 +32,11 @@ mongoose.Promise = global.Promise;
 var models = require('./models/models');
 
 //put in dbRoutes
-var dbRoutes = require('./routes/databaseAccess.js');
-var awsRoutes = require('./routes/awsAccess.js');
+var dbGeneralRoutes = require('./routes/dbRoutes/dbGeneralRoutes');
+var dbGetRoutes = require('./routes/dbRoutes/dbGetRoutes');
+var dbSaveRoutes = require('./routes/dbRoutes/dbSaveRoutes');
+var dbUpdateRoutes = require('./routes/dbRoutes/dbUpdateRoutes');
+var awsRoutes = require('./routes/awsAccess');
 var auth = require('./routes/authorization');
 var app = express();
 
@@ -60,88 +65,97 @@ app.use(cors(corsOptions));
 // Passport
 app.use(session({
   secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  // userToken: null
 }));
 
+// var hbs = require('express-handlebars')({
+//   defaultLayout: 'main',
+//   extname: '.hbs'
+// });
+// app.engine('hbs', hbs);
+// app.set('views', path.join(__dirname, '..', 'views'));
+// app.set('view engine', 'hbs');
 
-var hbs = require('express-handlebars')({
-  defaultLayout: 'main',
-  extname: '.hbs'
-});
-app.engine('hbs', hbs);
-app.set('views', path.join(__dirname, '..', 'views'));
-app.set('view engine', 'hbs');
 
+// app.use(passport.initialize());
+// app.use(passport.session());
+//
+// passport.serializeUser(function(user, done) {
+//   done(null, user._id);
+// });
+//
+// passport.deserializeUser(function(id, done) {
+//   models.User.findById(id, done);
+// });
+//
+// // passport strategy
+// passport.use(new LocalStrategy(function(username, password, done) {
+//   // Find the user with the given username
+//   models.User.findOne({ username: username }, function (err, user) {
+//     // if there's an error, finish trying to authenticate (auth failed)
+//     if (err) {
+//       console.error('Error fetching user in LocalStrategy', err);
+//       return done(err);
+//     }
+//     // if no user present, auth failed
+//     if (!user) {
+//       return done(null, false, { message: 'Incorrect username.' });
+//     }
+//     // TODO encrypt this!!!
+//     // if passwords do not match, auth failed
+//     if (user.password !== password) {
+//       return done(null, false, { message: 'Incorrect password.' });
+//     }
+//     // auth has has succeeded
+//     return done(null, user);
+//   });
+// }
+// ));
+//
+// passport.use(new FacebookStrategy({
+//     clientID: process.env.FACEBOOK_APP_ID,
+//     clientSecret: process.env.FACEBOOK_APP_SECRET,
+//     callbackURL: "http://localhost:3000/auth/facebook/callback",
+//     // TODO scrape groups
+//      profileFields: ['id', 'displayName', 'photos']
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.find({ facebookId: profile.id }, function(err, user) {
+//       console.log(user)
+//       console.log(profile)
+//       if (user.length === 0) {
+//         var new_user = new User({
+//           username: profile.displayName,
+//           pictureURL: profile.photos[0].value,
+//           facebookId: profile.id
+//         })
+//         new_user.save(function(err) {
+//           if (!err) {
+//             cb(err, new_user);
+//           }
+//         })
+//       } else {
+//         cb(err, user[0])
+//       }
+//     })
+//   }
+// ));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
-
-passport.deserializeUser(function(id, done) {
-  models.User.findById(id, done);
-});
-
-// passport strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // Find the user with the given username
-  models.User.findOne({ username: username }, function (err, user) {
-    // if there's an error, finish trying to authenticate (auth failed)
-    if (err) {
-      console.error('Error fetching user in LocalStrategy', err);
-      return done(err);
-    }
-    // if no user present, auth failed
-    if (!user) {
-      return done(null, false, { message: 'Incorrect username.' });
-    }
-    // TODO encrypt this!!!
-    // if passwords do not match, auth failed
-    if (user.password !== password) {
-      return done(null, false, { message: 'Incorrect password.' });
-    }
-    // auth has has succeeded
-    return done(null, user);
-  });
-}
-));
-
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-    // TODO scrape groups
-     profileFields: ['id', 'displayName', 'photos']
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.find({ facebookId: profile.id }, function(err, user) {
-      if (user.length === 0) {
-        var new_user = new User({
-          username: profile.displayName,
-          pictureURL: profile.photos[0].value,
-          facebookId: profile.id
-        })
-        new_user.save(function(err) {
-          if (!err) {
-            cb(err, new_user);
-          }
-        })
-      } else {
-        cb(err, user[0])
-      }
-    })
-  }
-));
-
-app.use('/', auth(passport));
-app.use('/db', dbRoutes);
-app.use('/aws', awsRoutes);
+app.use('/auth', auth);
+app.use('/db', dbGeneralRoutes);
+app.use('/db/get', dbGetRoutes);
+app.use('/db/save', dbSaveRoutes);
+app.use('/db/update', dbUpdateRoutes);
+    app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/app', (request, response) => {
+app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
+
+
+
+
 // make this dbRoutes when we have the database running
 
 

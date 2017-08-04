@@ -41,6 +41,11 @@ class WalnutHomeContainer extends React.Component {
     this.props.getAllCommunities();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isCreated) {
+      nextProps.getAllCommunities();
+    }
+  }
 
   toggleCommunity(com) {
     this.props.changeCommunity(com);
@@ -142,12 +147,14 @@ WalnutHomeContainer.propTypes = {
   userCommunities: PropTypes.array,
   changeCommunity: PropTypes.func,
   getAllCommunities: PropTypes.func,
+  isCreated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
   userCommunities: state.userReducer.communities,
-  communities: state.getCommunityReducer.communities
+  communities: state.getCommunityReducer.communities,
+  isCreated: state.userReducer.isCreated
 });
 
 const mapDispatchToProps = (dispatch) => ({

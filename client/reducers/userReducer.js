@@ -43,7 +43,8 @@ const userObj = {
   tags: [],
   hasProfile: false,
   isFetching: false,
-  blurb: ''
+  blurb: '',
+  isCreated: true
 };
 
 
@@ -109,6 +110,16 @@ const userReducer = (state = userObj, action) => {
         return newState3;
       }
       return newState3;
+    case 'USER_IS_NOT_CREATED':
+      return {
+        ...state,
+        isCreated: false
+      };
+    case 'USER_IS_CREATED':
+      return {
+        ...state,
+        isCreated: true
+      };
     default:
       return state;
   }

@@ -16,6 +16,21 @@
     <div style="background-color: #313D4D; height: 100%" id='root'></div>
     <!-- Import jQuery before materialize.js -->
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAlvJ_fjJc3-4vzMkDfG4EQ81f02n8_0eE",
+        authDomain: "walnut-1500128476052.firebaseapp.com",
+        databaseURL: "https://walnut-1500128476052.firebaseio.com",
+        projectId: "walnut-1500128476052",
+        storageBucket: "walnut-1500128476052.appspot.com",
+        messagingSenderId: "7094437893"
+      };
+      firebase.initializeApp(config);
+      var defaultAuth = firebase.auth();
+    </script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

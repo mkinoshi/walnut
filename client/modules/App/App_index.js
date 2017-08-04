@@ -27,15 +27,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router path="/" history={history}>
-        <Switch>
-          <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-          <Route path="/app/community" component={Community} />
-          <Route path="/app/editprofile" render={(props) =>
-            <EditProfile isCreating={!null} {...props} />
-          } />
-        </Switch>
-      </Router>
+        <div>
+          <Switch>
+            <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
+            <Route path="/app/community" component={Community} />
+            <Route path="/app/editprofile" render={(props) =>
+              <EditProfile isCreating={!null} {...props} />
+            } />
+          </Switch>
+        </div>
     );
   }
 }
@@ -48,8 +48,7 @@ App.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => dispatch(getUser()),
-  setUser: () => dispatch({type: 'GET_USER_DATA_DONE', user: JSON.parse(localStorage.getItem('user'))})
+  getUser: () => dispatch(getUser())
 });
 
 
