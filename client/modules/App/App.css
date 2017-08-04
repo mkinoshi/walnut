@@ -1,7 +1,7 @@
 
 #navBar {
     display: flex;
-    height: 3.9vw;
+    height: 57px;
     background-color: #303C4D;
 }
 
@@ -16,6 +16,11 @@
 }
 
 .tabs {
+    color: #F1F1EF;
+}
+
+.Container {
+    height: 100%;
     color: #F1F1EF;
 }
 

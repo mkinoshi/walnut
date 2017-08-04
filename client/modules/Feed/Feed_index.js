@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
+import './Feed.css';
 
 const styles = {
   outer: {
@@ -92,29 +93,21 @@ class Feed extends React.Component {
       count: 0
     };
   }
-  componentWillMount() {
-  }
-
-  handleScroll(e) {
-    // if (window.innerHeight - window.scrollY < 500 && window.innerHeight - window.scrollY > 450) {
-    //   this.props.getNext10(this.props.data.posts.length);
-    // }
-  }
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
 
-  filterChange(filterName) {
-    const filts = this.state.filters;
-    if (filts.indexOf(filterName) >= 0) {
-      const idx = filts.indexOf(filterName);
-      filts.splice(idx, 1);
-    } else {
-      filts.push(filterName);
-    }
-    this.setState({filters: filts});
-  }
+  // filterChange(filterName) {
+  //   const filts = this.state.filters;
+  //   if (filts.indexOf(filterName) >= 0) {
+  //     const idx = filts.indexOf(filterName);
+  //     filts.splice(idx, 1);
+  //   } else {
+  //     filts.push(filterName);
+  //   }
+  //   this.setState({filters: filts});
+  // }
 
   filterData(filters, posts) {
     // if the array zero return the entire unfiltered array
@@ -136,9 +129,9 @@ class Feed extends React.Component {
   }
 
   render() {
-    const filteredPosts = this.filterData(this.state.filters, this.props.data.posts).posts;
+    const filteredPosts = this.filterData(this.props.data.filters, this.props.data.posts).posts;
     return (
-      <div>
+      <div className="Feed_Wrapper col-xs-5">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
             <div className="col-xs-3">
               <div className="discoverButton left" style={{}}>
@@ -146,7 +139,7 @@ class Feed extends React.Component {
                   className="waves-effect waves-light btn"
                   onClick={() => (this.toggleFilterPref())}>Discover</a>
               </div>
-            {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>}
+            {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
             </div>
             <div className="col-xs-9" >
               {this.props.data.isFetching ?

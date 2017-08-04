@@ -20,20 +20,41 @@ router.post('/location', (req, res) => {
       });
 });
 
+// router.post('/user', (req, res) => {
+//   adminApp.adminApp.auth().verifyIdToken(req.session.userToken)
+//     .then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//       User.findOneAndUpdate({firebaseId: uid}, req.body.data)
+//         .populate('currentCommunity')
+//         .populate('communities')
+//         .then((response) => {
+//           res.json({success: true, data: response});
+//         })
+//     }).catch((err) => {
+//       console.log('update user error', err);
+//       res.json({data: null});
+//     });
+// });
+
 router.post('/user', (req, res) => {
-  adminApp.adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOneAndUpdate({firebaseId: uid}, req.body.data)
-        .populate('currentCommunity')
-        .populate('communities')
-        .then((response) => {
-          res.json({success: true, data: response});
-        })
-    }).catch((err) => {
-      console.log('update user error', err);
-      res.json({data: null});
-    });
+  User.findById(req.user._id)
+      .then((user) => {
+        user.preferences = req.body.data.preferences;
+        return user.save();
+      })
+      .then((savedUser) => {
+        const opts = [
+          { path: 'communities'},
+          { path: 'currentCommunity'}
+        ];
+        return User.populate(savedUser, opts);
+      })
+      .then((populatedUser) => {
+        res.json({success: true, data: populatedUser});
+      })
+      .catch((err) => {
+        res.json({success: false});
+      });
 });
 
 router.post('/portfoliotabs', (req, res) => {

@@ -2,9 +2,11 @@
 const discoverReducer = (state = {
   defaultFilters: [],
   otherFilters: [],
+  filters: [],
   posts: [],
   hasMore: true,
-  isFetching: false
+  isFetching: false,
+  isReady: true
 }, action) => {
   switch (action.type) {
     case 'DISCOVER_IS_LOADING':
@@ -14,6 +16,7 @@ const discoverReducer = (state = {
       };
     case 'GET_DISCOVER_DATA_DONE':
       return  {
+        ...state,
         defaultFilters: action.defaultFilters,
         otherFilters: action.otherFilters,
         posts: action.posts,
@@ -45,6 +48,21 @@ const discoverReducer = (state = {
       // }
       return newState;
     }
+    case 'HOLD_DISCOVER':
+      return {
+        ...state,
+        isReady: false
+      };
+    case 'DISCOVER_READY':
+      return {
+        ...state,
+        isReady: true
+      };
+    case 'CHANGE_FILTERS':
+      return {
+        ...state,
+        filters: action.filters
+      };
     default:
       return state;
   }

@@ -86,23 +86,19 @@ class Post extends React.Component {
 
   render() {
     return (
-      <Card className="postOuter" >
-      <Card.Content className="postContent">
-        <Image floated="left"
-               size="mini"
-               src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
-        <Card.Header>
-          {this.props.postData.username}
-        </Card.Header>
-        <Card.Meta>
-          {this.props.postData.tags.map((tag, index) => (
-            <text key={index} className="tag">
-              <text className="hashtag">#</text>
-            {tag.name}   </text>))}
-        </Card.Meta>
-        <Card.Description>
-          {this.props.postData.content}
-        </Card.Description>
+      <div className="postOuter" >
+      <div className="postContent">
+        <div className="postUser">
+          <div className="imageWrapper">
+            <img className="postUserimage" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+          </div>
+          <div className="postHeader">
+            <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+          </div>
+        </div>
+        <div className="postDiscription">
+          <p className="postInnerContent">{this.props.postData.content}</p>
+        </div>
 
         {(this.props.postData.attachment.name !== '') ?
         <MediaAttachment data={this.props.postData.attachment}
@@ -141,6 +137,18 @@ class Post extends React.Component {
           </Modal.Actions>
         </Modal>
 
+<<<<<<< HEAD
+      </div>
+      <div className="postFootnote">
+        <div className="postMeta">
+          <div className="tagContainer">
+            {this.props.postData.tags.map((tag, index) => (
+            <div key={index} className="tag">
+              <text className="hashtag">#{tag.name}</text>
+            </div>))}
+          </div>
+          {!this.props.isOpen ? <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
+=======
       </Card.Content>
       <Card.Content extra>
         <a onClick={() => this.toggleLike()}>
@@ -148,13 +156,15 @@ class Post extends React.Component {
           {this.state.likeCount}
         </a>
         {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
+>>>>>>> ab218a9700ee8a33dd476cdd8be29e78c89dd3c0
         : <a className="commentButton">
             <span> <Icon name="comment outline" />
             {this.props.postData.comments.length} </span>
           </a>}
-      </Card.Content>
+      </div>
+        </div>
       {/* <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/> */}
-    </Card>
+    </div>
     );
   }
 }

@@ -39,7 +39,7 @@ class Community extends React.Component {
     return (
       <div>
         <NavBar />
-         <div>
+         <div className="Container">
          <Switch>
             <Route path="/app/community/:communityName/directory" component={Directory} />
             <Route path="/app/community/:communityName/map" component={MapContainer}/>

@@ -14,7 +14,6 @@ import getUser from '../../thunks/app_thunks/getAppThunk';
 
 const history = createBrowserHistory();
 
-
 class Auth extends React.Component {
   constructor() {
     super();

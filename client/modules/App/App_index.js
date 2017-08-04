@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
@@ -15,6 +16,8 @@ const styles = {
     width: '65%'
   }
 };
+
+const history = createBrowserHistory();
 
 class App extends React.Component {
 

@@ -128,21 +128,42 @@ router.post('/join/community', (req, res) => {
     });
 });
 
+// router.post('/toggle/community', (req, res) => {
+//   adminApp.auth().verifyIdToken(req.session.userToken)
+//     .then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//       User.findOne({firebaseId: uid})
+//       .then((user) => {
+//         user.currentCommunity = req.body.communityId;
+//         return user.save();
+//       })
+//       .then((response) => {
+//         res.json({success: true});
+//       })
+//     }).catch((err) => {
+//       console.log('got error', err);
+//       res.json({data: null});
+//     });
+// });
+
 router.post('/toggle/community', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOne({firebaseId: uid})
-      .then((user) => {
-        user.currentCommunity = req.body.communityId;
-        return user.save();
-      })
-      .then((response) => {
-        res.json({success: true});
-      })
-    }).catch((err) => {
-      console.log('got error', err);
-      res.json({data: null});
+  User.findById(req.user._id)
+    .then((user) => {
+      user.currentCommunity = req.body.communityId;
+      return user.save();
+    })
+    .then((savedUser) => {
+      const opts = [
+          { path: 'communities'},
+          { path: 'currentCommunity'}
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({success: true, data: populatedUser});
+    })
+    .catch((err) => {
+      res.json({error: err});
     });
 });
 
