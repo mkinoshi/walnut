@@ -34,7 +34,7 @@ class Navbar extends React.Component {
               <div className="navBarLinks">
                 <div className="navBarLink" onClick={() => this.handleClick(1)}>
                   <Link className="tabs" to={'/app/community/' + title + '/discover'}>
-                    <Icon name="talk outline" size="big" />
+                    <Icon className="navBarIcon" name="talk outline" size="big" />
                   </Link>
                   {(this.props.tab === 1) ?
                     <div className="bar">
@@ -44,7 +44,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => this.handleClick(2)}>
                   <Link className="tabs" to={'/app/community/' + title + '/directory'}>
-                    <Icon name="address card outline" size="big"/>
+                    <Icon className="navBarIcon" name="address card outline" size="big"/>
                   </Link>
                   {(this.props.tab === 2) ?
                     <div className="bar">
@@ -54,7 +54,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => this.handleClick(3)}>
                   <Link className="tabs" to={'/app/community/' + title + '/map'}>
-                    <Icon name="map" size="big"/>
+                    <Icon className="navBarIcon" name="map" size="big"/>
                   </Link>
                   {(this.props.tab === 3) ?
                     <div className="bar">
@@ -64,7 +64,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => this.handleClick(4)}>
                   <Link className="tabs" to={'/app/community/' + title + '/editprofile'}>
-                    <Icon name="paypal" size="big"/>
+                    <Icon className="navBarIcon" name="paypal" size="big"/>
                   </Link>
                   {(this.props.tab === 4) ?
                     <div className="bar">

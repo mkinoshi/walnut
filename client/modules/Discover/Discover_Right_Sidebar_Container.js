@@ -16,8 +16,8 @@ class RightSideBar extends React.Component {
     return (
       <div className="RightSideBar_Container">
        <div className="rightButtons">
-          <Button className="rightModalButton" circular icon="plus" />
-          <Button className="rightModalButton" circular icon="wechat" />
+          <Button className="rightModalButtonPlus" circular icon="plus" />
+          <Button className="rightModalButtonChat" circular icon="wechat" />
        </div>
         <NewPostContainer />
       </div>

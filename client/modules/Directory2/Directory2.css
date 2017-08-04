@@ -1,0 +1,41 @@
+.Page2 {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    min-width: 950px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.Container {
+    background-color: #313D4D;
+    overflow-x: scroll;
+}
+
+.directoryCard.ui.card {
+    margin: 40px;
+    width: 220px;
+    height: auto;
+    /*box-shadow: none;*/
+}
+
+.cardImage.ui.image {
+    height: 160px;
+}
+
+.directoryHeader {
+    font-size: 16px;
+}
+
+.directoryMeta.meta {
+    padding: 2.5px;
+    font-size: 12px;
+    line-height: 13px;
+}
+
+body ::-webkit-scrollbar-track {
+    background-color: #313D4D;
+    border-radius: 0;
+}

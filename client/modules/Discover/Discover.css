@@ -64,6 +64,14 @@
     justify-content: center;
 }
 
-.rightModalButton {    
+.rightModalButtonPlus {    
   margin-right: 50px !important;
+  background-color: #98C1D9 !important;
+  color: #F1F1EF !important;
+}
+
+.rightModalButtonChat {    
+  margin-right: 50px !important;
+  background-color: #DADDD8 !important;
+  color: #314460 !important;
 }

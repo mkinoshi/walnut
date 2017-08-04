@@ -19,6 +19,7 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleChange(e) {
+    console.log('this is it');
     const index = this.state.filters.indexOf(e.target.value);
     this.props.filterChange(e.target.value);
     if (!this.state.filters.includes(e.target.value)) {
@@ -33,14 +34,14 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    console.log('hereeeeeeeeeeee');
-    console.log(value);
+    console.log('dddddddd', this.state.filters);
+    console.log('hereeeeeeeeeeee', value);
     if (value) {
       const options = value.split(',');
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
       const newOne = this.state.useFilters.length > 0 ? this.state.useFilters.concat(send) : this.props.defaultFilters.concat(send);
       // const newChecked = this.state.filters.concat(options);
-      console.log(options);
+      console.log('split', options);
       console.log(send);
       console.log(newOne);
       this.props.updateUser({preferences: this.props.preferences.concat(send)});
@@ -89,7 +90,6 @@ class FilterPrefContainer extends React.Component {
             })}
             onChange={this.handleSelectChange.bind(this)}
           />
-          {/* <button type="submit">Add new filter</button> */}
         </form>
       </div>
     );
