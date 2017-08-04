@@ -21,7 +21,6 @@ class Post extends React.Component {
       page: 1,
       pages: 100
     };
-
   }
 
   handleClick() {
