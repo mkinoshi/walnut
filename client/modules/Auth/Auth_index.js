@@ -14,10 +14,7 @@ const history = createBrowserHistory();
 
 firebaseApp.auth().onAuthStateChanged(user => {
   console.log(user);
-  if (user) {
-    // this.context.history.push('/app/walnuthome');
-    history.push('/app/walnuthome');
-  } else {
+  if (!user) {
     history.replace('/app/login');
     // this.context.history.push('/app/login');
   }

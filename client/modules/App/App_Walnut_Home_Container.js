@@ -6,7 +6,7 @@ import _ from 'underscore';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
-import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
 
 
 const styles = {
@@ -43,7 +43,7 @@ class WalnutHomeContainer extends React.Component {
 
 
   toggleCommunity(com) {
-    this.props.changeCommunity({currentCommunity: com._id});
+    this.props.changeCommunity(com);
   }
 
   handleStart() {
@@ -101,7 +101,7 @@ class WalnutHomeContainer extends React.Component {
                     }).map((community, idx) => <div key={idx}>
                         <img src={community.icon} style={styles.image} />
                         <p>{community.title}</p>
-                        <button onClick={() => {this.joinCommunity(community._id);}}>+ Join</button>
+                        <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>
                     </div> )
                     }
                 </div>
@@ -153,7 +153,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => dispatch(createCommunityThunk(image, title, filters)),
-  changeCommunity: (updateObj) => dispatch(updateUserPrefThunk(updateObj)),
+  changeCommunity: (updateObj) => dispatch(updateUserCommunityThunk(updateObj)),
   getAllCommunities: () => dispatch(getAllCommunities())
 });
 

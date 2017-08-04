@@ -4,6 +4,7 @@ const URL = 'http://localhost:3000/';
 
 const signInThunk = (email, password) => (dispatch) => {
   firebase.auth().onAuthStateChanged(function(user) {
+    console.log('user', user);
     if (user) {
       console.log('user was logged in', user);
         // if(req.user.hasProfile) {

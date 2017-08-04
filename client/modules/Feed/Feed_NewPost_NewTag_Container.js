@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import newTagThunk from '../../thunks/post_thunks/newTagThunk';
+import { Icon, Button, Input } from 'semantic-ui-react';
 
 class NewTagContainer extends React.Component {
   constructor(props) {
@@ -19,13 +19,16 @@ class NewTagContainer extends React.Component {
   render() {
     return (
       <form>
-        <input type="text"
+        <Input
           value={this.state.tag}
           placeholder="Type new tag"
           onChange={(e) => this.setState({tag: e.target.value})}/>
-        <input type="submit" value="Add" onClick={(e, tag) => {
-          this.handleClick(e);
-        }} />
+          <Button animated="vertical" id="addTagButton" onClick={(e, tag) => {this.handleClick(e);}}>
+          <Button.Content visible>Add new</Button.Content>
+          <Button.Content hidden>
+            <Icon name="hashtag" />
+          </Button.Content>
+          </Button>
       </form>
     );
   }
@@ -35,10 +38,4 @@ NewTagContainer.propTypes = {
   addToPost: PropTypes.func
 };
 
-const mapStateToProps = () => ({
-});
-
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewTagContainer);
+export default NewTagContainer;
