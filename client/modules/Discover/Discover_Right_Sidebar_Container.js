@@ -2,6 +2,7 @@ import React from 'react';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
 import './Discover.css';
 
 class RightSideBar extends React.Component {
@@ -13,10 +14,12 @@ class RightSideBar extends React.Component {
 
   render() {
     return (
-      <div className="RightSideBar_Container col-xs-4">
-        <div className="newPost_Container">
-          <NewPostContainer />
-        </div>
+      <div className="RightSideBar_Container">
+       <div className="rightButtons">
+          <Button className="rightModalButton" circular icon="plus" />
+          <Button className="rightModalButton" circular icon="wechat" />
+       </div>
+        <NewPostContainer />
       </div>
     );
   }

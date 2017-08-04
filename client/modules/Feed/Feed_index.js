@@ -131,16 +131,8 @@ class Feed extends React.Component {
   render() {
     const filteredPosts = this.filterData(this.props.data.filters, this.props.data.posts).posts;
     return (
-      <div className="Feed_Wrapper col-xs-5">
+      <div className="Feed_Wrapper">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
-            <div className="col-xs-3">
-              <div className="discoverButton left" style={{}}>
-                <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
-                  className="waves-effect waves-light btn"
-                  onClick={() => (this.toggleFilterPref())}>Discover</a>
-              </div>
-            {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
-            </div>
             <div className="col-xs-9" >
               {this.props.data.isFetching ?
                <p>loading is true inside the reducer</p> :

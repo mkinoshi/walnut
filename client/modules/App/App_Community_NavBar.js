@@ -26,10 +26,10 @@ class Navbar extends React.Component {
                 <Link className="navBarHome" to={'/app/walnuthome'} onClick={() => this.handleClick(1)}>
                   <Icon name="content" size="big" />
                 </Link>
-
-                <a href="#" className="logoHolder">
-                <h1 className="logo">Walnut</h1>
-                </a>
+              <div className="communityNavBarLogo">
+                <img className="communityImage" src={this.props.community.icon} />
+                <h2 className="communityTitle">{this.props.community.title}</h2>
+              </div>
 
               <div className="navBarLinks">
                 <div className="navBarLink" onClick={() => this.handleClick(1)}>
