@@ -22,12 +22,6 @@ const history = createBrowserHistory();
 class App extends React.Component {
 
   componentWillMount() {
-    // if (localStorage.getItem('user')) {
-    //   console.log(JSON.parse(localStorage.getItem('user')));
-    //   this.props.setUser();
-    // } else {
-    //   this.props.getUser();
-    // }
     this.props.getUser();
   }
 

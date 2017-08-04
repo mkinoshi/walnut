@@ -9,7 +9,7 @@ import Comment from './Post_Comment';
 import './Post.css';
 import { Button, Header, Icon, Image, Modal, Card, Form, TextArea } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-
+import ReactDOM from 'react-dom';
 
 class ModalInstance extends React.Component {
   constructor(props) {
@@ -19,13 +19,21 @@ class ModalInstance extends React.Component {
     };
   }
 
-  handleChange(e) {
-    this.setState({commentBody: e.target.value});
+  componentDidMount() {
+    this.scrollToBottom();
   }
 
-  handleClick(id) {
-    this.props.newComment(this.state.commentBody, id);
-    this.setState({commentBody: ''});
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    const node = ReactDOM.findDOMNode(this.messagesEnd);
+    node.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  handleChange(e) {
+    this.setState({commentBody: e.target.value});
   }
 
   render() {
@@ -41,7 +49,7 @@ class ModalInstance extends React.Component {
         <Modal.Content image scrolling className="scrollContentClass">
           <Modal.Description >
             <Post
-            isOpen={true}
+            isOpen
             currentUser={this.props.currentUser}
             postData={this.props.postData}
             newLike={() => (this.props.newLike(this.props.postData.postId))}/>
@@ -58,6 +66,8 @@ class ModalInstance extends React.Component {
               />
             </Modal.Description>
             ))}
+          <div style={{ float: 'left', clear: 'both' }}
+             ref={(el) => { this.messagesEnd = el; }} />
         </Modal.Content>
         <Modal.Actions>
           <span id="inputBoxHolder">
