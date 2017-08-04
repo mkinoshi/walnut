@@ -21,6 +21,7 @@ class Post extends React.Component {
       page: 1,
       pages: 100
     };
+
   }
 
   handleClick() {
@@ -137,6 +138,7 @@ class Post extends React.Component {
           </Modal.Actions>
         </Modal>
 
+<<<<<<< HEAD
       </div>
       <div className="postFootnote">
         <div className="postMeta">
@@ -147,6 +149,15 @@ class Post extends React.Component {
             </div>))}
           </div>
           {!this.props.isOpen ? <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
+=======
+      </Card.Content>
+      <Card.Content extra>
+        <a onClick={() => this.toggleLike()}>
+          <Icon className="like" name="thumbs outline up" />
+          {this.state.likeCount}
+        </a>
+        {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
+>>>>>>> ab218a9700ee8a33dd476cdd8be29e78c89dd3c0
         : <a className="commentButton">
             <span> <Icon name="comment outline" />
             {this.props.postData.comments.length} </span>
