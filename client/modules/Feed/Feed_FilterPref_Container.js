@@ -33,37 +33,42 @@ class FilterPrefContainer extends React.Component {
     e.preventDefault();
   }
 
+  isPrefSelected(options) {
+    console.log('00000000');
+    let val = false;
+    if (this.state.useFilters.length > 0) {
+      console.log('11111111', this.state.useFilters);
+      this.state.useFilters.forEach((filter) => {
+        console.log('222222', filter, options);
+        if (options.indexOf(filter.name) > -1) {
+          console.log('3333333');
+          val = true;
+        }
+      });
+    }
+    return val;
+  }
+
   handleSelectChange(value) {
     console.log('dddddddd', this.state.filters);
     console.log('hereeeeeeeeeeee', value);
     if (value) {
       const options = value.split(',');
+      console.log('booooooool', this.isPrefSelected(options));
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-      const newOne = this.state.useFilters.length > 0 ? this.state.useFilters.concat(send) : this.props.defaultFilters.concat(send);
-      // const newChecked = this.state.filters.concat(options);
-      console.log('split', options);
-      console.log(send);
-      console.log(newOne);
-      this.props.updateUser({preferences: this.props.preferences.concat(send)});
-      this.setState({useFilters: newOne, value: []});
+      if (!this.isPrefSelected(options)) {
+        const newOne = this.state.useFilters.length > 0 ? this.state.useFilters.concat(send) : this.props.defaultFilters.concat(send);
+        this.props.updateUser({ preferences: this.props.preferences.concat(send) });
+        this.setState({ useFilters: newOne, value: [] });
+      } else {
+        this.setState({ value: [] });
+      }
     } else {
       this.setState({value: []});
     }
   }
 
-  handleNew(event) {
-    event.preventDefault();
-    const options = this.state.value.split(',');
-    const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-    const newOne = this.state.useFilters.concat(send);
-    // const newChecked = this.state.filters.concat(options);
-
-    this.props.updateUser({preferences: this.props.preferences.concat(send)});
-    this.setState({useFilters: newOne, value: []});
-  }
-
   render() {
-    console.log('yoyoyoyoyoyoyoyo');
     console.log(this.state);
     const filters = this.state.useFilters.length > 0 ? this.state.useFilters : this.props.defaultFilters;
     return (
@@ -79,7 +84,7 @@ class FilterPrefContainer extends React.Component {
             </p>
             ))}
         </form>
-        <form onSubmit={(e) => this.handleNew(e)}>
+        <form>
           <Select
             name="form-field-name"
             value={this.state.value}
