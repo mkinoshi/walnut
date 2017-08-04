@@ -21,6 +21,7 @@ class Post extends React.Component {
       page: 1,
       pages: 100
     };
+
   }
 
   handleClick() {
@@ -147,7 +148,7 @@ class Post extends React.Component {
           <Icon className="like" name="thumbs outline up" />
           {this.state.likeCount}
         </a>
-        {!this.props.isOpen ? <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
+        {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
         : <a className="commentButton">
             <span> <Icon name="comment outline" />
             {this.props.postData.comments.length} </span>
