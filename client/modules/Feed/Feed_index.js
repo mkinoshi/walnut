@@ -98,38 +98,11 @@ class Feed extends React.Component {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
 
-  // filterChange(filterName) {
-  //   const filts = this.state.filters;
-  //   if (filts.indexOf(filterName) >= 0) {
-  //     const idx = filts.indexOf(filterName);
-  //     filts.splice(idx, 1);
-  //   } else {
-  //     filts.push(filterName);
-  //   }
-  //   this.setState({filters: filts});
-  // }
-
-  filterData(filters, posts) {
-    // if the array zero return the entire unfiltered array
-    if(filters.length === 0 || filters.length === this.props.data.defaultFilters.length) {
-      return {filters: filters, posts: posts};
-    }
-    const final = posts.filter((post) => {
-      const findOne = (haystack, arr) => {
-        return arr.some(tag => haystack.indexOf(tag.name) >= 0);
-      };
-      return findOne(filters, post.tags) === true;
-    });
-
-    return {filters: filters, posts: final};
-  }
-
   _loadMore() {
-    this.props.getNext10(this.props.data.posts.length);
+    // this.props.getNext10(this.props.data.posts.length);
   }
 
   render() {
-    const filteredPosts = this.filterData(this.props.data.filters, this.props.data.posts).posts;
     return (
       <div className="Feed_Wrapper">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
@@ -143,7 +116,7 @@ class Feed extends React.Component {
                   threshold={600}
                   loader={<div className="loader">Loading ...</div>}
                   >
-                  {filteredPosts.map((post) => (
+                {this.props.data.posts.map((post) => (
                   <Post ref="card"
                   key={post.postId}
                   isOpen={false}

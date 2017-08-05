@@ -7,6 +7,7 @@ import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -16,17 +17,6 @@ class FilterPrefContainer extends React.Component {
       value: [],
       useFilters: []
     };
-  }
-
-  handleChange(e) {
-    console.log('this is it');
-    const index = this.state.filters.indexOf(e.target.value);
-    this.props.filterChange(e.target.value);
-    if (!this.state.filters.includes(e.target.value)) {
-      this.setState({filters: this.state.filters.concat(e.target.value)});
-    } else {
-      this.setState({filters: this.state.filters.slice(0, index).concat(this.state.filters.slice(index + 1))});
-    }
   }
 
   handleSubmit(e) {
@@ -57,29 +47,25 @@ class FilterPrefContainer extends React.Component {
       console.log('booooooool', this.isPrefSelected(options));
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
       if (!this.isPrefSelected(options)) {
-        const newOne = this.state.useFilters.length > 0 ? this.state.useFilters.concat(send) : this.props.defaultFilters.concat(send);
-        this.props.updateUser({ preferences: this.props.preferences.concat(send) });
-        this.setState({ useFilters: newOne, value: [] });
-      } else {
-        this.setState({ value: [] });
+        this.setState({useFilters: this.state.useFilters.concat(send)});
+        const id = send[0]._id;
+        this.props.toggleTempChecked(id);
       }
-    } else {
-      this.setState({value: []});
     }
   }
 
   render() {
-    console.log(this.state);
-    const filters = this.state.useFilters.length > 0 ? this.state.useFilters : this.props.defaultFilters;
+    console.log(this.state, this.props);
+    const filters = this.props.defaultFilters.concat(this.state.useFilters);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {filters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
-              checked={(this.state.filters.includes(filter.name)) ? 'checked' : ''}
+              checked={(this.props.preferences.includes(filter._id)) ? 'checked' : ''}
               value={filter.name}
-              onChange={(e) => {this.handleChange(e);}}/>
+              onChange={() => { this.props.toggleChecked(filter._id);}}/>
               <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
             </p>
             ))}
@@ -108,7 +94,8 @@ FilterPrefContainer.propTypes = {
   toggleChecked: PropTypes.func,
   getDiscoverData: PropTypes.func,
   updateUser: PropTypes.func,
-  filterChange: PropTypes.func
+  filterChange: PropTypes.func,
+  toggleTempChecked: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -118,7 +105,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleChecked: (name, index) => toggleFilterCheckedThunk(name, index)(dispatch),
+  toggleChecked: (id) => dispatch(toggleFilterCheckedThunk(id)),
+  toggleTempChecked: (id) => dispatch(toggleTempFilterCheckedThunk(id)),
   updateUser: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 

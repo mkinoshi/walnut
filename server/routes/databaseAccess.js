@@ -157,62 +157,63 @@ router.get('/get/allcommunities', (req, res) => {
 // TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
   Community.findById(req.user.currentCommunity)
-      .populate('defaultTags')
-      .populate('otherTags')
-      .then((community) => {
-        community.users.filter((user) => {
-          return user === req.user._id;
-        });
-        if (community.length === 0) {
-          res.json({error: 'No authorization'});
-        } else{
-          const defaultFilters = community.defaultTags;
-          const otherFilters = community.otherTags;
-          let posts = [];
-          Post.find({community: req.user.currentCommunity})
-            .limit(10)
-            .sort({createdAt: -1})
-            .populate('tags')
-            .populate('comments')
-            .populate('comments.createdBy')
-            .populate('createdBy')
-            .then((postArr) => {
-              posts = postArr.map((postObj) => {
-                return {
-                  postId: postObj._id,
-                  username: postObj.createdBy.username,
-                  pictureURL: postObj.createdBy.pictureURL,
-                  content: postObj.content,
-                  createdAt: postObj.createdAt,
-                  tags: postObj.tags,
-                  likes: postObj.likes,
-                  commentNumber: postObj.commentNumber,
-                  link: postObj.link,
-                  attachment: postObj.attachment,
-                  comments: postObj.comments.map((commentObj) => {
-                    return {
-                      commentId: commentObj._id,
-                      username: commentObj.createdBy.username,
-                      pictureURL: commentObj.createdBy.pictureURL,
-                      content: commentObj.content,
-                      createdAt: commentObj.createdAt,
-                      likes: commentObj.likes
-                    };
-                  })
-                };
-              });
-              res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
-            })
-            .catch((err) => {
-              console.log('error 1', err);
-              res.json(err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.log('error 2', err);
-        res.json({error: err});
+    .populate('defaultTags')
+    .populate('otherTags')
+    .then((community) => {
+      community.users.filter((user) => {
+        return user === req.user._id;
       });
+      if (community.length === 0) {
+        res.json({ error: 'No authorization' });
+      } else {
+        const defaultFilters = community.defaultTags;
+        const otherFilters = community.otherTags;
+        let posts = [];
+        const filter = req.user.preferences.length > 0 ? { tags: { $in: req.user.preferences } } : {};
+        Post.find(filter)
+          .limit(10)
+          .sort({ createdAt: -1 })
+          .populate('tags')
+          .populate('comments')
+          .populate('comments.createdBy')
+          .populate('createdBy')
+          .then((postArr) => {
+            posts = postArr.map((postObj) => {
+              return {
+                postId: postObj._id,
+                username: postObj.createdBy.username,
+                pictureURL: postObj.createdBy.pictureURL,
+                content: postObj.content,
+                createdAt: postObj.createdAt,
+                tags: postObj.tags,
+                likes: postObj.likes,
+                commentNumber: postObj.commentNumber,
+                link: postObj.link,
+                attachment: postObj.attachment,
+                comments: postObj.comments.map((commentObj) => {
+                  return {
+                    commentId: commentObj._id,
+                    username: commentObj.createdBy.username,
+                    pictureURL: commentObj.createdBy.pictureURL,
+                    content: commentObj.content,
+                    createdAt: commentObj.createdAt,
+                    likes: commentObj.likes
+                  };
+                })
+              };
+            });
+            res.json({ defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts });
+          })
+          .catch((err) => {
+            console.log('error 1', err);
+            res.json(err);
+          });
+      }
+    })
+    .catch((err) => {
+      console.log('error 2', err);
+      res.json({ error: err });
+    });
 });
 
 router.get('/get/next10', (req, res) => {
@@ -327,20 +328,107 @@ router.post('/save/comment', (req, res) => {
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
-        if (req.user.preferences.includes(req.body.tagName)) {
-          response.preferences.splice(req.user.preferences.indexOf(req.body.tagName), 1);
+        if (req.user.preferences.includes(req.body.tagId)) {
+          response.preferences.splice(req.user.preferences.indexOf(req.body.tagId), 1);
         } else {
-          response.preferences.push(req.body.tagName);
+          response.preferences.push(req.body.tagId);
         }
         response.save()
-        .then((resp) => {
-          res.json({success: true});
+          .then((savedUser) => {
+            const opts = [
+              { path: 'currentCommunity' }
+            ];
+            return User.populate(savedUser, opts);
+          })
+        .then((user) => {
+          let posts = [];
+          Post.find({ tags: { $in: user.preferences } })
+            .limit(10)
+            .sort({ createdAt: -1 })
+            .populate('tags')
+            .populate('comments')
+            .populate('comments.createdBy')
+            .populate('createdBy')
+            .then((postArr) => {
+              posts = postArr.map((postObj) => {
+                return {
+                  postId: postObj._id,
+                  username: postObj.createdBy.username,
+                  pictureURL: postObj.createdBy.pictureURL,
+                  content: postObj.content,
+                  createdAt: postObj.createdAt,
+                  tags: postObj.tags,
+                  likes: postObj.likes,
+                  commentNumber: postObj.commentNumber,
+                  link: postObj.link,
+                  attachment: postObj.attachment,
+                  comments: postObj.comments.map((commentObj) => {
+                    return {
+                      commentId: commentObj._id,
+                      username: commentObj.createdBy.username,
+                      pictureURL: commentObj.createdBy.pictureURL,
+                      content: commentObj.content,
+                      createdAt: commentObj.createdAt,
+                      likes: commentObj.likes
+                    };
+                  })
+                };
+              });
+              res.json({posts: posts, user: user });
+            })
+            .catch((err) => {
+              console.log('error 1', err);
+              res.json({ success: false });
+            });
         });
       })
       .catch((err) => {
         res.json({success: false});
       });
 });
+
+router.post('/toggle/checkedtemp', (req, res) => {
+  let posts = [];
+  Post.find({ tags: { $in: req.user.preferences.concat(req.body.tagId) } })
+        .limit(10)
+        .sort({ createdAt: -1 })
+        .populate('tags')
+        .populate('comments')
+        .populate('comments.createdBy')
+        .populate('createdBy')
+        .then((postArr) => {
+          posts = postArr.map((postObj) => {
+            return {
+              postId: postObj._id,
+              username: postObj.createdBy.username,
+              pictureURL: postObj.createdBy.pictureURL,
+              content: postObj.content,
+              createdAt: postObj.createdAt,
+              tags: postObj.tags,
+              likes: postObj.likes,
+              commentNumber: postObj.commentNumber,
+              link: postObj.link,
+              attachment: postObj.attachment,
+              comments: postObj.comments.map((commentObj) => {
+                return {
+                  commentId: commentObj._id,
+                  username: commentObj.createdBy.username,
+                  pictureURL: commentObj.createdBy.pictureURL,
+                  content: commentObj.content,
+                  createdAt: commentObj.createdAt,
+                  likes: commentObj.likes
+                };
+              })
+            };
+          });
+          res.json({ posts: posts});
+        })
+        .catch((err) => {
+          console.log('error 1', err);
+          res.json({ success: false });
+        });
+});
+
 
 router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)
@@ -632,7 +720,7 @@ router.post('/save/tag', (req, res) => {
           res.json({success: false});
         });
   })
-  .catch((e) => {dgasugefqewfrq
+  .catch((e) => {dgasugefqewfrq;
     console.log('error saving tag', e);
     res.json({success: false});
   });
