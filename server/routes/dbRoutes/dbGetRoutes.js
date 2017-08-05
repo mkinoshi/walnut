@@ -7,10 +7,7 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.get('/app', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOne({firebaseId: uid})
+  User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')
       .then((response) => {
@@ -22,145 +19,139 @@ router.get('/app', (req, res) => {
             res.json({error: err});
           });
       })
-    }).catch((err) => {
-      console.log('got error', err);
-      res.json({data: null});
-    });
+      .catch((err) => {
+        console.log('get user error', err);
+        res.json({data: null});
+      });
+
 });
 
 router.get('/allcommunities', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      Community.find()
+  Community.find()
       .then((communities) => {
         res.json({data: communities});
       })
-    }).catch((err) => {
-      console.log('got error', err);
-      res.json({data: null});
-    });
-  
+      .catch((err) => {
+        res.json({error: err});
+      });
 });
 
 router.get('/discoverinfo', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOne({firebaseId: uid})
-      .then((userObj) => {
-        Community.findById(userObj.currentCommunity)
-          .populate('defaultTags')
-          .populate('otherTags')
-          .then((community) => {
-            community.users.filter((user) => {
-              return user === userObj._id;
-            });
-            if (community.length === 0) {
-              res.json({error: 'No authorization'});
-            } else {
-              const defaultFilters = community.defaultTags;
-              const otherFilters = community.otherTags;
-              let posts = [];
-              Post.find({community: userObj.currentCommunity})
-                .limit(10)
-                .sort({createdAt: -1})
-                .populate('tags')
-                .populate('comments')
-                .populate('comments.createdBy')
-                .populate('createdBy')
-                .then((postArr) => {
-                  posts = postArr.map((postObj) => {
+  Community.findById(req.user.currentCommunity)
+      .populate('defaultTags')
+      .populate('otherTags')
+      .then((community) => {
+        community.users.filter((user) => {
+          return user === req.user._id;
+        });
+        if (community.length === 0) {
+          res.json({error: 'No authorization'});
+        } else{
+          const defaultFilters = community.defaultTags;
+          const otherFilters = community.otherTags;
+          let posts = [];
+          Post.find({community: req.user.currentCommunity})
+            .limit(10)
+            .sort({createdAt: -1})
+            .populate('tags')
+            .populate('comments')
+            .populate('comments.createdBy')
+            .populate('createdBy')
+            .then((postArr) => {
+              posts = postArr.map((postObj) => {
+                return {
+                  postId: postObj._id,
+                  username: postObj.createdBy.username,
+                  pictureURL: postObj.createdBy.pictureURL,
+                  content: postObj.content,
+                  createdAt: postObj.createdAt,
+                  tags: postObj.tags,
+                  likes: postObj.likes,
+                  commentNumber: postObj.commentNumber,
+                  link: postObj.link,
+                  attachment: postObj.attachment,
+                  comments: postObj.comments.map((commentObj) => {
                     return {
-                      postId: postObj._id,
-                      username: postObj.createdBy.username,
-                      pictureURL: postObj.createdBy.pictureURL,
-                      content: postObj.content,
-                      createdAt: postObj.createdAt,
-                      tags: postObj.tags,
-                      likes: postObj.likes,
-                      commentNumber: postObj.commentNumber,
-                      link: postObj.link,
-                      attachment: postObj.attachment,
-                      comments: postObj.comments.map((commentObj) => {
-                        return {
-                          commentId: commentObj._id,
-                          username: commentObj.createdBy.username,
-                          pictureURL: commentObj.createdBy.pictureURL,
-                          content: commentObj.content,
-                          createdAt: commentObj.createdAt,
-                          likes: commentObj.likes
-                        };
-                      })
+                      commentId: commentObj._id,
+                      username: commentObj.createdBy.username,
+                      pictureURL: commentObj.createdBy.pictureURL,
+                      content: commentObj.content,
+                      createdAt: commentObj.createdAt,
+                      likes: commentObj.likes
                     };
-                  });
-                  res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
-                });
+                  })
+                };
+              });
+              res.json({defaultFilters: defaultFilters, otherFilters: otherFilters, posts});
+            })
+            .catch((err) => {
+              console.log('error 1', err);
+              res.json(err);
+            });
         }
       })
-    }).catch((err) => {
-      console.log('join error', err);
-      res.json({error: err});
-    });
-});
+      .catch((err) => {
+        console.log('error 2', err);
+        res.json({error: err});
+      });
 });
 
 router.get('/next10', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOne({firebaseId: uid})
-        .then((userObj) => {
-          Community.findById(userObj.currentCommunity)
-            .populate('defaultTags')
-            .populate('otherTags')
-            .then((community) => {
-              community.users.filter((user) => {
-                return user === userObj._id;
-              });
-              if (community.length === 0) {
-                res.json({error: 'No authorization'});
-              } else{
-                const filters = community.tags;
-                let posts = [];
-                Post.find({community: userObj.currentCommunity})
-                        .sort({createdAt: -1})
-                        .skip(Number(req.query.lastOne))
-                        .limit(20)
-                        .populate('tags')
-                        .populate('comments')
-                        .populate('comments.createdBy')
-                        .populate('createdBy')
-                        .then((postArr) => {
-                          posts = postArr.map((postObj) => {
+  console.log(req.user.currentCommunity);
+  Community.findById(req.user.currentCommunity)
+        .populate('defaultTags')
+        .populate('otherTags')
+        .then((community) => {
+          community.users.filter((user) => {
+            return user === req.user._id;
+          });
+          if (community.length === 0) {
+            res.json({error: 'No authorization'});
+          } else{
+            const filters = community.tags;
+            let posts = [];
+            Post.find({community: req.user.currentCommunity})
+                    .sort({createdAt: -1})
+                    .skip(Number(req.query.lastOne))
+                    .limit(20)
+                    .populate('tags')
+                    .populate('comments')
+                    .populate('comments.createdBy')
+                    .populate('createdBy')
+                    .then((postArr) => {
+                      posts = postArr.map((postObj) => {
+                        return {
+                          postId: postObj._id,
+                          username: postObj.createdBy.username,
+                          pictureURL: postObj.createdBy.pictureURL,
+                          content: postObj.content,
+                          createdAt: postObj.createdAt,
+                          tags: postObj.tags,
+                          likes: postObj.likes,
+                          commentNumber: postObj.commentNumber,
+                          link: postObj.link,
+                          attachment: postObj.attachment,
+                          comments: postObj.comments.map((commentObj) => {
                             return {
-                              postId: postObj._id,
-                              username: postObj.createdBy.username,
-                              pictureURL: postObj.createdBy.pictureURL,
-                              content: postObj.content,
-                              createdAt: postObj.createdAt,
-                              tags: postObj.tags,
-                              likes: postObj.likes,
-                              commentNumber: postObj.commentNumber,
-                              link: postObj.link,
-                              attachment: postObj.attachment,
-                              comments: postObj.comments.map((commentObj) => {
-                                return {
-                                  commentId: commentObj._id,
-                                  username: commentObj.createdBy.username,
-                                  pictureURL: commentObj.createdBy.pictureURL,
-                                  content: commentObj.content,
-                                  createdAt: commentObj.createdAt,
-                                  likes: commentObj.likes
-                                };
-                              })
+                              commentId: commentObj._id,
+                              username: commentObj.createdBy.username,
+                              pictureURL: commentObj.createdBy.pictureURL,
+                              content: commentObj.content,
+                              createdAt: commentObj.createdAt,
+                              likes: commentObj.likes
                             };
-                          });
-                          res.json({filters: filters, posts: posts});
-                        })
-              }})
-          })
-          }).catch((err) => {
+                          })
+                        };
+                      });
+                      res.json({filters: filters, posts: posts});
+                    })
+                    .catch((err) => {
+                      console.log('error 1', err);
+                      res.json(err);
+                    });
+          }
+        })
+        .catch((err) => {
           console.log('error 2', err);
           res.json({error: err});
         });

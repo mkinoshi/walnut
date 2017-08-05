@@ -144,12 +144,14 @@ app.use(session({
 //   }
 // ));
 
-app.use('/', function(req, res, next) {
+app.use('*', function(req, res, next) {
+  console.log(req.session.userMToken);
   if (req.session.userMToken) {
     const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
     const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     User.findById(mongoId)
         .then((response) => {
+          console.log(response);
           req.user = response;
           next()
         })

@@ -21,6 +21,7 @@ class Home extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('yoyoyoyoyo');
     if (nextProps.isReady) {
       this.props.getDiscoverContent();
     }

@@ -22,7 +22,6 @@ class Auth extends React.Component {
   }
 
   componentWillMount() {
-    console.log('here');
     firebaseApp.auth().onAuthStateChanged(user => {
       console.log(user);
       if (!user) {

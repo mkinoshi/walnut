@@ -7,59 +7,45 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      return User.findOne({firebaseId: uid});
-    }).then((userObj) => {
-      const newPost = new Post({
-        content: req.body.postBody,
-        createdAt: new Date(),
-        createdBy: userObj._id,
-        likes: [],
-        tags: req.body.postTags,
-        comments: [],
-        commentNumber: 0,
-        community: userObj.currentCommunity,
-        link: '',
-        attachments: {
-        name: '',
-        url: '',
-        type: ''
-        }
-    });
-    newPost.save()
+  const newPost = new Post({
+    content: req.body.postBody,
+    createdAt: new Date(),
+    createdBy: req.user._id,
+    likes: [],
+    tags: req.body.postTags,
+    comments: [],
+    commentNumber: 0,
+    community: req.user.currentCommunity,
+    link: '',
+    attachments: {
+      name: '',
+      url: '',
+      type: ''
+    }
+  });
+  newPost.save()
     .then((r) => {
-        console.log('firesbaseApp', firebaseApp);
-        firebaseApp.database().ref('chats/' + r._id).set({
+      firebaseApp.database().ref('chats/' + r._id).set({
         title: r.content,
         createdAt: r.createdAt,
-        });
-        const start = {};
-        start[ ''/* firebaseId*/] = true;
-        firebaseApp.database().ref('members/' + r._id).set(start);
-        res.json({success: true, newPost: r});
-    })  
+      });
+      const start = {};
+      start[ ''/* firebaseId*/] = true;
+      firebaseApp.database().ref('members/' + r._id).set(start);
+      res.json({success: true, newPost: r});
     }).catch((err) => {
       console.log('got error', err);
       res.json({data: null});
     });
 });
 
-router.post('/comment', (req, res) => {
-  var userObj;
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      return User.findOne({firebaseId: uid});
-    }).then((user) => {
-        userObj = user;
-        return Post.findById(req.body.postId);
-    }).then((response) => {
+router.post('/save/comment', (req, res) => {
+  Post.findById(req.body.postId)
+      .then((response) => {
         const newComment = {
           content: req.body.commentBody,
           createdAt: new Date(),
-          createdBy: userObj._id,
+          createdBy: req.user._id,
           likes: []
         };
         response.comments.push(newComment);
@@ -72,6 +58,7 @@ router.post('/comment', (req, res) => {
         res.json({success: false, data: null});
       });
 });
+
 
 router.post('/postlike', (req, res) => {
   Post.findById(req.body.postId)
