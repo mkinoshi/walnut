@@ -13,8 +13,10 @@ var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
-
-import { adminApp } from './firebaseAdmin';
+var FirebaseStrategy = require('passport-firebase-auth').Strategy;
+// var firebaseMiddleware = require('./firebaseMiddleware');
+import AdminApp from './firebaseAdmin';
+var CryptoJS = require("crypto-js");
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
@@ -80,11 +82,11 @@ app.use(session({
 
 // app.use(passport.initialize());
 // app.use(passport.session());
-//
+
 // passport.serializeUser(function(user, done) {
 //   done(null, user._id);
 // });
-//
+
 // passport.deserializeUser(function(id, done) {
 //   models.User.findById(id, done);
 // });
@@ -142,12 +144,26 @@ app.use(session({
 //   }
 // ));
 
+app.use('/', function(req, res, next) {
+  if (req.session.userMToken) {
+    const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
+    const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
+    User.findById(mongoId)
+        .then((response) => {
+          req.user = response;
+          next()
+        })
+  } else {
+    next();
+  }
+})
+
 app.use('/auth', auth);
 app.use('/db', dbGeneralRoutes);
 app.use('/db/get', dbGetRoutes);
 app.use('/db/save', dbSaveRoutes);
 app.use('/db/update', dbUpdateRoutes);
-    app.use('/aws', awsRoutes);
+app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux

@@ -20,22 +20,6 @@ router.post('/location', (req, res) => {
       });
 });
 
-// router.post('/user', (req, res) => {
-//   adminApp.adminApp.auth().verifyIdToken(req.session.userToken)
-//     .then(function(decodedToken) {
-//       var uid = decodedToken.uid;
-//       User.findOneAndUpdate({firebaseId: uid}, req.body.data)
-//         .populate('currentCommunity')
-//         .populate('communities')
-//         .then((response) => {
-//           res.json({success: true, data: response});
-//         })
-//     }).catch((err) => {
-//       console.log('update user error', err);
-//       res.json({data: null});
-//     });
-// });
-
 router.post('/user', (req, res) => {
   User.findById(req.user._id)
       .then((user) => {

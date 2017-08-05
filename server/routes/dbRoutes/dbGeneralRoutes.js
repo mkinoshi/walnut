@@ -7,23 +7,22 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.get('/user', (req, res) => {
-  adminApp.auth().verifyIdToken(req.session.userToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      User.findOne({firebaseId: uid})
-        .populate('communities')
-        .populate('currentCommunity')
-        .then((response) => {
-          res.json({data: response});
-        })
-    }).catch((err) => {
-      console.log('get user error', err);
-      res.json({data: null});
-    });
+  User.findById(req.user._id)
+      .populate('communities')
+      .populate('currentCommunity')
+      .then((response) => {
+        res.json({data: response});
+      })
+      .catch((err) => {
+        console.log('get user error', err);
+        res.json({data: null});
+      });
 });
 
 // TODO: this needs to be fixed. There is a "cannot read property map of undefined" error
 router.post('/create/community', (req, res) => {
+  console.log('it is hereee!!!!!!!!!!!!!!');
+  console.log(req.user);
   adminApp.auth().verifyIdToken(req.session.userToken)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;

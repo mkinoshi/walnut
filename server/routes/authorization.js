@@ -6,30 +6,18 @@ var Tag = models.Tag;
 const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
+var CryptoJS = require("crypto-js");
 import adminApp from '../firebaseAdmin';
 
-  router.get('/auth/signup', function(req, res) {
-    Tag.find({}, function(err, tags) {
-      if (tags) {
-        var tag_names = tags.map(function(tag) {
-          return tag.name;
-        })
-      } else {
-        var tag_names = [];
-      }
-      res.render('signup', {tags: tag_names}); //have to change
-    })
-  })
-  // TODO: TEST REGISTRATION
   router.post('/signup', function(req, res) {
-    console.log('req.body.token', req.body.token);
-    console.log('adminApp', adminApp);
+    // console.log('req.body.token', req.body.token);
+    // console.log('adminApp', adminApp);
     req.session.userToken = req.body.token;
-    console.log('req.session.userToken', req.session.userToken);
+    //console.log('req.session.userToken', req.session.userToken);
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
-      console.log('uid', uid);
+      // console.log('uid', uid);
       var new_user = new User({
         firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
@@ -51,7 +39,10 @@ import adminApp from '../firebaseAdmin';
       });
       return new_user.save()
       .then((doc) => {
-        console.log('new user', doc);
+        console.log(doc._id);
+        const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
+        req.session.userMToken = token;
+        console.log(req.session);
         res.status(200);
         res.redirect('/')
       })
@@ -64,13 +55,10 @@ import adminApp from '../firebaseAdmin';
     });
   });
 
-  router.get('/auth/login', function(req, res) {
-    res.render('login');
-  });
-
-  router.post('/auth/login', function(req, res) {
+  router.post('/login', function(req, res) {
     firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
     .then((result) => {
+      // req.session.userToken = req.body.token;
       console.log('result', result);
       res.redirect('/');
     })
@@ -83,11 +71,7 @@ import adminApp from '../firebaseAdmin';
         console.log('could not login', error);
         res.redirect('/auth/login');
       }
-    });
-  //   passport.authenticate('local', {
-  //   successRedirect: '/',
-  //   failureRedirect: '/auth/login'
-  // })
+    });s
   });
 
   router.post('/facebook', function(req, res) {
@@ -98,63 +82,15 @@ import adminApp from '../firebaseAdmin';
       console.log('uid here: ', uid);
       res.status(200);
     }).catch((error) => {console.log('error', error);})
-    // firebase.auth().signInWithRedirect(provider);
-    // firebase.auth().getRedirectResult().then(function(result) {
-    //   if (result.credential) {
-    //     // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    //     var token = result.credential.accessToken;
-    //     // ...
-    //   }
-    //   // The signed-in user info.
-    //   var user = result.user;
-    //   console.log('facebook login worked', user);
-    // }).catch(function(error) {
-    //   // Handle Errors here.
-    //   console.log('facebook login failed', error);
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // The email of the user's account used.
-    //   var email = error.email;
-    //   // The firebase.auth.AuthCredential type that was used.
-    //   var credential = error.credential;
-    //   // ...
-    // });
-
-    // passport.authenticate('facebook')
   });
-
-
-  // router.get('/', function(req, res, next) {
-  //   firebase.auth().onAuthStateChanged(function(user) {
-  //     if (user) {
-  //       console.log('user was logged in', user);
-  //       // if(req.user.hasProfile) {
-  //       //   if (req.user.currentCommunity) {
-  //       //       User.findById(req.user._id)
-  //       //           .populate('currentCommunity')
-  //       //           .then((user) => {
-  //       //               const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-  //       //               res.redirect(url);
-  //       //           })
-  //       //   }
-  //       //   else {
-  //       //     res.redirect('/app/walnuthome')
-  //       //   }
-  //       // } else{
-  //       //   res.redirect('/app/editprofile');
-  //       // }
-  //     } else {
-  //       console.log('user not validated');
-  //       res.redirect('/auth/login')
-  //     }
-  //   });
-  // });
 
   router.get('/logout', function(req, res) {
     localStorage.removeItem('isUserInCommunity');
     req.logout();
-    res.redirect('/auth/login');
+    res.redirect('/app/login');
   });
 
+  // return router;
+// }
 module.exports = router;
-//export default auth;
+// export default auth;
