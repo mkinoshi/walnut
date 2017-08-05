@@ -24,14 +24,10 @@ class FilterPrefContainer extends React.Component {
   }
 
   isPrefSelected(options) {
-    console.log('00000000');
     let val = false;
     if (this.state.useFilters.length > 0) {
-      console.log('11111111', this.state.useFilters);
       this.state.useFilters.forEach((filter) => {
-        console.log('222222', filter, options);
         if (options.indexOf(filter.name) > -1) {
-          console.log('3333333');
           val = true;
         }
       });
@@ -40,11 +36,8 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    console.log('dddddddd', this.state.filters);
-    console.log('hereeeeeeeeeeee', value);
     if (value) {
       const options = value.split(',');
-      console.log('booooooool', this.isPrefSelected(options));
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
       if (!this.isPrefSelected(options)) {
         this.setState({useFilters: this.state.useFilters.concat(send)});
@@ -54,16 +47,60 @@ class FilterPrefContainer extends React.Component {
     }
   }
 
+  selectOptions() {
+    if(this.props.isFetching) {
+      return null;
+    }
+    if(this.state.useFilters.length === 0) {
+      return this.props.otherFilters.map((tag) => {
+        return { value: tag.name, label: '#' + tag.name };
+      });
+    }
+    function findWithAttr(array, attr, value) {
+      for (let i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+          return i;
+        }
+      }
+      return -1;
+    }
+    const indxs = this.state.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
+    const arrFilt = this.props.otherFilters;
+    indxs.forEach((indx) => arrFilt.splice(indx, 1));
+    return arrFilt.map((tag) => {
+      return {value: tag.name, label: '#' + tag.name};
+    });
+  }
+
+  checkedBoxTagAdd(id) {
+    if(this.props.preferences.includes(id)) {
+      return 'checked';
+    }
+    let useCheck = false;
+    if(this.state.useFilters.length > 0) {
+      for (let i = 0; i < this.state.useFilters.length; i++) {
+        if (this.state.useFilters[i]._id === id) {
+          useCheck = true;
+        }
+      }
+    }
+    if(useCheck) {
+      return 'checked';
+    }
+    return '';
+  }
+
   render() {
-    console.log(this.state, this.props);
     const filters = this.props.defaultFilters.concat(this.state.useFilters);
+    const options = this.selectOptions();
+    const checked = filters.map((filter) => this.checkedBoxTagAdd(filter._id));
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {filters.map((filter, index) => (
             <p key={index}>
               <input type="checkbox" id={index}
-              checked={(this.props.preferences.includes(filter._id)) ? 'checked' : ''}
+              checked={checked[index]}
               value={filter.name}
               onChange={() => { this.props.toggleChecked(filter._id);}}/>
               <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
@@ -76,9 +113,7 @@ class FilterPrefContainer extends React.Component {
             value={this.state.value}
             multi simpleValue
             placeholder="Add new filter"
-            options={this.props.otherFilters.map((tag) => {
-              return {value: tag.name, label: '#' + tag.name};
-            })}
+            options={options}
             onChange={this.handleSelectChange.bind(this)}
           />
         </form>
@@ -95,12 +130,14 @@ FilterPrefContainer.propTypes = {
   getDiscoverData: PropTypes.func,
   updateUser: PropTypes.func,
   filterChange: PropTypes.func,
-  toggleTempChecked: PropTypes.func
+  toggleTempChecked: PropTypes.func,
+  isFetching: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   defaultFilters: state.discoverReducer.defaultFilters,
   otherFilters: state.discoverReducer.otherFilters,
+  isFetching: state.discoverReducer.isFetching,
   preferences: state.userReducer.preferences
 });
 
