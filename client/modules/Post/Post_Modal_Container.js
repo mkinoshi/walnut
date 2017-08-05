@@ -23,18 +23,18 @@ class ModalInstance extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.scrollToBottom();
-  }
+  // componentDidMount() {
+  //   this.scrollToBottom();
+  // }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
+  // componentDidUpdate() {
+  //   this.scrollToBottom();
+  // }
 
-  scrollToBottom() {
-    const node = ReactDOM.findDOMNode(this.messagesEnd);
-    node.scrollIntoView({ behavior: 'smooth' });
-  }
+  // scrollToBottom() {
+  //   const node = ReactDOM.findDOMNode(this.messagesEnd);
+  //   node.scrollIntoView({ behavior: 'smooth' });
+  // }
 
   handleChange(e) {
     this.setState({commentBody: e.target.value});
@@ -102,8 +102,8 @@ class ModalInstance extends React.Component {
               />
             </Modal.Description>
             ))}
-          <div style={{ float: 'left', clear: 'both' }}
-             ref={(el) => { this.messagesEnd = el; }} />
+          {/* <div style={{ float: 'left', clear: 'both' }}
+             ref={(el) => { this.messagesEnd = el; }} /> */}
         </Modal.Content>
         <Modal.Actions>
           <span id="inputBoxHolder">

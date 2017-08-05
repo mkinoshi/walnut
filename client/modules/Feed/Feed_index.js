@@ -142,7 +142,7 @@ class Feed extends React.Component {
             {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
             </div>
             <div className="col-xs-9" >
-              {this.props.data.isFetching ?
+              {this.props.data.isFetching || !this.props.isReady ?
                <p>loading is true inside the reducer</p> :
                 <InfiniteScroll
                   pageStart={0}
@@ -174,13 +174,15 @@ Feed.propTypes = {
   getData: PropTypes.func,
   getNext10: PropTypes.func,
   hasMore: PropTypes.bool,
-  user: PropTypes.object
+  user: PropTypes.object,
+  isReady: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer,
   hasMore: state.discoverReducer.hasMore,
-  user: state.userReducer
+  user: state.userReducer,
+  isReady: state.discoverReducer.isReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

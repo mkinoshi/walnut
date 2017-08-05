@@ -97,7 +97,6 @@ router.get('/discoverinfo', (req, res) => {
 });
 
 router.get('/next10', (req, res) => {
-  console.log(req.user.currentCommunity);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
