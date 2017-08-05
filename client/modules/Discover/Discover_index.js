@@ -20,6 +20,12 @@ class Home extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const urls = this.props.location.pathname;
+    console.log(urls);
+    localStorage.setItem('url', urls);
+  }
+
   componentWillReceiveProps(nextProps) {
     console.log('yoyoyoyoyo');
     if (nextProps.isReady) {
@@ -40,7 +46,8 @@ class Home extends React.Component {
 
 Home.propTypes = {
   getDiscoverContent: PropTypes.func,
-  isReady: PropTypes.bool
+  isReady: PropTypes.bool,
+  location: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

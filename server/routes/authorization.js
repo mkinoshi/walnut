@@ -56,22 +56,27 @@ import adminApp from '../firebaseAdmin';
   });
 
   router.post('/login', function(req, res) {
-    firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
-    .then((result) => {
-      // req.session.userToken = req.body.token;
-      console.log('result', result);
-      res.redirect('/');
-    })
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-      if (error) {
-        console.log('could not login', error);
-        res.redirect('/auth/login');
-      }
-    });s
+    req.session.userToken = req.body.token;
+    adminApp.auth().verifyIdToken(req.body.token)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      // console.log('uid', uid);
+      return User.findOne({firebaseId: uid})
+      .then((doc) => {
+        console.log(doc._id);
+        const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
+        req.session.userMToken = token;
+        console.log(req.session);
+        res.status(200);
+        res.redirect('/')
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }).catch(function(error) {
+      // Handle error
+      console.log('error with admin auth', error);
+    });
   });
 
   router.post('/facebook', function(req, res) {

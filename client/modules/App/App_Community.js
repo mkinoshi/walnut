@@ -22,6 +22,7 @@ class Community extends React.Component {
 
   componentDidMount() {
     localStorage.setItem('isUserInCommunity', true);
+    // localStorage.setItem('url', '/app/community');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }

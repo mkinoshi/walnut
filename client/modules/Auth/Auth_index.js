@@ -30,12 +30,14 @@ class Auth extends React.Component {
         // history.push('/app/walnuthome');
       } else {
         console.log(localStorage.getItem('isUserInCommunity'));
+        console.log(localStorage.getItem('url'));
         const isUserInCommunity = localStorage.getItem('isUserInCommunity');
         if (this.props.isCreated && !isUserInCommunity) {
           this.props.getUser();
           history.replace('/app/walnuthome');
         } else {
           this.props.getUser();
+          history.replace(localStorage.getItem('url'));
         }
       }
     });
