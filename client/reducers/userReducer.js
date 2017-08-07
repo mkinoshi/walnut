@@ -7,6 +7,7 @@ const userObj = {
   password: '',
   pictureURL: '',
   preferences: [],
+  communityPreference: [],
   location: {
     college: [],
     homeTown: [],
@@ -43,8 +44,11 @@ const userObj = {
   tags: [],
   hasProfile: false,
   isFetching: false,
-  blurb: ''
+  blurb: '',
+  isCreated: true
 };
+
+
 
 
 
@@ -58,7 +62,13 @@ const userReducer = (state = userObj, action) => {
     case 'GET_USER_DATA_DONE':
       return {
         ...action.user,
-        isFetching: false
+        isFetching: false,
+        isCreated: true
+      };
+    case 'ADD_TEMP_FILTER':
+      return {
+        ...state,
+        communityPreference: [...state.communityPreference].concat(action.useFilters)
       };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {
@@ -109,6 +119,16 @@ const userReducer = (state = userObj, action) => {
         return newState3;
       }
       return newState3;
+    case 'USER_IS_NOT_CREATED':
+      return {
+        ...state,
+        isCreated: false
+      };
+    case 'USER_IS_CREATED':
+      return {
+        ...state,
+        isCreated: true
+      };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import Select from 'react-select';
 import styles from 'react-select/dist/react-select.css';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -14,64 +15,113 @@ class FilterPrefContainer extends React.Component {
     this.state = {
       filters: [],
       value: [],
-      useFilters: this.props.defaultFilters
+      useFilters: []
     };
-  }
-
-  handleChange(e) {
-    const index = this.state.filters.indexOf(e.target.value);
-    this.props.filterChange(e.target.value);
-    if (!this.state.filters.includes(e.target.value)) {
-      this.setState({filters: this.state.filters.concat(e.target.value)});
-    } else {
-      this.setState({filters: this.state.filters.slice(0, index).concat(this.state.filters.slice(index + 1))});
-    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
   }
 
-  handleSelectChange(value) {
-    this.setState({value});
+  isPrefSelected(options) {
+    let val = false;
+    if (this.state.useFilters.length > 0) {
+      this.state.useFilters.forEach((filter) => {
+        if (options.indexOf(filter.name) > -1) {
+          val = true;
+        }
+      });
+    }
+    return val;
   }
 
-  handleNew(event) {
-    event.preventDefault();
-    const options = this.state.value.split(',');
-    const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-    const newOne = this.state.useFilters.concat(send);
-    // const newChecked = this.state.filters.concat(options);
+  handleSelectChange(value) {
+    if (value) {
+      const options = value.split(',');
+      const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
+      if (!this.isPrefSelected(options)) {
+        this.props.toggleTempChecked(this.state.useFilters.concat(send).map((filt) => filt._id));
+        this.setState({useFilters: this.state.useFilters.concat(send)});
+      }
+    }
+  }
 
-    this.props.updateUser({preferences: this.props.preferences.concat(send)});
-    this.setState({useFilters: newOne, value: []});
+  selectOptions() {
+    if(this.props.isFetching) {
+      return null;
+    }
+    if(!this.props.defaultFilters) {
+      return null;
+    }
+    if(this.state.useFilters.length === 0) {
+      return this.props.otherFilters.map((tag) => {
+        return { value: tag.name, label: '#' + tag.name };
+      });
+    }
+    function findWithAttr(array, attr, value) {
+      for (let i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+          return i;
+        }
+      }
+      return -1;
+    }
+    const indxs = this.state.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
+    const arrFilt = this.props.otherFilters;
+    indxs.forEach((indx) => arrFilt.splice(indx, 1));
+    return arrFilt.map((tag) => {
+      return {value: tag.name, label: '#' + tag.name};
+    });
+  }
+
+  checkedBoxTagAdd(id) {
+    if (this.props.communityPreference.includes(id)) {
+      return 'checked';
+    }
+    let useCheck = false;
+    if(this.state.useFilters.length > 0) {
+      for (let i = 0; i < this.state.useFilters.length; i++) {
+        if (this.state.useFilters[i]._id === id) {
+          useCheck = true;
+        }
+      }
+    }
+    if(useCheck) {
+      return 'checked';
+    }
+    return '';
   }
 
   render() {
+    const filters = this.props.defaultFilters ? this.props.defaultFilters.concat(this.state.useFilters) : null;
+    const options = this.selectOptions();
+    const checked = this.props.defaultFilters ? filters.map((filter) => this.checkedBoxTagAdd(filter._id)) : null;
     return (
-      <div style={{clear: 'both', padding: '5%', paddingTop: '40px'}}>
+      <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.state.useFilters.map((filter, index) => (
-            <p key={index}>
-              <input type="checkbox" id={index}
-              checked={(this.state.filters.includes(filter.name)) ? 'checked' : ''}
-              value={filter.name}
-              onChange={(e) => {this.handleChange(e);}}/>
-              <label htmlFor={index} style={{color: 'black'}}># {filter.name}</label>
-            </p>
-            ))}
+          {this.props.defaultFilters ?
+            filters.map((filter, index) => (
+                <p key={index}>
+                  <input type="checkbox" id={index}
+                    checked={checked[index]}
+                    value={filter.name}
+                    onChange={() => { this.props.toggleChecked(filter._id); }} />
+                  <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
+                </p>
+              ))
+           :
+            null
+          }
         </form>
-        <form onSubmit={(e) => this.handleNew(e)}>
+        <form>
           <Select
             name="form-field-name"
             value={this.state.value}
             multi simpleValue
-            options={this.props.otherFilters.map((tag) => {
-              return {value: tag.name, label: '#' + tag.name};
-            })}
+            placeholder="Add new filter"
+            options={options}
             onChange={this.handleSelectChange.bind(this)}
           />
-          <button type="submit">Add new filter</button>
         </form>
       </div>
     );
@@ -81,21 +131,25 @@ class FilterPrefContainer extends React.Component {
 FilterPrefContainer.propTypes = {
   defaultFilters: PropTypes.array,
   otherFilters: PropTypes.array,
-  preferences: PropTypes.array,
+  communityPreference: PropTypes.array,
   toggleChecked: PropTypes.func,
   getDiscoverData: PropTypes.func,
   updateUser: PropTypes.func,
-  filterChange: PropTypes.func
+  filterChange: PropTypes.func,
+  toggleTempChecked: PropTypes.func,
+  isFetching: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   defaultFilters: state.discoverReducer.defaultFilters,
   otherFilters: state.discoverReducer.otherFilters,
-  preferences: state.userReducer.preferences
+  isFetching: state.discoverReducer.isFetching,
+  communityPreference: state.userReducer.communityPreference
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleChecked: (name, index) => toggleFilterCheckedThunk(name, index)(dispatch),
+  toggleChecked: (id) => dispatch(toggleFilterCheckedThunk(id)),
+  toggleTempChecked: (useFilters) => dispatch(toggleTempFilterCheckedThunk(useFilters)),
   updateUser: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 

@@ -13,13 +13,10 @@ var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
-
-var admin = require('firebase-admin');
-var serviceAccount = require('./serviceAccountKey.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://walnut-1500128476052.firebaseio.com'
-})
+var FirebaseStrategy = require('passport-firebase-auth').Strategy;
+// var firebaseMiddleware = require('./firebaseMiddleware');
+import AdminApp from './firebaseAdmin';
+var CryptoJS = require("crypto-js");
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
@@ -37,9 +34,12 @@ mongoose.Promise = global.Promise;
 var models = require('./models/models');
 
 //put in dbRoutes
-var dbRoutes = require('./routes/databaseAccess.js');
-var awsRoutes = require('./routes/awsAccess.js');
-// var auth = require('./routes/authorization');
+var dbGeneralRoutes = require('./routes/dbRoutes/dbGeneralRoutes');
+var dbGetRoutes = require('./routes/dbRoutes/dbGetRoutes');
+var dbSaveRoutes = require('./routes/dbRoutes/dbSaveRoutes');
+var dbUpdateRoutes = require('./routes/dbRoutes/dbUpdateRoutes');
+var awsRoutes = require('./routes/awsAccess');
+var auth = require('./routes/authorization');
 var app = express();
 
 app.use(logger('tiny'));
@@ -67,7 +67,8 @@ app.use(cors(corsOptions));
 // Passport
 app.use(session({
   secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  // userToken: null
 }));
 
 // var hbs = require('express-handlebars')({
@@ -81,11 +82,11 @@ app.use(session({
 
 // app.use(passport.initialize());
 // app.use(passport.session());
-//
+
 // passport.serializeUser(function(user, done) {
 //   done(null, user._id);
 // });
-//
+
 // passport.deserializeUser(function(id, done) {
 //   models.User.findById(id, done);
 // });
@@ -143,17 +144,34 @@ app.use(session({
 //   }
 // ));
 
-// app.get('/', function(req,res) {
-//     res.redirect('/app/login')
-// });
+app.use('*', function(req, res, next) {
+  console.log(req.session.userMToken);
+  if (req.session.userMToken) {
+    const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
+    const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
+    User.findById(mongoId)
+        .then((response) => {
+          // console.log(response);
+          req.user = response;
+          next()
+        })
+  } else {
+    next();
+  }
+})
 
-
-app.use('/db', dbRoutes);
+app.use('/auth', auth);
+app.use('/db', dbGeneralRoutes);
+app.use('/db/get', dbGetRoutes);
+app.use('/db/save', dbSaveRoutes);
+app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
+
+
 
 
 // make this dbRoutes when we have the database running

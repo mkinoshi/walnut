@@ -7,20 +7,12 @@ import Login from './Auth_Login';
 import Register from './Auth_Registration';
 // import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import App from '../App/App_index';
-import { firebaseApp } from '../../firebase';
+import appCommunity from '../App/App_Community';
+import firebaseApp from '../../firebase';
+import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
+import getUser from '../../thunks/app_thunks/getAppThunk';
 
 const history = createBrowserHistory();
-
-firebaseApp.auth().onAuthStateChanged(user => {
-  console.log(user);
-  if (user) {
-    // this.context.history.push('/app/walnuthome');
-    history.push('/app/walnuthome');
-  } else {
-    history.replace('/app/login');
-    // this.context.history.push('/app/login');
-  }
-});
 
 class Auth extends React.Component {
   constructor() {
@@ -29,11 +21,47 @@ class Auth extends React.Component {
     };
   }
 
+  componentWillMount() {
+    firebaseApp.auth().onAuthStateChanged(user => {
+      console.log('user', user);
+      if (!user) {
+        // this.context.history.push('/app/walnuthome');
+        history.replace('/app/login');
+        // history.push('/app/walnuthome');
+      } else {
+        console.log(localStorage.getItem('isUserInCommunity'));
+        console.log(localStorage.getItem('url'));
+        const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+        if (this.props.isCreated && !isUserInCommunity) {
+          // this.props.getUser();
+          history.replace('/app/walnuthome');
+        } else {
+          // this.props.getUser();
+          history.replace(localStorage.getItem('url'));
+        }
+      }
+    });
+  }
+
+  componentDidMount() {
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+    if (nextProps.isCreated && !isUserInCommunity) {
+      nextProps.getUser();
+      history.replace('/app/walnuthome');
+    } else {
+      nextProps.getUser();
+    }
+  }
+
   render() {
     return (
       <Router path="/" history={history}>
         <Switch>
-          <Route path="/app/walnuthome" component={App} />
+          <Route path="/app/walnuthome" component={WalnutHomeContainer} />
+          <Route path="/app/community" component={appCommunity} />
           <Route path="/app/login" component={Login}/>
           <Route path="/app/register" component={Register}/>
         </Switch>
@@ -44,12 +72,16 @@ class Auth extends React.Component {
 
 
 Auth.propTypes = {
+  getUser: PropTypes.func,
+  isCreated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
+  isCreated: state.userReducer.isCreated
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getUser: () => dispatch(getUser())
 });
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route, Switch} from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
@@ -16,16 +17,12 @@ const styles = {
   }
 };
 
+const history = createBrowserHistory();
+
 class App extends React.Component {
 
   componentWillMount() {
-    // if (localStorage.getItem('user')) {
-    //   console.log(JSON.parse(localStorage.getItem('user')));
-    //   this.props.setUser();
-    // } else {
-    //   this.props.getUser();
-    // }
-    this.props.getUser();
+    // this.props.getUser();
   }
 
   render() {
@@ -51,8 +48,7 @@ App.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => dispatch(getUser()),
-  setUser: () => dispatch({type: 'GET_USER_DATA_DONE', user: JSON.parse(localStorage.getItem('user'))})
+  getUser: () => dispatch(getUser())
 });
 
 

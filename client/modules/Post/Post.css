@@ -101,20 +101,25 @@
     color: whitesmoke;
 }
 
-.postOuter {
-    width: 100% !important;
-}
-
-.postContent {
+.tagContainer {
+    margin-left: 3%;
 }
 
 .tag {
-    font-size: 20px;
+    margin-left: 3%;
+    background-color: #B3805C;
+    border-radius: 4px 3px 4px 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 20px;
+    display: inline;
 }
 
 .hashtag {
-    color: #0D9ED3;
-    font-size: 18px;
+    color: #F1F1EF;
+    font-size: 14px;
+    line-height: 19px;
 }
 
 .likeIcon {
@@ -156,6 +161,76 @@
     margin-right: auto;
 }
 
+.postOuter {
+    background-color: #F1F1EF;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    width: 513.67px;
+}
 
+.postContent {
+    display: flex;
+    flex-direction: column;
+}
 
+.postUser {
+    display: flex;
+    flex-direction: row;
+}
 
+.postUserimage {
+    width: 40px;
+    height: 40px;
+    border-radius: 23px;
+    margin-left: 3%;
+}
+
+.postHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 46px;
+    margin-top: 10px;
+}
+
+.imageWrapper {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    margin-left: 3%;
+    margin-top: 10px;
+}
+
+.postHeaderUser {
+    height: 19px;	
+    width: 263.6px;	
+    color: #232425;	
+    font-family: Avenir Next;	
+    font-size: 14px;	
+    font-weight: bold;	
+    line-height: 19px;
+    margin-left: 2%;
+}
+
+.postInnerContent {
+    height: 150px;
+    width: 454.83px;	
+    color: #4A4A4A;	
+    font-family: Avenir Next;	
+    font-size: 18px;	
+    line-height: 25px;
+    margin-left: 3%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.postMeta {
+    display: flex;
+    flex-direction: row;
+}
+
+.postFootnote {
+    height: 40px;
+}

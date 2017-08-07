@@ -78,15 +78,14 @@ class MapContainer extends React.Component {
 
   clusterMarker(coordinates, count, data) {
     return (
-      <Marker coordinates={coordinates} className="marker">
+      <Marker coordinates={coordinates} className="marker" key={uuidv4()}>
           <div>
             <Popup
               trigger={<CircleIcon />}
-              content="Hello. This is a mini popup"
             >
               <Popup.Content>
                 <Image.Group className="wrapper" >
-                  {data.map((d, i) => (<Image key={i} src={d.pictureURL} className="mapImage" />))}
+                  {data.map((d, i) => (<Image key={uuidv4()} src={d.pictureURL} className="mapImage" />))}
                 </Image.Group>
               </Popup.Content>
             </Popup>
@@ -134,7 +133,6 @@ class MapContainer extends React.Component {
                           >
                           <Popup
                             trigger={<CircleIcon />}
-                            content="Hello. This is a mini popup"
                           >
                             <Popup.Content>
                               <Image.Group className="imageWrapper" >

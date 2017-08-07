@@ -92,7 +92,7 @@ MapCard.propTypes = {
   updateClicked: PropTypes.func,
   clicked: PropTypes.string,
   selected: PropTypes.string,
-  zoom: PropTypes.number,
+  zoom: PropTypes.array,
   email: PropTypes.string
 };
 

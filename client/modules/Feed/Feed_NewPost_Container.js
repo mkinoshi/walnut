@@ -9,7 +9,7 @@ import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import ReactUploadFile from 'react-upload-file';
-import { Icon, Button } from 'semantic-ui-react';
+import { Icon, Button, Input } from 'semantic-ui-react';
 import superagent from 'superagent';
 import css from './Feed.css';
 
@@ -18,26 +18,6 @@ import css from './Feed.css';
 // TODO post button dispatches newPost
 // userPost is the string that gets updated in reducer
 
-const styles = {
-  postOuter: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: '#a67759'
-  },
-  outer: {
-    paddingTop: '1%',
-    paddingLeft: '1%',
-    paddingRight: '1%',
-    paddingBottom: '1%',
-    backgroundColor: '#a67759',
-    width: '50%',
-    marginLeft: '25%'
-  },
-  post: {
-    backgroundColor: 'white',
-    borderRadius: '5px',
-  }
-};
 
 class NewPostContainer extends React.Component {
   constructor(props) {
@@ -130,15 +110,14 @@ class NewPostContainer extends React.Component {
     };
 
     return (
-      <div className="newPost col-xs-6 col-xs-offset-3">
+      <div className="newPost">
+        <h3 id="newPostHeader">New Conversation</h3>
         <div className="row newPostContent">
-          <textarea id="textarea1"
-            style={{'paddingTop': 0, 'paddingBottom': 0, borderWidth: 0, height: '80px'}}
+          <Input id="textarea1"
             value={this.state.postBody}
-            onChange={(e) => this.handleChange(e)}>
-              <label htmlFor="textarea1">Enter Your Post</label>
-            </textarea>
+            onChange={(e) => this.handleChange(e)} />
         </div>
+        <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
                             tags={this.state.postTags}
@@ -148,13 +127,7 @@ class NewPostContainer extends React.Component {
           <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
         </div>
           <div className="row newPostFooter">
-            <Button onClick={() => this.submitPost()} animated>
-              <Button.Content visible>create</Button.Content>
-              <Button.Content hidden>
-                <Icon name="send" />
-              </Button.Content>
-            </Button>
-            <div className="fileUpload">
+          <div className="fileUpload col-xs-6">
             <ReactUploadFile
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
@@ -164,6 +137,14 @@ class NewPostContainer extends React.Component {
               onChange={(e) => this.changeFileName(e.target.value)}/>
                 :
                 null}
+            </div>
+            <div className="col-xs-6">
+              <Button onClick={() => this.submitPost()} animated>
+                <Button.Content visible>create</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="send"/>
+                </Button.Content>
+              </Button>
             </div>
           </div>
       </div>
