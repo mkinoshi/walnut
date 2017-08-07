@@ -7,8 +7,6 @@ import css from './Post.css';
 import MediaAttachment from './Post_Media_Attachment.js';
 import Lightbox from 'react-images';
 import PDF from 'react-pdf-js';
-
-
 class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -22,11 +20,9 @@ class Post extends React.Component {
       pages: 100
     };
   }
-
   handleClick() {
     this.setState({isOpen: !this.state.isOpen});
   }
-
   toggleLike() {
     this.props.newLike();
     if (this.state.isLiked) {
@@ -35,23 +31,18 @@ class Post extends React.Component {
       this.setState({likeCount: this.state.likeCount + 1, isLiked: true});
     }
   }
-
   renderLightBox(data) {
     this.setState({lightBoxData: data});
   }
-
   closeLightbox() {
     this.setState({lightBoxData: ''});
   }
-
   renderPdfModal(data) {
     this.setState({pdfModalData: data});
   }
-
   closeModal() {
     this.setState({ pdfUrl: '', page: 1 });
   }
-
   handlePrevious() {
     if(this.state.page === 1) {
       this.setState({ page: this.state.pages });
@@ -59,7 +50,6 @@ class Post extends React.Component {
       this.setState({ page: this.state.page - 1 });
     }
   }
-
   handleNext() {
     if(this.state.page === this.state.pages) {
       this.setState({ page: 1 });
@@ -67,23 +57,18 @@ class Post extends React.Component {
       this.setState({ page: this.state.page + 1 });
     }
   }
-
   onDocumentComplete(pages) {
     this.setState({ page: 1, pages: pages });
   }
-
   onPageComplete(page) {
     this.setState({ page: page });
   }
-
   closePdfModal() {
     this.setState({pdfModalData: ''});
   }
-
   closeDownloadModal() {
     this.setState({downloadUrl: ''});
   }
-
   render() {
     return (
       <div className="postOuter" >
@@ -99,13 +84,11 @@ class Post extends React.Component {
         <div className="postDiscription">
           <p className="postInnerContent">{this.props.postData.content}</p>
         </div>
-
         {(this.props.postData.attachment.name !== '') ?
         <MediaAttachment data={this.props.postData.attachment}
         renderLightBox={(data) => this.renderLightBox(data)}
         renderPdfModal={(data) => this.renderPdfModal(data)}/>
         : null}
-
         {(this.state.lightBoxData !== '') ?
         <Lightbox
           images={[{
@@ -116,7 +99,6 @@ class Post extends React.Component {
           onClose={() => this.closeLightbox()}
           /> : null
         }
-
         <Modal
         open={this.state.pdfModalData !== ''}
         basic
@@ -136,7 +118,6 @@ class Post extends React.Component {
             </Button>
           </Modal.Actions>
         </Modal>
-
       </div>
       <div className="postFootnote">
         <div className="postMeta">
@@ -146,7 +127,7 @@ class Post extends React.Component {
               <text className="hashtag">#{tag.name}</text>
             </div>))}
           </div>
-          {!this.props.isOpen ? <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
+          {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
         : <a className="commentButton">
             <span> <Icon name="comment outline" />
             {this.props.postData.comments.length} </span>
@@ -158,12 +139,10 @@ class Post extends React.Component {
     );
   }
 }
-
 Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
   isOpen: PropTypes.bool
 };
-
 export default Post;

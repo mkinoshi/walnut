@@ -9,11 +9,11 @@ import Comment from './Post_Comment';
 import './Post.css';
 import { Button, Header, Icon, Image, Modal, Card, Form, TextArea } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import ReactDOM from 'react-dom';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
-
+import Scroll from 'react-scroll';
+const scroll = Scroll.animateScroll;
 class ModalInstance extends React.Component {
   constructor(props) {
     super(props);
@@ -21,23 +21,23 @@ class ModalInstance extends React.Component {
       commentBody: '',
       messages: []
     };
+    // this.scrollToBottom = this.scrollToBottom.bind(this);
   }
+  // handleChange(e) {
+  //   this.setState({commentBody: e.target.value});
+  // }
 
+  // scrollToBottom() {
+  //   const scrollHeight = this.messagesEnd.scrollHeight;
+  //   const height = this.messagesEnd.clientHeight;
+  //   const maxScrollTop = scrollHeight - height;
+  //   this.messagesEnd.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  // }
   componentDidMount() {
     this.scrollToBottom();
   }
-
   componentDidUpdate() {
     this.scrollToBottom();
-  }
-
-  scrollToBottom() {
-    const node = ReactDOM.findDOMNode(this.messagesEnd);
-    node.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  handleChange(e) {
-    this.setState({commentBody: e.target.value});
   }
 
   handleClick(id) {
@@ -73,7 +73,6 @@ class ModalInstance extends React.Component {
       console.log('missing postData');
     }
   }
-
   render() {
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData);}} scrolling trigger={
@@ -102,9 +101,9 @@ class ModalInstance extends React.Component {
               />
             </Modal.Description>
             ))}
-          <div style={{ float: 'left', clear: 'both' }}
-             ref={(el) => { this.messagesEnd = el; }} />
         </Modal.Content>
+        <div style={{ float: 'left', clear: 'both' }}
+             ref={(el) => { this.messagesEnd = el; }} />
         <Modal.Actions>
           <span id="inputBoxHolder">
             <Form id="commentInput">
@@ -127,7 +126,6 @@ class ModalInstance extends React.Component {
     );
   }
 }
-
 ModalInstance.propTypes = {
   postData: PropTypes.object,
   newComment: PropTypes.func,
@@ -137,14 +135,11 @@ ModalInstance.propTypes = {
   currentUser: PropTypes.object,
   startListen: PropTypes.func
 };
-
 const mapStateToProps = () => ({
 });
-
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
   newComment: (commentBody, postId) => newCommentThunk(commentBody, postId)(dispatch),
   newCommentLike: (postId, commentId) => newCommentLikeThunk(postId, commentId)(dispatch)
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(ModalInstance);
