@@ -151,7 +151,7 @@ app.use('*', function(req, res, next) {
     const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     User.findById(mongoId)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           req.user = response;
           next()
         })

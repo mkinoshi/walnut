@@ -33,7 +33,8 @@ class Login extends React.Component {
     this.props.googleLogin();
   }
 
-  regLogin() {
+  regLogin(e) {
+    e.preventDefault();
     this.props.signIn(this.state.emailVal, this.state.passwordVal);
   }
 
@@ -61,9 +62,9 @@ class Login extends React.Component {
                        onChange={(e) => this.handlePasswordChange(e)}
                        value={this.state.passwordVal} />
               </div>
-              <input className="form-control" type="submit" name="" value="Login" />
+              {/* <input className="form-control" type="submit" name="" value="Login" /> */}
             </form>
-            <button onClick={() => {this.regLogin();}}>Login</button>
+            <button onClick={(e) => {this.regLogin(e);}}>Login</button>
             <h2>New user?</h2>
             <Link to="/app/register">Go to Registration</Link>
           </div>
