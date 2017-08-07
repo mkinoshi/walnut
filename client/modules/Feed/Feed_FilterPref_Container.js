@@ -40,9 +40,8 @@ class FilterPrefContainer extends React.Component {
       const options = value.split(',');
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
       if (!this.isPrefSelected(options)) {
+        this.props.toggleTempChecked(this.state.useFilters.concat(send).map((filt) => filt._id));
         this.setState({useFilters: this.state.useFilters.concat(send)});
-        const id = send[0]._id;
-        this.props.toggleTempChecked(id);
       }
     }
   }
@@ -150,7 +149,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleChecked: (id) => dispatch(toggleFilterCheckedThunk(id)),
-  toggleTempChecked: (id) => dispatch(toggleTempFilterCheckedThunk(id)),
+  toggleTempChecked: (useFilters) => dispatch(toggleTempFilterCheckedThunk(useFilters)),
   updateUser: (updateObj) => updateUserPrefThunk(updateObj)(dispatch)
 });
 

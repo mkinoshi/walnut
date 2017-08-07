@@ -49,6 +49,8 @@ const userObj = {
 
 
 
+
+
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
     case 'USER_IS_FETCHING':
@@ -60,6 +62,11 @@ const userReducer = (state = userObj, action) => {
       return {
         ...action.user,
         isFetching: false
+      };
+    case 'ADD_TEMP_FILTER':
+      return {
+        ...state,
+        communityPreference: [...state.communityPreference].concat(action.useFilters)
       };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {

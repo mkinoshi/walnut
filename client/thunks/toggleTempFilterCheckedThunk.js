@@ -3,9 +3,10 @@
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
-const toggleFilterCheckedThunk = (id) => (dispatch) => {
+const toggleFilterCheckedThunk = (useFilters) => (dispatch) => {
+  dispatch({ type: 'ADD_TEMP_FILTER', useFilters: useFilters });
   axios.post(URL + 'db/toggle/checkedtemp', {
-    tagId: id
+    useFilters: useFilters
   })
         .then((response) => {
           console.log('backend response', response);

@@ -419,7 +419,8 @@ router.post('/toggle/checked', (req, res) => {
 
 router.post('/toggle/checkedtemp', (req, res) => {
   let posts = [];
-  const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity } : { community: req.user.currentCommunity };
+  console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
+  const filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
   Post.find(filter)
         .limit(10)
         .sort({ createdAt: -1 })
