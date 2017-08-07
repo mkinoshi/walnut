@@ -62,7 +62,6 @@ class Login extends React.Component {
                        onChange={(e) => this.handlePasswordChange(e)}
                        value={this.state.passwordVal} />
               </div>
-              {/* <input className="form-control" type="submit" name="" value="Login" /> */}
             </form>
             <button onClick={(e) => {this.regLogin(e);}}>Login</button>
             <h2>New user?</h2>

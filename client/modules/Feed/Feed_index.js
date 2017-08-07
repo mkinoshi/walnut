@@ -98,51 +98,16 @@ class Feed extends React.Component {
     this.setState({showFilterPref: !this.state.showFilterPref});
   }
 
-  // filterChange(filterName) {
-  //   const filts = this.state.filters;
-  //   if (filts.indexOf(filterName) >= 0) {
-  //     const idx = filts.indexOf(filterName);
-  //     filts.splice(idx, 1);
-  //   } else {
-  //     filts.push(filterName);
-  //   }
-  //   this.setState({filters: filts});
-  // }
-
-  filterData(filters, posts) {
-    // if the array zero return the entire unfiltered array
-    if(filters.length === 0 || filters.length === this.props.data.defaultFilters.length) {
-      return {filters: filters, posts: posts};
-    }
-    const final = posts.filter((post) => {
-      const findOne = (haystack, arr) => {
-        return arr.some(tag => haystack.indexOf(tag.name) >= 0);
-      };
-      return findOne(filters, post.tags) === true;
-    });
-
-    return {filters: filters, posts: final};
-  }
-
   _loadMore() {
-    this.props.getNext10(this.props.data.posts.length);
+    // this.props.getNext10(this.props.data.posts.length);
   }
 
   render() {
-    const filteredPosts = this.filterData(this.props.data.filters, this.props.data.posts).posts;
     return (
-      <div className="Feed_Wrapper col-xs-5">
+      <div className="Feed_Wrapper">
           <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
-            <div className="col-xs-3">
-              <div className="discoverButton left" style={{}}>
-                <a style={{backgroundColor: '#FF5657', marginTop: '-15px', marginLeft: '30%'}}
-                  className="waves-effect waves-light btn"
-                  onClick={() => (this.toggleFilterPref())}>Discover</a>
-              </div>
-            {/* {this.state.showFilterPref ? <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/> : <p></p>} */}
-            </div>
             <div className="col-xs-9" >
-              {this.props.data.isFetching ?
+              {this.props.data.isFetching || !this.props.isReady ?
                <p>loading is true inside the reducer</p> :
                 <InfiniteScroll
                   pageStart={0}
@@ -151,7 +116,7 @@ class Feed extends React.Component {
                   threshold={600}
                   loader={<div className="loader">Loading ...</div>}
                   >
-                  {filteredPosts.map((post) => (
+                {this.props.data.posts.map((post) => (
                   <Post ref="card"
                   key={post.postId}
                   isOpen={false}
@@ -174,13 +139,15 @@ Feed.propTypes = {
   getData: PropTypes.func,
   getNext10: PropTypes.func,
   hasMore: PropTypes.bool,
-  user: PropTypes.object
+  user: PropTypes.object,
+  isReady: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   data: state.discoverReducer,
   hasMore: state.discoverReducer.hasMore,
-  user: state.userReducer
+  user: state.userReducer,
+  isReady: state.discoverReducer.isReady
 });
 
 const mapDispatchToProps = (dispatch) => ({

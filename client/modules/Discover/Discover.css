@@ -2,32 +2,19 @@
   display: flex;
   flex-direction: row;
   margin-top: 20px;
+  background-color: #313D4D;
 }
 
 .RightSideBar_Container {
   flex: 4;
-  background-color: #313D4D;
 }
 
 .LeftSidebar_Container {
   flex: 3;
-  background-color: #313D4D;
-  margin-top: 30px;
 }
 
-.LeftSideBar_LogoContainer {
-  display: flex;
-  flex-direction: row;
-  margin-right: 20%;
-}
-.LeftSideBar_Logo {
-  flex:1;
-  margin-left: 8%;
-  margin-right: 4%;
-}
-
-.LeftSideBar_title {
-  flex: 2;
+.discoverTitleBox {
+  margin-left: 20px;
 }
 
 .discoverTitle {
@@ -36,6 +23,13 @@
   margin-right: 30%;
   font-size: 30px;
   line-height: 41px;
+  margin-bottom: 0px;
+}
+
+.discoverTitleLine {
+  width: 200px;
+  height: 2px;
+  background-color: #F1F1EF;
 }
 
 .discoverImage {
@@ -51,15 +45,33 @@
   margin-top: 10%;
   border-radius: 4px;
   margin-right: 20%;
+  width: 250px;
 }
 
 .outeritem {
-  color: #837F8A;
   font-family: Avenir Next;
   font-weight: bold;
   font-size: 14px;
   line-height: 19px;
-  margin-left: 5%;
-  margin-top: 3%;
+  width: 200px;
+  color: #314460;
+  margin-left: 10px;
+  margin-top: 6px !important;
 }
 
+.rightButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.rightModalButtonPlus {    
+  margin-right: 50px !important;
+  background-color: #98C1D9 !important;
+  color: #F1F1EF !important;
+}
+
+.rightModalButtonChat {    
+  margin-right: 50px !important;
+  background-color: #DADDD8 !important;
+  color: #314460 !important;
+}

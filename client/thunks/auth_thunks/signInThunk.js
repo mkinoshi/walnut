@@ -10,14 +10,14 @@ const signInThunk = (email, password) => (dispatch) => {
     result.getToken(/* forceRefresh */ true)
     .then(function(idToken) {
       console.log('idToken', idToken);
-      axios.post(URL + '/auth/login', {
+      axios.post(URL + 'auth/login', {
         token: idToken,
         email: email,
         password: password
       })
       .then((res) => {
-        console.log(res);
-        // dispatch({type: 'USER_IS_CREATED'});
+        console.log('signin thunk', res);
+        dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
       });
     })
   .catch(function(error) {
@@ -28,6 +28,7 @@ const signInThunk = (email, password) => (dispatch) => {
     // ...
   });
   });
+};
   // firebase.auth().onAuthStateChanged(function(user) {
   //   console.log('user', user);
   //   if (user) {
@@ -51,6 +52,5 @@ const signInThunk = (email, password) => (dispatch) => {
   //     console.log('user not validated');
   //   }
   // });
-};
 
 export default signInThunk;

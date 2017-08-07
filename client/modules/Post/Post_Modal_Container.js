@@ -27,17 +27,21 @@ class ModalInstance extends React.Component {
   //   this.setState({commentBody: e.target.value});
   // }
 
-  // scrollToBottom() {
-  //   const scrollHeight = this.messagesEnd.scrollHeight;
-  //   const height = this.messagesEnd.clientHeight;
-  //   const maxScrollTop = scrollHeight - height;
-  //   this.messagesEnd.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  // componentDidMount() {
+  //   this.scrollToBottom();
   // }
-  componentDidMount() {
-    this.scrollToBottom();
-  }
-  componentDidUpdate() {
-    this.scrollToBottom();
+
+  // componentDidUpdate() {
+  //   this.scrollToBottom();
+  // }
+
+  // scrollToBottom() {
+  //   const node = ReactDOM.findDOMNode(this.messagesEnd);
+  //   node.scrollIntoView({ behavior: 'smooth' });
+  // }
+
+  handleChange(e) {
+    this.setState({commentBody: e.target.value});
   }
 
   handleClick(id) {
@@ -101,6 +105,8 @@ class ModalInstance extends React.Component {
               />
             </Modal.Description>
             ))}
+          {/* <div style={{ float: 'left', clear: 'both' }}
+             ref={(el) => { this.messagesEnd = el; }} /> */}
         </Modal.Content>
         <div style={{ float: 'left', clear: 'both' }}
              ref={(el) => { this.messagesEnd = el; }} />

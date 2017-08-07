@@ -29,6 +29,7 @@ class WalnutHomeContainer extends React.Component {
       image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
       defaultFilters: [],
       filterValue: '',
+      isCalled: false
     };
     this.handleStart = this.handleStart.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,10 +43,16 @@ class WalnutHomeContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isCreated) {
+    if (nextProps.isCreated && !this.state.isCalled) {
       nextProps.getAllCommunities();
+      this.setState({isCalled: true});
     }
   }
+
+  compoenentDidMout() {
+    localStorage.setItem('url', '/app/walnuthome');
+  }
+
 
   toggleCommunity(com) {
     this.props.changeCommunity(com);

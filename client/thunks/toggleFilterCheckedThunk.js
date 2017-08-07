@@ -4,13 +4,17 @@
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
-const toggleFilterCheckedThunk = (tagName, index) => (dispatch) => {
-  dispatch({type: 'TOGGLE_FILTER_FRONT', index: index});
+const toggleFilterCheckedThunk = (id) => (dispatch) => {
   axios.post(URL + 'db/toggle/checked', {
-    tagName: tagName
+    tagId: id
   })
-    .catch((err) =>{
-      console.log('error in toggleFilterPref', err);
-    });
+  .then((response) => {
+    console.log('backend response', response);
+    dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
+    dispatch({ type: 'GET_DISCOVER_POSTS_DONE', posts: response.data.posts });
+  })
+  .catch((err) =>{
+    console.log('error in toggleFilterPref', err);
+  });
 };
 export default toggleFilterCheckedThunk;
