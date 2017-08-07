@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
-import Directory from '../Directory/Directory_index';
+import Directory from '../Directory2/Directory_index2';
 import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
 import EditProfile from '../EditProfile/EditProfile_index.js';

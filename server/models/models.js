@@ -65,11 +65,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  preferences: [
-    {
-      type: String
-    }
-  ],
+  preferences: {
+    type: Array
+  },
+  communityPreference: {
+    type: Array
+  },
   placesLived: {
     from: {
       type: String

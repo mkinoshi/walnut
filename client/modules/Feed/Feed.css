@@ -35,10 +35,6 @@
     margin-left: 1%;
 }
 
-.newPostTagsPref {
-    height: 15vw;
-}
-
 .tagItemLabel {
     background-color: #B3805C;
     margin-left: 3%;
@@ -57,6 +53,8 @@
 }
 
 .newPost_Container {
+    height: 310px;
+    width: 210px;
     display: flex;
     justify-content: center;    
 }
@@ -64,23 +62,17 @@
 .newPostContent {
     display: flex;
     justify-content: center;
-    margin-bottom: 6px;
-    border-style: solid;
-    border-width: 8px;
-    border-color: #a67759;
-    border-radius: 3px;
 }
 
 #textarea1 {
-    width: 100%;
+    width: 360px;
     padding-top: 0;
     padding-bottom: 0;
-    border-width: 0;
-    height: 100px;
+    height: 50px;
 }
 
 #newPostHeader {
-    color: #837F8A;
+    color: #314460;
 }
 
 #addingTags {
@@ -97,7 +89,7 @@
 }
 
 #tagPrefTitleHash {
-    color: #0082B0;
+    color: #4CC1FC;
     margin-top: 12px;
 }
 
@@ -124,7 +116,7 @@
 }
 
 #tagPrefTitle {
-    color: #837F8A;    
+    color: #B3805C;
     margin-top: 14px;
     margin-bottom: 10px;
     margin-left: 6px;
@@ -132,4 +124,7 @@
 
 .choiceForm {
     margin-bottom: 14px;
+}
+.discoverButton {
+    color: #4CC1FC;
 }

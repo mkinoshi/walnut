@@ -20,16 +20,15 @@ class LeftSideBar extends React.Component {
     } else {
       filts.push(filterName);
     }
-    // this.setState({filters: filts});
     this.props.changeFilters(filts);
   }
 
   render() {
     return (
-      <div className="LeftSidebar_Container col-xs-3">
-        <div className="LeftSideBar_LogoContainer">
-          <div className="LeftSideBar_Logo"><img className="discoverImage" src={this.props.community.icon} /></div>
-          <div className="LeftSideBar_title"><h1 className="discoverTitle">{this.props.community.title}</h1></div>
+      <div className="LeftSidebar_Container">
+        <div className="discoverTitleBox">
+          <h1 className="discoverTitle">Discover</h1>
+          <div className="discoverTitleLine"></div>
         </div>
         <div className="LeftSideBar_Preference">
           <div>

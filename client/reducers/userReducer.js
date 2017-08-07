@@ -7,6 +7,7 @@ const userObj = {
   password: '',
   pictureURL: '',
   preferences: [],
+  communityPreference: [],
   location: {
     college: [],
     homeTown: [],
@@ -49,6 +50,8 @@ const userObj = {
 
 
 
+
+
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
     case 'USER_IS_FETCHING':
@@ -61,6 +64,11 @@ const userReducer = (state = userObj, action) => {
         ...action.user,
         isFetching: false,
         isCreated: true
+      };
+    case 'ADD_TEMP_FILTER':
+      return {
+        ...state,
+        communityPreference: [...state.communityPreference].concat(action.useFilters)
       };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {

@@ -23,7 +23,6 @@ import adminApp from '../firebaseAdmin';
         fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
         password: req.body.password,
-        preferences: req.body.tags,
         portfolio: [
           {name: 'media', data: []},
           {name: 'documents', data: []},
@@ -78,14 +77,47 @@ import adminApp from '../firebaseAdmin';
   });
 
   router.post('/facebook', function(req, res) {
-    req.session.userToken = req.body.token;
-    adminApp.auth().verifyIdToken(req.body.token)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-      console.log('uid here: ', uid);
-      res.status(200);
-    }).catch((error) => {console.log('error', error);})
+      req.session.userToken = req.body.token;
+      adminApp.auth().verifyIdToken(req.body.token)
+          .then(function (decodedToken) {
+              var uid = decodedToken.uid;
+              console.log('uid here: ', uid);
+              res.status(200);
+          }).catch((error) => {
+          console.log('error', error);
+      })
   });
+
+  // router.get('/auth/facebook', passport.authenticate('facebook'));
+  //
+  // router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
+  //   function(req, res) {
+  //     // Successful authentication, redirect home.
+  //     res.redirect('/app/walnuthome');
+  //   }
+  // );
+  //
+  // router.get('/', function(req, res, next) {
+  //   if (!req.user) {
+  //     res.redirect('/auth/login')
+  //   } else {
+  //     if(req.user.hasProfile) {
+  //         if (req.user.currentCommunity !== '') {
+  //             User.findById(req.user._id)
+  //                 .populate('currentCommunity')
+  //                 .then((user) => {
+  //                     const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+  //                     res.redirect(url);
+  //                 })
+  //         }
+  //         else {
+  //           res.redirect('/app/walnuthome')
+  //         }
+  //     } else{
+  //         res.redirect('/app/editprofile');
+  //     }
+  //   }
+  // });
 
   router.get('/logout', function(req, res) {
     localStorage.removeItem('isUserInCommunity');
