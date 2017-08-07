@@ -6,7 +6,8 @@ const discoverReducer = (state = {
   posts: [],
   hasMore: true,
   isFetching: false,
-  isReady: true
+  isReady: true,
+  holdDiscover: false
 }, action) => {
   switch (action.type) {
     case 'DISCOVER_IS_LOADING':

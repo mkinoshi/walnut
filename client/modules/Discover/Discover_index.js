@@ -16,6 +16,7 @@ class Home extends React.Component {
 
   componentWillMount() {
     if (this.props.isReady) {
+      console.log('in here');
       this.props.getDiscoverContent();
     }
   }

@@ -3,9 +3,12 @@ const router = express.Router();
 import {User, Tag, Post, Quote, Community} from '../models/models';
 import axios from 'axios';
 import Promise from 'promise';
+import _ from 'underscore';
 // you have to import models like so:
 // import TodoItem from '../models/TodoItem.js'
 // getting all of tags and posts including comments
+
+// TODO promises!!
 
 router.get('/get/app', (req, res) => {
   User.findById(req.user._id)
@@ -62,9 +65,16 @@ router.post('/create/community', (req, res) => {
             .then((user) => {
               user.communities.push(community._id);
               user.currentCommunity = community._id;
+              const pref = {
+                community: `${community._id}`,
+                pref: []
+              };
+              user.preferences.push(pref);
+              user.markModified('preferences');
               return user.save();
             })
             .then((userSave) => {
+              console.log('dhhdhdhd', userSave);
               Community.findById(community._id)
                   .populate('defaultTags')
                   .then((com) => {
@@ -105,6 +115,16 @@ router.post('/join/community', (req, res) => {
         user.communities.push(req.body.communityId);
       }
       user.currentCommunity = req.body.communityId;
+      console.log('comm id', req.body.communityId);
+      const commPref = user.preferences.filter((pref) => pref.community === req.body.communityId);
+      if (commPref.length === 0 || commPref[0].pref.length === 0) {
+        const pref = {
+          community: req.body.communityId,
+          pref: []
+        };
+        user.preferences.push(pref);
+      }
+      user.markModified('preferences', 'currentCommunity');
       return user.save();
     })
     .then((savedUser) => {
@@ -126,7 +146,12 @@ router.post('/join/community', (req, res) => {
 router.post('/toggle/community', (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
+      console.log('user', user);
       user.currentCommunity = req.body.communityId;
+      user.communityPreference = user.preferences.filter((pref) =>
+        (pref.community === req.body.communityId))[0].pref;
+      user.markModified('currentCommunity');
+      user.markModified('communityPreference');
       return user.save();
     })
     .then((savedUser) => {
@@ -140,6 +165,7 @@ router.post('/toggle/community', (req, res) => {
       res.json({success: true, data: populatedUser});
     })
     .catch((err) => {
+      console.log('errororororororororororororor', err);
       res.json({error: err});
     });
 });
@@ -154,8 +180,8 @@ router.get('/get/allcommunities', (req, res) => {
       });
 });
 
-// TODO use .then correctly without nesting
 router.get('/get/discoverinfo', (req, res) => {
+  console.log('get discover route req.user for id', req.user);
   Community.findById(req.user.currentCommunity)
     .populate('defaultTags')
     .populate('otherTags')
@@ -169,7 +195,7 @@ router.get('/get/discoverinfo', (req, res) => {
         const defaultFilters = community.defaultTags;
         const otherFilters = community.otherTags;
         let posts = [];
-        const filter = req.user.preferences.length > 0 ? { tags: { $in: req.user.preferences } } : {};
+        const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity } : {community: req.user.currentCommunity};
         Post.find(filter)
           .limit(10)
           .sort({ createdAt: -1 })
@@ -276,7 +302,6 @@ router.get('/get/next10', (req, res) => {
         });
 });
 
-
 router.post('/save/post', (req, res) => {
   const newPost = new Post({
     content: req.body.postBody,
@@ -304,7 +329,6 @@ router.post('/save/post', (req, res) => {
   });
 });
 
-// new comment
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
       .then((response) => {
@@ -328,11 +352,14 @@ router.post('/save/comment', (req, res) => {
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
       .then((response) => {
-        if (req.user.preferences.includes(req.body.tagId)) {
-          response.preferences.splice(req.user.preferences.indexOf(req.body.tagId), 1);
+        if (req.user.communityPreference.includes(req.body.tagId)) {
+          response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.splice(req.user.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.indexOf(req.body.tagId), 1);
         } else {
-          response.preferences.push(req.body.tagId);
+          response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.push(req.body.tagId);
         }
+        response.communityPreference = response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref;
+        response.markModified('communityPreference');
+        response.markModified('preferences');
         response.save()
           .then((savedUser) => {
             const opts = [
@@ -342,7 +369,9 @@ router.post('/toggle/checked', (req, res) => {
           })
         .then((user) => {
           let posts = [];
-          Post.find({ tags: { $in: user.preferences } })
+          console.log('user obj', user.communityPreference);
+          const filter = user.communityPreference.length > 0 ? { tags: { $in: user.communityPreference }, community: user.currentCommunity } : { community: user.currentCommunity };
+          Post.find(filter)
             .limit(10)
             .sort({ createdAt: -1 })
             .populate('tags')
@@ -383,13 +412,15 @@ router.post('/toggle/checked', (req, res) => {
         });
       })
       .catch((err) => {
+        console.log('error 1', err);
         res.json({success: false});
       });
 });
 
 router.post('/toggle/checkedtemp', (req, res) => {
   let posts = [];
-  Post.find({ tags: { $in: req.user.preferences.concat(req.body.tagId) } })
+  const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity } : { community: req.user.currentCommunity };
+  Post.find(filter)
         .limit(10)
         .sort({ createdAt: -1 })
         .populate('tags')
@@ -428,7 +459,6 @@ router.post('/toggle/checkedtemp', (req, res) => {
           res.json({ success: false });
         });
 });
-
 
 router.post('/save/postlike', (req, res) => {
   Post.findById(req.body.postId)

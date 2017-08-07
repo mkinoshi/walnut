@@ -51,6 +51,9 @@ class FilterPrefContainer extends React.Component {
     if(this.props.isFetching) {
       return null;
     }
+    if(!this.props.defaultFilters) {
+      return null;
+    }
     if(this.state.useFilters.length === 0) {
       return this.props.otherFilters.map((tag) => {
         return { value: tag.name, label: '#' + tag.name };
@@ -73,7 +76,7 @@ class FilterPrefContainer extends React.Component {
   }
 
   checkedBoxTagAdd(id) {
-    if(this.props.preferences.includes(id)) {
+    if (this.props.communityPreference.includes(id)) {
       return 'checked';
     }
     let useCheck = false;
@@ -91,21 +94,25 @@ class FilterPrefContainer extends React.Component {
   }
 
   render() {
-    const filters = this.props.defaultFilters.concat(this.state.useFilters);
+    const filters = this.props.defaultFilters ? this.props.defaultFilters.concat(this.state.useFilters) : null;
     const options = this.selectOptions();
-    const checked = filters.map((filter) => this.checkedBoxTagAdd(filter._id));
+    const checked = this.props.defaultFilters ? filters.map((filter) => this.checkedBoxTagAdd(filter._id)) : null;
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {filters.map((filter, index) => (
-            <p key={index}>
-              <input type="checkbox" id={index}
-              checked={checked[index]}
-              value={filter.name}
-              onChange={() => { this.props.toggleChecked(filter._id);}}/>
-              <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
-            </p>
-            ))}
+          {this.props.defaultFilters ?
+            filters.map((filter, index) => (
+                <p key={index}>
+                  <input type="checkbox" id={index}
+                    checked={checked[index]}
+                    value={filter.name}
+                    onChange={() => { this.props.toggleChecked(filter._id); }} />
+                  <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
+                </p>
+              ))
+           :
+            null
+          }
         </form>
         <form>
           <Select
@@ -125,7 +132,7 @@ class FilterPrefContainer extends React.Component {
 FilterPrefContainer.propTypes = {
   defaultFilters: PropTypes.array,
   otherFilters: PropTypes.array,
-  preferences: PropTypes.array,
+  communityPreference: PropTypes.array,
   toggleChecked: PropTypes.func,
   getDiscoverData: PropTypes.func,
   updateUser: PropTypes.func,
@@ -138,7 +145,7 @@ const mapStateToProps = (state) => ({
   defaultFilters: state.discoverReducer.defaultFilters,
   otherFilters: state.discoverReducer.otherFilters,
   isFetching: state.discoverReducer.isFetching,
-  preferences: state.userReducer.preferences
+  communityPreference: state.userReducer.communityPreference
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -42,7 +42,6 @@ function auth(passport) {
         fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
         password: req.body.password,
-        preferences: req.body.tags,
         portfolio: [
           {name: 'media', data: []},
           {name: 'documents', data: []},
@@ -89,7 +88,7 @@ function auth(passport) {
       res.redirect('/auth/login')
     } else {
       if(req.user.hasProfile) {
-          if (req.user.currentCommunity) {
+          if (req.user.currentCommunity !== '') {
               User.findById(req.user._id)
                   .populate('currentCommunity')
                   .then((user) => {
