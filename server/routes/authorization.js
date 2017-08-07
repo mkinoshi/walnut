@@ -61,11 +61,18 @@ import adminApp from '../firebaseAdmin';
       // console.log('uid', uid);
       return User.findOne({firebaseId: uid})
       .then((doc) => {
-        console.log(doc._id);
-        const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-        req.session.userMToken = token;
-        console.log(req.session, 'doc login', doc);
-        res.send({success: true, user: doc});
+        const opts = [
+          {path: 'communities'},
+          {path: 'currentCommunity'}
+        ]
+        return User.populate(doc, 'communities')
+        .then((populated) => {
+          console.log(populated._id);
+          const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
+          req.session.userMToken = token;
+          console.log(req.session, 'pop login', populated);
+          res.send({success: true, user: populated});
+        })
       })
       .catch((err) => {
         console.log(err);
