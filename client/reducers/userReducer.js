@@ -59,7 +59,8 @@ const userReducer = (state = userObj, action) => {
     case 'GET_USER_DATA_DONE':
       return {
         ...action.user,
-        isFetching: false
+        isFetching: false,
+        isCreated: true
       };
     case 'GET_FILTERS_UPDATE_FRONT':
       return {

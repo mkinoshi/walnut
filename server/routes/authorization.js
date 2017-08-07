@@ -42,9 +42,8 @@ import adminApp from '../firebaseAdmin';
         console.log(doc._id);
         const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
         req.session.userMToken = token;
-        console.log(req.session);
-        res.status(200);
-        res.redirect('/')
+        console.log(req.session, 'doc register', doc);
+        res.send({success: true, user: doc});
       })
       .catch((err) => {
         console.log(err);
@@ -66,9 +65,8 @@ import adminApp from '../firebaseAdmin';
         console.log(doc._id);
         const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
         req.session.userMToken = token;
-        console.log(req.session);
-        res.status(200);
-        res.redirect('/')
+        console.log(req.session, 'doc login', doc);
+        res.send({success: true, user: doc});
       })
       .catch((err) => {
         console.log(err);

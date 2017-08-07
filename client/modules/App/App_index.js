@@ -22,7 +22,7 @@ const history = createBrowserHistory();
 class App extends React.Component {
 
   componentWillMount() {
-    this.props.getUser();
+    // this.props.getUser();
   }
 
   render() {

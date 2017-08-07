@@ -5,7 +5,6 @@ const URL = 'http://localhost:3000/';
 
 const signInThunk = (email, password) => (dispatch) => {
   console.log('got in the thunk');
-  dispatch({type: 'USER_IS_NOT_CREATED'});
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
     result.getToken(/* forceRefresh */ true)
@@ -17,8 +16,8 @@ const signInThunk = (email, password) => (dispatch) => {
         password: password
       })
       .then((res) => {
-        console.log(res);
-        dispatch({type: 'USER_IS_CREATED'});
+        console.log('signin thunk', res);
+        dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
       });
     })
   .catch(function(error) {

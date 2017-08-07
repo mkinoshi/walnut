@@ -1,4 +1,4 @@
-import { firebaseApp } from '../../firebase';
+import firebaseApp from '../../firebase';
 import firebase from 'firebase';
 const URL = 'http://localhost:3000/';
 
