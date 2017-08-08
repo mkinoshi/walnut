@@ -46,10 +46,10 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Community',
   },
-  username: {
+  fullName: {
     type: String
   },
-  fullName: {
+  firebaseId: {
     type: String
   },
   facebookId: {
@@ -62,11 +62,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  preferences: [
-    {
-      type: String
-    }
-  ],
+  preferences: {
+    type: Array
+  },
+  communityPreference: {
+    type: Array
+  },
   placesLived: {
     from: {
       type: String
@@ -109,9 +110,9 @@ const UserSchema = new mongoose.Schema({
         }
       }
     ],
-    email: {
+    email: [{
       type: String
-    }
+    }]
   },
   work: [
     {

@@ -1,12 +1,8 @@
 .newPost {
     padding: 1%;
-    background-color: #a67759;
-    width: 50%;
-    margin-left: 25%;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #a67759;
-    box-shadow: 0 1px 1px 1px #c9c9c9;
+    background-color: #F1F1EF;
+    width: 400px;
+    margin-top: 30px;
     border-radius: 3px;
 }
 .uploadButtonIcon {
@@ -14,5 +10,126 @@
 } 
 
 .attachFileIcon:hover {
-    color: greenyellow !important;
+    color: #0082B0 !important;
+}
+
+.attachFileIcon {
+    color: #837F8A !important;
+}
+
+.Feed_Wrapper {
+    flex: 5;
+    margin-left: 10px;
+    background-color: #313D4D;
+}
+
+.newPostFooter {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.fileUpload {
+    display: flex;
+    align-items: center;
+    margin-top: 0.6vw;
+    margin-left: 1%;
+}
+
+.tagItemLabel {
+    background-color: #B3805C;
+    margin-left: 3%;
+    border-radius: 4px 3px 4px 3px;
+    color: #F1F1EF;
+    font-size: 14px;
+    line-height: 19px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+#choice_form {
+    margin-bottom: 14px;
+}
+
+.newPost {
+    padding: 10px;
+}
+
+.newPost_Container {
+    height: 310px;
+    width: 210px;
+    display: flex;
+    justify-content: center;    
+}
+
+.newPostContent {
+    display: flex;
+    justify-content: center;
+}
+
+#textarea1 {
+    width: 360px;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 50px;
+}
+
+#newPostHeader {
+    color: #314460;
+}
+
+#addingTags {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchTags {
+    width: 300px    
+}
+
+#addTagButton {
+    margin-right: 5px;
+}
+
+#tagPrefTitleHash {
+    color: #4CC1FC;
+    margin-top: 12px;
+}
+
+#tagHash {
+    color: #0082B0;
+}
+
+#tag {
+    background-color: #B3805C;
+    margin-left: 3%;
+    border-radius: 4px 3px 4px 3px;
+    color: #F1F1EF;
+    font-size: 14px;
+    line-height: 19px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+#tagPrefTitleDiv {
+    display: flex;
+    width: 100%;
+}
+
+#tagPrefTitle {
+    color: #B3805C;
+    margin-top: 14px;
+    margin-bottom: 10px;
+    margin-left: 6px;
+}
+
+.choiceForm {
+    margin-bottom: 14px;
+}
+.discoverButton {
+    color: #4CC1FC;
 }

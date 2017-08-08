@@ -22,50 +22,47 @@ class MediaAttachment extends React.Component {
   whatShouldIRender() {
     if(this.props.data.type === 'image/jpeg' || this.props.data.type === 'image/png') {
       return (
-                    <div className="mediaAttachment" >
-                        <Image onClick={() => this.props.renderLightBox(this.props.data)} size="medium" src={this.props.data.url}/><br/>
-                    </div>
-                );
+          <div className="mediaAttachment" >
+              <Image onClick={() => this.props.renderLightBox(this.props.data)} size="medium" src={this.props.data.url}/><br/>
+          </div>
+      );
     }
     if(this.props.data.type === 'application/pdf') {
       return (
-                <div className="mediaPDFAttachment" onClick={() => this.props.renderPdfModal(this.props.data)}>
-                <Card className="pdfCard">
-                    <PDF className="pdfThumb" rotate={90} file={this.props.data.url} page={1} />
-                        <p>{this.props.data.name}</p>
-                </Card>
-                </div>
-            );
+          <div className="mediaPDFAttachment" onClick={() => this.props.renderPdfModal(this.props.data)}>
+            <PDF className="pdfThumbOut" file={this.props.data.url} page={1} />
+          </div>
+      );
     }
-    if(this.props.data.type === 'video/mp4') {
+    if (this.props.data.type === 'video/mp4' || this.props.data.type ===  'video/quicktime') {
       return (
-                <div className="mediaVideoAttachment">
-                    <Player>
-                        <source src={this.props.data.url} />
-                    </Player>
-                </div>
-            );
+          <div className="mediaVideoAttachment">
+              <Player>
+                  <source src={this.props.data.url} />
+              </Player>
+          </div>
+      );
     }
     if(this.props.data.type === 'text/javascript') {
       return (
-                <div className="mediaDownloadAttachment">
-                  <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-                    <Icon name="file code outline" size="huge"/>
-                    <p>{this.props.data.name}</p>
-                    {this.state.hoverDownloadCard ? <a className="downloadButton" href={this.props.data.url}><Icon name="cloud download" size="big" className="downloadButton"/></a> : null}
-                  </Card>
-                </div>
-            );
+          <div className="mediaDownloadAttachment">
+            <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
+              <Icon name="file code outline" size="huge"/>
+              <p>{this.props.data.name}</p>
+              <a className="downloadButton" href={this.props.data.url}> {this.state.hoverDownloadCard ? <Icon name="cloud download" size="big" /> : null}</a>
+            </Card>
+          </div>
+      );
     }
     return (
-              <div className="mediaDownloadAttachment">
-                <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-                    <Icon name="file outline" size="huge" />
-                    <p>{this.props.data.name}</p>
-                    {this.state.hoverDownloadCard ? <a className="downloadButton" href={this.props.data.url}><Icon name="cloud download" size="big"/></a> : null}
-                </Card>
-              </div>
-          );
+        <div className="mediaDownloadAttachment">
+          <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
+              <Icon name="file outline" size="huge" className="downloadFileIcon"/>
+              <p className="downloadFileName">{this.props.data.name}</p>
+              <a className="downloadButton" href={this.props.data.url}> {this.state.hoverDownloadCard ? <Icon name="cloud download" size="big" /> : null}</a>
+          </Card>
+        </div>
+    );
   }
 
   render() {

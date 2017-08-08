@@ -6,43 +6,23 @@ var Tag = models.Tag;
 const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
+var CryptoJS = require("crypto-js");
+import adminApp from '../firebaseAdmin';
 
-
-/* GET home page. */
-function auth(passport) {
-
-
-  router.get('/auth/signup', function(req, res) {
-    Tag.find({}, function(err, tags) {
-      if (tags) {
-        var tag_names = tags.map(function(tag) {
-          return tag.name;
-        })
-      } else {
-        var tag_names = [];
-      }
-      res.render('signup', {tags: tag_names}); //have to change
-    })
-  })
-  // TODO: TEST REGISTRATION
-  router.post('/auth/signup', function(req, res) {
-    req.check('username', "username cannot be empty").notEmpty();
-    req.check('password', "password cannot be empty").notEmpty();
-    req.check('passwordRepeat', "password has to match with the one you typed").notEmpty().equals(req.body.password);
-    var errors = req.validationErrors();
-    if (errors) {
-      var error_msg = {};
-      errors.forEach(function(error) {
-        error_msg[error.param] = error.msg
-      })
-      res.status(400);
-      //res.redirect('/auth/signup', {project: req.body, error: error_msg}) // have to change
-    } else {
+  router.post('/signup', function(req, res) {
+    // console.log('req.body.token', req.body.token);
+    // console.log('adminApp', adminApp);
+    req.session.userToken = req.body.token;
+    //console.log('req.session.userToken', req.session.userToken);
+    adminApp.auth().verifyIdToken(req.body.token)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      // console.log('uid', uid);
       var new_user = new User({
+        firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
         password: req.body.password,
-        preferences: req.body.tags,
         portfolio: [
           {name: 'media', data: []},
           {name: 'documents', data: []},
@@ -51,68 +31,108 @@ function auth(passport) {
         ],
         contact: {
           phones: [],
-          email: ''
+          email: [req.body.email]
         },
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
+        communities: [],
+        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png'
       });
       return new_user.save()
       .then((doc) => {
-        res.status(200);
-        res.redirect('/auth/login')
+        console.log(doc._id);
+        const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
+        req.session.userMToken = token;
+        console.log(req.session, 'doc register', doc);
+        res.send({success: true, user: doc});
       })
       .catch((err) => {
         console.log(err);
       })
-    }
+    }).catch(function(error) {
+      // Handle error
+      console.log('error with admin auth', error);
+    });
   });
 
-  router.get('/auth/login', function(req, res) {
-    res.render('login');
+  router.post('/login', function(req, res) {
+    req.session.userToken = req.body.token;
+    adminApp.auth().verifyIdToken(req.body.token)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+      // console.log('uid', uid);
+      return User.findOne({firebaseId: uid})
+      .then((doc) => {
+        const opts = [
+          {path: 'communities'},
+          {path: 'currentCommunity'}
+        ]
+        return User.populate(doc, 'communities')
+        .then((populated) => {
+          console.log(populated._id);
+          const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
+          req.session.userMToken = token;
+          console.log(req.session, 'pop login', populated);
+          res.send({success: true, user: populated});
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }).catch(function(error) {
+      // Handle error
+      console.log('error with admin auth', error);
+    });
   });
 
-  router.post('/auth/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/auth/login'
-  }));
-
-  router.get('/auth/facebook', passport.authenticate('facebook'));
-
-  router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      res.redirect('/app/walnuthome');
-    }
-  );
-
-  router.get('/', function(req, res, next) {
-    if (!req.user) {
-      res.redirect('/auth/login')
-    } else {
-      if(req.user.hasProfile) {
-          if (req.user.currentCommunity) {
-              User.findById(req.user._id)
-                  .populate('currentCommunity')
-                  .then((user) => {
-                      const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-                      res.redirect(url);
-                  })
-          }
-          else {
-            res.redirect('/app/walnuthome')
-          }
-      } else{
-          res.redirect('/app/editprofile');
-      }
-    }
+  router.post('/facebook', function(req, res) {
+      req.session.userToken = req.body.token;
+      adminApp.auth().verifyIdToken(req.body.token)
+          .then(function (decodedToken) {
+              var uid = decodedToken.uid;
+              console.log('uid here: ', uid);
+              res.status(200);
+          }).catch((error) => {
+          console.log('error', error);
+      })
   });
+
+  // router.get('/auth/facebook', passport.authenticate('facebook'));
+  //
+  // router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
+  //   function(req, res) {
+  //     // Successful authentication, redirect home.
+  //     res.redirect('/app/walnuthome');
+  //   }
+  // );
+  //
+  // router.get('/', function(req, res, next) {
+  //   if (!req.user) {
+  //     res.redirect('/auth/login')
+  //   } else {
+  //     if(req.user.hasProfile) {
+  //         if (req.user.currentCommunity !== '') {
+  //             User.findById(req.user._id)
+  //                 .populate('currentCommunity')
+  //                 .then((user) => {
+  //                     const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+  //                     res.redirect(url);
+  //                 })
+  //         }
+  //         else {
+  //           res.redirect('/app/walnuthome')
+  //         }
+  //     } else{
+  //         res.redirect('/app/editprofile');
+  //     }
+  //   }
+  // });
 
   router.get('/logout', function(req, res) {
+    localStorage.removeItem('isUserInCommunity');
     req.logout();
-    res.redirect('/auth/login');
+    res.redirect('/app/login');
   });
 
-  return router;
-}
-
-module.exports = auth;
-//export default auth;
+  // return router;
+// }
+module.exports = router;
+// export default auth;

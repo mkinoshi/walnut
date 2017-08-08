@@ -1,11 +1,13 @@
-.ui.menu {
-    border-radius: 0px;
+
+#navBar {
+    display: flex;
+    height: 57px;
+    background-color: #303C4D;
 }
 
 .logoHolder {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 10px;
+    left: 6%;
+    position: absolute;
 }
 
 .logo {
@@ -14,5 +16,100 @@
 }
 
 .tabs {
-    color: #000000;
+    color: #1b1c1d;
+}
+
+.Container {
+    height: 100%;
+    color: #F1F1EF;
+}
+
+.navBarLinks {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    left: 40%;
+    right: 60%;
+    position: absolute;
+    margin-top: 10px;;
+    color: #F1F1EF;
+}
+
+.navBarLinksRight {
+    right: 0.5%;
+    display: flex;
+    margin-right: 10px;
+    left: auto;
+    position: absolute;
+    color: #F1F1EF;
+}
+
+.navBarHome {
+    left: 10px;
+    right: auto;
+    position: absolute;
+    margin-top: 13px;
+    color: #F1F1EF;
+}
+
+.bar {
+    background-color: #B48059;
+    width: 40px;
+    height: 6px;
+    border-radius: 50px;
+    margin-top: 0.4vw;
+  }
+
+.communityNavBarLogo {
+    display: flex;
+    margin-left: 80px;
+}
+
+.communityImage {
+    width:30px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.communityTitle {
+    margin-left: 10px;
+    margin-top: 10px;
+    color: #F1F1EF;
+}
+
+.navBarLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.navBarIcon {
+    color: #F1F1EF;
+}
+
+.imageWrapper {
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.postUserImage {
+    max-width: 110%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+.logoutText {
+    margin-top: 10px;
+}
+
+.logoutIcon {
+    
 }

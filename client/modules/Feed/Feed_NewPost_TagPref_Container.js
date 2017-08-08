@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import { Icon, Button } from 'semantic-ui-react';
 
 // TODO Filter component box style
 // TODO button onClick dispatches toggleChecked(index) 17
@@ -41,40 +42,41 @@ class TagPref extends React.Component {
       <div>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {this.props.defaultFilters.map((filter, index) => (
-            <div key={index}>
+            <div key={index} className="choiceForm">
               <input type="checkbox" id={filter.name}
                 checked={(this.props.tags.includes(filter._id)) ? 'checked' : ''}
                 value={filter._id}
                 onClick={(e) => {this.handleChange(e);}}
               />
-              <label htmlFor={filter.name}># {filter.name}</label>
+              <label id="tag" htmlFor={filter.name}># {filter.name}</label>
             </div>
             ))}
             {this.props.tempTags.map((tag, idx) => (
-                <div key={idx}>
+            <div key={idx} className="choiceForm">
                   <input type="checkbox"
                          id={tag.name}
                          checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
                          value={tag._id}
                          onClick={(e) => {this.handleChange(e);}}
                   />
-                  <label htmlFor={tag.name}># {tag.name}</label>
+                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
                 </div>
             ))}
             {this.props.newTags.map((tag, idx) => (
-                <div key={idx}>
+            <div key={idx} className="choiceForm">
                   <input type="checkbox"
                          id={tag.name}
                          checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
                          value={tag._id}
                          onClick={(e) => {this.handleChange(e);}}
                   />
-                  <label htmlFor={tag.name}># {tag.name}</label>
+                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
                 </div>
             ))}
         </form>
-        <form onSubmit={(e) => this.handleNew(e)}>
+        <form onSubmit={(e) => this.handleNew(e)} id="addingTags">
           <Select
+              className="searchTags"
               name="form-field-name"
               value={this.state.value}
               multi simpleValue
@@ -83,7 +85,12 @@ class TagPref extends React.Component {
               })}
               onChange={this.handleSelectChange.bind(this)}
           />
-          <button type="submit">Add Tag</button>
+          <Button animated="vertical" id="addTagButton">
+            <Button.Content visible>Add</Button.Content>
+            <Button.Content hidden>
+              <Icon name="hashtag" />
+            </Button.Content>
+          </Button>
         </form>
       </div>
     );

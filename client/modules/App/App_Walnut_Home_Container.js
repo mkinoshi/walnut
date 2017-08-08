@@ -6,7 +6,7 @@ import _ from 'underscore';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
-import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
+import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
 
 
 const styles = {
@@ -29,6 +29,7 @@ class WalnutHomeContainer extends React.Component {
       image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
       defaultFilters: [],
       filterValue: '',
+      isCalled: false
     };
     this.handleStart = this.handleStart.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,9 +42,20 @@ class WalnutHomeContainer extends React.Component {
     this.props.getAllCommunities();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isCreated && !this.state.isCalled) {
+      nextProps.getAllCommunities();
+      this.setState({isCalled: true});
+    }
+  }
+
+  compoenentDidMout() {
+    localStorage.setItem('url', '/app/walnuthome');
+  }
+
 
   toggleCommunity(com) {
-    this.props.changeCommunity({currentCommunity: com._id});
+    this.props.changeCommunity(com);
   }
 
   handleStart() {
@@ -101,7 +113,7 @@ class WalnutHomeContainer extends React.Component {
                     }).map((community, idx) => <div key={idx}>
                         <img src={community.icon} style={styles.image} />
                         <p>{community.title}</p>
-                        <button onClick={() => {this.joinCommunity(community._id);}}>+ Join</button>
+                        <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>
                     </div> )
                     }
                 </div>
@@ -142,18 +154,20 @@ WalnutHomeContainer.propTypes = {
   userCommunities: PropTypes.array,
   changeCommunity: PropTypes.func,
   getAllCommunities: PropTypes.func,
+  isCreated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
   userCommunities: state.userReducer.communities,
-  communities: state.getCommunityReducer.communities
+  communities: state.getCommunityReducer.communities,
+  isCreated: state.userReducer.isCreated
 });
 
 const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
-  createCommunity: (image, title, filters) => createCommunityThunk(image, title, filters)(dispatch),
-  changeCommunity: (updateObj) => updateUserPrefThunk(updateObj)(dispatch),
+  createCommunity: (image, title, filters) => dispatch(createCommunityThunk(image, title, filters)),
+  changeCommunity: (updateObj) => dispatch(updateUserCommunityThunk(updateObj)),
   getAllCommunities: () => dispatch(getAllCommunities())
 });
 

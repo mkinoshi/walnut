@@ -8,8 +8,8 @@ const newPostThunk = (postBody, postTags) => (dispatch) => {
     postBody: postBody,
     postTags: postTags
   })
-    .then((newPost) => {
-      discoverLoadThunk(dispatch);
+    .then(() => {
+      dispatch(discoverLoadThunk());
     })
     .catch((err) =>{
       console.log('error in new post', err);
