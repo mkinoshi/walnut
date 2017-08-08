@@ -92,6 +92,7 @@ class HeadContainer extends React.Component {
   }
 
   handleUpload(file) {
+    console.log('this is the file', file);
     this.setState({file: file});
   }
 
@@ -103,6 +104,7 @@ class HeadContainer extends React.Component {
         console.log(err);
         alert('failed uploaded!');
       }
+      console.log('got to the end of it all');
       this.setState({pic: res.body.pictureURL, file: {}});
     });
   }

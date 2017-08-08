@@ -52,6 +52,7 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
+  console.log('inside aws', req.user, req.file);
   const toSave = req.user._id + req.file.originalname + Date.now();
   s3.putObject({
     Bucket: 'walnut-test',
@@ -71,6 +72,7 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
       return user.save();
     })
     .then((user) => {
+      console.log('end of upload', user);
       res.json({pictureURL: user.pictureURL});
     })
     .catch((error) => console.log('error in aws db save', error));
