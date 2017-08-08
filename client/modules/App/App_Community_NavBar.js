@@ -64,7 +64,7 @@ class Navbar extends React.Component {
                     }
                 </div>
 
-                <div className="navBarLink" onClick={() => this.handleClick(4)}>
+                {/* <div className="navBarLink" onClick={() => this.handleClick(4)}>
                   <Link className="tabs" to={'/app/community/' + title + '/editprofile'}>
                     <Icon className="navBarIcon" name="paypal" size="big"/>
                   </Link>
@@ -72,7 +72,7 @@ class Navbar extends React.Component {
                     <div className="bar">
                       </div> : null
                     }
-                </div>
+                </div> */}
               </div>
 
             <div className="navBarLinksRight">

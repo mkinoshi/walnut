@@ -65,7 +65,7 @@ import adminApp from '../firebaseAdmin';
           {path: 'communities'},
           {path: 'currentCommunity'}
         ]
-        return User.populate(doc, 'communities')
+        return User.populate(doc, opts)
         .then((populated) => {
           console.log(populated._id);
           const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
