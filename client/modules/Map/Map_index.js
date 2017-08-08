@@ -63,6 +63,8 @@ class MapContainer extends React.Component {
 
   componentDidMount() {
     this.props.getAllUsers();
+    const urls = this.props.location.pathname;
+    localStorage.setItem('url', urls);
   }
 
   handleClick(id) {
@@ -162,6 +164,7 @@ MapContainer.propTypes = {
   getAllUsers: PropTypes.func,
   users: PropTypes.array,
   selected: PropTypes.string,
+  location: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

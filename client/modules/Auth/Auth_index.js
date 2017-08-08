@@ -23,20 +23,16 @@ class Auth extends React.Component {
 
   componentWillMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log('user', user);
       if (!user) {
         // this.context.history.push('/app/walnuthome');
         history.replace('/app/login');
         // history.push('/app/walnuthome');
       } else {
-        console.log(localStorage.getItem('isUserInCommunity'));
-        console.log(localStorage.getItem('url'));
         const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+        this.props.getUser();
         if (this.props.isCreated && !isUserInCommunity) {
-          this.props.getUser();
           history.replace('/app/walnuthome');
         } else {
-          this.props.getUser();
           history.replace(localStorage.getItem('url'));
         }
       }
@@ -44,6 +40,11 @@ class Auth extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener('beforeunload', () => {
+      console.log('unmounting');
+      localStorage.setItem('url', localStorage.getItem('home'));
+      localStorage.setItem('tab', 1);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,8 +58,6 @@ class Auth extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounting');
-    localStorage.setItem('url', localStorage.getItem('home'));
   }
 
   render() {
