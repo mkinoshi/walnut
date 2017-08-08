@@ -13,8 +13,10 @@ class Navbar extends React.Component {
     this.props.changeTab(num);
   }
 
+
   render() {
     let title;
+    console.log('this.props.community', this.props.community);
     if (this.props.community) {
       title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     } else {

@@ -56,6 +56,11 @@ class Auth extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log('unmounting');
+    localStorage.setItem('url', localStorage.getItem('home'));
+  }
+
   render() {
     return (
       <Router path="/" history={history}>
