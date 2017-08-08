@@ -15,6 +15,12 @@ class Directory2 extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const urls = this.props.location.pathname;
+    console.log(urls);
+    localStorage.setItem('url', urls);
+  }
+
   render() {
     return (
         <div className="Page2">
