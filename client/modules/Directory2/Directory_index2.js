@@ -19,6 +19,12 @@ class Directory2 extends React.Component {
     this.props.getUsers();
   }
 
+  componentDidMount() {
+    const urls = this.props.location.pathname;
+    console.log(urls);
+    localStorage.setItem('url', urls);
+  }
+
   render() {
     console.log('here are the users', this.props.users);
     return (
@@ -41,6 +47,7 @@ class Directory2 extends React.Component {
 Directory2.propTypes = {
   getUsers: PropTypes.func,
   users: PropTypes.array,
+  location: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
