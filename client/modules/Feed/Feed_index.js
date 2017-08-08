@@ -99,7 +99,7 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
-    // this.props.getNext10(this.props.data.posts.length);
+    this.props.getNext10(this.props.data.posts.length);
   }
 
   render() {
