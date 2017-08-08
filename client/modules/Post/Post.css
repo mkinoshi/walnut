@@ -180,11 +180,22 @@
     flex-direction: row;
 }
 
-.postUserimage {
-    width: 40px;
-    height: 40px;
-    border-radius: 23px;
-    margin-left: 3%;
+.imageWrapper {
+    margin-left: 5px;
+    margin-top: 10px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.postUserImage {
+    max-width: 110%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
 }
 
 .postHeader {
@@ -193,14 +204,7 @@
     align-items: center;
     height: 46px;
     margin-top: 10px;
-}
-
-.imageWrapper {
-    display: flex;
-    align-items: center;
-    height: 46px;
-    margin-left: 3%;
-    margin-top: 10px;
+    border-color: black;
 }
 
 .postHeaderUser {

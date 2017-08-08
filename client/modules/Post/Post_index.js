@@ -7,6 +7,7 @@ import css from './Post.css';
 import MediaAttachment from './Post_Media_Attachment.js';
 import Lightbox from 'react-images';
 import PDF from 'react-pdf-js';
+
 class Post extends React.Component {
   constructor(props) {
     super(props);
@@ -75,7 +76,7 @@ class Post extends React.Component {
       <div className="postContent">
         <div className="postUser">
           <div className="imageWrapper">
-            <img className="postUserimage" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+              <img className="postUserImage" src={this.props.postData.pictureURL} />
           </div>
           <div className="postHeader">
             <h3 className="postHeaderUser">{this.props.postData.username}</h3>
@@ -84,6 +85,7 @@ class Post extends React.Component {
         <div className="postDiscription">
           <p className="postInnerContent">{this.props.postData.content}</p>
         </div>
+
         {(this.props.postData.attachment.name !== '') ?
         <MediaAttachment data={this.props.postData.attachment}
         renderLightBox={(data) => this.renderLightBox(data)}
@@ -99,6 +101,7 @@ class Post extends React.Component {
           onClose={() => this.closeLightbox()}
           /> : null
         }
+
         <Modal
         open={this.state.pdfModalData !== ''}
         basic
@@ -119,6 +122,7 @@ class Post extends React.Component {
           </Modal.Actions>
         </Modal>
       </div>
+
       <div className="postFootnote">
         <div className="postMeta">
           <div className="tagContainer">
@@ -134,7 +138,6 @@ class Post extends React.Component {
           </a>}
       </div>
         </div>
-      {/* <ModalContainer isOpen={this.state.isOpen} postData={this.props.postData} onClick={() => this.handleClick()}/> */}
     </div>
     );
   }
