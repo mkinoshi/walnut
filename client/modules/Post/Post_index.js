@@ -37,6 +37,7 @@ class Post extends React.Component {
   }
   closeLightbox() {
     this.setState({lightBoxData: ''});
+    console.log('this is closed', this.state.lightBoxData);
   }
   renderPdfModal(data) {
     this.setState({pdfModalData: data});
@@ -72,7 +73,7 @@ class Post extends React.Component {
   }
   render() {
     return (
-      <div className="postOuter" >
+      <div className="postOuter">
       <div className="postContent">
         <div className="postUser">
           <div className="imageWrapper">
@@ -82,7 +83,7 @@ class Post extends React.Component {
             <h3 className="postHeaderUser">{this.props.postData.username}</h3>
           </div>
         </div>
-        <div className="postDiscription">
+        <div className="postDescription">
           <p className="postInnerContent">{this.props.postData.content}</p>
         </div>
 
@@ -91,7 +92,6 @@ class Post extends React.Component {
         renderLightBox={(data) => this.renderLightBox(data)}
         renderPdfModal={(data) => this.renderPdfModal(data)}/>
         : null}
-        {(this.state.lightBoxData !== '') ?
         <Lightbox
           images={[{
             src: this.state.lightBoxData.url,
@@ -99,9 +99,7 @@ class Post extends React.Component {
           }]}
           isOpen={this.state.lightBoxData !== ''}
           onClose={() => this.closeLightbox()}
-          /> : null
-        }
-
+          />
         <Modal
         open={this.state.pdfModalData !== ''}
         basic
@@ -109,7 +107,7 @@ class Post extends React.Component {
         onClose={() => this.closePdfModal()}>
           <Header icon="archive" content={this.state.pdfModalData.name} />
           <Modal.Content>
-          <PDF rotate={90} file={this.state.pdfModalData.url} onDocumentComplete={(e) => this.onDocumentComplete(e)}
+          <PDF file={this.state.pdfModalData.url} onDocumentComplete={(e) => this.onDocumentComplete(e)}
             onPageComplete={(e) => this.onPageComplete(e)} page={this.state.page} />
           </Modal.Content>
           <Modal.Actions className="pdfModalFooter">
@@ -124,20 +122,15 @@ class Post extends React.Component {
       </div>
 
       <div className="postFootnote">
-        <div className="postMeta">
-          <div className="tagContainer">
-            {this.props.postData.tags.map((tag, index) => (
-            <div key={index} className="tag">
-              <text className="hashtag">#{tag.name}</text>
-            </div>))}
-          </div>
-          {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
-        : <a className="commentButton">
-            <span> <Icon name="comment outline" />
-            {this.props.postData.comments.length} </span>
-          </a>}
-      </div>
+        <div className="tagContainer">
+          {this.props.postData.tags.map((tag, index) => (
+          <div key={index} className="tag">
+            <text className="hashtag">#{tag.name}</text>
+          </div>))}
         </div>
+        {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
+        : null}
+      </div>
     </div>
     );
   }

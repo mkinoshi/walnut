@@ -115,27 +115,4 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   });
 });
 
-
-// router.post('/save/post', (req, res) => {
-//   const newPost = new Post({
-//     content: req.body.postBody,
-//     createdAt: new Date(),
-//     createdBy: req.user._id,
-//     likes: [],
-//     tags: req.body.postTags,
-//     comments: [],
-//     commentNumber: 0,
-//     community: req.user.currentCommunity
-//   });
-//   newPost.save()
-//   .then(() => {
-//     res.json({success: true});
-//   })
-//   .catch((e) => {
-//     console.log(e);
-//     res.json({success: false});
-//   });
-// });
-
-
 module.exports = router;

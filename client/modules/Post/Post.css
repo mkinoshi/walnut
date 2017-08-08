@@ -3,6 +3,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 200px;
+    overflow: hidden;
 }
 
 .lightBoxImage {
@@ -11,11 +13,14 @@
 
 .mediaPDFAttachment {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 200px;
+    overflow: hidden;
+    justify-content: flex-start;
 }
-.pdfThumb {
+
+.pdfThumbOut {
     width: 100%;
 }
 
@@ -62,23 +67,22 @@
 
  .downloadButton{
     position: relative;
-    right: -32% !important;
-    margin-top: 3% !important;
+    right: -204px !important;
+    top: 16px !important;
 } 
 
 
  .downloadButton:hover {
     position: relative;
-    right: -32% !important;
-    margin-top: 3% !important;
+    right: -204px !important;
+    top: 16px !important;
     color: darkblue;
 } 
 
 .downloadCard {
-    width: 40% !important;
-    width: 40% !important;
+    width: 400px !important;
     flex-direction: row !important;
-    padding: 0.5% !important;
+    padding: 1% !important;
 }
 
 .ui.dimmer {
@@ -102,32 +106,25 @@
 }
 
 .tagContainer {
-    margin-left: 3%;
+    margin-left: 10px;
+    width: 400px;
 }
 
 .tag {
-    margin-left: 3%;
     background-color: #B3805C;
     border-radius: 4px 3px 4px 3px;
     padding-top: 4px;
     padding-bottom: 4px;
     padding-left: 10px;
-    padding-right: 20px;
+    padding-right: 10px;
     display: inline;
+    margin-right: 5px;
 }
 
 .hashtag {
     color: #F1F1EF;
     font-size: 14px;
     line-height: 19px;
-}
-
-.likeIcon {
-    float: left;
-}
-
-.commentButton {
-    float: right !important;
 }
 
 .scrollContentClass {
@@ -173,6 +170,7 @@
 .postContent {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
 .postUser {
@@ -181,7 +179,7 @@
 }
 
 .imageWrapper {
-    margin-left: 5px;
+    margin-left: 10px;
     margin-top: 10px;
     background-color: red;
     width: 30px;
@@ -215,12 +213,11 @@
     font-size: 14px;	
     font-weight: bold;	
     line-height: 19px;
-    margin-left: 2%;
+    margin-left: 10px;
 }
 
 .postInnerContent {
-    height: 150px;
-    width: 454.83px;	
+    width: 480.83px;	
     color: #4A4A4A;	
     font-family: Avenir Next;	
     font-size: 18px;	
@@ -230,11 +227,36 @@
     margin-bottom: 15px;
 }
 
-.postMeta {
+.postFootnote {
     display: flex;
     flex-direction: row;
+    height: 40px;
+    align-items: center;
 }
 
-.postFootnote {
-    height: 40px;
+.commentIcon {
+    color: #313D4D !important;
+}
+
+.commentNum {
+    font-size: 12px;
+    color: #4CC1FC;
+}
+
+.commentDiv {
+    margin-left: 40px;
+    margin-left: 53px;
+}
+
+.postDescription {
+    margin-bottom: 5px;
+}
+
+.downloadFileName { 
+    color: #DADDD8;
+    font-size: 14px;
+}
+
+.downloadFileIcon {
+    color: #DADDD8
 }

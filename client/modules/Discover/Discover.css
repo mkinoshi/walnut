@@ -7,6 +7,7 @@
 
 .RightSideBar_Container {
   flex: 4;
+  margin-left: 10px;
 }
 
 .LeftSidebar_Container {
@@ -20,7 +21,7 @@
 .discoverTitle {
   font-family: Avenir Next;
   font-weight: bold;
-  margin-right: 30%;
+  margin-right: 20px;
   font-size: 30px;
   line-height: 41px;
   margin-bottom: 0px;
@@ -38,13 +39,13 @@
 }
 
 .LeftSideBar_Preference {
-  margin-left: 8%;
+  margin-left: 20px;
   background-color: #F1F1EF;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  margin-top: 10%;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  margin-top: 20px;
   border-radius: 4px;
-  margin-right: 20%;
+  margin-right: 10px;
   width: 250px;
 }
 
