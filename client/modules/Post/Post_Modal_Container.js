@@ -80,22 +80,21 @@ class ModalInstance extends React.Component {
   render() {
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData);}} scrolling trigger={
-        <a className="commentButton">
-          <span> <Icon name="comment outline" />
-          {this.props.postData.comments.length} </span>
-        </a>}
+        <div className="commentDiv" onClick={() => this.handleClick()}>
+          <span className="commentNum">{this.props.postData.comments.length} </span>
+          <Icon size="big" name="comments" className="commentIcon" />
+        </div>}
         closeIcon="close"
         >
-        <Modal.Header>What goes here?</Modal.Header>
-        <Modal.Content image scrolling className="scrollContentClass">
-          <Modal.Description >
-            <Post
+        <Modal.Header>
+          <Post
             isOpen
             currentUser={this.props.currentUser}
             postData={this.props.postData}
-            newLike={() => (this.props.newLike(this.props.postData.postId))}/>
-          </Modal.Description>
-          {this.state.messages.map((message, ind) => (
+            newLike={() => (this.props.newLike(this.props.postData.postId))} />
+        </Modal.Header>
+        <Modal.Content image scrolling className="scrollContentClass">
+          {this.state.messages.map((message) => (
             <Modal.Description key={uuidv4()}>
               <Comment
                 name={message.author}

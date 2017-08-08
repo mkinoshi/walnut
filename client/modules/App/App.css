@@ -37,6 +37,8 @@
 
 .navBarLinksRight {
     right: 0.5%;
+    display: flex;
+    margin-right: 10px;
     left: auto;
     position: absolute;
     color: #F1F1EF;
@@ -84,4 +86,30 @@
 
 .navBarIcon {
     color: #F1F1EF;
+}
+
+.imageWrapper {
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.postUserImage {
+    max-width: 110%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+.logoutText {
+    margin-top: 10px;
+}
+
+.logoutIcon {
+    
 }
