@@ -23,27 +23,27 @@ class DirectoryCard extends React.Component {
   render() {
     return (
         <Card className="directoryCard">
-            <Image classname="cardImage" src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+            <Image className="cardImage" src={this.props.picture} />
             <Card.Content>
                 <Card.Header className="directoryHeader">
-                    Eli Badgio
+                    {this.props.name}
                 </Card.Header>
                 <Card.Meta className="directoryMeta">
                     <span>
                         <Icon name="student" />
-                      Rice University class of 2019
+                      {this.props.school}
                     </span>
                     <br />
                     <span>
                         <Icon name="travel" />
-                      Works as a software engineer at Facebook
+                      {this.props.job}
                     </span>
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
                 <a>
                     <Icon name="user" />
-                    Some extra detail/action
+                    {this.props.email}
                 </a>
             </Card.Content>
         </Card>
@@ -53,7 +53,11 @@ class DirectoryCard extends React.Component {
 
 
 DirectoryCard.propTypes = {
-  user: PropTypes.object
+  picture: PropTypes.string,
+  name: PropTypes.string,
+  school: PropTypes.string,
+  job: PropTypes.string,
+  email: PropTypes.string
 };
 
 
