@@ -25,6 +25,7 @@ class Home extends React.Component {
     const urls = this.props.location.pathname;
     console.log(urls);
     localStorage.setItem('url', urls);
+    sessionStorage.setItem('url', urls);
     localStorage.setItem('home', urls);
   }
 
