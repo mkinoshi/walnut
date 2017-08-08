@@ -99,35 +99,31 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
-    // this.props.getNext10(this.props.data.posts.length);
+    this.props.getNext10(this.props.data.posts.length);
   }
 
   render() {
     return (
       <div className="Feed_Wrapper">
-          <div className="col-xs-12" onScroll={() =>{console.log('scrolling');}} style={styles.feed}>
-            <div className="col-xs-9" >
-              {this.props.data.isFetching || !this.props.isReady ?
-               <p>loading is true inside the reducer</p> :
-                <InfiniteScroll
-                  pageStart={0}
-                  loadMore={() => this._loadMore()}
-                  hasMore={this.props.hasMore}
-                  threshold={600}
-                  loader={<div className="loader">Loading ...</div>}
-                  >
-                {this.props.data.posts.map((post) => (
-                  <Post ref="card"
-                  key={post.postId}
-                  isOpen={false}
-                  currentUser={this.props.user}
-                  postData={post}
-                  newLike={() => (this.props.newLike(post.postId))}/>
-                  ))}
-                  </InfiniteScroll>
-              }
-            </div>
-          </div>
+        {this.props.data.isFetching || !this.props.isReady ?
+          <p>loading is true inside the reducer</p> :
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={() => this._loadMore()}
+            hasMore={this.props.hasMore}
+            threshold={600}
+            loader={<div className="loader">Loading ...</div>}
+            >
+          {this.props.data.posts.map((post) => (
+            <Post ref="card"
+            key={post.postId}
+            isOpen={false}
+            currentUser={this.props.user}
+            postData={post}
+            newLike={() => (this.props.newLike(post.postId))}/>
+            ))}
+            </InfiniteScroll>
+        }
       </div>
     );
   }

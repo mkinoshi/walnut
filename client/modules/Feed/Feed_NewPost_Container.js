@@ -84,11 +84,12 @@ class NewPostContainer extends React.Component {
           alert('failed uploaded!');
         }
         this.props.discoverLoader();
-        this.setState({postBody: '', postTags: [], showTagPref: false, file: ''});
+        this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
+      console.log('new post dispatching');
       this.props.newPost(this.state.postBody, this.state.postTags);
-      this.setState({postBody: '', postTags: [], showTagPref: false, file: ''});
+      this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
     }
   }
 
@@ -162,9 +163,9 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => newPostThunk(postBody, postTags)(dispatch),
-  newTag: (tag) => newTagThunk(tag)(dispatch),
-  discoverLoader: () => discoverLoadThunk(dispatch)
+  newPost: (postBody, postTags) => dispatch(newPostThunk(postBody, postTags)),
+  newTag: (tag) => dispatch(newTagThunk(tag)),
+  discoverLoader: () => dispatch(discoverLoadThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

@@ -62,7 +62,7 @@ router.get('/discoverinfo', (req, res) => {
                       posts = postArr.map((postObj) => {
                         return {
                           postId: postObj._id,
-                          username: postObj.createdBy.username,
+                          username: postObj.createdBy.fullName,
                           pictureURL: postObj.createdBy.pictureURL,
                           content: postObj.content,
                           createdAt: postObj.createdAt,

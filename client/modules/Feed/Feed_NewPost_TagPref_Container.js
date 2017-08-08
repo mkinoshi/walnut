@@ -52,7 +52,7 @@ class TagPref extends React.Component {
             </div>
             ))}
             {this.props.tempTags.map((tag, idx) => (
-                <div key={idx}>
+            <div key={idx} className="choiceForm">
                   <input type="checkbox"
                          id={tag.name}
                          checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
@@ -63,7 +63,7 @@ class TagPref extends React.Component {
                 </div>
             ))}
             {this.props.newTags.map((tag, idx) => (
-                <div key={idx}>
+            <div key={idx} className="choiceForm">
                   <input type="checkbox"
                          id={tag.name}
                          checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
