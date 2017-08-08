@@ -13,7 +13,12 @@ import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
 import Scroll from 'react-scroll';
+import $ from 'jquery';
+
+
 const scroll = Scroll.animateScroll;
+
+
 class ModalInstance extends React.Component {
   constructor(props) {
     super(props);
@@ -21,33 +26,20 @@ class ModalInstance extends React.Component {
       commentBody: '',
       messages: []
     };
-    // this.scrollToBottom = this.scrollToBottom.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
-  // handleChange(e) {
-  //   this.setState({commentBody: e.target.value});
-  // }
 
-  // componentDidMount() {
-  //   this.scrollToBottom();
-  // }
-
-  // componentDidUpdate() {
-  //   this.scrollToBottom();
-  // }
-
-  // scrollToBottom() {
-  //   const node = ReactDOM.findDOMNode(this.messagesEnd);
-  //   node.scrollIntoView({ behavior: 'smooth' });
-  // }
+  scrollToBottom() {
+    $('.scrolling').scrollTop(10000);
+    console.log($('.scrolling'));
+  }
 
   handleChange(e) {
     this.setState({commentBody: e.target.value});
   }
 
   handleClick(id) {
-    console.log(firebaseApp);
     const user = firebaseApp.auth().currentUser;
-    console.log('firebase user', user);
     const message = {
       author: user.email,
       content: this.state.commentBody,
@@ -62,13 +54,14 @@ class ModalInstance extends React.Component {
   }
 
   startListen(data) {
-    console.log('hi', data);
+    this.scrollToBottom();
     if (data.postId) {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           console.log('got it', snapshot.val(), typeof(snapshot.val()));
           this.setState({messages: _.values(snapshot.val())});
+          this.scrollToBottom();
         } else {
           console.log('no snapshot val :(');
         }
@@ -78,8 +71,10 @@ class ModalInstance extends React.Component {
     }
   }
   render() {
+    const self = this;
     return (
-      <Modal onOpen={() => {this.startListen(this.props.postData);}} scrolling trigger={
+      <Modal onOpen={() => {this.startListen(this.props.postData);}}
+             scrolling trigger={
         <a className="commentButton">
           <span> <Icon name="comment outline" />
           {this.props.postData.comments.length} </span>
@@ -87,7 +82,7 @@ class ModalInstance extends React.Component {
         closeIcon="close"
         >
         <Modal.Header>What goes here?</Modal.Header>
-        <Modal.Content image scrolling className="scrollContentClass">
+        <Modal.Content id="scroll" image scrolling className="scrollContentClass">
           <Modal.Description >
             <Post
             isOpen
@@ -105,11 +100,7 @@ class ModalInstance extends React.Component {
               />
             </Modal.Description>
             ))}
-          {/* <div style={{ float: 'left', clear: 'both' }}
-             ref={(el) => { this.messagesEnd = el; }} /> */}
         </Modal.Content>
-        <div style={{ float: 'left', clear: 'both' }}
-             ref={(el) => { this.messagesEnd = el; }} />
         <Modal.Actions>
           <span id="inputBoxHolder">
             <Form id="commentInput">

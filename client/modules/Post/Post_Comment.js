@@ -31,7 +31,7 @@ class Comment extends React.Component {
               {this.props.name}
             </Card.Header>
             <Card.Meta>
-              {this.props.createdAt.slice(11, 16)}
+              {this.props.createdAt}
             </Card.Meta>
             <Card.Description>
               {this.props.content}
