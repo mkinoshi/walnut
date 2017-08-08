@@ -22,28 +22,29 @@ class Auth extends React.Component {
   }
 
   componentWillMount() {
-    firebaseApp.auth().onAuthStateChanged(user => {
-      console.log('user', user);
-      if (!user) {
-        // this.context.history.push('/app/walnuthome');
-        history.replace('/app/login');
-        // history.push('/app/walnuthome');
-      } else {
-        console.log(localStorage.getItem('isUserInCommunity'));
-        console.log(localStorage.getItem('url'));
-        const isUserInCommunity = localStorage.getItem('isUserInCommunity');
-        if (this.props.isCreated && !isUserInCommunity) {
-          // this.props.getUser();
-          history.replace('/app/walnuthome');
-        } else {
-          // this.props.getUser();
-          history.replace(localStorage.getItem('url'));
-        }
-      }
-    });
+    // firebaseApp.auth().onAuthStateChanged(user => {
+    //   console.log('user', user);
+    //   if (!user) {
+    //     // this.context.history.push('/app/walnuthome');
+    //     history.replace('/app/login');
+    //     // history.push('/app/walnuthome');
+    //   } else {
+    //     console.log(localStorage.getItem('isUserInCommunity'));
+    //     console.log(localStorage.getItem('url'));
+    //     const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+    //     if (this.props.isCreated && !isUserInCommunity) {
+    //       // this.props.getUser();
+    //       history.replace('/app/walnuthome');
+    //     } else {
+    //       // this.props.getUser();
+    //       history.replace(localStorage.getItem('url'));
+    //     }
+    //   }
+    // });
   }
 
   componentDidMount() {
+    console.log('history.location', history.location);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,13 +57,17 @@ class Auth extends React.Component {
     }
   }
 
+  redirect(path) {
+    history.push(path);
+  }
+
   render() {
     return (
       <Router path="/" history={history}>
         <Switch>
           <Route path="/app/walnuthome" component={WalnutHomeContainer} />
           <Route path="/app/community" component={appCommunity} />
-          <Route path="/app/login" component={Login}/>
+          <Route path="/app/login" render={() => (<Login redirect={(path) => this.redirect.bind(this, path)}/>)}/>
           <Route path="/app/register" component={Register}/>
         </Switch>
       </Router>

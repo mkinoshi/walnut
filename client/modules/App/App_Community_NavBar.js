@@ -74,7 +74,7 @@ class Navbar extends React.Component {
               </div>
 
             <div className="navBarLinksRight">
-              <a className="tabs" href="/logout">
+              <a className="tabs" href="/auth/logout">
                 <Icon name="log out" />
                 Logout</a>
               <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
