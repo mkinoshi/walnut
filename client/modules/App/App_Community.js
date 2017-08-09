@@ -56,6 +56,7 @@ class Community extends React.Component {
 
 Community.propTypes = {
   updateLocation: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => ({

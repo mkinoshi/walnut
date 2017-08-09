@@ -172,6 +172,7 @@ class Post extends React.Component {
             <text className="hashtag">#{tag.name}</text>
           </div>))}
         </div>
+        <div></div>
         {!this.props.nested ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
         : null}
       </div>

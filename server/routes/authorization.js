@@ -35,7 +35,7 @@ import adminApp from '../firebaseAdmin';
         },
         communities: [],
         pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
-        isEdited: false
+        isEdited: true
       });
       return new_user.save()
       .then((doc) => {
@@ -107,11 +107,9 @@ import adminApp from '../firebaseAdmin';
   //
 
 
-  router.get('/logout', function(req, res) {
-    console.log('logging out');
-    // localStorage.removeItem('isUserInCommunity');
-    // req.logout();
-    res.redirect('/app/login');
+  router.post('/logout', function(req, res) {
+    req.session.destory();
+    res.json({success:true});
   });
 
   // return router;

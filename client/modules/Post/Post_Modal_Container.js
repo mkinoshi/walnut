@@ -100,6 +100,8 @@ class ModalInstance extends React.Component {
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData);}} size={'small'} basic trigger={
         <div className="commentDiv" onClick={() => this.handleClick()}>
+          <span className="userNum">4</span>
+          <Icon size="big" name="users" className="users" />
           <span className="commentNum">{this.props.postData.comments.length} </span>
           <Icon size="big" name="comments" className="commentIcon" />
         </div>}
