@@ -17,8 +17,6 @@ const styles = {
   }
 };
 
-const history = createBrowserHistory();
-
 class App extends React.Component {
 
   componentWillMount() {
@@ -30,7 +28,7 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-            <Route path="/app/community" component={Community} />
+            <Route path="/app/community" render={() => <Community history={history} />} />
             <Route path="/app/editprofile" component={EditProfile} />
           </Switch>
         </div>

@@ -126,6 +126,10 @@ const userReducer = (state = userObj, action) => {
         ...state,
         isCreated: true
       };
+    case 'LOGOUT_DONE':
+      return userObj;
+    case 'LOGOUT_ERROR':
+      return state;
     default:
       return state;
   }

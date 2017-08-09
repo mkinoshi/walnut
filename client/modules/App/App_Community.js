@@ -39,7 +39,7 @@ class Community extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar history={this.props.history}/>
          <div className="Container">
          <Switch>
             <Route path="/app/community/:communityName/directory" component={Directory} />
@@ -56,6 +56,7 @@ class Community extends React.Component {
 
 Community.propTypes = {
   updateLocation: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => ({
