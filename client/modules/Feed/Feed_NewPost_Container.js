@@ -125,7 +125,7 @@ class NewPostContainer extends React.Component {
                             addTempTags={(tag) => (this.addTempTags(tag))}
                             tempTags={this.state.tempTags}
                             newTags={this.state.newTags} />
-          <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} />
+          {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
           <div className="row newPostFooter">
           <div className="fileUpload col-xs-6">

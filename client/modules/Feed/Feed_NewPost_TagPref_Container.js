@@ -3,8 +3,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
+import { Select, Creatable } from 'react-select';
 import { Icon, Button } from 'semantic-ui-react';
+import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
 // TODO Filter component box style
 // TODO button onClick dispatches toggleChecked(index) 17
@@ -23,8 +24,14 @@ class TagPref extends React.Component {
 
   handleNew(event) {
     event.preventDefault();
-    const options = this.state.value.split(',');
+    console.log('this.state.value', this.state.value);
+    const options = this.state.value.map((obj) => {return obj.value;});
+    // const options = this.state.value.split(',');
     const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
+    console.log('here', send);
+    if (send.length === 0) {
+      this.props.newTagThunk(options);
+    }
     this.props.addTempTags(send);
     this.setState({value: []});
   }
@@ -75,11 +82,11 @@ class TagPref extends React.Component {
             ))}
         </form>
         <form onSubmit={(e) => this.handleNew(e)} id="addingTags">
-          <Select
+          <Creatable
               className="searchTags"
               name="form-field-name"
+              multi
               value={this.state.value}
-              multi simpleValue
               options={this.props.otherFilters.map((tag) => {
                 return {value: tag.name, label: '#' + tag.name};
               })}
@@ -104,7 +111,8 @@ TagPref.propTypes = {
   tags: PropTypes.array,
   addTempTags: PropTypes.func,
   tempTags: PropTypes.array,
-  newTags: PropTypes.array
+  newTags: PropTypes.array,
+  newTagThunk: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -113,7 +121,8 @@ const mapStateToProps = (state) => ({
   newTags: state.newTagsReducer
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  newTagThunk: (tag) => dispatch(newTagThunk(tag))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagPref);
