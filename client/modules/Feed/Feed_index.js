@@ -108,7 +108,7 @@ class Feed extends React.Component {
       <div className="Feed_Wrapper">
         {this.props.data.isFetching || !this.props.isReady ?
           <p>loading is true inside the reducer</p> :
-           <div style={{height:'700px', overflow: 'auto'}}> 
+           <div style={{height: '700px', overflow: 'auto'}}>
             <InfiniteScroll
             pageStart={0}
             loadMore={() => this._loadMore()}
@@ -126,7 +126,7 @@ class Feed extends React.Component {
             newLike={() => (this.props.newLike(post.postId))}/>
             ))}
             </InfiniteScroll>
-           </div> 
+           </div>
         }
       </div>
     );
