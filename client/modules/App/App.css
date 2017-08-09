@@ -97,6 +97,7 @@
     border-radius: 50%;
     display: flex;
     overflow: hidden;
+    margin-right: 15px
 }
 
 .postUserImage {
@@ -110,6 +111,46 @@
     margin-top: 10px;
 }
 
-.logoutIcon {
-    
+.profilePopoutOuter {
+    position: fixed;
+    background: #F1F1EF;
+    top: 60px;
+    right: 1%;
+    z-index: 3;
+    border-radius: 4px;
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    position: fixed;
+    right: 1.5%;
+    margin-top: -20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #F1F1EF;
+}
+
+.profilePopeoutHeader {
+    text-align: center;
+    padding: 20px;
+    text-decoration: underline;
+}
+
+.profilePopoutOuterMost {
+    position: absolute;
+    top: 60px;
+    left: -100vw;
+    width: 150vw;
+    height: 100vh;
+    z-index: 4;
+    background: rgba(0,0,0,0.8);
+}
+
+.ui.dropdown {
+    margin-top: 15px;
+}
+
+.ui.dropdown > .text {
+    font-size: 20px;
 }

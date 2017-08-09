@@ -34,7 +34,8 @@ import adminApp from '../firebaseAdmin';
           email: [req.body.email]
         },
         communities: [],
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png'
+        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
+        isEdited: false
       });
       return new_user.save()
       .then((doc) => {
