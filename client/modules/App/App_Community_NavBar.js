@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Icon, Image, Popup, Dropdown} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './App.css';
+import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class Navbar extends React.Component {
 
   handleClick(num) {
     this.props.changeTab(num);
+  }
+
+  handleLogout() {
+    this.props.onLogout(this.props.history);
   }
 
   render() {
@@ -101,7 +106,7 @@ class Navbar extends React.Component {
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item><a className="logoutText" href="/logout">Logout</a></Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               {/* <a className="logoutText" href="/logout">
@@ -119,7 +124,9 @@ Navbar.propTypes = {
   tab: PropTypes.number,
   changeTab: PropTypes.func,
   isEdited: PropTypes.bool,
-  fullName: PropTypes.string
+  fullName: PropTypes.string,
+  onLogout: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
@@ -131,7 +138,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab})
+  changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
+  onLogout: (history) => dispatch(signOutThunk(history))
 });
 
 
