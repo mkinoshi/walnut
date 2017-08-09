@@ -22,6 +22,7 @@ class Auth extends React.Component {
   }
 
   componentWillMount() {
+<<<<<<< HEAD
     firebaseApp.auth().onAuthStateChanged(user => {
       if (!user) {
         // this.context.history.push('/app/walnuthome');
@@ -49,6 +50,31 @@ class Auth extends React.Component {
     //   localStorage.setItem('url', localStorage.getItem('home'));
     //   localStorage.setItem('tab', 1);
     // });
+=======
+    // firebaseApp.auth().onAuthStateChanged(user => {
+    //   console.log('user', user);
+    //   if (!user) {
+    //     // this.context.history.push('/app/walnuthome');
+    //     history.replace('/app/login');
+    //     // history.push('/app/walnuthome');
+    //   } else {
+    //     console.log(localStorage.getItem('isUserInCommunity'));
+    //     console.log(localStorage.getItem('url'));
+    //     const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+    //     if (this.props.isCreated && !isUserInCommunity) {
+    //       // this.props.getUser();
+    //       history.replace('/app/walnuthome');
+    //     } else {
+    //       // this.props.getUser();
+    //       history.replace(localStorage.getItem('url'));
+    //     }
+    //   }
+    // });
+  }
+
+  componentDidMount() {
+    console.log('history.location', history.location);
+>>>>>>> d6a606cf78297fa968cde83cb1655a270c2fad3a
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,7 +87,12 @@ class Auth extends React.Component {
     }
   }
 
+<<<<<<< HEAD
   componentWillUnmount() {
+=======
+  redirect(path) {
+    history.push(path);
+>>>>>>> d6a606cf78297fa968cde83cb1655a270c2fad3a
   }
 
   render() {
@@ -70,8 +101,13 @@ class Auth extends React.Component {
         <Switch>
           <Route path="/app/walnuthome" component={WalnutHomeContainer} />
           <Route path="/app/community" component={appCommunity} />
+<<<<<<< HEAD
           <Route path="/app/login" component={Login} />
           <Route path="/app/register" component={Register} />
+=======
+          <Route path="/app/login" render={() => (<Login redirect={(path) => this.redirect.bind(this, path)}/>)}/>
+          <Route path="/app/register" component={Register}/>
+>>>>>>> d6a606cf78297fa968cde83cb1655a270c2fad3a
         </Switch>
       </Router>
     );
