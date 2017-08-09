@@ -84,6 +84,8 @@ const styles = {
   }
 };
 
+let refresh;
+
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -93,6 +95,15 @@ class Feed extends React.Component {
       count: 0
     };
   }
+
+  // componentDidMount() {
+  //   refresh = setInterval(this.props.getData, 30000);
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(refresh);
+  // }
+
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
