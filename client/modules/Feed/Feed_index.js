@@ -84,6 +84,8 @@ const styles = {
   }
 };
 
+let refresh;
+
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -93,6 +95,15 @@ class Feed extends React.Component {
       count: 0
     };
   }
+
+  // componentDidMount() {
+  //   refresh = setInterval(this.props.getData, 30000);
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(refresh);
+  // }
+
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
@@ -108,7 +119,7 @@ class Feed extends React.Component {
       <div className="Feed_Wrapper">
         {this.props.data.isFetching || !this.props.isReady ?
           <p>loading is true inside the reducer</p> :
-           <div style={{height:'570px', overflow: 'auto'}}>
+           <div style={{height: '570px', overflow: 'auto'}}>
             <InfiniteScroll
             pageStart={0}
             loadMore={() => this._loadMore()}
