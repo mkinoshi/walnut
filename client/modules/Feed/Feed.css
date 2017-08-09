@@ -137,3 +137,7 @@
 .prev {
     color: black;
 }
+
+body ::-webkit-scrollbar-thumb {
+    background: none;
+}
