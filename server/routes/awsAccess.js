@@ -80,7 +80,8 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
-  const toSave = 'post/' + req.user._id + req.file.originalname + Date.now();
+  console.log(req.file);
+  const toSave = req.user._id + req.file.originalname + Date.now();
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,

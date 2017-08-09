@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Metascraper from 'metascraper';
 import axios from 'axios';
+import YouTube from 'react-youtube';
 
 class LinkPreview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      meta: {}
+      meta: {},
+      youtube: ''
     };
   }
 
   componentWillMount() {
+    if (this.props.url.split('.')[1] === 'youtube') {
+      this.setState({ youtube: this.props.url.split('v=')[1]});
+      return;
+    }
     axios.post('/db/get/linkpreview', {
       url: this.props.url
     })
@@ -25,6 +30,13 @@ class LinkPreview extends React.Component {
 
   render() {
     const bool = Object.keys(this.state.meta).length > 0;
+    const opts = {
+      height: '270',
+      width: '513',
+      playerVars: {
+        autoplay: 0
+      }
+    };
     return (
        <div className="linkPreviewWrapper">
         {(bool && this.state.meta.image && this.state.meta.description) ?
@@ -35,7 +47,14 @@ class LinkPreview extends React.Component {
                 <img className="linkImg" src={this.state.meta.image} />
             </div>
         </div>
-        : <p>preview is loading</p>
+        : null
+        }
+        {(this.state.youtube !== '') ?
+        <YouTube
+            videoId={this.state.youtube}
+            opts={opts}
+            onReady={this._onReady}
+        /> : null
         }
        </div>
         );

@@ -48,7 +48,6 @@ class Post extends React.Component {
   componentWillMount() {
     const urls = this.urlFinder(this.props.postData.content);
     this.setState({urls: urls});
-    console.log('these are the urls', urls);
   }
   urlFinder(text) {
     const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
