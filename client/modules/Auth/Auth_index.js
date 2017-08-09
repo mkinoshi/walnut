@@ -12,7 +12,7 @@ import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
 class Auth extends React.Component {
   constructor() {
@@ -69,7 +69,8 @@ class Auth extends React.Component {
       <Router path="/" history={history}>
         <Switch>
           <Route path="/app/walnuthome" component={WalnutHomeContainer} />
-          <Route path="/app/community" render={() => (<Community history={history} />)} />
+          {/* <Route path="/app/community" render={() => (<Community history={history} />)} /> */}
+          <Route path="/app/community" component={Community} />
           <Route path="/app/login" component={Login} />
           <Route path="/app/register" component={Register} />
         </Switch>

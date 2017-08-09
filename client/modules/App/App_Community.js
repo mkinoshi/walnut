@@ -39,7 +39,7 @@ class Community extends React.Component {
   render() {
     return (
       <div>
-        <NavBar history={this.props.history}/>
+        <NavBar />
          <div className="Container">
          <Switch>
             <Route path="/app/community/:communityName/directory" component={Directory} />
