@@ -116,7 +116,7 @@ class Comment extends React.Component {
           </Card>
         </div>}
         content={useDate}
-        position='right center'
+        position="right center"
         inverted />
       );
     } else {
@@ -134,7 +134,7 @@ class Comment extends React.Component {
           </Card>
         </div>}
         content={useDate}
-        position='left center'
+        position="left center"
         inverted />
       );
     }
