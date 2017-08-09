@@ -8,11 +8,12 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import Lightbox from 'react-images';
 import PDF from 'react-pdf-js';
 
+
 class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: this.props.isOpen,
+      nested: this.props.nested,
       likeCount: this.props.postData.likes.length,
       isLiked: this.props.postData.likes.indexOf(this.props.currentUser._id) > 0,
       lightBoxData: '',
@@ -121,6 +122,7 @@ class Post extends React.Component {
         </Modal>
       </div>
 
+
       <div className="postFootnote">
         <div className="tagContainer">
           {this.props.postData.tags.map((tag, index) => (
@@ -128,7 +130,7 @@ class Post extends React.Component {
             <text className="hashtag">#{tag.name}</text>
           </div>))}
         </div>
-        {!this.props.isOpen ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
+        {!this.props.nested ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
         : null}
       </div>
     </div>
@@ -139,6 +141,6 @@ Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
-  isOpen: PropTypes.bool
+  nested: PropTypes.bool
 };
 export default Post;

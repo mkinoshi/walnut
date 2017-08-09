@@ -132,10 +132,6 @@
     flex-direction: column !important;
 }
 
-.commentWidth {
-    width: 100% !important;
-    /*overflow: auto;*/
-}
 
 #inputBoxHolder {
     display: flex;
@@ -147,10 +143,6 @@
 
 #commentSubmit {
     flex: 1;
-}
-
-.commentColor {
-    background-color: #d4d4d5 !important;
 }
 
 .walnutLogo {
@@ -260,3 +252,53 @@
 .downloadFileIcon {
     color: #DADDD8
 }
+
+.ui.card.commentCardOther {
+    background-color: #C0BFC4;
+    box-shadow: none;
+    margin: 0 10px 10px 10px;
+    clear:both;
+    width: auto;
+    border-radius: 16px;
+}
+
+.messageGroupOther {
+    float: left;
+    margin-right: 300px;
+}
+
+.messageGroupYou {
+    float: right;
+    margin-left: 300px;
+}
+
+.ui.card.commentCardYou {
+    background-color: #4CC1FC;
+    box-shadow: none;
+    margin:0 10px 10px 10px;
+    clear: both;
+    width: auto;
+    border-radius: 16px;
+}
+
+.messageNameYou {
+    float:right;
+    padding-right: 10px;
+    color: #9e9e9e;
+}
+
+.messageNameOther {
+    float:left;
+    padding-left: 10px;
+    color: #9e9e9e;
+}
+
+
+.message.you {
+    /* float: right;*/
+}
+
+.message.other {
+    /* float: left;*/
+}
+

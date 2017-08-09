@@ -5,25 +5,34 @@ const URL = 'http://localhost:3000';
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
-    result.getToken(/* forceRefresh */ true)
-    .then(function(idToken) {
-      console.log('idToken', idToken);
-      axios.post(URL + '/auth/signup', {
-        token: idToken,
-        fname: firstname,
-        lname: lastname,
-        email: email,
-        password: password
-      })
-      .then((res) => {
-        console.log('register thunk', res);
-        dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-      })
-      .catch(function(error) {
-        console.log('axios did not go through');
-      });
-    }).catch(function(error) {
-      console.log('could not get token', error);
+    result.updateProfile({
+      displayName: firstname + ' ' + lastname
+    })
+    .then(() => {
+      result.getToken(/* forceRefresh */ true)
+          .then(function(idToken) {
+            console.log('idToken', idToken);
+            axios.post(URL + '/auth/signup', {
+              token: idToken,
+              fname: firstname,
+              lname: lastname,
+              email: email,
+              password: password
+            })
+              .then((res) => {
+                console.log('register thunk', res);
+                dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+              })
+              .catch(function(error) {
+                console.log('axios did not go through');
+              });
+          })
+          .catch(function(error) {
+            console.log('could not get token', error);
+          });
+    })
+    .catch((error) => {
+      console.log('update user error', error);
     });
   })
   .catch(function(error) {
