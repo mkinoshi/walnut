@@ -104,7 +104,7 @@ class Comment extends React.Component {
         <Popup
         trigger={<div className="messageGroupYou">
           {/* <Image avatar className="message you" src={this.props.authorPhoto}/>*/}
-          <div className="messageNameYou">{this.props.name}</div>
+          <div className="messageNameYou">{this.props.name.split(' ')[0]}</div>
           <Card className="commentCardYou">
             <Card.Content >
               <Card.Description className="messageContent" style={{color: '#fff'}}>
