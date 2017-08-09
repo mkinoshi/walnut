@@ -302,3 +302,37 @@
     /* float: left;*/
 }
 
+.linkPreview {
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.linkPreviewWrapper{
+     width: 100%
+}
+
+
+.linkImage {
+    display: flex;
+    justify-content: center; 
+    height: 200px;
+}
+
+.linkPub {
+    margin-bottom: 0;
+}
+
+.linkTitle {
+    margin: 0
+}
+
+.linkDesc {
+
+}
+
+.linkImg {
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+}

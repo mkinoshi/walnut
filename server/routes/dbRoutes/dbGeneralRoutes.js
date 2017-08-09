@@ -122,12 +122,15 @@ router.post('/join/community', (req, res) => {
 });
 
 router.post('/toggle/community', (req, res) => {
+  console.log(req.body);
   User.findById(req.user._id)
         .then((user) => {
           console.log('user', user);
           user.currentCommunity = req.body.communityId;
-          user.communityPreference = user.preferences.filter((pref) =>
-                (pref.community === req.body.communityId))[0].pref;
+          const tmp = user.preferences.filter((pref) =>
+                (pref.community === req.body.communityId));
+          console.log(tmp);
+          user.communityPreference = tmp[0].pref;
           user.markModified('currentCommunity');
           user.markModified('communityPreference');
           return user.save();

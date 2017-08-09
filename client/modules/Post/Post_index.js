@@ -1,12 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModalContainer from './Post_Modal_Container';
+import MediaAttachment from './Post_Media_Attachment.js';
+import LinkPreview from './LinkPreview';
 import { Card, Icon, Image, Button, Modal, Header } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './Post.css';
-import MediaAttachment from './Post_Media_Attachment.js';
 import Lightbox from 'react-images';
 import PDF from 'react-pdf-js';
+import Linkify from 'linkifyjs/react';
+
+const defaults = {
+  attributes: null,
+  className: 'linkified',
+  defaultProtocol: 'http',
+  events: null,
+  format: (value) => {
+    return value;
+  },
+  formatHref: (href) => {
+    return href;
+  },
+  ignoreTags: [],
+  nl2br: false,
+  tagName: 'a',
+  target: {
+    url: '_blank'
+  },
+  validate: true
+};
+
 
 
 class Post extends React.Component {
@@ -19,8 +42,22 @@ class Post extends React.Component {
       lightBoxData: '',
       pdfModalData: '',
       page: 1,
-      pages: 100
+      pages: 100,
+      urls: []
     };
+  }
+  componentWillMount() {
+    const urls = this.urlFinder(this.props.postData.content);
+    this.setState({urls: urls});
+  }
+  urlFinder(text) {
+    const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    const urls = [];
+    text.replace(urlRegex, (url, b, c) => {
+      const url2 = (c === 'www.') ? 'http://' + url : url;
+      urls.push(url2);
+    });
+    return urls;
   }
   handleClick() {
     this.setState({isOpen: !this.state.isOpen});
@@ -73,6 +110,7 @@ class Post extends React.Component {
     this.setState({downloadUrl: ''});
   }
   render() {
+    const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
       <div className="postOuter">
       <div className="postContent">
@@ -85,8 +123,12 @@ class Post extends React.Component {
           </div>
         </div>
         <div className="postDescription">
-          <p className="postInnerContent">{this.props.postData.content}</p>
+          <div className="postInnerContent">
+            <Linkify tagName="p" options={defaults}>{this.props.postData.content}</Linkify>
+          </div>
         </div>
+
+        {urlPrev.length > 0 ? urlPrev[0] : null}
 
         {(this.props.postData.attachment.name !== '') ?
         <MediaAttachment data={this.props.postData.attachment}

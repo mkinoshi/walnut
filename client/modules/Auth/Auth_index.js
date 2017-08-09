@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -23,27 +23,32 @@ class Auth extends React.Component {
 
   componentWillMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log('user', user);
       if (!user) {
         // this.context.history.push('/app/walnuthome');
         history.replace('/app/login');
         // history.push('/app/walnuthome');
       } else {
-        console.log(localStorage.getItem('isUserInCommunity'));
-        console.log(localStorage.getItem('url'));
         const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+        this.props.getUser();
         if (this.props.isCreated && !isUserInCommunity) {
-          // this.props.getUser();
           history.replace('/app/walnuthome');
         } else {
-          // this.props.getUser();
-          history.replace(localStorage.getItem('url'));
+          if (sessionStorage.getItem(('url'))) {
+            history.replace(sessionStorage.getItem('url'));
+          } else {
+            history.replace(localStorage.getItem('home'));
+          }
         }
       }
     });
   }
 
   componentDidMount() {
+    // window.addEventListener('unload', () => {
+    //   console.log('unmounting', localStorage.getItem('home'));
+    //   localStorage.setItem('url', localStorage.getItem('home'));
+    //   localStorage.setItem('tab', 1);
+    // });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,14 +61,17 @@ class Auth extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+  }
+
   render() {
     return (
       <Router path="/" history={history}>
         <Switch>
           <Route path="/app/walnuthome" component={WalnutHomeContainer} />
           <Route path="/app/community" component={appCommunity} />
-          <Route path="/app/login" component={Login}/>
-          <Route path="/app/register" component={Register}/>
+          <Route path="/app/login" component={Login} />
+          <Route path="/app/register" component={Register} />
         </Switch>
       </Router>
     );

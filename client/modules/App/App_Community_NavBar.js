@@ -3,11 +3,17 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Image } from 'semantic-ui-react';
+import { Icon, Image, Popup, Dropdown} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './App.css';
 
 class Navbar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: this.props.isEdited
+    };
+  }
 
   handleClick(num) {
     this.props.changeTab(num);
@@ -15,6 +21,8 @@ class Navbar extends React.Component {
 
   render() {
     let title;
+    console.log('yoyoyoyoyyoyoyoyoyoyoyo');
+    console.log('this.props.community', this.props.community);
     if (this.props.community) {
       title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     } else {
@@ -23,7 +31,7 @@ class Navbar extends React.Component {
     return (
           <div className="row" id="navBar">
 
-                <Link className="navBarHome" to={'/app/walnuthome'} onClick={() => this.handleClick(1)}>
+                <Link className="navBarHome" to={'/app/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
                   <Icon name="content" size="big" />
                 </Link>
               <div className="communityNavBarLogo">
@@ -32,7 +40,7 @@ class Navbar extends React.Component {
               </div>
 
               <div className="navBarLinks">
-                <div className="navBarLink" onClick={() => this.handleClick(1)}>
+                <div className="navBarLink" onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/discover'}>
                     <Icon className="navBarIcon" name="talk outline" size="big" />
                   </Link>
@@ -42,7 +50,7 @@ class Navbar extends React.Component {
                   }
                 </div>
 
-                <div className="navBarLink" onClick={() => this.handleClick(2)}>
+                <div className="navBarLink" onClick={() => {this.handleClick(2); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/directory'}>
                     <Icon className="navBarIcon" name="address card outline" size="big"/>
                   </Link>
@@ -52,7 +60,7 @@ class Navbar extends React.Component {
                     }
                 </div>
 
-                <div className="navBarLink" onClick={() => this.handleClick(3)}>
+                <div className="navBarLink" onClick={() => {this.handleClick(3); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/map'}>
                     <Icon className="navBarIcon" name="map" size="big"/>
                   </Link>
@@ -62,7 +70,7 @@ class Navbar extends React.Component {
                     }
                 </div>
 
-                <div className="navBarLink" onClick={() => this.handleClick(4)}>
+                {/* <div className="navBarLink" onClick={() => this.handleClick(4)}>
                   <Link className="tabs" to={'/app/community/' + title + '/editprofile'}>
                     <Icon className="navBarIcon" name="paypal" size="big"/>
                   </Link>
@@ -70,16 +78,35 @@ class Navbar extends React.Component {
                     <div className="bar">
                       </div> : null
                     }
-                </div>
+                </div> */}
               </div>
 
             <div className="navBarLinksRight">
-              <a className="logoutText" href="/logout">
-              <Icon name="log out" className="logoutIcon" size="big"/>
-                Logout</a>
               <div className="imageWrapper">
                 <img className="postUserImage" src={this.props.pictureURL} />
+                {!(this.state.isOpen || this.props.isEdited) ?
+                  <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>
+                    <div className="profilePopoutOuter">
+                      <div className="arrow-up"></div>
+                      <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/app/community/' + title + '/editprofile'}>
+                        <h2 className="profilePopeoutHeader">Complete the profile</h2>
+                      </Link>
+                    </div>
+                  </div> : null}
               </div>
+              <Dropdown className="profileDropdown" text={this.props.fullName} pointing className="link item">
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link className="profilePopeoutHeaderTab" to={'/app/community/' + title + '/editprofile'}>
+                    Edit Profile
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item><a className="logoutText" href="/logout">Logout</a></Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* <a className="logoutText" href="/logout">
+              <Icon name="log out" className="logoutIcon" size="big"/>
+                Logout</a> */}
             </div>
         </div>
         );
@@ -90,13 +117,17 @@ Navbar.propTypes = {
   pictureURL: PropTypes.string,
   community: PropTypes.object,
   tab: PropTypes.number,
-  changeTab: PropTypes.func
+  changeTab: PropTypes.func,
+  isEdited: PropTypes.bool,
+  fullName: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   pictureURL: state.userReducer.pictureURL,
+  fullName: state.userReducer.fullName,
   community: state.userReducer.currentCommunity,
-  tab: state.navBarReducer.tab
+  tab: state.navBarReducer.tab,
+  isEdited: state.userReducer.isEdited
 });
 
 const mapDispatchToProps = (dispatch) => ({

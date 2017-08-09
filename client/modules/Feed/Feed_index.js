@@ -99,6 +99,7 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
+    console.log('getting here');
     this.props.getNext10(this.props.data.posts.length);
   }
 
@@ -107,12 +108,14 @@ class Feed extends React.Component {
       <div className="Feed_Wrapper">
         {this.props.data.isFetching || !this.props.isReady ?
           <p>loading is true inside the reducer</p> :
-          <InfiniteScroll
+           <div style={{height:'700px', overflow: 'auto'}}> 
+            <InfiniteScroll
             pageStart={0}
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}
-            threshold={600}
+            threshold={250}
             loader={<div className="loader">Loading ...</div>}
+            useWindow={false}
             >
           {this.props.data.posts.map((post) => (
             <Post ref="card"
@@ -123,6 +126,7 @@ class Feed extends React.Component {
             newLike={() => (this.props.newLike(post.postId))}/>
             ))}
             </InfiniteScroll>
+           </div> 
         }
       </div>
     );

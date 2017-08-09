@@ -100,6 +100,7 @@ router.post('/blurb', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            response.blurb = req.body.blurbBody;
+           response.isEdited = true;
            return response.save();
          })
          .then((user) => {
@@ -115,6 +116,7 @@ router.post('/tags', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            response.tags = req.body.tagsArray;
+           response.isEdited = true;
            return response.save();
          })
          .then((user) => {
@@ -130,6 +132,7 @@ router.post('/interests', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            response.interests = req.body.interestsArray;
+           response.isEdited = true;
            return response.save();
          })
          .then(() => {
@@ -150,6 +153,7 @@ router.post('/about', (req, res) => {
            globalResponse.work = req.body.works;
            globalResponse.education.schools = req.body.schools;
            globalResponse.placesLived = req.body.placesLived;
+           globalResponse.isEdited = true;
            if (req.body.colleges) {
              let addr;
              req.body.colleges.forEach((college) => {
@@ -202,6 +206,7 @@ router.post('/contact', (req, res) => {
               globalResponse.contact.email = req.body.email;
               globalResponse.contact.phones = req.body.phones;
               globalResponse.location = req.body.location;
+              globalResponse.isEdited = true;
               return globalResponse.save();
             })
              .then((user) => {
@@ -217,6 +222,7 @@ router.post('/links', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {
            response.links = req.body.linksArray;
+           response.isEdited = true;
            return response.save();
          })
          .then((user) => {

@@ -34,7 +34,8 @@ import adminApp from '../firebaseAdmin';
           email: [req.body.email]
         },
         communities: [],
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png'
+        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
+        isEdited: false
       });
       return new_user.save()
       .then((doc) => {
@@ -65,7 +66,7 @@ import adminApp from '../firebaseAdmin';
           {path: 'communities'},
           {path: 'currentCommunity'}
         ]
-        return User.populate(doc, 'communities')
+        return User.populate(doc, opts)
         .then((populated) => {
           console.log(populated._id);
           const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
@@ -104,31 +105,12 @@ import adminApp from '../firebaseAdmin';
   //   }
   // );
   //
-  // router.get('/', function(req, res, next) {
-  //   if (!req.user) {
-  //     res.redirect('/auth/login')
-  //   } else {
-  //     if(req.user.hasProfile) {
-  //         if (req.user.currentCommunity !== '') {
-  //             User.findById(req.user._id)
-  //                 .populate('currentCommunity')
-  //                 .then((user) => {
-  //                     const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-  //                     res.redirect(url);
-  //                 })
-  //         }
-  //         else {
-  //           res.redirect('/app/walnuthome')
-  //         }
-  //     } else{
-  //         res.redirect('/app/editprofile');
-  //     }
-  //   }
-  // });
+
 
   router.get('/logout', function(req, res) {
-    localStorage.removeItem('isUserInCommunity');
-    req.logout();
+    console.log('logging out');
+    // localStorage.removeItem('isUserInCommunity');
+    // req.logout();
     res.redirect('/app/login');
   });
 

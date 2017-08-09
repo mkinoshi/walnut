@@ -34,11 +34,11 @@ class MediaAttachment extends React.Component {
           </div>
       );
     }
-    if (this.props.data.type === 'video/mp4' || this.props.data.type ===  'video/quicktime') {
+    if (this.props.data.type === 'video/mp4' || this.props.data.type === 'video/quicktime' || this.props.data.type === 'video/mov') {
       return (
           <div className="mediaVideoAttachment">
               <Player>
-                  <source src={this.props.data.url} />
+               <source src={this.props.data.url}/>
               </Player>
           </div>
       );

@@ -3,8 +3,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
-const signInThunk = (email, password) => (dispatch) => {
-  console.log('got in the thunk');
+const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
     result.getToken(/* forceRefresh */ true)
@@ -18,6 +17,10 @@ const signInThunk = (email, password) => (dispatch) => {
       .then((res) => {
         console.log('signin thunk', res);
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+        redirect('/app/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
+        // history.replace('/');
+        // console.log('history', history);
+        // axios.get(URL);
       });
     })
   .catch(function(error) {

@@ -6,6 +6,7 @@ const URL = 'http://localhost:3000/';
 
 const updateUserCommunityThunk = (community) => (dispatch) => {
   dispatch({type: 'HOLD_DISCOVER'});
+  console.log('yeyeryeyeyeyeyeyeyeyeyey', community._id);
   axios.post(URL + 'db/toggle/community', {
     communityId: community._id
   })
