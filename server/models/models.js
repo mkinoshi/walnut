@@ -182,6 +182,9 @@ const UserSchema = new mongoose.Schema({
   blurb: {
     type: String,
     default: ''
+  },
+  isEdited: {
+    type: Boolean
   }
 });
 

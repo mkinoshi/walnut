@@ -156,9 +156,34 @@ app.use('*', function(req, res, next) {
           next()
         })
   } else {
+    req.user = undefined;
     next();
   }
 })
+
+app.get('/', function(req, res, next) {
+  console.log('a');
+  if (!req.user) {
+    console.log('b');
+    res.redirect('/app/login')
+  } else {
+    console.log('d');
+    console.log(req.user);
+    if (req.user.currentCommunity !== '') {
+      console.log('c');
+      User.findById(req.user._id)
+          .populate('currentCommunity')
+          .then((user) => {
+              const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+              res.redirect(url);
+          })
+    }
+    else {
+      console.log('e');
+      res.redirect('/app/walnuthome')
+    }
+  }
+});
 
 app.use('/auth', auth);
 app.use('/db', dbGeneralRoutes);

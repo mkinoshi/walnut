@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -33,18 +33,22 @@ class Auth extends React.Component {
         if (this.props.isCreated && !isUserInCommunity) {
           history.replace('/app/walnuthome');
         } else {
-          history.replace(localStorage.getItem('url'));
+          if (sessionStorage.getItem(('url'))) {
+            history.replace(sessionStorage.getItem('url'));
+          } else {
+            history.replace(localStorage.getItem('home'));
+          }
         }
       }
     });
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', () => {
-      console.log('unmounting');
-      localStorage.setItem('url', localStorage.getItem('home'));
-      localStorage.setItem('tab', 1);
-    });
+    // window.addEventListener('unload', () => {
+    //   console.log('unmounting', localStorage.getItem('home'));
+    //   localStorage.setItem('url', localStorage.getItem('home'));
+    //   localStorage.setItem('tab', 1);
+    // });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,8 +70,8 @@ class Auth extends React.Component {
         <Switch>
           <Route path="/app/walnuthome" component={WalnutHomeContainer} />
           <Route path="/app/community" component={appCommunity} />
-          <Route path="/app/login" component={Login}/>
-          <Route path="/app/register" component={Register}/>
+          <Route path="/app/login" component={Login} />
+          <Route path="/app/register" component={Register} />
         </Switch>
       </Router>
     );

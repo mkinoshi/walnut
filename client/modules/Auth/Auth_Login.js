@@ -35,7 +35,8 @@ class Login extends React.Component {
 
   regLogin(e) {
     e.preventDefault();
-    this.props.signIn(this.state.emailVal, this.state.passwordVal);
+    console.log('redirect function', this.props.redirect);
+    this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect);
   }
 
   render() {
@@ -76,7 +77,8 @@ class Login extends React.Component {
 Login.propTypes = {
   fbLogin: PropTypes.func,
   googleLogin: PropTypes.func,
-  signIn: PropTypes.func
+  signIn: PropTypes.func,
+  redirect: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -85,7 +87,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   fbLogin: () => facebookLoginThunk(dispatch),
   googleLogin: () => googleLoginThunk(dispatch),
-  signIn: (email, password) => signInThunk(email, password)(dispatch)
+  signIn: (email, password, redirect) => signInThunk(email, password, redirect)(dispatch)
 });
 
 
