@@ -82,15 +82,13 @@ class Comment extends React.Component {
     if (parseInt(timeArr[0], 10) > 12) {
       hour = parseInt(timeArr[0], 10) - 12;
       isPM = true;
-    }
-    else {
+    } else {
       hour = parseInt(timeArr[0], 10);
     }
     const min = timeArr[1];
     if (isPM) {
       time = hour + ':' + min + 'PM';
-    }
-    else {
+    } else {
       time = hour + ':' + min + 'AM';
     }
     if (now[2] !== split[2]) {
@@ -119,25 +117,24 @@ class Comment extends React.Component {
         position="right center"
         inverted />
       );
-    } else {
-      return (
-        <Popup
-        trigger = {<div className="messageGroupOther">
-          {/* <Image avatar className="message other" src={this.props.authorPhoto}/>*/}
-          <div className="messageNameOther">{this.props.name}</div>
-          <Card className="commentCardOther">
-            <Card.Content>
-              <Card.Description className="messageContent" style={{color: '#fff'}}>
-                  {this.props.content}
-              </Card.Description>
-            </Card.Content>
-          </Card>
-        </div>}
-        content={useDate}
-        position="left center"
-        inverted />
-      );
     }
+    return (
+      <Popup
+      trigger = {<div className="messageGroupOther">
+        {/* <Image avatar className="message other" src={this.props.authorPhoto}/>*/}
+        <div className="messageNameOther">{this.props.name}</div>
+        <Card className="commentCardOther">
+          <Card.Content>
+            <Card.Description className="messageContent" style={{color: '#fff'}}>
+                {this.props.content}
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      </div>}
+      content={useDate}
+      position="left center"
+      inverted />
+    );
   }
 }
 

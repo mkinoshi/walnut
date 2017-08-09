@@ -126,7 +126,7 @@ class Feed extends React.Component {
             newLike={() => (this.props.newLike(post.postId))}/>
             ))}
             </InfiniteScroll>
-           </div> 
+           </div>
         }
       </div>
     );
