@@ -27,8 +27,6 @@ class Navbar extends React.Component {
 
   render() {
     let title;
-    console.log('yoyoyoyoyyoyoyoyoyoyoyo');
-    console.log('this.props.community', this.props.community);
     if (this.props.community) {
       title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     } else {
