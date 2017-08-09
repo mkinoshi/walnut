@@ -82,7 +82,6 @@ class Navbar extends React.Component {
               </div>
 
             <div className="navBarLinksRight">
-<<<<<<< HEAD
               <div className="imageWrapper">
                 <img className="postUserImage" src={this.props.pictureURL} />
                 {!(this.state.isOpen || this.props.isEdited) ?
@@ -108,12 +107,6 @@ class Navbar extends React.Component {
               {/* <a className="logoutText" href="/logout">
               <Icon name="log out" className="logoutIcon" size="big"/>
                 Logout</a> */}
-=======
-              <a className="tabs" href="/auth/logout">
-                <Icon name="log out" />
-                Logout</a>
-              <Image src={this.props.pictureURL} size="mini" floated="right" style={{height: '50px'}} />
->>>>>>> d6a606cf78297fa968cde83cb1655a270c2fad3a
             </div>
         </div>
         );
