@@ -5,6 +5,7 @@ import axios from 'axios';
 import Promise from 'promise';
 import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
+import Metascraper from 'metascraper';
 
 router.get('/app', (req, res) => {
   User.findById(req.user._id)
@@ -219,6 +220,14 @@ router.get('/allusers', (req, res) => {
       .catch((err) => {
         res.json({data: null});
       });
+});
+
+router.post('/linkpreview', (req, res) => {
+  Metascraper
+    .scrapeUrl(req.body.url)
+    .then((metadata) => {
+      res.json({meta: metadata});
+    });
 });
 
 module.exports = router;
