@@ -101,7 +101,7 @@ class Navbar extends React.Component {
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item><a className="logoutText" href="/logout">Logout</a></Dropdown.Item>
+                  <Dropdown.Item><a className="logoutText" href="/auth/logout">Logout</a></Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               {/* <a className="logoutText" href="/logout">

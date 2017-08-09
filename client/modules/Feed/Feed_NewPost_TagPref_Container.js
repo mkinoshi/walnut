@@ -19,21 +19,27 @@ class TagPref extends React.Component {
   }
 
   handleSelectChange(value) {
+    // if (value.trim().length > 0) {
     this.setState({value});
+    // }
   }
 
   handleNew(event) {
     event.preventDefault();
     console.log('this.state.value', this.state.value);
-    const options = this.state.value.map((obj) => {return obj.value;});
-    // const options = this.state.value.split(',');
-    const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-    console.log('here', send);
-    if (send.length === 0) {
-      this.props.newTagThunk(options);
+    // make sure not to have empty strings
+    if (this.state.value.length > 0) {
+      const options = this.state.value.map((obj) => {return obj.value.replace(/\W/g, '');});
+      // const options = this.state.value.split(',');
+      // send is an array that only includes the objects that are being added
+      const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
+      console.log('here', send);
+      if (send.length === 0) {
+        this.props.newTagThunk(options);
+      }
+      this.props.addTempTags(send);
+      this.setState({value: []});
     }
-    this.props.addTempTags(send);
-    this.setState({value: []});
   }
 
   handleChange(e) {

@@ -37,7 +37,6 @@ router.get('/allcommunities', (req, res) => {
 });
 
 router.get('/discoverinfo', (req, res) => {
-  console.log('get discover route req.user for id', req.user);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
