@@ -45,12 +45,9 @@ const userObj = {
   hasProfile: false,
   isFetching: false,
   blurb: '',
-  isCreated: true
+  isCreated: true,
+  isEdited: true
 };
-
-
-
-
 
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
