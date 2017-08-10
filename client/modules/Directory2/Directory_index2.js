@@ -34,7 +34,7 @@ class Directory2 extends React.Component {
               picture={user.pictureURL}
               name={user.fullName}
               email={user.contact.email[0]}
-              school={user.education.schools[0]}
+              school={user.education.colleges[0]}
               job={user.work[0]}
               />
             )}

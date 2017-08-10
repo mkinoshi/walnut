@@ -9,6 +9,8 @@ import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshTh
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import './Feed.css';
+import { Loader } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 let refresh;
 
@@ -46,7 +48,7 @@ class Feed extends React.Component {
     return (
       <div className="Feed_Wrapper">
         {this.props.data.isFetching || !this.props.isReady ?
-          <p>loading is true inside the reducer</p> :
+            <Loader active inline="centered" /> :
            <div style={{height: '88vh', overflow: 'auto'}}>
             <InfiniteScroll
             className="banterScroller"
@@ -54,7 +56,7 @@ class Feed extends React.Component {
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}
             threshold={250}
-            loader={<div className="loader">Loading ...</div>}
+            loader={<Loader active inline="centered" />}
             useWindow={false}
             >
             <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
