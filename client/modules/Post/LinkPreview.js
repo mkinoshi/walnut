@@ -40,7 +40,9 @@ class LinkPreview extends React.Component {
     };
     return (
       <div className="linkPrev">
-        <div className="lineLeft"></div>
+        {(this.state.youtube === '') ?
+          <div className="lineLeft"></div> : null
+        }
         <div className="linkPreviewWrapper">
           {(bool && this.state.meta.image && this.state.meta.description) ?
           <div className="linkPreview">
