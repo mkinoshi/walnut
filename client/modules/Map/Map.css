@@ -102,7 +102,6 @@
 }
 i.icon.map {
   font-size: 20px;
-  color: black;
   margin: 2px 1px 2px 1px;
 }
 
@@ -193,4 +192,8 @@ button.ui.button {
 
 .ui.card.cardOuter.clicked > .content {
   background: #97ABA9 !important;
+}
+
+.mapIcon {
+  color: black;
 }
