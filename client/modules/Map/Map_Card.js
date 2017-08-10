@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {Card} from 'semantic-ui-react';
 
 const styles = {
   outer: {
@@ -56,25 +57,25 @@ class MapCard extends React.Component {
 
   render() {
     return (this.props.clicked === this.props.id) ?
-        <div className="ui list">
-          <div className="item clicked" onClick={() => this.handleClick()}>
-            <img className="ui avatar image" style={styles.image} src={this.props.profileURL} />
-            <div className="content">
-              <a className="header">{this.props.name}</a>
-              <div className="description">{this.props.email}</div>
+        <Card onClick={() => this.handleClick()} className="cardOuter clicked">
+          <Card.Content>
+            <div className="headerOuter">
+              <img className="ui avatar image" style={styles.image} src={this.props.profileURL} />
+              <Card.Header>{this.props.name}</Card.Header>
             </div>
-          </div>
-         </div>
+             <Card.Description>{this.props.college ? this.props.college.name : null}</Card.Description>
+          </Card.Content>
+        </Card>
         :
-        <div className="ui list">
-          <div className="item">
-            <img className="ui avatar image" style={styles.image} src={this.props.profileURL} onClick={() => this.handleClick()}/>
-            <div className="content">
-              <a className="header">{this.props.name}</a>
-              <div className="description">{this.props.email}</div>
+         <Card onClick={() => this.handleClick()} className="cardOuter">
+          <Card.Content>
+            <div className="headerOuter">
+              <img className="ui avatar image" style={styles.image} src={this.props.profileURL} />
+              <Card.Header>{this.props.name}</Card.Header>
             </div>
-          </div>
-         </div>;
+            <Card.Description>{this.props.college ? this.props.college.name : null}</Card.Description>
+          </Card.Content>
+        </Card>;
   }
 }
 
@@ -93,7 +94,8 @@ MapCard.propTypes = {
   clicked: PropTypes.string,
   selected: PropTypes.string,
   zoom: PropTypes.array,
-  email: PropTypes.string
+  email: PropTypes.string,
+  college: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

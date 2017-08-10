@@ -42,10 +42,10 @@ class NameSearch extends React.Component {
     return (
          <Select
           style={styles}
+          className="mapSelector"
           name="selected-state"
           value={this.state.value}
           simpleValue
-          autofocus
           clearable
           options={this.props.users.filter((item) => (item.location[this.props.selected].length > 0)).map((user) => {
             return {value: user.fullName, label: user.fullName};

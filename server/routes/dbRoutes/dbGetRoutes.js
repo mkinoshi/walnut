@@ -189,6 +189,7 @@ router.get('/allusersmap', (req, res) => {
             fullName: user.fullName,
             pictureURL: user.pictureURL,
             location: user.location,
+            email: user.contact.email[0],
             career: user.currentOccupation,
             education: user.education
           };
