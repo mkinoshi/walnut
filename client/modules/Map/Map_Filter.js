@@ -24,12 +24,12 @@ class MapFilter extends React.Component {
         <Button.Group>
           {this.state.search === 'place' ?
             <Button positive>Place</Button> :
-            <Button onClick={() => this.setState({search: 'place'})}>Place</Button>
+            <Button className="buttonPlaceNegative" onClick={() => this.setState({search: 'place'})}>Place</Button>
           }
           <Button.Or />
           {this.state.search === 'place' ?
             <Button onClick={() => this.setState({search: 'person'})}>Person</Button> :
-            <Button positive>Person</Button>
+            <Button className="buttonPersonNegative" positive>Person</Button>
           }
         </Button.Group>
         {this.state.search === 'place' ?
@@ -49,8 +49,9 @@ class MapFilter extends React.Component {
                 profileURL={user.pictureURL}
                 name={user.fullName}
                 year={user.education.classYear}
-                college={user.education.college}
+                college={user.education.colleges[0]}
                 career={user.currentOccupation}
+                email={user.email}
                 location={user.location[this.props.selected]}
               />
             ))}
