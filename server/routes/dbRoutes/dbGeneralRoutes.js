@@ -154,11 +154,14 @@ router.post('/toggle/community', (req, res) => {
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
         .then((response) => {
-          if (req.user.communityPreference.includes(req.body.tagId)) {
-            response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.splice(req.user.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.indexOf(req.body.tagId), 1);
+          console.log(response);
+          if (response.communityPreference.includes(req.body.tagId)) {
+            const tmpPref = response.preferences.filter((pref) =>(pref.community.toString() === req.user.currentCommunity.toString()))[0].pref;
+            response.preferences.filter((pref) =>(pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.splice(tmpPref.indexOf(req.body.tagId), 1);
           } else {
             response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.push(req.body.tagId);
           }
+          console.log(response.preferences[0].pref);
           response.communityPreference = response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref;
           response.markModified('communityPreference');
           response.markModified('preferences');
@@ -221,8 +224,13 @@ router.post('/toggle/checked', (req, res) => {
 
 router.post('/toggle/checkedtemp', (req, res) => {
   let posts = [];
-  console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
-  const filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
+  let filter;
+  if (req.user.communityPreference.indexOf(req.body.useFilters) === -1) {
+    console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
+    filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
+  } else {
+    filter =  { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity };
+  }
   Post.find(filter)
         .limit(10)
         .sort({ createdAt: -1 })
