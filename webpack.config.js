@@ -36,6 +36,9 @@ module.exports = {
       },
     ]
   },
+  resolve: {
+    extensions: ['.js']
+  },
   stats: {
     colors: true
   },
