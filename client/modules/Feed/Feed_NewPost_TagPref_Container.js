@@ -92,6 +92,8 @@ class TagPref extends React.Component {
               className="searchTags"
               name="form-field-name"
               multi
+              clearable
+              placeholder="Select Tag or Type your own..."
               value={this.state.value}
               options={this.props.otherFilters.map((tag) => {
                 return {value: tag.name, label: '#' + tag.name};
