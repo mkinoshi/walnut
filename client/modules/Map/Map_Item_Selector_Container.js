@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-
+import {Icon} from 'semantic-ui-react';
 class MapItemSelectorContainer extends React.Component {
 
   handleClick(item) {
@@ -11,11 +11,15 @@ class MapItemSelectorContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.category);
     return(
-            <div>
-                <a className="waves-effect waves-light btn" onClick={() => this.handleClick('live')}>live</a>
+            <div className="iconWrapper">
+                <div className={this.props.category === 'live' ? 'iconSelectorWrapper1' : 'iconSelectorWrapper2'}><Icon name="clock" onClick={() => this.handleClick('live')} /></div>
+                <div className={this.props.category === 'college' ? 'iconSelectorWrapper1' : 'iconSelectorWrapper2'}><Icon name="university" onClick={() => this.handleClick('college')} /></div>
+                <div className={this.props.category === 'homeTown' ? 'iconSelectorWrapper1' : 'iconSelectorWrapper2'}><Icon name="home" onClick={() => this.handleClick('homeTown')} /></div>
+                {/* <a className="waves-effect waves-light btn" onClick={() => this.handleClick('live')}>live</a>
                 <a className="waves-effect waves-light btn" onClick={() => this.handleClick('college')}>college</a>
-                <a className="waves-effect waves-light btn" onClick={() => this.handleClick('homeTown')}>from</a>
+                <a className="waves-effect waves-light btn" onClick={() => this.handleClick('homeTown')}>from</a> */}
             </div>
         );
   }
@@ -24,10 +28,12 @@ class MapItemSelectorContainer extends React.Component {
 MapItemSelectorContainer.propTypes = {
   changeCategory: PropTypes.func,
   updateCenter: PropTypes.func,
-  updateZoom: PropTypes.func
+  updateZoom: PropTypes.func,
+  category: PropTypes.string
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  category: state.mapReducer.selected
 });
 
 const mapDispatchToProps = (dispatch) => ({
