@@ -58,7 +58,7 @@ class Directory2 extends React.Component {
           })}
           placeholder="Search by Name..."
           onInputChange={this.handleChange.bind(this)}
-        /> <br/>
+        />
         <div className="directoryCardsList">
               {this.state.currentCards.map(user =>
               <DirectoryCard
