@@ -7,6 +7,7 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
+  console.log('thththththththththt', req.body.lastRefresh);
   const newPost = new Post({
     content: req.body.postBody,
     createdAt: new Date(),

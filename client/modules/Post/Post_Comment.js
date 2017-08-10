@@ -79,7 +79,11 @@ class Comment extends React.Component {
       hour = parseInt(timeArr[0], 10) - 12;
       isPM = true;
     } else {
-      hour = parseInt(timeArr[0], 10);
+      if (parseInt(timeArr[0], 10) === 0) {
+        hour = 12;
+      } else {
+        hour = parseInt(timeArr[0], 10);
+      }
     }
     const min = timeArr[1];
     if (isPM) {
@@ -118,7 +122,9 @@ class Comment extends React.Component {
     return (
       <div className="userGroupOther">
         <Popup
-        trigger= {<Image avatar className="messageAvatarOther" src={this.props.authorPhoto} />}
+        trigger= {<div className="imageWrapper messageAvatarOther">
+          <img className="postUserImage" src={this.props.authorPhoto} />
+        </div>}
         content={this.props.name}
         position="left center"
         inverted

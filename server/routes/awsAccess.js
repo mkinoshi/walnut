@@ -80,12 +80,13 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
-  console.log(req.file);
+  console.log('upload', req.body.lastRefresh);
   const toSave = req.user._id + req.file.originalname + Date.now();
   s3.putObject({
     Bucket: 'walnut-test',
     Key: toSave,
     Body: req.file.buffer,
+    ContentType: req.file.type,
     ACL: 'public-read',
   }, (err, result) => {
     if (err) {
@@ -112,8 +113,8 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
     newPost.save()
     .then((post) => {
       let posts = [];
-      const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } }
-        : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } };
+      const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
+        : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
       Post.find(filter)
         .sort({ createdAt: -1 })
         .populate('tags')
@@ -153,6 +154,20 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
         });
     })
     .catch((error) => console.log('error in aws db save', error));
+  });
+});
+
+router.post('/download/post', upload.single('attach'), (req, res) => {
+  s3.getObject({
+    Bucket: 'walnut-test',
+    Key: req.body.url,
+  }, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send(err);
+      return;
+    }
+    res.json({data: result});
   });
 });
 

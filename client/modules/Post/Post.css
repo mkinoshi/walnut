@@ -66,16 +66,17 @@
 }
 
  .downloadButton{
-    position: relative;
-    right: -204px !important;
-    top: 16px !important;
+    position: absolute;
+    right: 10px;
+    top: 23px;    
+    color: darkblue;
 } 
 
 
  .downloadButton:hover {
-    position: relative;
-    right: -204px !important;
-    top: 16px !important;
+    position: absolute;
+    right: 10px;
+    top: 23px;
     color: darkblue;
 } 
 
@@ -232,8 +233,7 @@
 }
 
 .commentNum {
-    font-size: 12px;
-    color: red;
+    color: #4CC1FC;
     margin-left: 10px;
     margin-top: 4px;
     margin-right: 3px;
@@ -241,8 +241,9 @@
 }
 
 .userNum {
-    margin-right: 8px;
+    margin-right: 3px;
     margin-top: 4px;
+    color: #4CC1FC;
 }
 
 .commentDiv {
@@ -311,7 +312,16 @@
 .messageAvatarYou {
 }
 
-.messageAvatarOther {
+.imageWrapper.messageAvatarOther {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 8px;
+    background-color: red;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
     align-self: flex-end;
     margin-bottom: 5px;
 }
@@ -359,4 +369,8 @@ body ::-webkit-scrollbar-track {
 .userGroupOther {
     clear: both;
     display: inline-flex;
+}
+
+iframe {
+    width: 100%
 }
