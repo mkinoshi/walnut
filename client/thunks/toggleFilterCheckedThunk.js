@@ -5,6 +5,7 @@ import axios from 'axios';
 const URL = 'http://localhost:3000/';
 
 const toggleFilterCheckedThunk = (id) => (dispatch) => {
+  console.log('I am toggling here right now', id);
   axios.post(URL + 'db/toggle/checked', {
     tagId: id
   })
