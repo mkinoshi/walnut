@@ -113,12 +113,12 @@
     "url-loader": "^0.5.9",
     "uuid": "^3.1.0",
     "video-react": "^0.8.6",
-    "webpack": "^2.6.1"
-  },
-  "devDependencies": {
+    "webpack": "^2.6.1",
     "image-webpack-loader": "^3.3.1",
     "karma-scss-preprocessor": "^2.0.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.5.3"
+  },
+  "devDependencies": {
     "webpack-dev-server": "^2.4.5"
   }
 }
