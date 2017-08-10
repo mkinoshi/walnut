@@ -30,12 +30,12 @@ class DirectoryCard extends React.Component {
                     {this.props.name}
                 </Card.Header>
                 <Card.Meta className="directoryMeta">
-                    <span>
+                    <span className="infoSpan">
                         <Icon name="student" />
                       {this.props.school ? this.props.school.name : 'N/A'}
                     </span>
                     <br />
-                    <span>
+                    <span className="infoSpan">
                         <Icon name="travel" />
                       {this.props.job ? this.props.job.company : 'N/A'}
                     </span>
