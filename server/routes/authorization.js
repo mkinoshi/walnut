@@ -108,7 +108,9 @@ import adminApp from '../firebaseAdmin';
 
 
   router.post('/logout', function(req, res) {
-    req.session.destory();
+    console.log('logged out before destroy', req.session);
+    req.session.destroy();
+    console.log('logged out after destroy', req.session);
     res.json({success:true});
   });
 
