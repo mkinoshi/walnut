@@ -360,3 +360,7 @@ body ::-webkit-scrollbar-track {
     clear: both;
     display: inline-flex;
 }
+
+iframe {
+    width: 100%
+}
