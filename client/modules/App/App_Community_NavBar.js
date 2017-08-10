@@ -46,7 +46,7 @@ class Navbar extends React.Component {
               <div className="navBarLinks">
                 <div className="navBarLink" onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/discover'}>
-                    <Icon className="navBarIcon" name="talk outline" size="big" />
+                    <Icon className="navBarIcon" name="talk outline" size="large" />
                   </Link>
                   {(this.props.tab === 1) ?
                     <div className="bar">
@@ -56,7 +56,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => {this.handleClick(2); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/directory'}>
-                    <Icon className="navBarIcon" name="address card outline" size="big"/>
+                    <Icon className="navBarIcon" name="address card outline" size="large"/>
                   </Link>
                   {(this.props.tab === 2) ?
                     <div className="bar">
@@ -66,7 +66,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => {this.handleClick(3); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/map'}>
-                    <Icon className="navBarIcon" name="map" size="big"/>
+                    <Icon className="navBarIcon" name="marker" size="large"/>
                   </Link>
                   {(this.props.tab === 3) ?
                     <div className="bar">
