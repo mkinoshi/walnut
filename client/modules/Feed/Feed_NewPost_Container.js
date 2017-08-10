@@ -85,12 +85,13 @@ class NewPostContainer extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
-        this.props.refreshDiscover(res.data.posts, res.data.lastRefresh);
+        console.log('resssssssssss', res);
+        this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
         this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
-      if (this.state.postBody) {
-        this.props.newPost(this.state.postBody, this.state.postTags);
+      if (this.state.postBody && this.state.file === '') {
+        this.props.newPost(this.state.postBody, this.state.postTags, this.props.lastRefresh);
         this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       } else {
         alert('Oops, post is empty');
@@ -99,6 +100,7 @@ class NewPostContainer extends React.Component {
   }
 
   handleUpload(file) {
+    console.log(file);
     this.setState({file: file});
   }
 
