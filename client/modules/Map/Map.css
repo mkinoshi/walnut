@@ -42,6 +42,7 @@
 }
 
 .outerfilterall  {
+  margin-top: 20px;
   width: 20vw;
   display: flex;
   flex-direction: column;
@@ -74,10 +75,6 @@
   width: 20vw;
 }
 
-.clicked {
-  background: orange;
-}
-
 .zoomControl {
   right: 5%;
 }
@@ -105,40 +102,98 @@
 }
 i.icon.map {
   font-size: 20px;
-  color: 'white';
   margin: 2px 1px 2px 1px;
 }
 
-/* .mapboxgl-canvas {
-  height: calc(100vh - 58.12px);
-} */
-
-/*
-.image {
-  width: 15%;
-  height: 15%;
-}
-
-.listOuter {
+.iconWrapper {
   display: flex;
   flex-direction: row;
-  border-width: 1px;
-  margin-bottom: 10px;
-} 
+  justify-content: space-between;
+}
 
-disc {
+.iconSelectorWrapper1 {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background-color: #B48059;
+}
+
+.iconSelectorWrapper2 {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background-color: #97ABA9;
+}
+
+i.clock.icon {
+  font-size: 25px;
+  padding: 9px;
+  padding-top: 10px;
+}
+
+i.university.icon {
+  font-size: 20px;
+  padding: 8px;
+  padding-left: 9px;
+}
+
+i.home.icon {
+  font-size: 25px;
+  padding-left: 8px;
+  padding-top: 10px;
+}
+
+button.ui.positive.button, button.ui.positive.button:focus  {
+  background-color: #B48059;
+}
+
+button.ui.positive.button:hover {
+  background-color: #8B5C38;
+}
+
+button.ui.button {
+  background-color: #97ABA9;
+}
+
+.mapSelector .Select-placeholder {
+  background: #313D4D;
+  border-width: 0px;
+}
+
+.mapSelector .Select-control {
+  border-width: 0px;
+  border-bottom-width: 1px;
+}
+
+.mapSelector .Select.Select--single.is-clearable.is-focused.is-searchable {
+  border-width: 0px !important; 
+  border-bottom-width: 1px !important;
+}
+
+#PlacesAutocomplete__root input {
+  background: #313D4D;
+  border-radius: 0px;
+  border-width: 0px;
+  border-bottom-width: 1px;
+}
+
+#PlacesAutocomplete__root ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #aaa;
+}
+
+.headerOuter {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.outerpopup {
-  border: 1px;
+.cardOuter {
+  margin-top: 0px !important;
 }
 
-.icon {
-  width: 34.6px;
-  margin-left: auto;
-  margin-right: auto;
+.ui.card.cardOuter.clicked > .content {
+  background: #97ABA9 !important;
 }
 
-*/
+.mapIcon {
+  color: black;
+}

@@ -7,6 +7,7 @@ import { Icon, Image, Popup, Dropdown} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
+import {history} from '../Auth/Auth_index';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -21,13 +22,11 @@ class Navbar extends React.Component {
   }
 
   handleLogout() {
-    this.props.onLogout(this.props.history);
+    this.props.onLogout(history);
   }
 
   render() {
     let title;
-    console.log('yoyoyoyoyyoyoyoyoyoyoyo');
-    console.log('this.props.community', this.props.community);
     if (this.props.community) {
       title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     } else {
@@ -139,7 +138,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
-  onLogout: (history) => dispatch(signOutThunk(history))
+  onLogout: (his) => dispatch(signOutThunk(his))
 });
 
 

@@ -37,7 +37,6 @@ router.get('/allcommunities', (req, res) => {
 });
 
 router.get('/discoverinfo', (req, res) => {
-  console.log('get discover route req.user for id', req.user);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
@@ -234,6 +233,7 @@ router.get('/allusersmap', (req, res) => {
             fullName: user.fullName,
             pictureURL: user.pictureURL,
             location: user.location,
+            email: user.contact.email[0],
             career: user.currentOccupation,
             education: user.education
           };
