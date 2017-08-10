@@ -123,8 +123,11 @@ class ModalInstance extends React.Component {
         if (snapshot.val()) {
           console.log('got it', snapshot.val(), typeof(snapshot.val()));
           const send = _.values(snapshot.val());
+          console.log(send);
           const ID = send[0].authorId + '' + send[0].content;
+          console.log(ID);
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
+          console.log(bottomID);
           this.setState({messages: send, firstKey: Object.keys(snapshot.val())[0], firstId: ID, hasMore: true});
           if (this.state.c === 0) {
             console.log('c', this.state.c);
