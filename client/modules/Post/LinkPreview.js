@@ -39,7 +39,8 @@ class LinkPreview extends React.Component {
       }
     };
     return (
-      <div>
+      <div className="linkPrev">
+        <div className="lineLeft"></div>
         <div className="linkPreviewWrapper">
           {(bool && this.state.meta.image && this.state.meta.description) ?
           <div className="linkPreview">
@@ -68,20 +69,3 @@ LinkPreview.propTypes = {
 };
 
 export default LinkPreview;
-
-
-// description;
-// 'Create an account or log into Facebook. Connect with friends, family and other people you know. Share photos and videos, send messages and get updates.';
-
-// image;
-// 'https://www.facebook.com/images/fb_icon_325x325.png';
-
-// publisher;
-// 'Facebook';
-
-// title;
-// 'Facebook - Log In or Sign Up';
-
-// url;
-// 'https://www.facebook.com/'
-// ;
