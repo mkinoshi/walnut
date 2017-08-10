@@ -66,7 +66,7 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => {this.handleClick(3); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/map'}>
-                    <Icon className="navBarIcon" name="marker" size="large"/>
+                    <Icon className="navBarIcon" name="marker" color="white" size="large"/>
                   </Link>
                   {(this.props.tab === 3) ?
                     <div className="bar">

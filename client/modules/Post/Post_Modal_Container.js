@@ -6,7 +6,7 @@ import newCommentThunk from '../../thunks/post_thunks/newCommentThunk';
 import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 import Comment from './Post_Comment';
 import './Post.css';
-import { Button, Header, Icon, Image, Modal, Card, Form, TextArea, Loader } from 'semantic-ui-react';
+import { Button, Form, Icon, Image, Modal, Input, TextArea, Loader } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
@@ -89,6 +89,13 @@ class ModalInstance extends React.Component {
   }
 
   handleChange(e) {
+    $('#messageInput').keypress( (event) => {
+      if(event.which === 13) {
+        this.handleClick(this.props.postData.postId);
+        return false; // prevent duplicate submission
+      }
+      return null;
+    });
     this.setState({commentBody: e.target.value});
   }
 
@@ -112,13 +119,14 @@ class ModalInstance extends React.Component {
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL
       };
+      this.setState({commentBody: ''});
       const updates = {};
       const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
       updates['/messages/' + id + '/' + newMessageKey] = message;
       firebaseApp.database().ref().update(updates);
-      this.setState({commentBody: ''});
       const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
       messagesCountRef.transaction((currentValue) => {
+        console.log('current count', currentValue);
         return (currentValue || 0) + 1;
       });
     }
@@ -138,7 +146,7 @@ class ModalInstance extends React.Component {
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
           this.setState({messages: send, firstKey: Object.keys(snapshot.val())[0], firstId: ID, hasMore: true, hitBottom: true});
-          if (this.state.c === 0) {
+          if (this.state.c === 0 || send[send.length - 1].authorId === user.uid) {
             this.scrollToBottom(bottomID);
           }
         } else {
@@ -174,9 +182,13 @@ class ModalInstance extends React.Component {
         </div>}
         closeIcon="close"
         >
-        <Modal.Header>
+        <Modal.Header className="modalHeader">
           <NestedPostModal postData={this.props.postData}
                            currentUser={this.props.currentUser}/>
+          <div className="inModalUsers">
+            <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
+            <Icon size="big" name="users" className="users" color="grey" />
+          </div>
         </Modal.Header>
         <Modal.Content scrolling className="scrollContentClass">
             <InfiniteScroll
@@ -204,23 +216,16 @@ class ModalInstance extends React.Component {
             </InfiniteScroll>
         </Modal.Content>
         <Modal.Actions>
-          <span id="inputBoxHolder">
-            <Form id="commentInput">
-              <TextArea
-                autoHeight
-                placeholder="Give your two cents..."
-                rows={1}
-                value={this.state.commentBody}
-                onChange={(e) => this.handleChange(e)}
-              />
-            </Form>
-            <Button
-              id="commentSubmit"
-              primary
-              onClick={() => this.handleClick(this.props.postData.postId)}>
-              Comment
-            </Button>
-          </span>
+          <Form>
+            <TextArea
+              id="messageInput"
+              autoHeight
+              placeholder="Give your two cents..."
+              value={this.state.commentBody}
+              onChange={(e) => this.handleChange(e)}
+              rows={3}
+            />
+          </Form>
         </Modal.Actions>
       </Modal>
     );
