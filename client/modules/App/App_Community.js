@@ -7,7 +7,7 @@ import Discover from '../Discover/Discover_index';
 import Directory from '../Directory2/Directory_index2';
 import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
-import EditProfile from '../EditProfile/EditProfile_index';
+// import EditProfile from '../EditProfile/EditProfile_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
 
 const styles = {
@@ -45,7 +45,7 @@ class Community extends React.Component {
             <Route path="/app/community/:communityName/directory" component={Directory} />
             <Route path="/app/community/:communityName/map" component={MapContainer}/>
             <Route path="/app/community/:communityName/discover" component={Discover} />
-            <Route path="/app/community/:communityName/editProfile" component={EditProfile} />
+            {/* <Route path="/app/community/:communityName/editProfile" component={EditProfile} /> */}
          </Switch>
          </div>
        </div>
