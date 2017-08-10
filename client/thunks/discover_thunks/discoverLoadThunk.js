@@ -2,7 +2,7 @@
  * Created by ebadgio on 7/24/17.
  */
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const discoverLoadThunk = () => (dispatch) => {
   dispatch({type: 'DISCOVER_IS_LOADING'});

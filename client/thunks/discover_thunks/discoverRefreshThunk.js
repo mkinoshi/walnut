@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const discoverRefreshThunk = (lastRefresh) => (dispatch) => {
   axios.get(URL + 'db/get/discoverrefresh?lastRefresh=' + lastRefresh)

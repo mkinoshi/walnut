@@ -26,7 +26,7 @@ class WalnutHomeContainer extends React.Component {
     this.state = {
       showInputs: false,
       titleValue: '',
-      image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      image: 'https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
       defaultFilters: [],
       filterValue: '',
       isCalled: false
