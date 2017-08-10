@@ -79,7 +79,11 @@ class Comment extends React.Component {
       hour = parseInt(timeArr[0], 10) - 12;
       isPM = true;
     } else {
-      hour = parseInt(timeArr[0], 10);
+      if (parseInt(timeArr[0], 10) === 0) {
+        hour = 12;
+      } else {
+        hour = parseInt(timeArr[0], 10);
+      }
     }
     const min = timeArr[1];
     if (isPM) {
