@@ -1,4 +1,4 @@
-.Page2 {
+.directoryCardsList {
     padding-top: 20px;
     display: flex;
     flex-direction: row;
@@ -36,10 +36,15 @@
 }
 
 body ::-webkit-scrollbar-track {
-    background-color: #313D4D;
+    background-color: inherit;
     border-radius: 0;
 }
 
 .banterScroller {
     position: relative;
+}
+
+.search {
+    width: 50vw;
+    margin: auto;
 }

@@ -56,8 +56,8 @@ class DirectoryCard extends React.Component {
 DirectoryCard.propTypes = {
   picture: PropTypes.string,
   name: PropTypes.string,
-  school: PropTypes.string,
-  job: PropTypes.string,
+  school: PropTypes.object,
+  job: PropTypes.object,
   email: PropTypes.string
 };
 

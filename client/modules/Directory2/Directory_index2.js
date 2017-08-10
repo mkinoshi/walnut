@@ -8,11 +8,15 @@ import css from './Directory2.css';
 import getUsersThunk from '../../thunks/directory_thunks/getUsersThunk';
 import DirectoryCard from './Directory_Card';
 import InfiniteScroll from 'react-infinite-scroller';
+import Select from 'react-select';
+import uuidv4 from 'uuid/v4';
 
 class Directory2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentCards: [],
+      query: ''
     };
   }
 
@@ -26,31 +30,48 @@ class Directory2 extends React.Component {
     sessionStorage.setItem('url', urls);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
+    this.setState({currentCards: nextProps.users});
+  }
+
+  handleChange(value) {
+    console.log('it works!', value);
+    const substring = (value ? value : '').toLowerCase();
+    const filteredCards = this.props.users.filter((user) => {return user.fullName.toLowerCase().includes(substring);});
+    this.setState({currentCards: filteredCards});
+  }
+
   render() {
-    console.log('here are the users', this.props.users);
+    console.log('here are the users', this.props.users, this.state.currentCards);
     return (
-        <div className="Page2">
-          <div className="lockedDiv">
-            <InfiniteScroll
-              className="banterScroller"
-              pageStart={0}
-              hasMore={false}
-              threshold={250}
-              loader={<div className="loader">Loading ...</div>}
-              useWindow={false}
-            >
+      <div>
+        <Select
+          className="search"
+          name="selected-state"
+          value={this.state.query}
+          simpleValue
+          autofocus
+          clearable
+          options={this.props.users.map((user) => {
+            return {value: user.fullName, label: user.fullName};
+          })}
+          placeholder="Search by Name..."
+          onInputChange={this.handleChange.bind(this)}
+        /> <br/>
+        <div className="directoryCardsList">
               {this.props.users.map(user =>
-                <DirectoryCard
+              <DirectoryCard
+                key={uuidv4()}
                 picture={user.pictureURL}
                 name={user.fullName}
                 email={user.contact.email[0]}
-                school={user.education.schools[0]}
+                school={user.education.colleges[0]}
                 job={user.work[0]}
-                />
+              />
               )}
-            </InfiniteScroll>
-          </div>
         </div>
+      </div>
     );
   }
 }
