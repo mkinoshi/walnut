@@ -205,7 +205,7 @@ router.post('/toggle/checked', (req, res) => {
                               })
                             };
                           });
-                          res.json({posts: posts, user: user });
+                          res.json({ posts: posts, user: user, lastRefresh: new Date()});
                         })
                         .catch((err) => {
                           console.log('error 1', err);
@@ -255,7 +255,7 @@ router.post('/toggle/checkedtemp', (req, res) => {
               })
             };
           });
-          res.json({ posts: posts});
+          res.json({ posts: posts, lastRefresh: new Date()});
         })
         .catch((err) => {
           console.log('error 1', err);
