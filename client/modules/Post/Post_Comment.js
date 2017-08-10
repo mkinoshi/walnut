@@ -106,8 +106,8 @@ class Comment extends React.Component {
           {/* <div className="messageNameYou">{this.props.name.split(' ')[0]}</div>*/}
           <div className="userGroupYou">
             <Card className="commentCardYou">
-              <Card.Content >
-                <Card.Description className="messageContent" style={{color: '#fff'}}>
+              <Card.Content className="messageContent">
+                <Card.Description className="messageDescription" style={{color: '#fff'}}>
                     {this.props.content}
                 </Card.Description>
               </Card.Content>
@@ -133,8 +133,8 @@ class Comment extends React.Component {
         trigger = {<div className="messageGroupOther" id={this.props.id}>
           <div className="messageNameOther">{this.props.name.split(' ')[0]}</div>
             <Card className="commentCardOther">
-              <Card.Content>
-                <Card.Description className="messageContent" style={{color: '#fff'}}>
+              <Card.Content className="messageContent">
+                <Card.Description className="messageDescription" style={{color: '#fff'}}>
                     {this.props.content}
                 </Card.Description>
               </Card.Content>
