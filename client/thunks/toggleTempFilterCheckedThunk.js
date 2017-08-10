@@ -11,6 +11,7 @@ const toggleFilterCheckedThunk = (useFilters) => (dispatch) => {
         .then((response) => {
           console.log('backend response', response);
           dispatch({ type: 'GET_DISCOVER_POSTS_DONE', posts: response.data.posts });
+          dispatch({type: 'HAS_MORE'});
         })
         .catch((err) => {
           console.log('error in toggleFilterPref', err);

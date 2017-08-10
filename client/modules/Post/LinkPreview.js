@@ -15,14 +15,18 @@ class LinkPreview extends React.Component {
 
   componentWillMount() {
     if (this.props.url.split('.')[1] === 'youtube') {
-      this.setState({ youtube: this.props.url.split('v=')[1]});
+      if (this.refs.myRef) {
+        this.setState({ youtube: this.props.url.split('v=')[1]});
+      }
       return;
     }
     axios.post('/db/get/linkpreview', {
       url: this.props.url
     })
     .then((response) => {
-      this.setState({ meta: response.data.meta});
+      if (this.refs.myRef) {
+        this.setState({ meta: response.data.meta});
+      }
     })
     .catch((err) => {
       console.log('error in meta scrape', err);
@@ -39,7 +43,7 @@ class LinkPreview extends React.Component {
       }
     };
     return (
-      <div>
+      <div ref="myRef">
         <div className="linkPreviewWrapper">
           {(bool && this.state.meta.image && this.state.meta.description) ?
           <div className="linkPreview">
