@@ -340,6 +340,18 @@
      width: 100%
 }
 
+.lineLeft {
+    height: 200px;
+    width: 6px;
+    background-color: #DADDD8;
+    border-radius: 100px;
+    height: 297px;
+    margin-left: 10px;
+}
+
+.linkPrev {
+    display: flex;
+}
 
 .linkImage {
     display: flex;
