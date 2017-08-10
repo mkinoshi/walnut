@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import css from './Directory2.css';
 import getUsersThunk from '../../thunks/directory_thunks/getUsersThunk';
 import DirectoryCard from './Directory_Card';
+import InfiniteScroll from 'react-infinite-scroller';
 import Select from 'react-select';
 import uuidv4 from 'uuid/v4';
 
@@ -58,17 +59,17 @@ class Directory2 extends React.Component {
           placeholder="Search by Name..."
           onInputChange={this.handleChange.bind(this)}
         /> <br/>
-        <div className="Page2">
-            {this.state.currentCards.map(user =>
+        <div className="directoryCardsList">
+              {this.props.users.map(user =>
               <DirectoryCard
-              key={uuidv4()}
-              picture={user.pictureURL}
-              name={user.fullName}
-              email={user.contact.email[0]}
-              school={user.education.colleges[0]}
-              job={user.work[0]}
+                key={uuidv4()}
+                picture={user.pictureURL}
+                name={user.fullName}
+                email={user.contact.email[0]}
+                school={user.education.colleges[0]}
+                job={user.work[0]}
               />
-            )}
+              )}
         </div>
       </div>
     );
