@@ -15,9 +15,8 @@ class LinkPreview extends React.Component {
 
   componentWillMount() {
     if (this.props.url.split('.')[1] === 'youtube') {
-      if (this.refs.myRef) {
-        this.setState({ youtube: this.props.url.split('v=')[1]});
-      }
+      // TODO take set states out of will mount
+      this.setState({ youtube: this.props.url.split('v=')[1]});
       return;
     }
     axios.post('/db/get/linkpreview', {
@@ -43,7 +42,10 @@ class LinkPreview extends React.Component {
       }
     };
     return (
-      <div ref="myRef">
+      <div ref="myRef" className="linkPrev">
+        {(this.state.youtube === '') ?
+          <div className="lineLeft"></div> : null
+        }
         <div className="linkPreviewWrapper">
           {(bool && this.state.meta.image && this.state.meta.description) ?
           <div className="linkPreview">
@@ -72,20 +74,3 @@ LinkPreview.propTypes = {
 };
 
 export default LinkPreview;
-
-
-// description;
-// 'Create an account or log into Facebook. Connect with friends, family and other people you know. Share photos and videos, send messages and get updates.';
-
-// image;
-// 'https://www.facebook.com/images/fb_icon_325x325.png';
-
-// publisher;
-// 'Facebook';
-
-// title;
-// 'Facebook - Log In or Sign Up';
-
-// url;
-// 'https://www.facebook.com/'
-// ;

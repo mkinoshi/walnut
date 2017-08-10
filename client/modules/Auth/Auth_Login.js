@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import { Button, Input, Form, Checkbox } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
+import css from './Auth.css';
 
 class Login extends React.Component {
   constructor() {
@@ -41,32 +44,34 @@ class Login extends React.Component {
 
   render() {
     return (
-        <div>
-          <h1 style={{textAlign: 'center'}}>Login</h1>
-          <div className="container col-xs-4 col-xs-offset-4">
-            <button onClick={() => this.fbLogin()}>Continue with Facebook</button>
-            <button onClick={() => this.googleLogin()}>Continue with Google</button>
-            <form>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input className="form-control"
-                       type="text"
-                       name="email"
-                       onChange={(e) => this.handleEmailChange(e)}
-                       value={this.state.emailVal} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input className="form-control"
-                       type="password"
-                       name="password"
-                       onChange={(e) => this.handlePasswordChange(e)}
-                       value={this.state.passwordVal} />
-              </div>
-            </form>
-            <button onClick={(e) => {this.regLogin(e);}}>Login</button>
-            <h2>New user?</h2>
-            <Link to="/app/register">Go to Registration</Link>
+        <div className="loginPage">
+          <div className="loginCard">
+            <h1>Login</h1>
+            <div className="loginBox">
+              <Form>
+                <Form.Field>
+                  <label>Email</label>
+                  <input
+                    placeholder="enter email"
+                    type="text"
+                    name="email"
+                    onChange={(e) => this.handleEmailChange(e)}
+                    value={this.state.emailVal} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    placeholder="enter password"
+                    name="password"
+                    onChange={(e) => this.handlePasswordChange(e)}
+                    value={this.state.passwordVal} />
+                </Form.Field>
+                <Button onClick={(e) => { this.regLogin(e); }} type="submit">Submit</Button>
+              </Form>
+              <h2>New user?</h2>
+              <Link to="/app/register">Go to Registration</Link>
+            </div>
           </div>
         </div>
     );

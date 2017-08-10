@@ -39,8 +39,11 @@ class FilterPrefContainer extends React.Component {
     if (value) {
       const options = value.split(',');
       const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
+      console.log(this.props.otherFilters);
+      console.log(this.state.useFilters);
+      console.log(options);
       if (!this.isPrefSelected(options)) {
-        this.props.toggleTempChecked(this.state.useFilters.concat(send).map((filt) => filt._id));
+        this.props.toggleTempChecked(send.map((filt) => filt._id));
         this.setState({useFilters: this.state.useFilters.concat(send)});
       }
     }
@@ -67,7 +70,7 @@ class FilterPrefContainer extends React.Component {
       return -1;
     }
     const indxs = this.state.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
-    const arrFilt = this.props.otherFilters;
+    const arrFilt = this.props.otherFilters.slice();
     indxs.forEach((indx) => arrFilt.splice(indx, 1));
     return arrFilt.map((tag) => {
       return {value: tag.name, label: '#' + tag.name};
@@ -78,17 +81,17 @@ class FilterPrefContainer extends React.Component {
     if (this.props.communityPreference.includes(id)) {
       return 'checked';
     }
-    let useCheck = false;
-    if(this.state.useFilters.length > 0) {
-      for (let i = 0; i < this.state.useFilters.length; i++) {
-        if (this.state.useFilters[i]._id === id) {
-          useCheck = true;
-        }
-      }
-    }
-    if(useCheck) {
-      return 'checked';
-    }
+    // let useCheck = false;
+    // if(this.state.useFilters.length > 0) {
+    //   for (let i = 0; i < this.state.useFilters.length; i++) {
+    //     if (this.state.useFilters[i]._id === id) {
+    //       useCheck = true;
+    //     }
+    //   }
+    // }
+    // if(useCheck) {
+    //   return 'checked';
+    // }
     return '';
   }
 
@@ -96,16 +99,17 @@ class FilterPrefContainer extends React.Component {
     const filters = this.props.defaultFilters ? this.props.defaultFilters.concat(this.state.useFilters) : null;
     const options = this.selectOptions();
     const checked = this.props.defaultFilters ? filters.map((filter) => this.checkedBoxTagAdd(filter._id)) : null;
+    console.log(checked);
     return (
       <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.defaultFilters ?
+          {filters ?
             filters.map((filter, index) => (
                 <p key={index}>
                   <input type="checkbox" id={index}
                     checked={checked[index]}
                     value={filter.name}
-                    onChange={() => { this.props.toggleChecked(filter._id); }} />
+                    onChange={() => { console.log('I am toggling here', filter); this.props.toggleChecked(filter._id); }} />
                   <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
                 </p>
               ))

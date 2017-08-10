@@ -14,8 +14,14 @@ const updateUserCommunityThunk = (community) => (dispatch) => {
       console.log(community);
       console.log(response.data);
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
+      dispatch({
+        type: 'GET_DISCOVER_DATA_DONE',
+        defaultFilters: response.data.defaultFilters,
+        otherFilters: response.data.otherFilters,
+        posts: response.data.posts,
+        lastRefresh: response.data.lastRefresh
+      });
       dispatch({type: 'DISCOVER_READY'});
-      // .push('/app/community/' + community.title.split(' ').join('') + '/discover');
     })
     .catch((err) =>{
       console.log('error in newTag', err);

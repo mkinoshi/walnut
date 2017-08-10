@@ -1,0 +1,18 @@
+.loginBox {
+    width: 400px;
+
+}
+
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginCard {
+    background-color: #DADDD8;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 150px;
+}
