@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { Icon, Image, Popup, Dropdown} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import css from './App.css';
+import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
+import {history} from '../Auth/Auth_index';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -19,10 +21,12 @@ class Navbar extends React.Component {
     this.props.changeTab(num);
   }
 
+  handleLogout() {
+    this.props.onLogout(history);
+  }
+
   render() {
     let title;
-    console.log('yoyoyoyoyyoyoyoyoyoyoyo');
-    console.log('this.props.community', this.props.community);
     if (this.props.community) {
       title = this.props.community.title ? this.props.community.title.split(' ').join('') : 'bet';
     } else {
@@ -101,7 +105,7 @@ class Navbar extends React.Component {
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item><a className="logoutText" href="/logout">Logout</a></Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               {/* <a className="logoutText" href="/logout">
@@ -119,7 +123,9 @@ Navbar.propTypes = {
   tab: PropTypes.number,
   changeTab: PropTypes.func,
   isEdited: PropTypes.bool,
-  fullName: PropTypes.string
+  fullName: PropTypes.string,
+  onLogout: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
@@ -131,7 +137,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab})
+  changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
+  onLogout: (his) => dispatch(signOutThunk(his))
 });
 
 

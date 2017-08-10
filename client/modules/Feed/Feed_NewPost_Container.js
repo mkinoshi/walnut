@@ -12,6 +12,7 @@ import ReactUploadFile from 'react-upload-file';
 import { Icon, Button, Input } from 'semantic-ui-react';
 import superagent from 'superagent';
 import css from './Feed.css';
+import Textarea from 'react-textarea-autosize';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -77,19 +78,23 @@ class NewPostContainer extends React.Component {
       .field('body', this.state.postBody ? this.state.postBody : '')
       .field('tags', this.state.postTags ? this.state.postTags : [])
       .field('name', this.state.newFileName ? this.state.newFileName : '')
+      .field('lastRefresh', this.props.lastRefresh)
       .attach('attach', this.state.file)
       .end((err, res) => {
         if (err) {
           console.log(err);
           alert('failed uploaded!');
         }
-        this.props.discoverLoader();
+        this.props.refreshDiscover(res.data.posts, res.data.lastRefresh);
         this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
-      console.log('new post dispatching');
-      this.props.newPost(this.state.postBody, this.state.postTags);
-      this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
+      if (this.state.postBody) {
+        this.props.newPost(this.state.postBody, this.state.postTags);
+        this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
+      } else {
+        alert('Oops, post is empty');
+      }
     }
   }
 
@@ -99,6 +104,13 @@ class NewPostContainer extends React.Component {
 
   changeFileName(name) {
     this.setState({newFileName: name});
+  }
+
+  handleKeyPress(event) {
+    if(event.key === 'Enter') {
+      console.log('enter press here! ');
+      console.log(event);
+    }
   }
 
   render() {
@@ -114,9 +126,12 @@ class NewPostContainer extends React.Component {
       <div className="newPost">
         <h3 id="newPostHeader">New Conversation</h3>
         <div className="row newPostContent">
-          <Input id="textarea1"
+          <Textarea id="textarea1"
             value={this.state.postBody}
-            onChange={(e) => this.handleChange(e)} />
+            minRows={3}
+            onChange={(e) => this.handleChange(e)}
+            onKeyPress={(e) => this.handleKeyPress(e)}
+            />
         </div>
         <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
@@ -156,16 +171,18 @@ class NewPostContainer extends React.Component {
 NewPostContainer.propTypes = {
   newPost: PropTypes.func,
   newTag: PropTypes.func,
-  discoverLoader: PropTypes.func
+  refreshDiscover: PropTypes.func,
+  lastRefresh: PropTypes.string
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  lastRefresh: state.discoverReducer.lastRefresh
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => dispatch(newPostThunk(postBody, postTags)),
+  refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
+  newPost: (postBody, postTags, lastRefresh) => dispatch(newPostThunk(postBody, postTags, lastRefresh)),
   newTag: (tag) => dispatch(newTagThunk(tag)),
-  discoverLoader: () => dispatch(discoverLoadThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

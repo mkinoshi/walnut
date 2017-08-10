@@ -111,8 +111,46 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
     });
     newPost.save()
     .then((post) => {
-      console.log(post);
-      res.json({success: true});
+      let posts = [];
+      const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } }
+        : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } };
+      Post.find(filter)
+        .sort({ createdAt: -1 })
+        .populate('tags')
+        .populate('comments')
+        .populate('comments.createdBy')
+        .populate('createdBy')
+        .then((postArr) => {
+          posts = postArr.map((postObj) => {
+            return {
+              postId: postObj._id,
+              username: postObj.createdBy.fullName,
+              pictureURL: postObj.createdBy.pictureURL,
+              content: postObj.content,
+              createdAt: postObj.createdAt,
+              tags: postObj.tags,
+              likes: postObj.likes,
+              commentNumber: postObj.commentNumber,
+              link: postObj.link,
+              attachment: postObj.attachment,
+              comments: postObj.comments.map((commentObj) => {
+                return {
+                  commentId: commentObj._id,
+                  username: commentObj.createdBy.username,
+                  pictureURL: commentObj.createdBy.pictureURL,
+                  content: commentObj.content,
+                  createdAt: commentObj.createdAt,
+                  likes: commentObj.likes
+                };
+              })
+            };
+          });
+          res.json({ posts: posts, lastRefresh: new Date() });
+        })
+        .catch((er) => {
+          console.log('eror in aws save fetching recent posts', er);
+          res.json(er);
+        });
     })
     .catch((error) => console.log('error in aws db save', error));
   });

@@ -21,6 +21,7 @@ class DirectoryCard extends React.Component {
   }
 
   render() {
+    console.log('this.props.school', this.props.school);
     return (
         <Card className="directoryCard">
             <Image className="cardImage" src={this.props.picture} />
@@ -31,12 +32,12 @@ class DirectoryCard extends React.Component {
                 <Card.Meta className="directoryMeta">
                     <span>
                         <Icon name="student" />
-                      {this.props.school}
+                      {this.props.school ? this.props.school.name : 'N/A'}
                     </span>
                     <br />
                     <span>
                         <Icon name="travel" />
-                      {this.props.job}
+                      {this.props.job ? this.props.job.company : 'N/A'}
                     </span>
                 </Card.Meta>
             </Card.Content>
