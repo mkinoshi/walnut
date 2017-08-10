@@ -118,7 +118,9 @@ class Comment extends React.Component {
     return (
       <div className="userGroupOther">
         <Popup
-        trigger= {<Image avatar className="messageAvatarOther" src={this.props.authorPhoto} />}
+        trigger= {<div className="imageWrapper messageAvatarOther">
+          <img className="postUserImage" src={this.props.authorPhoto} />
+        </div>}
         content={this.props.name}
         position="left center"
         inverted
