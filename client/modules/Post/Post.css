@@ -232,8 +232,7 @@
 }
 
 .commentNum {
-    font-size: 12px;
-    color: red;
+    color: #4CC1FC;
     margin-left: 10px;
     margin-top: 4px;
     margin-right: 3px;
@@ -241,8 +240,9 @@
 }
 
 .userNum {
-    margin-right: 8px;
+    margin-right: 3px;
     margin-top: 4px;
+    color: #4CC1FC;
 }
 
 .commentDiv {
@@ -311,7 +311,16 @@
 .messageAvatarYou {
 }
 
-.messageAvatarOther {
+.imageWrapper.messageAvatarOther {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 8px;
+    background-color: red;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
     align-self: flex-end;
     margin-bottom: 5px;
 }

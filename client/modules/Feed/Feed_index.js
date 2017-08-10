@@ -28,13 +28,13 @@ class Feed extends React.Component {
     clearInterval(refresh);
   }
 
-  mofoMouseOver() {
-    refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh); }, 5000);
-  }
-
-  mofoMouseOff() {
-    clearInterval(refresh);
-  }
+  // mofoMouseOver() {
+  //   refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh); }, 5000);
+  // }
+  //
+  // mofoMouseOff() {
+  //   clearInterval(refresh);
+  // }
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});
@@ -59,7 +59,7 @@ class Feed extends React.Component {
             loader={<Loader active inline="centered" />}
             useWindow={false}
             >
-            <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
+            {/* <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>*/}
           {this.props.data.posts.map((post) => (
             <Post ref="card"
             key={post.postId}
