@@ -12,6 +12,7 @@ import ReactUploadFile from 'react-upload-file';
 import { Icon, Button, Input } from 'semantic-ui-react';
 import superagent from 'superagent';
 import css from './Feed.css';
+import Textarea from 'react-textarea-autosize';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -87,9 +88,12 @@ class NewPostContainer extends React.Component {
         this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
-      console.log('new post dispatching');
-      this.props.newPost(this.state.postBody, this.state.postTags);
-      this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
+      if (this.state.postBody) {
+        this.props.newPost(this.state.postBody, this.state.postTags);
+        this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
+      } else {
+        alert('Oops, post is empty');
+      }
     }
   }
 
@@ -99,6 +103,13 @@ class NewPostContainer extends React.Component {
 
   changeFileName(name) {
     this.setState({newFileName: name});
+  }
+
+  handleKeyPress(event) {
+    if(event.key === 'Enter') {
+      console.log('enter press here! ');
+      console.log(event);
+    }
   }
 
   render() {
@@ -114,9 +125,12 @@ class NewPostContainer extends React.Component {
       <div className="newPost">
         <h3 id="newPostHeader">New Conversation</h3>
         <div className="row newPostContent">
-          <Input id="textarea1"
+          <Textarea id="textarea1"
             value={this.state.postBody}
-            onChange={(e) => this.handleChange(e)} />
+            minRows={3}
+            onChange={(e) => this.handleChange(e)}
+            onKeyPress={(e) => this.handleKeyPress(e)}
+            />
         </div>
         <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
