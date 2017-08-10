@@ -15,9 +15,8 @@ class LinkPreview extends React.Component {
 
   componentWillMount() {
     if (this.props.url.split('.')[1] === 'youtube') {
-      if (this.refs.myRef) {
-        this.setState({ youtube: this.props.url.split('v=')[1]});
-      }
+      // TODO take set states out of will mount
+      this.setState({ youtube: this.props.url.split('v=')[1]});
       return;
     }
     axios.post('/db/get/linkpreview', {
@@ -43,7 +42,7 @@ class LinkPreview extends React.Component {
       }
     };
     return (
-      <div ref="myRef">
+      <div ref="myRef" className="linkPrev">
         {(this.state.youtube === '') ?
           <div className="lineLeft"></div> : null
         }
