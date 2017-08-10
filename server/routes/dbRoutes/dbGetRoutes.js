@@ -154,7 +154,9 @@ router.get('/next10', (req, res) => {
           } else{
             const filters = community.tags;
             let posts = [];
-            Post.find({ community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) }})
+            const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } }
+              : { community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+            Post.find(filter)
                     .sort({createdAt: -1})
                     .skip(Number(req.query.lastOne))
                     .limit(20)
@@ -166,7 +168,7 @@ router.get('/next10', (req, res) => {
                       posts = postArr.map((postObj) => {
                         return {
                           postId: postObj._id,
-                          username: postObj.createdBy.username,
+                          username: postObj.createdBy.fullName,
                           pictureURL: postObj.createdBy.pictureURL,
                           content: postObj.content,
                           createdAt: postObj.createdAt,

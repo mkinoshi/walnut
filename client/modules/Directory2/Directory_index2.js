@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import css from './Directory2.css';
 import getUsersThunk from '../../thunks/directory_thunks/getUsersThunk';
 import DirectoryCard from './Directory_Card';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class Directory2 extends React.Component {
   constructor(props) {
@@ -29,15 +30,26 @@ class Directory2 extends React.Component {
     console.log('here are the users', this.props.users);
     return (
         <div className="Page2">
-            {this.props.users.map(user =>
-              <DirectoryCard
-              picture={user.pictureURL}
-              name={user.fullName}
-              email={user.contact.email[0]}
-              school={user.education.schools[0]}
-              job={user.work[0]}
-              />
-            )}
+          <div className="lockedDiv">
+            <InfiniteScroll
+              className="banterScroller"
+              pageStart={0}
+              hasMore={false}
+              threshold={250}
+              loader={<div className="loader">Loading ...</div>}
+              useWindow={false}
+            >
+              {this.props.users.map(user =>
+                <DirectoryCard
+                picture={user.pictureURL}
+                name={user.fullName}
+                email={user.contact.email[0]}
+                school={user.education.schools[0]}
+                job={user.work[0]}
+                />
+              )}
+            </InfiniteScroll>
+          </div>
         </div>
     );
   }

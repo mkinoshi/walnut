@@ -146,6 +146,7 @@ body ::-webkit-scrollbar-thumb {
     width: 513px;
     height: 612px;
     position: absolute;
+    pointer-events: none;
 }
 
 .banterScroller {
