@@ -60,7 +60,7 @@ class Directory2 extends React.Component {
           onInputChange={this.handleChange.bind(this)}
         /> <br/>
         <div className="directoryCardsList">
-              {this.props.users.map(user =>
+              {this.state.currentCards.map(user =>
               <DirectoryCard
                 key={uuidv4()}
                 picture={user.pictureURL}
