@@ -78,13 +78,14 @@ class NewPostContainer extends React.Component {
       .field('body', this.state.postBody ? this.state.postBody : '')
       .field('tags', this.state.postTags ? this.state.postTags : [])
       .field('name', this.state.newFileName ? this.state.newFileName : '')
+      .field('lastRefresh', this.props.lastRefresh)
       .attach('attach', this.state.file)
       .end((err, res) => {
         if (err) {
           console.log(err);
           alert('failed uploaded!');
         }
-        this.props.discoverLoader();
+        this.props.refreshDiscover(res.data.posts, res.data.lastRefresh);
         this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
@@ -170,16 +171,18 @@ class NewPostContainer extends React.Component {
 NewPostContainer.propTypes = {
   newPost: PropTypes.func,
   newTag: PropTypes.func,
-  discoverLoader: PropTypes.func
+  refreshDiscover: PropTypes.func,
+  lastRefresh: PropTypes.string
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  lastRefresh: state.discoverReducer.lastRefresh
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newPost: (postBody, postTags) => dispatch(newPostThunk(postBody, postTags)),
+  refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
+  newPost: (postBody, postTags, lastRefresh) => dispatch(newPostThunk(postBody, postTags, lastRefresh)),
   newTag: (tag) => dispatch(newTagThunk(tag)),
-  discoverLoader: () => dispatch(discoverLoadThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

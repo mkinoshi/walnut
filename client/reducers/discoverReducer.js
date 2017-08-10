@@ -7,7 +7,8 @@ const discoverReducer = (state = {
   hasMore: true,
   isFetching: false,
   isReady: true,
-  holdDiscover: false
+  holdDiscover: false,
+  lastRefresh: ''
 }, action) => {
   switch (action.type) {
     case 'DISCOVER_IS_LOADING':
@@ -22,14 +23,22 @@ const discoverReducer = (state = {
         otherFilters: action.otherFilters,
         posts: action.posts,
         hasMore: true,
-        isFetching: false
+        isFetching: false,
+        lastRefresh: action.lastRefresh
+      };
+    case 'GET_DISCOVER_DATA_REFRESH':
+      return {
+        ...state,
+        posts: action.posts.concat(state.posts).slice(0, 10),
+        lastRefresh: action.lastRefresh
       };
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'GET_DISCOVER_POSTS_DONE':
       return {
         ...state,
-        posts: action.posts
+        posts: action.posts,
+        lastRefresh: action.lastRefresh
       };
     case 'GET_NEXT_TEN_DONE':
       return {

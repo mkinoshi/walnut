@@ -149,3 +149,13 @@
 body ::-webkit-scrollbar-thumb {
     background: none;
 }
+
+.deMofoSaviour {
+    width: 513px;
+    height: 612px;
+    position: absolute;
+}
+
+.banterScroller {
+    position: relative;
+}

@@ -12,7 +12,8 @@ const discoverLoadThunk = () => (dispatch) => {
             type: 'GET_DISCOVER_DATA_DONE',
             defaultFilters: response.data.defaultFilters,
             otherFilters: response.data.otherFilters,
-            posts: response.data.posts
+            posts: response.data.posts,
+            lastRefresh: response.data.lastRefresh
           });
         })
         .catch((err) => {
