@@ -44,9 +44,7 @@ class ModalInstance extends React.Component {
 
   scrollToBottom(id) {
     // $('.scrolling').scrollTop(50000);
-    console.log('tried scrolled to bottom', id);
     const elem = document.getElementById(id);
-    console.log('id', id, 'elem', elem);
     if (elem) {
       elem.scrollIntoView();
       this.setState({hitBottom: true, c: this.state.c + 1});
@@ -66,25 +64,20 @@ class ModalInstance extends React.Component {
     // const elmnt = document.getElementById(this.state.firstId);
     // console.log('first ID', this.state.firstId, elmnt);
     const oldId = this.state.firstId;
-    console.log('old', this.state.firstId);
     if (this.state.hitBottom) {
       if (data.postId) {
         const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey()
                 .endAt(this.state.firstKey).limitToLast(15);
         messagesRef.once('value', (snapshot) => {
-          console.log('got load more', snapshot.val());
           const newOnes = _.values(snapshot.val());
           newOnes.pop();
           const concat = newOnes.concat(this.state.messages);
-          console.log('concat', concat, newOnes);
           const more = newOnes.length > 0;
           const newId = (newOnes.length > 0) ? newOnes[0].authorId + '' + newOnes[0].content : '';
-          console.log('new', newId);
           this.setState({messages: concat, firstKey: Object.keys(snapshot.val())[0], firstId: newId, hitBottom: false, hasMore: more});
           // const scrollAmount = newOnes.length * 90 + 90;
           if (newId) {
             this.scrollToBottom(oldId);
-            console.log('somehow');
           }
         });
       } else {
@@ -117,17 +110,15 @@ class ModalInstance extends React.Component {
         authorId: user.uid,
         content: useBody,
         createdAt: new Date(),
-        authorPhoto: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg'
+        authorPhoto: this.props.currentUser.pictureURL
       };
       const updates = {};
       const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
-      console.log('info', newMessageKey, message);
       updates['/messages/' + id + '/' + newMessageKey] = message;
       firebaseApp.database().ref().update(updates);
       this.setState({commentBody: ''});
       const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
       messagesCountRef.transaction((currentValue) => {
-        console.log('current value', currentValue);
         return (currentValue || 0) + 1;
       });
     }
@@ -143,7 +134,6 @@ class ModalInstance extends React.Component {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
-          console.log('got it', snapshot.val(), typeof(snapshot.val()));
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
@@ -177,7 +167,7 @@ class ModalInstance extends React.Component {
              basic
              trigger={
         <div className="commentDiv">
-          <span className="userNum">+{this.state.members}</span>
+          <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
           <Icon size="big" name="users" className="users" />
           <span className="commentNum">+{this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
@@ -185,7 +175,8 @@ class ModalInstance extends React.Component {
         closeIcon="close"
         >
         <Modal.Header>
-          <NestedPostModal postData={this.props.postData} currentUser={this.props.currentUser}/>
+          <NestedPostModal postData={this.props.postData}
+                           currentUser={this.props.currentUser}/>
         </Modal.Header>
         <Modal.Content scrolling className="scrollContentClass">
             <InfiniteScroll
