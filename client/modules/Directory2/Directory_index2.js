@@ -46,12 +46,16 @@ class Directory2 extends React.Component {
     return (
       <div>
         <Select
+          className="search"
           name="selected-state"
           value={this.state.query}
           simpleValue
           autofocus
           clearable
-          placeholder="Search by Name"
+          options={this.props.users.map((user) => {
+            return {value: user.fullName, label: user.fullName};
+          })}
+          placeholder="Search by Name..."
           onInputChange={this.handleChange.bind(this)}
         /> <br/>
         <div className="Page2">
