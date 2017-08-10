@@ -65,17 +65,13 @@ class Comment extends React.Component {
   }
 
   getUseDate(dateObj) {
-    console.log('dateObj', dateObj);
     const now = new Date().toString().slice(4, 24).split(' ');
     const date = new Date(dateObj);
     const dateString = date.toString().slice(4, 24);
     const split = dateString.split(' ');
-    console.log('split', split);
     const useMonth = dateStuff.months[split[0]];
     const useDay = dateStuff.days[split[1]];
     const timeArr = split[3].split(':');
-    console.log('timeArr', timeArr);
-    console.log('stuff', useMonth, useDay);
     let time;
     let hour;
     let isPM;
@@ -102,16 +98,17 @@ class Comment extends React.Component {
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
       return (
         <Popup
-        trigger={<div className="messageGroupYou">
-          {/* <Image avatar className="message you" src={this.props.authorPhoto}/>*/}
-          <div className="messageNameYou">{this.props.name.split(' ')[0]}</div>
-          <Card className="commentCardYou">
-            <Card.Content >
-              <Card.Description className="messageContent" style={{color: '#fff'}}>
-                  {this.props.content}
-              </Card.Description>
-            </Card.Content>
-          </Card>
+        trigger={<div className="messageGroupYou" id={this.props.id}>
+          {/* <div className="messageNameYou">{this.props.name.split(' ')[0]}</div>*/}
+          <div className="userGroupYou">
+            <Card className="commentCardYou">
+              <Card.Content >
+                <Card.Description className="messageContent" style={{color: '#fff'}}>
+                    {this.props.content}
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </div>
         </div>}
         content={useDate}
         position="right center"
@@ -119,21 +116,28 @@ class Comment extends React.Component {
       );
     }
     return (
-      <Popup
-      trigger = {<div className="messageGroupOther">
-        {/* <Image avatar className="message other" src={this.props.authorPhoto}/>*/}
-        <div className="messageNameOther">{this.props.name}</div>
-        <Card className="commentCardOther">
-          <Card.Content>
-            <Card.Description className="messageContent" style={{color: '#fff'}}>
-                {this.props.content}
-            </Card.Description>
-          </Card.Content>
-        </Card>
-      </div>}
-      content={useDate}
-      position="left center"
-      inverted />
+      <div className="userGroupOther">
+        <Popup
+        trigger= {<Image avatar className="messageAvatarOther" src={this.props.authorPhoto} />}
+        content={this.props.name}
+        position="left center"
+        inverted
+        />
+        <Popup
+        trigger = {<div className="messageGroupOther" id={this.props.id}>
+          <div className="messageNameOther">{this.props.name.split(' ')[0]}</div>
+            <Card className="commentCardOther">
+              <Card.Content>
+                <Card.Description className="messageContent" style={{color: '#fff'}}>
+                    {this.props.content}
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </div>}
+        content={useDate}
+        position="left center"
+        inverted />
+      </div>
     );
   }
 }
@@ -145,7 +149,8 @@ Comment.propTypes = {
   content: PropTypes.string,
   currentUser: PropTypes.object,
   authorId: PropTypes.string,
-  authorPhoto: PropTypes.string
+  authorPhoto: PropTypes.string,
+  id: PropTypes.string,
 };
 
 export default Comment;

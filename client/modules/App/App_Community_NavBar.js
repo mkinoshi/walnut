@@ -94,7 +94,7 @@ class Navbar extends React.Component {
                     </div>
                   </div> : null}
               </div>
-              <Dropdown className="profileDropdown" text={this.props.fullName} pointing className="link item">
+              <Dropdown className="profileDropdown link item" text={this.props.fullName} pointing>
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Link className="profilePopeoutHeaderTab" to={'/app/community/' + title + '/editprofile'}>

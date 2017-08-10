@@ -10,6 +10,8 @@ import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import './Feed.css';
+import { Loader } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 const styles = {
   outer: {
@@ -107,14 +109,14 @@ class Feed extends React.Component {
     return (
       <div className="Feed_Wrapper">
         {this.props.data.isFetching || !this.props.isReady ?
-          <p>loading is true inside the reducer</p> :
+            <Loader active inline="centered" /> :
            <div style={{height: '88vh', overflow: 'auto'}}>
             <InfiniteScroll
             pageStart={0}
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}
             threshold={250}
-            loader={<div className="loader">Loading ...</div>}
+            loader={<Loader active inline="centered" />}
             useWindow={false}
             >
           {this.props.data.posts.map((post) => (
