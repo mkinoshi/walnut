@@ -41,7 +41,7 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
-    if (!(this.props.data.posts.length < 10)) {
+    if(this.props.data.posts.length >= 10) {
       this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh);
     }
   }

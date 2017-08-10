@@ -40,33 +40,25 @@ class LinkPreview extends React.Component {
     };
     return (
       <div>
-        <Grid columns={3} divided style={{marginLeft: '2px', marginRight: '2px'}}>
-          <Grid.Row>
-            <Grid.Column width={1}>
-            </Grid.Column>
-            <Grid.Column width={14}>
-              <div className="linkPreviewWrapper">
-                {(bool && this.state.meta.image && this.state.meta.description) ?
-                <div className="linkPreview">
-                    <a href={this.state.meta.url}><h3 className="linkTitle">{this.state.meta.title}</h3></a><br />
-                    <p className="linkDesc">{this.state.meta.description}</p><br />
-                    <div className="linkImage">
-                        <img className="linkImg" src={this.state.meta.image} />
-                    </div>
-                </div>
-                : null
-                }
-                {(this.state.youtube !== '') ?
-                <YouTube
-                    videoId={this.state.youtube}
-                    opts={opts}
-                    onReady={this._onReady}
-                /> : null
-                }
+        <div className="linkPreviewWrapper">
+          {(bool && this.state.meta.image && this.state.meta.description) ?
+          <div className="linkPreview">
+              <a href={this.state.meta.url}><h3 className="linkTitle">{this.state.meta.title}</h3></a><br />
+              <p className="linkDesc">{this.state.meta.description}</p><br />
+              <div className="linkImage">
+                  <img className="linkImg" src={this.state.meta.image} />
               </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+          </div>
+          : null
+          }
+          {(this.state.youtube !== '') ?
+          <YouTube
+              videoId={this.state.youtube}
+              opts={opts}
+              onReady={this._onReady}
+          /> : null
+          }
+        </div>
       </div>
         );
   }

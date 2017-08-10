@@ -6,6 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 import css from './Post.css';
 import PDF from 'react-pdf-js';
 import { Player } from 'video-react';
+import superagent from 'superagent';
 
 class MediaAttachment extends React.Component {
   constructor(props) {
@@ -17,6 +18,18 @@ class MediaAttachment extends React.Component {
 
   toggleDownloadHover() {
     this.setState({hoverDownloadCard: !this.state.hoverDownloadCard});
+  }
+
+  downloadS3(url) {
+    superagent.post('/aws/download/post')
+    .field('url', url.split('/')[4])
+    .end((err, res) => {
+      if (err) {
+        console.log(err);
+        alert('failed uploaded!');
+      }
+      console.log('aws download response', res);
+    });
   }
 
   whatShouldIRender() {
@@ -49,7 +62,7 @@ class MediaAttachment extends React.Component {
             <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
               <Icon name="file code outline" size="huge"/>
               <p>{this.props.data.name}</p>
-              <a className="downloadButton" href={this.props.data.url}> {this.state.hoverDownloadCard ? <Icon name="cloud download" size="big" /> : null}</a>
+              {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.data.url)} className="downloadButton" name="cloud download" size="big" /> : null}
             </Card>
           </div>
       );
@@ -59,7 +72,7 @@ class MediaAttachment extends React.Component {
           <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
               <Icon name="file outline" size="huge" className="downloadFileIcon"/>
               <p className="downloadFileName">{this.props.data.name}</p>
-              <a className="downloadButton" href={this.props.data.url}> {this.state.hoverDownloadCard ? <Icon name="cloud download" size="big" /> : null}</a>
+              {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.data.url)} className="downloadButton" name="cloud download" size="big" /> : null}
           </Card>
         </div>
     );
