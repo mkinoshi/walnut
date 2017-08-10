@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
-import EditProfile from '../EditProfile/EditProfile_index';
+// import EditProfile from '../EditProfile/EditProfile_index';
 import getUser from '../../thunks/app_thunks/getAppThunk';
 import getCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
 
@@ -29,7 +29,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
             <Route path="/app/community" render={() => <Community history={history} />} />
-            <Route path="/app/editprofile" component={EditProfile} />
+            {/* <Route path="/app/editprofile" component={EditProfile} /> */}
           </Switch>
         </div>
     );

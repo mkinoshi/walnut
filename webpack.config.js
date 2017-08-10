@@ -11,15 +11,6 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        enforce: "pre",
-        loader: "eslint-loader",
-        query: {
-          configFile: './.eslintrc'
-        }
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -44,6 +35,9 @@ module.exports = {
           test: /\.(svg|eot|ttf|woff|woff2)?$/
       },
     ]
+  },
+  resolve: {
+    extensions: ['.js']
   },
   stats: {
     colors: true

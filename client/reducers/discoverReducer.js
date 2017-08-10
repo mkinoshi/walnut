@@ -65,6 +65,11 @@ const discoverReducer = (state = {
         ...state,
         filters: action.filters
       };
+    case 'HAS_MORE':
+      return {
+        ...state,
+        hasMore: true
+      };
     default:
       return state;
   }

@@ -269,7 +269,7 @@
 .ui.card.commentCardOther {
     background-color: #C0BFC4;
     box-shadow: none;
-    margin: 0 10px 10px 5px;
+    margin: 0 10px 5px 5px;
     clear:both;
     width: auto;
     max-width: 270px;
@@ -289,11 +289,15 @@
 .ui.card.commentCardYou {
     background-color: #4CC1FC;
     box-shadow: none;
-    margin:0 10px 10px 10px;
+    margin:0 10px 5px 10px;
     clear: both;
     width: auto;
     max-width: 270px;
     border-radius: 16px;
+}
+
+.messageContent {
+    padding: 5px 9px 5px 9px !important;
 }
 
 .messageNameYou {
@@ -385,4 +389,21 @@ body ::-webkit-scrollbar-track {
 
 iframe {
     width: 100%
+}
+
+.inModalUsers {
+    margin-left: 20px;
+}
+
+.modalHeader {
+    display: -webkit-inline-box !important;
+}
+
+#messageInput{
+    border-color: transparent!important;
+    background-color: transparent!important;
+    padding: 0!important;
+    box-shadow: none!important;
+    border-radius: 0!important;
+    color: rgba(255,255,255,.9);
 }
