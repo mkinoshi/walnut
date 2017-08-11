@@ -1,4 +1,4 @@
 git add .
 git commit -m "pushing to heroku"
-git push heroku master --force
+git push heroku latif:master --force
 heroku open
