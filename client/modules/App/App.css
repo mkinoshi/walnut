@@ -155,3 +155,63 @@
 .ui.dropdown > .text {
     font-size: 20px;
 }
+
+
+.communityCard {
+    margin: 20px 40px 20px 40px !important;
+    width: 220px !important;
+    height: auto !important;
+
+    box-shadow: none !important;
+}
+
+.communityCardImage {
+    object-fit: cover !important;
+}
+
+.communitiesContainer {
+    display: -webkit-inline-box;
+    overflow: auto;
+
+}
+
+.walnutContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #313D4D;
+}
+
+.communityCardContent {
+    padding: 10px !important;
+}
+
+.Heading {
+    color: #F1F1EF;
+    padding: 20px 20px 10px 20px;
+}
+
+.subHead {
+    padding: 0px 20px 0px 35px;
+    color: #F1F1EF;
+}
+
+.modalTrigger {
+    float: right;
+    margin-right: 50px !important;
+}
+
+.hashtag.icon {
+    color: #4CC1FC;
+}
+
+.addButton {
+    margin-left: 15px !important;
+}
+
+.joinButton {
+    float: right;
+}
+
+.titleInput {
+    margin-bottom: 15px;
+}

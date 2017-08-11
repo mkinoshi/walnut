@@ -23,6 +23,7 @@ class Auth extends React.Component {
 
   componentWillMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
+      console.log(user);
       if (!user) {
         // this.context.history.push('/app/walnuthome');
         history.replace('/app/login');
