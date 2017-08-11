@@ -39,15 +39,15 @@ class WalnutHomeContainer extends React.Component {
     this.props.getAllCommunities();
   }
 
+  componentDidMount() {
+    localStorage.setItem('url', '/walnuthome');
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.isCreated && !this.state.isCalled) {
       nextProps.getAllCommunities();
-      this.setState({isCalled: true});
+      this.setState({ isCalled: true });
     }
-  }
-
-  componentDidMount() {
-    localStorage.setItem('url', '/walnuthome');
   }
 
 
