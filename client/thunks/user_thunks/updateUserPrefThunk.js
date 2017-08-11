@@ -5,7 +5,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router';
 import { push } from 'react-router-redux';
 
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const updateUserPrefThunk = (preference) => (dispatch) => {
   // dispatch({type: 'GET_FILTERS_UPDATE_FRONT', data: data});

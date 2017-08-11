@@ -1,7 +1,7 @@
 
 import firebase from 'firebase';
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)

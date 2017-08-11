@@ -1,6 +1,6 @@
 import firebaseApp from '../../firebase';
 import axios from 'axios';
-const URL = 'http://localhost:3000';
+import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)

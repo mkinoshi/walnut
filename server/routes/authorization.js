@@ -82,7 +82,7 @@ import adminApp from '../firebaseAdmin';
       // Handle error
       console.log('error with admin auth', error);
     });
-  });
+    });
 
   router.post('/facebook', function(req, res) {
       req.session.userToken = req.body.token;

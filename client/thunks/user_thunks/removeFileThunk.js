@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const removeFileThunk = (tab, i) => (dispatch) => {
   dispatch({type: 'REMOVE_FILE', tab: tab, index: i});

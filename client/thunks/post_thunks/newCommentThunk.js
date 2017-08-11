@@ -3,7 +3,7 @@
  */
 import axios from 'axios';
 import discoverLoadThunk from '../discover_thunks/discoverLoadThunk';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const newCommentThunk = (commentBody, postId) => (dispatch) => {
   axios.post(URL + 'db/save/comment', {

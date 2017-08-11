@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const removeUserPortTabsThunk = (i) => (dispatch) => {
   dispatch({type: 'REMOVE_TAB', index: i});

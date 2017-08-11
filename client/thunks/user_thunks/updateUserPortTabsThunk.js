@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const updateUserPortTabsThunk = (name, i) => (dispatch) => {
   dispatch({type: 'UPDATE_TAB', name: name, index: i});
