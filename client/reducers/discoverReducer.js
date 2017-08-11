@@ -5,7 +5,7 @@ const discoverReducer = (state = {
   filters: [],
   posts: [],
   hasMore: true,
-  isFetching: false,
+  isFetching: true,
   isReady: true,
   holdDiscover: false,
   lastRefresh: ''
