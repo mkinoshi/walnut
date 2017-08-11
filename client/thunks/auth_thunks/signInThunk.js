@@ -1,7 +1,7 @@
 
 import firebase from 'firebase';
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -17,7 +17,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
       .then((res) => {
         console.log('signin thunk', res);
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-        // redirect('/app/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
+        // redirect('/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
         // history.replace('/');
         // console.log('history', history);
         // axios.get(URL);
@@ -41,7 +41,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
   //       //       User.findById(req.user._id)
   //       //           .populate('currentCommunity')
   //       //           .then((user) => {
-  //       //               const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+  //       //               const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
   //       //               res.redirect(url);
   //       //           })
   //       //   }

@@ -27,6 +27,7 @@ router.get('/app', (req, res) => {
 });
 
 router.get('/allcommunities', (req, res) => {
+  console.log('hehehehehhe');
   Community.find()
       .then((communities) => {
         res.json({data: communities});

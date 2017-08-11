@@ -7,6 +7,7 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.get('/user', (req, res) => {
+  console.log('user', req.user);
   User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')

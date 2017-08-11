@@ -70,7 +70,7 @@ class Login extends React.Component {
                 <Button onClick={(e) => { this.regLogin(e); }} type="submit">Submit</Button>
               </Form>
               <h2>New user?</h2>
-              <Link to="/app/register">Go to Registration</Link>
+              <Link to="/register">Go to Registration</Link>
             </div>
           </div>
         </div>
