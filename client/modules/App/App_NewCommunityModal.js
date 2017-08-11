@@ -47,10 +47,11 @@ class NewCommunityModal extends React.Component {
             </Modal.Header>
             <Modal.Content scrolling>
                 <Input
+                       className="titleInput"
                        value={this.state.titleValue}
                        label="Title"
                        onChange={(e) => {this.handleChange(e);}} />
-                <div style={{marginLeft: '10px', marginBottom: '5px', marginTop: '10px'}}>
+                <div style={{marginLeft: '10px', marginBottom: '2px', marginTop: '10px'}}>
                     Add Default Topics:
                 </div>
                 <ul>

@@ -207,3 +207,11 @@
 .addButton {
     margin-left: 15px !important;
 }
+
+.joinButton {
+    float: right;
+}
+
+.titleInput {
+    margin-bottom: 15px;
+}
