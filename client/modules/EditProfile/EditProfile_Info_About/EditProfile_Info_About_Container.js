@@ -90,6 +90,7 @@ class AboutContainer extends React.Component {
 
 
   handleSave() {
+    console.log('trying to save', this.state);
     this.props.saveAbout({schools: this.state.schools,
         colleges: this.state.colleges,
         works: this.state.works,
