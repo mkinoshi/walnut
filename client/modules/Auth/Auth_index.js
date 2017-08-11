@@ -1,12 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Login from './Auth_Login';
 import Register from './Auth_Registration';
-// import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
-import App from '../App/App_index';
 import Community from '../App/App_Community';
 import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';

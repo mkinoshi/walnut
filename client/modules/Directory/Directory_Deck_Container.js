@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import css from './Directory.css';
+import './Directory.css';
 import Card from './Directory_Deck_Card';
 import uuidv4 from 'uuid/v4';
 

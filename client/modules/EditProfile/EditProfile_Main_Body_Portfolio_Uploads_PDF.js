@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PDF from 'react-pdf-js';
-import css from './EditProfile.css';
+import './EditProfile.css';
 
 
 class MyPdfViewer extends React.Component {

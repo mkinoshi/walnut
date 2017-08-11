@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import _ from 'underscore';
-import css from './App.css';
+import './App.css';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
@@ -11,14 +10,6 @@ import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommuni
 import CommunityCard from './App_CommunityCard';
 import NewCommunityModal from './App_NewCommunityModal';
 
-
-const styles = {
-  image: {
-    maxHeight: '50px',
-    maxWidth: '50px',
-    margin: '7px 15px 7px 30px'
-  }
-};
 
 class WalnutHomeContainer extends React.Component {
   constructor() {

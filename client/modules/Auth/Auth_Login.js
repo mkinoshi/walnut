@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import { Button, Input, Form, Checkbox } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Button, Form } from 'semantic-ui-react';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
-import css from './Auth.css';
+import './Auth.css';
 
 class Login extends React.Component {
   constructor() {

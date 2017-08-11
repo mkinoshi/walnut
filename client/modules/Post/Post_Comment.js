@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalContainer from './Post_Modal_Container';
-import { Card, Icon, Image, Button, Modal, Header, Popup } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import css from './Post.css';
+import { Card, Popup } from 'semantic-ui-react';
+import './Post.css';
 import firebaseApp from '../../firebase';
 
 const dateStuff = {

@@ -2,21 +2,14 @@
 <html>
   <head>
     <title>Walnut</title>
-    <!-- Import Google Icon Font -->
-<!--     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <!-- Import materialize.css -->
-<!--     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet"> -->
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <!-- <link rel="stylesheet" href="https://video-react.github.io/assets/video-react.css" />  -->
-    <!-- Semantic UI for map filter -->
-<!--     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"></link> -->
+    <!-- <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> -->
+    <link rel="stylesheet" href="https://video-react.github.io/assets/video-react.css" /> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"></link>
+    <!-- <link rel="stylesheet" href="/styles.css"></link> -->
   </head>
   <body>
-    <div style="background-color: #313D4D; height: 100%" id='root'></div>
-    <!-- Import jQuery before materialize.js -->
-<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    
+    <div style="background-color: #313D4D; height: 100%" id='root'></div> 
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -32,11 +25,11 @@
       var defaultAuth = firebase.auth();
     </script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Google Maps API -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4QxFl4CCfyLvsR3jzbeW0nEBRUmCAo50&libraries=places"></script>
     <!-- And then your bundled js -->
-    <script type="text/javascript" src="/app.bundle.js"></script>
+    <script type="text/javascript" src="/node-static.js"></script>
+    <script type="text/javascript" src="/bundle.js"></script>
   </body>
 </html>

@@ -3,8 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from './App.css';
-import 'semantic-ui-css/semantic.min.css';
+import './App.css';
 import { Card, Button, Icon, Image } from 'semantic-ui-react';
 
 

@@ -4,13 +4,12 @@ import Uploads from './EditProfile_Main_Body_Portfolio_Uploads_Container';
 import Lightbox from 'react-image-lightbox';
 import PdfViewer from './EditProfile_Main_Body_Portfolio_Uploads_PDF.js';
 import Modal from 'react-modal';
-import css from './EditProfile.css';
+import './EditProfile.css';
 import addUserPortTabsThunk from '../../thunks/user_thunks/addUserPortTabsThunk';
 import updateUserPortTabsThunk from '../../thunks/user_thunks/updateUserPortTabsThunk';
 import removeUserPortTabsThunk from '../../thunks/user_thunks/removeUserPortTabsThunk';
 import { connect } from 'react-redux';
-import {Image, Card, Icon, Tab} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Card } from 'semantic-ui-react';
 
 class PortfolioContainer extends React.Component {
   constructor(props) {
