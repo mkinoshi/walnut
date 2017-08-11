@@ -212,20 +212,18 @@ router.post('/about', (req, res) => {
              globalResponse.location.college = [jsonResp.geometry.location.lng,
             jsonResp.geometry.location.lat];
            }
-           req.body.works.forEach((work) => {
-             if (work.isCurrent) {
-               const workAddr = work.location.split(' ').join('+');
-               const locationOccupationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + workAddr + '&key=' + process.env.LOCATION_API;
-               return axios.get(locationOccupationUrl);
-             }
-           });
+           if (req.body.placesLived.current) {
+             const homeAddr = req.body.placesLived.current.split(' ').join('+');
+             const locationHomeUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + homeAddr + '&key=' + process.env.LOCATION_API;
+             return axios.get(locationHomeUrl);
+           }
            return null;
          })
          .then((respond) => {
            if (respond) {
              const jsonp = respond.data.results[0];
-             globalResponse.location.occupation = [jsonp.geometry.location.lng,
-            jsonp.geometry.location.lat];
+             globalResponse.location.homeTown = [jsonp.geometry.location.lng,
+             jsonp.geometry.location.lat];
            }
            console.log('user global save about', globalResponse);
            return globalResponse.save();
