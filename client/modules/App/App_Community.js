@@ -1,6 +1,6 @@
 // TODO navbar and router links
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
