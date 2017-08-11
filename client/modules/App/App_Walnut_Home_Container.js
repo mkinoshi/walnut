@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import _ from 'underscore';
+import css from './App.css';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
 import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
+import CommunityCard from './App_CommunityCard';
+import NewCommunityModal from './App_NewCommunityModal';
 
 
 const styles = {
-  communities: {
-    display: '-webkit-inline-box'
-  },
   image: {
     maxHeight: '50px',
     maxWidth: '50px',
@@ -24,16 +24,13 @@ class WalnutHomeContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      showInputs: false,
       titleValue: '',
       image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
       defaultFilters: [],
       filterValue: '',
       isCalled: false
     };
-    this.handleStart = this.handleStart.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.joinCommunity = this.joinCommunity.bind(this);
   }
 
@@ -49,7 +46,7 @@ class WalnutHomeContainer extends React.Component {
     }
   }
 
-  compoenentDidMout() {
+  componentDidMount() {
     localStorage.setItem('url', '/app/walnuthome');
   }
 
@@ -58,28 +55,10 @@ class WalnutHomeContainer extends React.Component {
     this.props.changeCommunity(com);
   }
 
-  handleStart() {
-    this.setState({showInputs: true});
+  handleSubmit(image, titleValue, defaultFilters) {
+    this.props.createCommunity(image, titleValue, defaultFilters);
   }
 
-  handleChange(e) {
-    this.setState({titleValue: e.target.value});
-  }
-
-  handleFilterChange(e) {
-    this.setState({filterValue: e.target.value});
-  }
-
-  handleSubmit() {
-    this.props.createCommunity(this.state.image, this.state.titleValue, this.state.defaultFilters);
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    const copy = this.state.defaultFilters;
-    copy.push(this.state.filterValue);
-    this.setState({defaultFilters: copy, filterValue: ''});
-  }
 
   joinCommunity(id) {
     this.props.joinCommunity(id);
@@ -90,55 +69,49 @@ class WalnutHomeContainer extends React.Component {
   render() {
     const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
     return (
-        <div>
-           <div>
-            <div>
-                <h1>I am the Walnut Home</h1>
+        <div className="walnutContainer">
+            <div className="Heading">
+                <h1>Walnut</h1>
+                <hr />
             </div>
-             <div>
-               <h2>Your Communities</h2>
-               <div style={styles.communities}>
-                   {this.props.userCommunities.map((community, idx) => <Link key={idx}
-                   onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>
-                     <img src={community.icon} style={styles.image} />
-                     <p>{community.title}</p>
-                   </div></Link> )}
+                <div>
+                  <NewCommunityModal handleCreate={this.handleSubmit} />
+                </div>
+               <h2 className="subHead">Your Communities</h2>
+               <div className="communitiesContainer">
+                   {/* {this.props.userCommunities.map((community, idx) => <Link key={idx}*/}
+                   {/* onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>*/}
+                     {/* <img src={community.icon} style={styles.image} />*/}
+                     {/* <p>{community.title}</p>*/}
+                   {/* </div></Link> )}*/}
+                   {this.props.userCommunities.map((community, idx) =>
+                       <Link key={idx}
+                             onClick={() => this.toggleCommunity(community)}
+                             to={'/app/community/' + community.title.split(' ').join('') + '/discover'}>
+                     <CommunityCard joined
+                                    icon={community.icon}
+                                    title={community.title}
+                                    key={idx} /></Link>)}
                </div>
-             </div>
-            <div>
-                <h2>Search For new Communities</h2>
-                <div style={styles.communities}>
+                <h2 className="subHead">Search For new Communities</h2>
+                <div className="communitiesContainer">
+                    {/* {this.props.communities.filter((com) => {*/}
+                      {/* return !(userCommunityTitles.indexOf(com.title) > -1);*/}
+                    {/* }).map((community, idx) => <div key={idx}>*/}
+                        {/* <img src={community.icon} style={styles.image} />*/}
+                        {/* <p>{community.title}</p>*/}
+                        {/* <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>*/}
+                    {/* </div> )*/}
+                    {/* }*/}
                     {this.props.communities.filter((com) => {
                       return !(userCommunityTitles.indexOf(com.title) > -1);
-                    }).map((community, idx) => <div key={idx}>
-                        <img src={community.icon} style={styles.image} />
-                        <p>{community.title}</p>
-                        <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>
-                    </div> )
+                    }).map((community, idx) => <CommunityCard icon={community.icon}
+                                                              title={community.title}
+                                                              communityId={community._id}
+                                                              join={this.joinCommunity}
+                                                              key={idx}/>)
                     }
                 </div>
-            </div>
-            <div>
-                <button onClick={() => {this.handleStart();}}>Start New Community</button>
-            </div>
-            {this.state.showInputs ? <div>
-                <label> Title:
-                <input type="text"
-                       value={this.state.titleValue} onChange={(e) => {this.handleChange(e);}} />
-                </label>
-                <ul>
-                    {this.state.defaultFilters.map((filter, idx) => <li key={idx}>#{' '}{filter}</li>)}
-                </ul>
-                <form>
-                    <label> Create default Filters:
-                        <input type="text"
-                               value={this.state.filterValue} onChange={(e) => {this.handleFilterChange(e);}} />
-                    </label>
-                    <input type="submit" value="Add" onClick={(e) => {this.handleClick(e);}} />
-                </form>
-                <button onClick={() => {this.handleSubmit();}}>Create</button>
-            </div> : null}
-          </div>
         </div>
     );
   }
