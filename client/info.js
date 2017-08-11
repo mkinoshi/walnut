@@ -1,2 +1,2 @@
-const URL = 'https://guarded-ridge-45994.herokuapp.com/';
+const URL = 'https://3176cdd5.ngrok.io/';
 export default URL;
