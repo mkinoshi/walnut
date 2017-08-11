@@ -41,7 +41,7 @@ class CommunityCard extends React.Component {
               </Card.Header>
           </Card.Content>
           <Card.Content extra>
-              <Button onClick={() => this.props.join(this.props.communityId)} content="Join" icon="plus" labelPosition="left"/>
+              <Button className="joinButton" onClick={() => this.props.join(this.props.communityId)} content="Join" icon="plus" labelPosition="left"/>
           </Card.Content>
       </Card>
     );
