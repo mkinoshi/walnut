@@ -40,7 +40,7 @@ class Navbar extends React.Component {
                 </Link>
               <div className="communityNavBarLogo">
                 <img className="communityImage" src={this.props.community.icon} />
-                <h2 className="communityTitle">{this.props.community.title}</h2>
+                <h3 className="communityTitle">{this.props.community.title}</h3>
               </div>
 
               <div className="navBarLinks">
@@ -100,11 +100,11 @@ class Navbar extends React.Component {
               </div>
               <Dropdown className="profileDropdown link item" text={this.props.fullName} pointing>
                 <Dropdown.Menu>
-                  {/* <Dropdown.Item>
+                   <Dropdown.Item>
                     <Link className="profilePopeoutHeaderTab" to={'/app/community/' + title + '/editprofile'}>
                     Edit Profile
                     </Link>
-                  </Dropdown.Item> */}
+                  </Dropdown.Item>
                   <Dropdown.Item onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
