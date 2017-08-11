@@ -39,7 +39,7 @@ class EditProfileContainer extends React.Component {
           <Info />
           <MainBody />
         </div>
-        {this.props.isCreating ? <button onClick={() => {this.create();}} style={styles.done}><Link to="/app/walnuthome">Done</Link></button> : null}
+        {this.props.isCreating ? <button onClick={() => {this.create();}} style={styles.done}><Link to="/walnuthome">Done</Link></button> : null}
       </div>
     );
   }

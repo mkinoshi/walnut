@@ -25,14 +25,14 @@ class Auth extends React.Component {
     firebaseApp.auth().onAuthStateChanged(user => {
       console.log(user);
       if (!user) {
-        // this.context.history.push('/app/walnuthome');
-        history.replace('/app/login');
-        // history.push('/app/walnuthome');
+        // this.context.history.push('/walnuthome');
+        history.replace('/login');
+        // history.push('/walnuthome');
       } else {
         const isUserInCommunity = localStorage.getItem('isUserInCommunity');
         this.props.getUser();
         if (this.props.isCreated && !isUserInCommunity) {
-          history.replace('/app/walnuthome');
+          history.replace('/walnuthome');
         } else {
           if (sessionStorage.getItem(('url'))) {
             history.replace(sessionStorage.getItem('url'));
@@ -56,7 +56,7 @@ class Auth extends React.Component {
     const isUserInCommunity = localStorage.getItem('isUserInCommunity');
     if (nextProps.isCreated && !isUserInCommunity) {
       nextProps.getUser();
-      history.replace('/app/walnuthome');
+      history.replace('/walnuthome');
     } else {
       nextProps.getUser();
     }
@@ -69,11 +69,11 @@ class Auth extends React.Component {
     return (
       <Router path="/" history={history}>
         <Switch>
-          <Route path="/app/walnuthome" component={WalnutHomeContainer} />
-          {/* <Route path="/app/community" render={() => (<Community history={history} />)} /> */}
-          <Route path="/app/community" component={Community} />
-          <Route path="/app/login" component={Login} />
-          <Route path="/app/register" component={Register} />
+          <Route path="/walnuthome" component={WalnutHomeContainer} />
+          {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
+          <Route path="/community" component={Community} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
       </Router>
     );

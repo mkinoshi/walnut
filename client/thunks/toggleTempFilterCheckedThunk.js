@@ -1,7 +1,7 @@
 
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../info';
 
 const toggleFilterCheckedThunk = (useFilters) => (dispatch) => {
   dispatch({ type: 'ADD_TEMP_FILTER', useFilters: useFilters });

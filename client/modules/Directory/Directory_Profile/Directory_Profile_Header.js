@@ -22,7 +22,7 @@ class Header extends React.Component {
             <Card.Content>
                 <Image floated="left"
                        size="small"
-                       src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+                       src="https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
                 <Card.Header>
                     Eli Badgio
                 </Card.Header>
