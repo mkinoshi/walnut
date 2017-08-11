@@ -101,7 +101,7 @@ import adminApp from '../firebaseAdmin';
   // router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   //   function(req, res) {
   //     // Successful authentication, redirect home.
-  //     res.redirect('/app/walnuthome');
+  //     res.redirect('/walnuthome');
   //   }
   // );
   //

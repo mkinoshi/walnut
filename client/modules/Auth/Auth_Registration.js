@@ -44,7 +44,7 @@ class Register extends React.Component {
   render() {
     return (
         <div>
-            <Link to="/app/login">Back to Login</Link>
+            <Link to="/login">Back to Login</Link>
 
 
             <h1 style={{textAlign: 'center'}}>Register</h1>

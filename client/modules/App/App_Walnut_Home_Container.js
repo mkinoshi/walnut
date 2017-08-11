@@ -47,7 +47,7 @@ class WalnutHomeContainer extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.setItem('url', '/app/walnuthome');
+    localStorage.setItem('url', '/walnuthome');
   }
 
 
@@ -80,14 +80,14 @@ class WalnutHomeContainer extends React.Component {
                <h2 className="subHead">Your Communities</h2>
                <div className="communitiesContainer">
                    {/* {this.props.userCommunities.map((community, idx) => <Link key={idx}*/}
-                   {/* onClick={() => this.toggleCommunity(community)} to={'/app/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>*/}
+                   {/* onClick={() => this.toggleCommunity(community)} to={'/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>*/}
                      {/* <img src={community.icon} style={styles.image} />*/}
                      {/* <p>{community.title}</p>*/}
                    {/* </div></Link> )}*/}
                    {this.props.userCommunities.map((community, idx) =>
                        <Link key={idx}
                              onClick={() => this.toggleCommunity(community)}
-                             to={'/app/community/' + community.title.split(' ').join('') + '/discover'}>
+                             to={'/community/' + community.title.split(' ').join('') + '/discover'}>
                      <CommunityCard joined
                                     icon={community.icon}
                                     title={community.title}
