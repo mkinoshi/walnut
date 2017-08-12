@@ -59,7 +59,7 @@ import adminApp from '../firebaseAdmin';
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
-      // console.log('uid', uid);
+      console.log('uid', uid);
       return User.findOne({firebaseId: uid})
       .then((doc) => {
         const opts = [
