@@ -58,19 +58,25 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+var mongoStore = new MongoStore({ 
+    mongooseConnection: mongoose.connection,
+    collection: 'user-sessions',
+  });
+
 // Passport
 app.use(session({
   secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  store: mongoStore,
+  resave: true
   // userToken: null
 }));
 
 app.use(function(req, res, next) {
-  console.log(req.session.userMToken);
+  console.log('this is inside the use', req.session.userMToken);
   if (req.session.userMToken) {
-    const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
-    const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
-    User.findById(mongoId)
+    // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
+    // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
+    User.findById(req.session.userMToken)
         .then((response) => {
           // console.log(response);
           req.user = response;
@@ -87,7 +93,8 @@ app.get('/', function(req, res, next) {
   if (!req.user) {
     console.log('b');
     res.redirect('/login')
-  } else {
+  } 
+  else {
     console.log('d');
     console.log(req.user);
     if (req.user.currentCommunity !== '') {
@@ -105,6 +112,14 @@ app.get('/', function(req, res, next) {
     }
   }
 });
+
+app.post('/auth/logout', function(req, res) {
+    console.log('logged out before destroy', req.session);
+    mongoStore.destroy(req.session.id, function() {
+      req.session.destroy();
+      res.json({success:true});
+    })
+  });
 
 app.use('/auth', auth);
 app.use('/db', dbGeneralRoutes);
