@@ -38,7 +38,6 @@ class Login extends React.Component {
 
   regLogin(e) {
     e.preventDefault();
-    console.log('redirect function', this.props.redirect);
     this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect);
   }
 

@@ -21,16 +21,16 @@ class Auth extends React.Component {
     };
   }
 
-  componentWillMount() {
+
+  componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
       console.log(user);
       if (!user) {
-        // this.context.history.push('/app/walnuthome');
         history.replace('/app/login');
-        // history.push('/app/walnuthome');
       } else {
-        const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+        console.log('calling this get User');
         this.props.getUser();
+        const isUserInCommunity = localStorage.getItem('isUserInCommunity');
         if (this.props.isCreated && !isUserInCommunity) {
           history.replace('/app/walnuthome');
         } else {
@@ -44,26 +44,12 @@ class Auth extends React.Component {
     });
   }
 
-  componentDidMount() {
-    // window.addEventListener('unload', () => {
-    //   console.log('unmounting', localStorage.getItem('home'));
-    //   localStorage.setItem('url', localStorage.getItem('home'));
-    //   localStorage.setItem('tab', 1);
-    // });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const isUserInCommunity = localStorage.getItem('isUserInCommunity');
-    if (nextProps.isCreated && !isUserInCommunity) {
-      nextProps.getUser();
-      history.replace('/app/walnuthome');
-    } else {
-      nextProps.getUser();
-    }
-  }
-
-  componentWillUnmount() {
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+  //   if (nextProps.isCreated && !isUserInCommunity) {
+  //     history.replace('/app/walnuthome');
+  //   }
+  // }
 
   render() {
     return (

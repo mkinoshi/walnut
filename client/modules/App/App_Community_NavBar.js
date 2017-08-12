@@ -13,12 +13,13 @@ class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: this.props.isEdited
+      isOpen: this.props.isEdited,
+      tab: 1
     };
   }
 
   handleClick(num) {
-    this.props.changeTab(num);
+    this.setState({tab: num});
   }
 
   handleLogout() {
@@ -48,7 +49,7 @@ class Navbar extends React.Component {
                   <Link className="tabs" to={'/app/community/' + title + '/discover'}>
                     <Icon className="navBarIcon" name="talk outline" size="large" />
                   </Link>
-                  {(this.props.tab === 1) ?
+                  {(this.state.tab === 1) ?
                     <div className="bar">
                       </div> : null
                   }
@@ -58,7 +59,7 @@ class Navbar extends React.Component {
                   <Link className="tabs" to={'/app/community/' + title + '/directory'}>
                     <Icon className="navBarIcon" name="address card outline" size="large"/>
                   </Link>
-                  {(this.props.tab === 2) ?
+                  {(this.state.tab === 2) ?
                     <div className="bar">
                       </div> : null
                     }
@@ -66,9 +67,9 @@ class Navbar extends React.Component {
 
                 <div className="navBarLink" onClick={() => {this.handleClick(3); this.setState({isOpen: true});}}>
                   <Link className="tabs" to={'/app/community/' + title + '/map'}>
-                    <Icon className="navBarIcon" name="marker" color="white" size="large"/>
+                    <Icon className="navBarIcon" name="marker" size="large"/>
                   </Link>
-                  {(this.props.tab === 3) ?
+                  {(this.state.tab === 3) ?
                     <div className="bar">
                       </div> : null
                     }
@@ -120,7 +121,6 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   pictureURL: PropTypes.string,
   community: PropTypes.object,
-  tab: PropTypes.number,
   changeTab: PropTypes.func,
   isEdited: PropTypes.bool,
   fullName: PropTypes.string,
@@ -132,7 +132,6 @@ const mapStateToProps = (state) => ({
   pictureURL: state.userReducer.pictureURL,
   fullName: state.userReducer.fullName,
   community: state.userReducer.currentCommunity,
-  tab: state.navBarReducer.tab,
   isEdited: state.userReducer.isEdited
 });
 

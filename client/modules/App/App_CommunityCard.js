@@ -50,7 +50,7 @@ class CommunityCard extends React.Component {
 
 
 CommunityCard.propTypes = {
-  joined: PropTypes.boolean,
+  joined: PropTypes.bool,
   icon: PropTypes.string,
   title: PropTypes.string,
   join: PropTypes.func,

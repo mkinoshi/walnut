@@ -159,7 +159,7 @@ app.use('*', function(req, res, next) {
     req.user = undefined;
     next();
   }
-})
+});
 
 app.get('/', function(req, res, next) {
   console.log('a');
@@ -169,7 +169,7 @@ app.get('/', function(req, res, next) {
   } else {
     console.log('d');
     console.log(req.user);
-    if (req.user.currentCommunity !== '') {
+    if (req.user.currentCommunity) {
       console.log('c');
       User.findById(req.user._id)
           .populate('currentCommunity')
