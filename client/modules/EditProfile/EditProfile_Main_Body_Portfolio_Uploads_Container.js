@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
 import removeFileThunk from '../../thunks/user_thunks/removeFileThunk';
-import {Image, Card, Icon} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Card, Icon} from 'semantic-ui-react';
 
 class UploadsContainer extends React.Component {
   constructor(props) {

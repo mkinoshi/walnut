@@ -4,10 +4,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post_index';
-import Comment from './Post_Comment';
 import './Post.css';
-import { Button, Header, Icon, Image, Modal, Card, Form, TextArea } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Button, Modal } from 'semantic-ui-react';
 
 
 class NestedPostModal extends React.Component {

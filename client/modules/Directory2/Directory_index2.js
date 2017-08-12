@@ -1,13 +1,10 @@
-/**
- * Created by ebadgio on 8/3/17.
- */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import css from './Directory2.css';
+import './Directory2.css';
 import getUsersThunk from '../../thunks/directory_thunks/getUsersThunk';
 import DirectoryCard from './Directory_Card';
-import InfiniteScroll from 'react-infinite-scroller';
 import Select from 'react-select';
 import uuidv4 from 'uuid/v4';
 

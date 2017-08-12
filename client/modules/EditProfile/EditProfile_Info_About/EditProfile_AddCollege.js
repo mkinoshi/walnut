@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import saveAboutThunk from '../../../thunks/profile_thunks/saveAboutThunk';
 import YearSelect from '../../SelectorDataSets/Years';
-import PlacesAutocomplete from 'react-places-autocomplete';
-import 'semantic-ui-css/semantic.min.css';
-import { Button, Header, Image, Modal, Input, Checkbox, Form, Icon } from 'semantic-ui-react';
+import { Button, Header, Modal, Input, Checkbox, Form, Icon } from 'semantic-ui-react';
 
 const styles = {
   form: {

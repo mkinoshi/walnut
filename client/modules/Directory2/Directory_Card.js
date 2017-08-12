@@ -3,9 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import css from './Directory2.css';
-import 'semantic-ui-css/semantic.min.css';
+import './Directory2.css';
 import { Card, Icon, Image } from 'semantic-ui-react';
 
 

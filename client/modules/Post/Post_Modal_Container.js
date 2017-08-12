@@ -6,8 +6,7 @@ import newCommentThunk from '../../thunks/post_thunks/newCommentThunk';
 import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 import Comment from './Post_Comment';
 import './Post.css';
-import { Button, Form, Icon, Image, Modal, Input, TextArea, Loader } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Form, Icon, Modal, TextArea, Loader } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
@@ -49,7 +48,6 @@ class ModalInstance extends React.Component {
       elem.scrollIntoView();
       this.setState({hitBottom: true, c: this.state.c + 1});
     } else {
-      console.log('elem missing');
       // $('.scrolling').scrollTop(100000);
       this.setState({hitBottom: true, c: this.state.c + 1});
     }
@@ -89,6 +87,10 @@ class ModalInstance extends React.Component {
   }
 
   handleChange(e) {
+    this.setState({commentBody: e.target.value});
+  }
+
+  findEnter() {
     $('#messageInput').keypress( (event) => {
       if(event.which === 13) {
         this.handleClick(this.props.postData.postId);
@@ -96,7 +98,6 @@ class ModalInstance extends React.Component {
       }
       return null;
     });
-    this.setState({commentBody: e.target.value});
   }
 
   handleClick(id) {
@@ -126,10 +127,11 @@ class ModalInstance extends React.Component {
       firebaseApp.database().ref().update(updates);
       const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
       messagesCountRef.transaction((currentValue) => {
-        console.log('current count', currentValue);
         return (currentValue || 0) + 1;
       });
     }
+    const elem = document.getElementById('messageInput');
+    elem.value = '';
   }
 
   startListen(data) {
@@ -143,9 +145,7 @@ class ModalInstance extends React.Component {
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const send = _.values(snapshot.val());
-          console.log(send);
           const ID = send[0].authorId + '' + send[0].content;
-          console.log(ID);
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
           this.setState({messages: send, firstKey: Object.keys(snapshot.val())[0], firstId: ID, hasMore: true, hitBottom: true});
           if (this.state.c === 0 || send[send.length - 1].authorId === user.uid) {
@@ -223,8 +223,7 @@ class ModalInstance extends React.Component {
               id="messageInput"
               autoHeight
               placeholder="Give your two cents..."
-              value={this.state.commentBody}
-              onChange={(e) => this.handleChange(e)}
+              onChange={(e) => {this.handleChange(e); this.findEnter();}}
               rows={3}
             />
           </Form>

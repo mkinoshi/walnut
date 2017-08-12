@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalContainer from './Post_Modal_Container';
-import { Card, Icon, Image, Button, Modal, Header, Popup } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import css from './Post.css';
+import { Card, Popup } from 'semantic-ui-react';
+import './Post.css';
 import firebaseApp from '../../firebase';
 
 const dateStuff = {
@@ -65,36 +63,38 @@ class Comment extends React.Component {
   }
 
   getUseDate(dateObj) {
-    const now = new Date().toString().slice(4, 24).split(' ');
-    const date = new Date(dateObj);
-    const dateString = date.toString().slice(4, 24);
-    const split = dateString.split(' ');
-    const useMonth = dateStuff.months[split[0]];
-    const useDay = dateStuff.days[split[1]];
-    const timeArr = split[3].split(':');
-    let time;
-    let hour;
-    let isPM;
-    if (parseInt(timeArr[0], 10) > 12) {
-      hour = parseInt(timeArr[0], 10) - 12;
-      isPM = true;
-    } else {
-      if (parseInt(timeArr[0], 10) === 0) {
-        hour = 12;
+    if (dateObj) {
+      const now = new Date().toString().slice(4, 24).split(' ');
+      const date = new Date(dateObj);
+      const dateString = date.toString().slice(4, 24);
+      const split = dateString.split(' ');
+      const useMonth = dateStuff.months[split[0]];
+      const useDay = dateStuff.days[split[1]];
+      const timeArr = split[3].split(':');
+      let time;
+      let hour;
+      let isPM;
+      if (parseInt(timeArr[0], 10) > 12) {
+        hour = parseInt(timeArr[0], 10) - 12;
+        isPM = true;
       } else {
-        hour = parseInt(timeArr[0], 10);
+        if (parseInt(timeArr[0], 10) === 0) {
+          hour = 12;
+        } else {
+          hour = parseInt(timeArr[0], 10);
+        }
       }
+      const min = timeArr[1];
+      if (isPM) {
+        time = hour + ':' + min + 'PM';
+      } else {
+        time = hour + ':' + min + 'AM';
+      }
+      if (now[2] !== split[2]) {
+        return useMonth + ' ' + useDay + ', ' + split[2] + ' ' + time;
+      }
+      return useMonth + ' ' + useDay + ', ' + time;
     }
-    const min = timeArr[1];
-    if (isPM) {
-      time = hour + ':' + min + 'PM';
-    } else {
-      time = hour + ':' + min + 'AM';
-    }
-    if (now[2] !== split[2]) {
-      return useMonth + ' ' + useDay + ', ' + split[2] + ' ' + time;
-    }
-    return useMonth + ' ' + useDay + ', ' + time;
   }
 
   render() {
@@ -131,7 +131,7 @@ class Comment extends React.Component {
         />
         <Popup
         trigger = {<div className="messageGroupOther" id={this.props.id}>
-          <div className="messageNameOther">{this.props.name.split(' ')[0]}</div>
+          <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
             <Card className="commentCardOther">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>

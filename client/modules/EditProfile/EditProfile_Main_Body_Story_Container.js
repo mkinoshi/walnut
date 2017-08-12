@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 
 const styles = {
   story: {
@@ -19,8 +19,5 @@ class StoryContainer extends React.Component {
     );
   }
 }
-
-StoryContainer.propTypes = {
-};
 
 export default StoryContainer;

@@ -3,10 +3,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import css from './Directory.css';
-import 'semantic-ui-css/semantic.min.css';
-import { Button, Card, Image } from 'semantic-ui-react';
+import './Directory.css';
+import { Card, Image } from 'semantic-ui-react';
 
 
 class DeckCard extends React.Component {

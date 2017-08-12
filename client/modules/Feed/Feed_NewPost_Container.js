@@ -4,14 +4,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
-import NewTagContainer from './Feed_NewPost_NewTag_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
-import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import ReactUploadFile from 'react-upload-file';
-import { Icon, Button, Input } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 import superagent from 'superagent';
-import css from './Feed.css';
+import './Feed.css';
 import Textarea from 'react-textarea-autosize';
 
 // TODO input that takes in content of post with # dropdown selector
