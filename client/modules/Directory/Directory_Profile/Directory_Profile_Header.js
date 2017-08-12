@@ -3,9 +3,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from '.././Directory.css';
-import 'semantic-ui-css/semantic.min.css';
-import { Button, Card, Image } from 'semantic-ui-react';
+import '.././Directory.css';
+import { Card, Image } from 'semantic-ui-react';
 
 
 
@@ -22,7 +21,7 @@ class Header extends React.Component {
             <Card.Content>
                 <Image floated="left"
                        size="small"
-                       src="http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
+                       src="https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg" />
                 <Card.Header>
                     Eli Badgio
                 </Card.Header>

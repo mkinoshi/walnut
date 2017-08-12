@@ -3,9 +3,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Image, Popup, Dropdown} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import css from './App.css';
+import { Icon, Dropdown} from 'semantic-ui-react';
+import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
 
@@ -36,17 +35,17 @@ class Navbar extends React.Component {
     return (
           <div className="row" id="navBar">
 
-                <Link className="navBarHome" to={'/app/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
+                <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
                   <Icon name="content" size="big" />
                 </Link>
               <div className="communityNavBarLogo">
                 <img className="communityImage" src={this.props.community.icon} />
-                <h2 className="communityTitle">{this.props.community.title}</h2>
+                <h3 className="communityTitle">{this.props.community.title}</h3>
               </div>
 
               <div className="navBarLinks">
                 <div className="navBarLink" onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
-                  <Link className="tabs" to={'/app/community/' + title + '/discover'}>
+                  <Link className="tabs" to={'/community/' + title + '/discover'}>
                     <Icon className="navBarIcon" name="talk outline" size="large" />
                   </Link>
                   {(this.state.tab === 1) ?
@@ -56,7 +55,7 @@ class Navbar extends React.Component {
                 </div>
 
                 <div className="navBarLink" onClick={() => {this.handleClick(2); this.setState({isOpen: true});}}>
-                  <Link className="tabs" to={'/app/community/' + title + '/directory'}>
+                  <Link className="tabs" to={'/community/' + title + '/directory'}>
                     <Icon className="navBarIcon" name="address card outline" size="large"/>
                   </Link>
                   {(this.state.tab === 2) ?
@@ -76,7 +75,7 @@ class Navbar extends React.Component {
                 </div>
 
                 {/* <div className="navBarLink" onClick={() => this.handleClick(4)}>
-                  <Link className="tabs" to={'/app/community/' + title + '/editprofile'}>
+                  <Link className="tabs" to={'/community/' + title + '/editprofile'}>
                     <Icon className="navBarIcon" name="paypal" size="big"/>
                   </Link>
                   {(this.props.tab === 4) ?
@@ -89,23 +88,23 @@ class Navbar extends React.Component {
             <div className="navBarLinksRight">
               <div className="imageWrapper">
                 <img className="postUserImage" src={this.props.pictureURL} />
-                {!(this.state.isOpen || this.props.isEdited) ?
-                  <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>
-                    <div className="profilePopoutOuter">
-                      <div className="arrow-up"></div>
-                      <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/app/community/' + title + '/editprofile'}>
-                        <h2 className="profilePopeoutHeader">Complete the profile</h2>
-                      </Link>
-                    </div>
-                  </div> : null}
+                {/* {!(this.state.isOpen || this.props.isEdited) ?*/}
+                  {/* <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>*/}
+                    {/* <div className="profilePopoutOuter">*/}
+                      {/* <div className="arrow-up"></div>*/}
+                      {/* <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/community/' + title + '/editprofile'}>*/}
+                        {/* <h2 className="profilePopeoutHeader">Complete the profile</h2>*/}
+                      {/* </Link>*/}
+                    {/* </div>*/}
+                  {/* </div> : null}*/}
               </div>
               <Dropdown className="profileDropdown link item" text={this.props.fullName} pointing>
                 <Dropdown.Menu>
-                   <Dropdown.Item>
-                    <Link className="profilePopeoutHeaderTab" to={'/app/community/' + title + '/editprofile'}>
-                    Edit Profile
-                    </Link>
-                  </Dropdown.Item>
+                   {/* <Dropdown.Item>*/}
+                    {/* <Link className="profilePopeoutHeaderTab" to={'/community/' + title + '/editprofile'}>*/}
+                    {/* Edit Profile*/}
+                    {/* </Link>*/}
+                  {/* </Dropdown.Item>*/}
                   <Dropdown.Item onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

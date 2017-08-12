@@ -2,9 +2,10 @@
  * Created by ebadgio on 7/24/17.
  */
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const discoverLoadThunk = () => (dispatch) => {
+  console.log('LOOOOOK', URL);
   dispatch({type: 'DISCOVER_IS_LOADING'});
   axios.get(URL + 'db/get/discoverinfo', {})
         .then((response) => {

@@ -59,7 +59,7 @@ import adminApp from '../firebaseAdmin';
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
-      // console.log('uid', uid);
+      console.log('uid', uid);
       return User.findOne({firebaseId: uid})
       .then((doc) => {
         const opts = [
@@ -82,7 +82,7 @@ import adminApp from '../firebaseAdmin';
       // Handle error
       console.log('error with admin auth', error);
     });
-  });
+    });
 
   router.post('/facebook', function(req, res) {
       req.session.userToken = req.body.token;
@@ -101,7 +101,7 @@ import adminApp from '../firebaseAdmin';
   // router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   //   function(req, res) {
   //     // Successful authentication, redirect home.
-  //     res.redirect('/app/walnuthome');
+  //     res.redirect('/walnuthome');
   //   }
   // );
   //

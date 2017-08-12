@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Select, Creatable } from 'react-select';
+import { Creatable } from 'react-select';
 import { Icon, Button } from 'semantic-ui-react';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 

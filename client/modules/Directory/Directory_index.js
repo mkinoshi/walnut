@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import css from './Directory.css';
+import './Directory.css';
 import DeckContainer from './Directory_Deck_Container';
 import Profile from './Directory_Profile/Directory_Profile_Index';
-import getAllUsersThunk from '../../thunks/user_thunks/getAllUsersThunk';
 
 
 class Directory extends React.Component {

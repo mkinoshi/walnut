@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
-import styles from 'react-select/dist/react-select.css';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';

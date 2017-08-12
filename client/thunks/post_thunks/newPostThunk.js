@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const newPostThunk = (postBody, postTags, lastRefresh) => (dispatch) => {
   axios.post(URL + 'db/save/post', {

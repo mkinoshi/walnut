@@ -1,21 +1,11 @@
 import React from 'react';
-import {Router, Route, Switch} from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
-// import EditProfile from '../EditProfile/EditProfile_index';
 import getUser from '../../thunks/app_thunks/getAppThunk';
-import getCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
 
-const styles = {
-  App: {
-    backgroundColor: 'lightblue',
-    marginLeft: '100px',
-    width: '65%'
-  }
-};
 
 class App extends React.Component {
 
@@ -27,9 +17,9 @@ class App extends React.Component {
     return (
         <div>
           <Switch>
-            <Route path="/app/walnuthome" component={WalnutHomeContainer}/>
-            <Route path="/app/community" render={() => <Community history={history} />} />
-            {/* <Route path="/app/editprofile" component={EditProfile} /> */}
+            <Route path="/walnuthome" component={WalnutHomeContainer}/>
+            <Route path="/community" render={() => <Community history={history} />} />
+            {/* <Route path="/editprofile" component={EditProfile} /> */}
           </Switch>
         </div>
     );

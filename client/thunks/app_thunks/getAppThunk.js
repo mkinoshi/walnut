@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const getUser = () => (dispatch) => {
   dispatch({type: 'USER_IS_FETCHING'});

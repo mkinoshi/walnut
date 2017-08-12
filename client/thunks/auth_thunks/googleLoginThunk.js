@@ -1,6 +1,6 @@
 import firebaseApp from '../../firebase';
 import firebase from 'firebase';
-const URL = 'http://localhost:3000/';
+import URL from '../../info';
 
 const googleLoginThunk = (dispatch) => {
   console.log('got here');

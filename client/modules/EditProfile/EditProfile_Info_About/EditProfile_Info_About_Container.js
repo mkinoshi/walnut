@@ -1,13 +1,10 @@
-/**
- * Created by ebadgio on 7/26/17.
- */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import saveAboutThunk from '../../../thunks/profile_thunks/saveAboutThunk';
 import Paper from 'material-ui/Paper';
 import AddCollege from './EditProfile_AddCollege';
-import 'semantic-ui-css/semantic.min.css';
 import AddHighSchool from './EditProfile_AddSchool';
 import AddPlace from './EditProfile_AddPlace';
 import AddWork from './EditProfile_AddWork';
@@ -90,6 +87,7 @@ class AboutContainer extends React.Component {
 
 
   handleSave() {
+    console.log('trying to save', this.state);
     this.props.saveAbout({schools: this.state.schools,
         colleges: this.state.colleges,
         works: this.state.works,

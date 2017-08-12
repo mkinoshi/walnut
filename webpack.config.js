@@ -1,10 +1,11 @@
 const webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: './client/app.js',
   output: {
     path: __dirname + '/build',
-    filename: 'app.bundle.js'
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -42,5 +43,10 @@ module.exports = {
   stats: {
     colors: true
   },
-  devtool: 'source-map'
+  devtool: 'cheap-eval-source-map',
+  plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static'
+    }),
+  ]
 };

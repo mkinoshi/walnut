@@ -59,7 +59,7 @@ app.use(function(req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: '*'
 };
 
 app.use(cors(corsOptions));
@@ -144,7 +144,7 @@ app.use(session({
 //   }
 // ));
 
-app.use('*', function(req, res, next) {
+app.use(function(req, res, next) {
   console.log(req.session.userMToken);
   if (req.session.userMToken) {
     const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
@@ -165,7 +165,7 @@ app.get('/', function(req, res, next) {
   console.log('a');
   if (!req.user) {
     console.log('b');
-    res.redirect('/app/login')
+    res.redirect('/login')
   } else {
     console.log('d');
     console.log(req.user);
@@ -174,13 +174,13 @@ app.get('/', function(req, res, next) {
       User.findById(req.user._id)
           .populate('currentCommunity')
           .then((user) => {
-              const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+              const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
               res.redirect(url);
           })
     }
     else {
       console.log('e');
-      res.redirect('/app/walnuthome')
+      res.redirect('/walnuthome')
     }
   }
 });
@@ -192,7 +192,7 @@ app.use('/db/save', dbSaveRoutes);
 app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/', (request, response) => {
+app.use('/*', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 

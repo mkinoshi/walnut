@@ -5,7 +5,6 @@ import saveBlurbThunk from '../../thunks/profile_thunks/saveBlurbThunk';
 import saveTagsThunk from '../../thunks/profile_thunks/saveTagsThunk';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
-import Slider from 'react-slick';
 import Paper from 'material-ui/Paper';
 
 const styles = {
