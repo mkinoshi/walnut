@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactMapboxGl, { Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
+// const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';

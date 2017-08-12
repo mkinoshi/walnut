@@ -12,7 +12,7 @@ import adminApp from '../firebaseAdmin';
   router.post('/signup', function(req, res) {
     // console.log('req.body.token', req.body.token);
     // console.log('adminApp', adminApp);
-    req.session.userToken = req.body.token;
+    // req.session.userToken = req.body.token;
     //console.log('req.session.userToken', req.session.userToken);
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
@@ -55,7 +55,8 @@ import adminApp from '../firebaseAdmin';
   });
 
   router.post('/login', function(req, res) {
-    req.session.userToken = req.body.token;
+    // req.session.userToken = req.body.token;
+    console.log('you are trying to login', req.session);
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
@@ -69,8 +70,9 @@ import adminApp from '../firebaseAdmin';
         return User.populate(doc, opts)
         .then((populated) => {
           console.log(populated._id);
-          const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
-          req.session.userMToken = token;
+          // const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
+          req.session.userMToken = populated._id;
+          req.session.save(function(err) {console.log(err);});
           console.log(req.session, 'pop login', populated);
           res.send({success: true, user: populated});
         })
@@ -105,14 +107,6 @@ import adminApp from '../firebaseAdmin';
   //   }
   // );
   //
-
-
-  router.post('/logout', function(req, res) {
-    console.log('logged out before destroy', req.session);
-    req.session.destroy();
-    console.log('logged out after destroy', req.session);
-    res.json({success:true});
-  });
 
   // return router;
 // }
