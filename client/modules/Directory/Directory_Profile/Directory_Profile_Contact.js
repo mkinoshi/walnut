@@ -3,10 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import css from '.././Directory.css';
-import 'semantic-ui-css/semantic.min.css';
-import { Button, Card, Image } from 'semantic-ui-react';
-
+import '.././Directory.css';
 
 
 class Contacts extends React.Component {

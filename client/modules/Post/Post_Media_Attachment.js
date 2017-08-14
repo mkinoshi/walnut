@@ -2,8 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Image, Card, Icon} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import css from './Post.css';
+import './Post.css';
 import PDF from 'react-pdf-js';
 import { Player } from 'video-react';
 import superagent from 'superagent';

@@ -225,8 +225,16 @@ router.post('/about', (req, res) => {
              globalResponse.location.homeTown = [jsonp.geometry.location.lng,
              jsonp.geometry.location.lat];
            }
+           console.log('user global save about', globalResponse);
            return globalResponse.save();
          })
+          .then((savedUser) => {
+            const opts = [
+              { path: 'communities' },
+              { path: 'currentCommunity' }
+            ];
+            return User.populate(savedUser, opts);
+          })
          .then((user) => {
            res.json({success: true, user: user});
          })

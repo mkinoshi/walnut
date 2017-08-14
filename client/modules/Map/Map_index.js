@@ -1,8 +1,6 @@
 import React from 'react';
-// import Iframe from 'react-iframe';
 // const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from '../../../myNpmModules/react-mapbox-gl';
-// import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import MapFilter from './Map_Filter';
 import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
@@ -11,7 +9,6 @@ import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
 import './Map.css';
-import 'semantic-ui-css/semantic.min.css';
 import {Icon, Popup, Image} from 'semantic-ui-react';
 const styles = {
   mapContainer: {

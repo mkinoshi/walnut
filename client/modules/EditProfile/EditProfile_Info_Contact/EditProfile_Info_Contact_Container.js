@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import saveContactThunk from '../../../thunks/profile_thunks/saveContactThunk';
 import Paper from 'material-ui/Paper';
-import { Button, Header, Image, Modal, Input, Checkbox, Form, Icon  } from 'semantic-ui-react';
+import { Button, Input  } from 'semantic-ui-react';
 
 const styles = {
   contact: {

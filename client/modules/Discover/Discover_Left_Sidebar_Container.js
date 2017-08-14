@@ -1,5 +1,4 @@
 import React from 'react';
-import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FilterPrefContainer from '../Feed/Feed_FilterPref_Container';

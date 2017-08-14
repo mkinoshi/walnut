@@ -1,6 +1,4 @@
-/**
- * Created by ebadgio on 7/26/17.
- */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';

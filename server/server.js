@@ -5,16 +5,10 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var FacebookStrategy = require('passport-facebook');
 var mongoose = require('mongoose');
-var expressValidator = require('express-validator');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
-var FirebaseStrategy = require('passport-firebase-auth').Strategy;
-// var firebaseMiddleware = require('./firebaseMiddleware');
 import AdminApp from './firebaseAdmin';
 var CryptoJS = require("crypto-js");
 
@@ -45,7 +39,7 @@ var app = express();
 app.use(logger('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator());
+// app.use(expressValidator());
 app.use(cookieParser());
 //IF WE NEED TO SERVE SOME FILES (stylesheets, scripts, etc.), USE THIS:
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -59,97 +53,30 @@ app.use(function(req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: 'http://localhost:3000'
+  origin: '*'
 };
 
 app.use(cors(corsOptions));
 
+var mongoStore = new MongoStore({ 
+    mongooseConnection: mongoose.connection,
+    collection: 'user-sessions',
+  });
+
 // Passport
 app.use(session({
   secret: process.env.SECRET,
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  store: mongoStore,
+  resave: true
   // userToken: null
 }));
 
-// var hbs = require('express-handlebars')({
-//   defaultLayout: 'main',
-//   extname: '.hbs'
-// });
-// app.engine('hbs', hbs);
-// app.set('views', path.join(__dirname, '..', 'views'));
-// app.set('view engine', 'hbs');
-
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.serializeUser(function(user, done) {
-//   done(null, user._id);
-// });
-
-// passport.deserializeUser(function(id, done) {
-//   models.User.findById(id, done);
-// });
-//
-// // passport strategy
-// passport.use(new LocalStrategy(function(username, password, done) {
-//   // Find the user with the given username
-//   models.User.findOne({ username: username }, function (err, user) {
-//     // if there's an error, finish trying to authenticate (auth failed)
-//     if (err) {
-//       console.error('Error fetching user in LocalStrategy', err);
-//       return done(err);
-//     }
-//     // if no user present, auth failed
-//     if (!user) {
-//       return done(null, false, { message: 'Incorrect username.' });
-//     }
-//     // TODO encrypt this!!!
-//     // if passwords do not match, auth failed
-//     if (user.password !== password) {
-//       return done(null, false, { message: 'Incorrect password.' });
-//     }
-//     // auth has has succeeded
-//     return done(null, user);
-//   });
-// }
-// ));
-//
-// passport.use(new FacebookStrategy({
-//     clientID: process.env.FACEBOOK_APP_ID,
-//     clientSecret: process.env.FACEBOOK_APP_SECRET,
-//     callbackURL: "http://localhost:3000/auth/facebook/callback",
-//     // TODO scrape groups
-//      profileFields: ['id', 'displayName', 'photos']
-//   },
-//   function(accessToken, refreshToken, profile, cb) {
-//     User.find({ facebookId: profile.id }, function(err, user) {
-//       console.log(user)
-//       console.log(profile)
-//       if (user.length === 0) {
-//         var new_user = new User({
-//           username: profile.displayName,
-//           pictureURL: profile.photos[0].value,
-//           facebookId: profile.id
-//         })
-//         new_user.save(function(err) {
-//           if (!err) {
-//             cb(err, new_user);
-//           }
-//         })
-//       } else {
-//         cb(err, user[0])
-//       }
-//     })
-//   }
-// ));
-
 app.use(function(req, res, next) {
-  console.log(req.session.userMToken);
+  console.log('this is inside the use', req.session.userMToken);
   if (req.session.userMToken) {
-    const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
-    const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
-    User.findById(mongoId)
+    // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
+    // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
+    User.findById(req.session.userMToken)
         .then((response) => {
           // console.log(response);
           req.user = response;
@@ -159,31 +86,40 @@ app.use(function(req, res, next) {
     req.user = undefined;
     next();
   }
-})
+});
 
 app.get('/', function(req, res, next) {
   console.log('a');
   if (!req.user) {
     console.log('b');
-    res.redirect('/app/login')
-  } else {
+    res.redirect('/login')
+  } 
+  else {
     console.log('d');
     console.log(req.user);
-    if (req.user.currentCommunity !== '') {
+    if (req.user.currentCommunity) {
       console.log('c');
       User.findById(req.user._id)
           .populate('currentCommunity')
           .then((user) => {
-              const url = '/app/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+              const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
               res.redirect(url);
           })
     }
     else {
       console.log('e');
-      res.redirect('/app/walnuthome')
+      res.redirect('/walnuthome')
     }
   }
 });
+
+app.post('/auth/logout', function(req, res) {
+    console.log('logged out before destroy', req.session);
+    mongoStore.destroy(req.session.id, function() {
+      req.session.destroy();
+      res.json({success:true});
+    })
+  });
 
 app.use('/auth', auth);
 app.use('/db', dbGeneralRoutes);
@@ -192,7 +128,7 @@ app.use('/db/save', dbSaveRoutes);
 app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/', (request, response) => {
+app.use('/*', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
 

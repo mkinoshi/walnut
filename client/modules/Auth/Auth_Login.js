@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import { Button, Input, Form, Checkbox } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { Button, Form } from 'semantic-ui-react';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
-import css from './Auth.css';
+import './Auth.css';
 
 class Login extends React.Component {
   constructor() {
@@ -38,7 +37,6 @@ class Login extends React.Component {
 
   regLogin(e) {
     e.preventDefault();
-    console.log('redirect function', this.props.redirect);
     this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect);
   }
 
@@ -70,7 +68,7 @@ class Login extends React.Component {
                 <Button onClick={(e) => { this.regLogin(e); }} type="submit">Submit</Button>
               </Form>
               <h2>New user?</h2>
-              <Link to="/app/register">Go to Registration</Link>
+              <Link to="/register">Go to Registration</Link>
             </div>
           </div>
         </div>

@@ -3,8 +3,7 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'semantic-ui-css/semantic.min.css';
-import { Button, Header, Image, Modal, Input, Checkbox, Form, Icon } from 'semantic-ui-react';
+import { Button, Header, Modal, Checkbox, Form, Icon } from 'semantic-ui-react';
 
 const styles = {
   modal: {
