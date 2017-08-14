@@ -12,7 +12,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       result.getToken(/* forceRefresh */ true)
           .then(function(idToken) {
             console.log('idToken', idToken);
-            axios.post(URL + '/auth/signup', {
+            axios.post(URL + 'auth/signup', {
               token: idToken,
               fname: firstname,
               lname: lastname,
