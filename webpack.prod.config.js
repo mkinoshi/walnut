@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-var CompressionPlugin = require("compression-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// var CompressionPlugin = require("compression-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: './client/app.js',
@@ -69,22 +69,23 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerMode: 'static'
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-            , sourceMap: false
-        }),
-        new CompressionPlugin({
-            asset: "[path].gz[query]",
-            algorithm: "gzip",
-            test: /\.(js|html)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        //     , sourceMap: false
+        // }),
+        // new CompressionPlugin({
+        //     asset: "[path].gz[query]",
+        //     algorithm: "gzip",
+        //     test: /\.(js|html)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'node-static',
             filename: 'node-static.js',
+            algorithm: "gzip",
             minChunks(module, count) {
                 var context = module.context;
                 return context && context.indexOf('node_modules') >= 0;

@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
+var compression = require('compression')
 import AdminApp from './firebaseAdmin';
 var CryptoJS = require("crypto-js");
 
@@ -20,7 +21,6 @@ REQUIRED_ENV.forEach(function(el) {
     process.exit(1);
   }
 });
-
 
 mongoose.connect(connect);
 mongoose.Promise = global.Promise;
@@ -44,6 +44,17 @@ app.use(cookieParser());
 //IF WE NEED TO SERVE SOME FILES (stylesheets, scripts, etc.), USE THIS:
 // app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(compression({ filter: shouldCompress }))
+
+function shouldCompress(req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header 
+    return false
+  }
+
+  // fallback to standard filter function 
+  return compression.filter(req, res)
+}
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
