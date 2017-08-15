@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
+import { Message, Icon } from 'semantic-ui-react';
 
 class Register extends React.Component {
   constructor() {
@@ -38,16 +39,28 @@ class Register extends React.Component {
 
   register(e) {
     e.preventDefault();
-    this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
+    console.log(this.state);
+    if (this.state.fName && this.state.lName && this.state.email && this.state.password) {
+      console.log('it is sent');
+      this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
+    }
   }
 
   render() {
     return (
         <div>
             <Link to="/login">Back to Login</Link>
-
-
             <h1 style={{textAlign: 'center'}}>Register</h1>
+            {!this.props.isVerified ?
+                <Message icon>
+                  <Icon name="circle notched" loading />
+                  <Message.Content>
+                    <Message.Header>Email will be sent soon </Message.Header>
+                    Please verify your account
+                  </Message.Content>
+                </Message> :
+                null
+            }
             <div className="container col-xs-4 col-xs-offset-4">
                 <form>
                     <div className="form-group">
@@ -103,10 +116,12 @@ class Register extends React.Component {
 
 
 Register.propTypes = {
-  emailRegistration: PropTypes.func
+  emailRegistration: PropTypes.func,
+  isVerified: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
+  isVerified: state.userReducer.isVerified
 });
 
 const mapDispatchToProps = (dispatch) => ({

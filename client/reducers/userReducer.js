@@ -46,11 +46,33 @@ const userObj = {
   isFetching: false,
   blurb: '',
   isCreated: true,
-  isEdited: true
+  isEdited: true,
+  isVerified: true,
+  isError: false
 };
 
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
+    case 'USER_IS_NOT_VERIFIED':
+      return {
+        ...state,
+        isVerified: false
+      };
+    case 'IS_VERIFIED':
+      return {
+        ...state,
+        isVerified: true
+      };
+    case 'GET_USER_DATA_ERROR':
+      return {
+        ...state,
+        isError: true
+      };
+    case 'GET_USER_VERIFY_ERROR':
+      return {
+        ...state,
+        isVerified: false
+      };
     case 'USER_IS_FETCHING':
       return {
         ...state,
@@ -58,9 +80,11 @@ const userReducer = (state = userObj, action) => {
       };
     case 'GET_USER_DATA_DONE':
       return {
+        ...state,
         ...action.user,
         isFetching: false,
-        isCreated: true
+        isCreated: true,
+        isError: false
       };
     case 'ADD_TEMP_FILTER':
       return {
@@ -72,8 +96,6 @@ const userReducer = (state = userObj, action) => {
         ...state,
         preferences: action.data.preferences
       };
-    case 'GET_USER_DATA_ERROR':
-      return state;
     case 'UPDATE_LOCATION_DONE':
       return {
         ...state,

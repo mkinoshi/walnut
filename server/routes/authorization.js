@@ -7,6 +7,7 @@ const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
 var CryptoJS = require("crypto-js");
+
 import adminApp from '../firebaseAdmin';
 
   router.post('/signup', function(req, res) {
@@ -40,8 +41,8 @@ import adminApp from '../firebaseAdmin';
       return new_user.save()
       .then((doc) => {
         console.log(doc._id);
-        const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-        req.session.userMToken = token;
+        // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
+        req.session.userMToken = doc._id;
         console.log(req.session, 'doc register', doc);
         res.send({success: true, user: doc});
       })
@@ -62,6 +63,10 @@ import adminApp from '../firebaseAdmin';
       var uid = decodedToken.uid;
       console.log('uid', uid);
       return User.findOne({firebaseId: uid})
+      .then((user) => {
+        user.password = req.body.password;
+        return user.save();
+      })
       .then((doc) => {
         const opts = [
           {path: 'communities'},

@@ -22,22 +22,35 @@ class Auth extends React.Component {
 
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log(user);
+      if (user && !user.emailVerified) {
+        const timer = setInterval(() => {
+          user.reload();
+          console.log(user);
+          if (user.emailVerified) {
+            console.log('it is verified !!!!!');
+            this.props.onVerified();
+            history.replace('/walnuthome');
+            clearInterval(timer);
+          }
+        }, 1000);
+      }
       if (!user) {
         // this.context.history.push('/walnuthome');
         history.replace('/login');
         // history.push('/walnuthome');
       } else {
-        console.log('calling this get User');
-        this.props.getUser();
-        const isUserInCommunity = localStorage.getItem('isUserInCommunity');
-        if (this.props.isCreated && !isUserInCommunity) {
-          history.replace('/walnuthome');
-        } else {
-          if (sessionStorage.getItem(('url'))) {
-            history.replace(sessionStorage.getItem('url'));
+        if (user.emailVerified) {
+          console.log('calling this get User');
+          this.props.getUser();
+          const isUserInCommunity = localStorage.getItem('isUserInCommunity');
+          if (this.props.isCreated && !isUserInCommunity) {
+            history.replace('/walnuthome');
           } else {
-            history.replace(localStorage.getItem('home'));
+            if (sessionStorage.getItem(('url'))) {
+              history.replace(sessionStorage.getItem('url'));
+            } else {
+              history.replace(localStorage.getItem('home'));
+            }
           }
         }
       }
@@ -69,15 +82,19 @@ class Auth extends React.Component {
 
 Auth.propTypes = {
   getUser: PropTypes.func,
-  isCreated: PropTypes.bool
+  isCreated: PropTypes.bool,
+  isVerified: PropTypes.bool,
+  onVerified: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  isCreated: state.userReducer.isCreated
+  isCreated: state.userReducer.isCreated,
+  isVerified: state.userReducer.isVerified
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUser: () => dispatch(getUser())
+  getUser: () => dispatch(getUser()),
+  onVerified: () => dispatch({type: 'IS_VERIFIED'})
 });
 
 

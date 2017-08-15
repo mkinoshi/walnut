@@ -3,16 +3,21 @@ import axios from 'axios';
 import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
+  dispatch({type: 'USER_IS_NOT_VERIFIED'});
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
     result.updateProfile({
       displayName: firstname + ' ' + lastname
     })
     .then(() => {
+      console.log(result);
+      return firebaseApp.auth().currentUser.sendEmailVerification();
+    })
+    .then(() => {
       result.getToken(/* forceRefresh */ true)
           .then(function(idToken) {
             console.log('idToken', idToken);
-            axios.post(URL + '/auth/signup', {
+            axios.post(URL + 'auth/signup', {
               token: idToken,
               fname: firstname,
               lname: lastname,
