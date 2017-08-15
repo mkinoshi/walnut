@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import AWS from 'aws-sdk';
+import multerS3 from 'multer-s3';
 // TODO user models with new db layout
 import {User, Post} from '../models/models';
 
@@ -15,8 +16,18 @@ const router = express.Router();
 const s3 = new AWS.S3();
 
 const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 52428800 },
+  storage: multerS3({
+    s3: s3,
+    bucket: 'walnut-test',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read',
+    // metadata: (req, file, cb) => {
+    //   cb(null, { fieldName: file.fieldname });
+    // },
+    key: (req, file, cb) => {
+      cb(null, req.user._id + Date.now().toString() + file.originalname);
+    }
+  })
 });
 
 router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
@@ -52,65 +63,58 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
-  console.log('inside aws', req.user, req.file);
-  const toSave = req.user._id + req.file.originalname + Date.now();
-  s3.putObject({
-    Bucket: 'walnut-test',
-    Key: toSave,
-    Body: req.file.buffer,
-    ACL: 'public-read',
-  }, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-      return;
-    }
-    User.findById(req.user._id)
+  User.findById(req.user._id)
     .then((user) => {
-      const url = process.env.AWS_BUCKET_URL + toSave;
+      const url = req.file.location;
       user.pictureURL = url;
       return user.save();
     })
     .then((user) => {
       console.log('end of upload', user);
+      // user pic thunk and reducer data refresh
       res.json({pictureURL: user.pictureURL});
     })
     .catch((error) => console.log('error in aws db save', error));
+});
+
+router.post('/upload/community', upload.single('community'), (req, res) => {
+  res.json({pictureURL: req.file.location}).
+  catch((error) => {
+    res.json({pictureURL: null});
   });
+  // User.findById(req.user._id)
+  //   .then((user) => {
+  //     const url = req.file.location;
+  //     user.pictureURL = url;
+  //     return user.save();
+  //   })
+  //   .then((user) => {
+  //     console.log('end of upload', user);
+  //     // user pic thunk and reducer data refresh
+  //     res.json({pictureURL: user.pictureURL});
+  //   })
+  //   .catch((error) => console.log('error in aws db save', error));
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
-  console.log('upload', req.body.lastRefresh);
-  const toSave = req.user._id + req.file.originalname + Date.now();
-  s3.putObject({
-    Bucket: 'walnut-test',
-    Key: toSave,
-    Body: req.file.buffer,
-    ContentType: req.file.type,
-    ACL: 'public-read',
-  }, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-      return;
+  console.log('upload', req.file);
+  const newPost = new Post({
+    content: req.body.body,
+    createdAt: new Date(),
+    createdBy: req.user._id,
+    likes: [],
+    tags: req.body.tags,
+    comments: [],
+    commentNumber: 0,
+    community: req.user.currentCommunity,
+    link: '',
+    attachment: {
+      name: req.body.name ? req.body.name : req.file.originalname,
+      url: req.file.location,
+      type: req.file.mimetype,
     }
-    const newPost = new Post({
-      content: req.body.body,
-      createdAt: new Date(),
-      createdBy: req.user._id,
-      likes: [],
-      tags: req.body.tags,
-      comments: [],
-      commentNumber: 0,
-      community: req.user.currentCommunity,
-      link: '',
-      attachment: {
-        name: req.body.name ? req.body.name : req.file.originalname,
-        url: process.env.AWS_BUCKET_URL + toSave,
-        type: req.file.mimetype,
-      }
-    });
-    newPost.save()
+  });
+  newPost.save()
     .then((post) => {
       let posts = [];
       const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
@@ -154,7 +158,6 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
         });
     })
     .catch((error) => console.log('error in aws db save', error));
-  });
 });
 
 router.post('/download/post', upload.single('attach'), (req, res) => {

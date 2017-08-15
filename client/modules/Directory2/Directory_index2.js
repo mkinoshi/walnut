@@ -18,6 +18,12 @@ class Directory2 extends React.Component {
   }
 
   componentWillMount() {
+    // TODO pass down users from community reducer and if state hit refresh with last refresh
+    // or new last refresh??
+    if (this.props.lastRefresh !== '') {
+      this.setState({currentCards: this.props.users});
+      return;
+    }
     this.props.getUsers();
   }
 
@@ -77,15 +83,17 @@ class Directory2 extends React.Component {
 Directory2.propTypes = {
   getUsers: PropTypes.func,
   users: PropTypes.array,
-  location: PropTypes.object
+  location: PropTypes.object,
+  lastRefresh: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-  users: state.directoryReducer.users
+  users: state.directoryReducer.users,
+  lastRefresh: state.directoryReducer.lastRefresh
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getUsers: () => dispatch(getUsersThunk)
+  getUsers: () => dispatch(getUsersThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Directory2);

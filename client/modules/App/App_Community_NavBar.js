@@ -7,13 +7,15 @@ import { Icon, Dropdown} from 'semantic-ui-react';
 import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
+import EditCommunityModal from './App_EditCommunityModal';
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: this.props.isEdited,
-      tab: 1
+      tab: 1,
+      admin: false
     };
   }
 
@@ -23,6 +25,18 @@ class Navbar extends React.Component {
 
   handleLogout() {
     this.props.onLogout(history);
+  }
+
+  handleLogoClick() {
+    console.log('it is here');
+    if (this.props.community.admins.indexOf(this.props.user) !== -1) {
+      this.setState({admin: true});
+    }
+  }
+
+  handleSubmit(image, titleValue, defaultFilters) {
+    // this.props.createCommunity(image, titleValue, defaultFilters);
+    window.location.reload();
   }
 
   render() {
@@ -39,7 +53,7 @@ class Navbar extends React.Component {
                   <Icon name="content" size="big" />
                 </Link>
               <div className="communityNavBarLogo">
-                <img className="communityImage" src={this.props.community.icon} />
+                <img className="communityImage" src={this.props.community.icon} onClick={() => this.handleLogoClick()}/>
                 <h3 className="communityTitle">{this.props.community.title}</h3>
               </div>
 
@@ -112,6 +126,10 @@ class Navbar extends React.Component {
               <Icon name="log out" className="logoutIcon" size="big"/>
                 Logout</a> */}
             </div>
+            {this.state.admin ?
+              <EditCommunityModal handleCreate={(image, titleValue, defaultFilters) => this.handleSubmit(image, titleValue, defaultFilters)} /> :
+              null
+            }
         </div>
         );
   }
@@ -124,12 +142,14 @@ Navbar.propTypes = {
   isEdited: PropTypes.bool,
   fullName: PropTypes.string,
   onLogout: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  user: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   pictureURL: state.userReducer.pictureURL,
   fullName: state.userReducer.fullName,
+  user: state.userReducer._id,
   community: state.userReducer.currentCommunity,
   isEdited: state.userReducer.isEdited
 });

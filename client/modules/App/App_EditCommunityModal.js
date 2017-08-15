@@ -8,7 +8,7 @@ import { Label, Input, Modal, Button, Icon } from 'semantic-ui-react';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
 
-class NewCommunityModal extends React.Component {
+class EditCommunityModal extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -18,7 +18,7 @@ class NewCommunityModal extends React.Component {
       filterValue: '',
       file: '',
       pic: '',
-      open: false
+      open: true
     };
   }
 
@@ -84,11 +84,11 @@ class NewCommunityModal extends React.Component {
     return (
         <Modal size={'small'}
                basic
-               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left" />}
                closeIcon="close"
+               open={this.state.open}
         >
             <Modal.Header className="modalHeader">
-                Create your Community!
+                Edit your community!
             </Modal.Header>
             <Modal.Content scrolling>
                 <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} />
@@ -130,9 +130,9 @@ class NewCommunityModal extends React.Component {
 }
 
 
-NewCommunityModal.propTypes = {
+EditCommunityModal.propTypes = {
   handleCreate: PropTypes.func
 };
 
 
-export default NewCommunityModal;
+export default EditCommunityModal;

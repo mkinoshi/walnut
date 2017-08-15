@@ -215,3 +215,14 @@
 .titleInput {
     margin-bottom: 15px;
 }
+
+.communityImgUpload {
+    height: 105px;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+button.ui.button > input {
+    display: inline !important;
+}
