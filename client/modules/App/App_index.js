@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
+// import EditProfile from '../EditProfile/EditProfile_index';
 
 
 class App extends React.Component {

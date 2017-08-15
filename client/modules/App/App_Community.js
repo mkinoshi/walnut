@@ -9,6 +9,7 @@ import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
 // import EditProfile from '../EditProfile/EditProfile_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
+import EditProfile from '../EditProfile_2/EditProfile_2_index';
 
 
 class Community extends React.Component {
@@ -38,7 +39,7 @@ class Community extends React.Component {
             <Route path="/community/:communityName/directory" component={Directory} />
             <Route path="/community/:communityName/map" component={MapContainer}/>
             <Route path="/community/:communityName/discover" component={Discover} />
-            {/* <Route path="/community/:communityName/editProfile" component={EditProfile} /> */}
+            <Route path="/community/:communityName/editProfile" component={EditProfile} />
          </Switch>
          </div>
        </div>
