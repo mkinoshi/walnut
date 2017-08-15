@@ -1,27 +1,22 @@
 import React from 'react';
-import MyConversationContainer from './Discover_My_Conversation_Container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+import {  } from 'semantic-ui-react';
 import './Discover.css';
 
 class RightSideBar extends React.Component {
   constructor() {
     super();
     this.state = {
-    };
+      };
   }
 
   render() {
     return (
-      <div className="RightSideBar_Container">
-        <div className="discoverTitleBox">
-          <h1 className="discoverTitle">My conversations</h1>
-          <div className="discoverTitleLine"></div>
+        <div className="myConversationBox">
+            <p>conversation box with infinite scroll</p>
         </div>
-        <MyConversationContainer />
-      </div>
-    );
+        );
   }
 }
 
