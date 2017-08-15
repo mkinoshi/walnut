@@ -1,6 +1,4 @@
-/**
- * Created by ebadgio on 7/24/17.
- */
+
 import axios from 'axios';
 import URL from '../../info';
 
@@ -9,6 +7,7 @@ const userDataThunk = () => (dispatch) => {
     .then((response) => {
       console.log('got user:', response);
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
+      // TODO dispatch the same action as inside the join community thunk
     })
     .catch((err) => {
       console.log('getting error in login', err);

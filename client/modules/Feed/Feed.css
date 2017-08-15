@@ -79,6 +79,8 @@
     padding-bottom: 12px;
     resize: none;
     border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
     border: none;
     overflow: auto;
     outline: none;
