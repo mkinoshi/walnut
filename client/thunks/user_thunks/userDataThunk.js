@@ -7,7 +7,7 @@ const userDataThunk = () => (dispatch) => {
     .then((response) => {
       console.log('got user:', response);
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
-      // TODO dispatch the same action as inside the join community thunk
+      // TODO dispatch the same action as inside the join conversation thunk
     })
     .catch((err) => {
       console.log('getting error in login', err);

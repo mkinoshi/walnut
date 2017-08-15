@@ -16,7 +16,7 @@ class MyConversationContainer extends React.Component {
     return (
         <div className="myConversationBox">
             <p>conversation box with infinite scroll</p>
-            {this.props.conversations.map((conv) =>
+            {this.props.currentConversations.map((conv) =>
               <ConversationCard data={conv} />
             )}
         </div>
@@ -25,11 +25,11 @@ class MyConversationContainer extends React.Component {
 }
 
 MyConversationContainer.propTypes = {
-  conversations: PropTypes.array
+  currentConversations: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
-  conversations: state.userReducer.conversations
+  currentConversations: state.userReducer.currentConversations
 });
 
 export default connect(mapStateToProps)(MyConversationContainer);

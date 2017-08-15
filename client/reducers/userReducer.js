@@ -47,7 +47,8 @@ const userObj = {
   isFetching: false,
   blurb: '',
   isCreated: true,
-  isEdited: true
+  isEdited: true,
+  currentConversations: []
 };
 
 const userReducer = (state = userObj, action) => {
