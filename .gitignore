@@ -1,12 +1,5 @@
 node_modules
 .DS_Store
 env.sh
-*app.bundle.js
-*app.bundle.js.gz
-*app.bundle.js.map
-*bundle.js
-*bundle.js.gz
+build
 .idea
-*npm-debug.log
-*node-static.js
-*node-static.js.gz
