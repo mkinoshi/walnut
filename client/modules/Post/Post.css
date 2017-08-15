@@ -260,6 +260,8 @@
 .downloadFileName { 
     color: #DADDD8;
     font-size: 14px;
+    word-break: break-word;
+    width: 268px;
 }
 
 .downloadFileIcon {
@@ -406,4 +408,23 @@ iframe {
     box-shadow: none!important;
     border-radius: 0!important;
     color: rgba(255,255,255,.9);
+}
+
+.previewPdf {
+    height: 59px;
+    width: 49px;
+    background-color: #98C1D9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    position: absolute;
+}
+
+.pdfClickMe {
+    margin-left: 8px;
+}
+
+.pdfClickMeText {
+    color: white;
 }

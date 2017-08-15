@@ -28,13 +28,13 @@ class Feed extends React.Component {
     clearInterval(refresh);
   }
 
-  // mofoMouseOver() {
-  //   refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh); }, 5000);
-  // }
-  //
-  // mofoMouseOff() {
-  //   clearInterval(refresh);
-  // }
+  mofoMouseOver() {
+    refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh); }, 5000);
+  }
+
+  mofoMouseOff() {
+    clearInterval(refresh);
+  }
 
   toggleFilterPref() {
     this.setState({showFilterPref: !this.state.showFilterPref});

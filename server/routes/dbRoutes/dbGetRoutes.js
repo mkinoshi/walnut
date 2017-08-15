@@ -219,7 +219,7 @@ router.get('/allusers', (req, res) => {
   Community.findById(req.user.currentCommunity)
       .populate('users')
       .then((community) => {
-        res.json({data: community.users});
+        res.json({data: community.users, lastRefresh: new Date()});
       })
       .catch((err) => {
         res.json({data: null});
@@ -259,15 +259,6 @@ router.get('/allusersdirectory', (req, res) => {
       });
 });
 
-router.get('/allusers', (req, res) => {
-  User.find()
-      .then((response) => {
-        res.json({users: response});
-      })
-      .catch((err) => {
-        res.json({data: null});
-      });
-});
 
 router.post('/linkpreview', (req, res) => {
   Metascraper

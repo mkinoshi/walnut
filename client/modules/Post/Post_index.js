@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import ModalContainer from './Post_Modal_Container';
 import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
-import { Icon, Button, Modal, Header } from 'semantic-ui-react';
 import './Post.css';
 import Lightbox from 'react-images';
-import PDF from 'react-pdf-js';
 import Linkify from 'linkifyjs/react';
 
 const defaults = {
@@ -142,25 +140,6 @@ class Post extends React.Component {
           isOpen={this.state.lightBoxData !== ''}
           onClose={() => this.closeLightbox()}
           />
-        <Modal
-        open={this.state.pdfModalData !== ''}
-        basic
-        size="small"
-        onClose={() => this.closePdfModal()}>
-          <Header icon="archive" content={this.state.pdfModalData.name} />
-          <Modal.Content>
-          <PDF file={this.state.pdfModalData.url} onDocumentComplete={(e) => this.onDocumentComplete(e)}
-            onPageComplete={(e) => this.onPageComplete(e)} page={this.state.page} />
-          </Modal.Content>
-          <Modal.Actions className="pdfModalFooter">
-            <Button onClick={(e) => {e.preventDefault(); this.handlePrevious();}} basic color="red" inverted>
-              <Icon name="caret left" /> Prev
-            </Button>
-            <Button onClick={(e) => {e.preventDefault(); this.handleNext();}} basic color="green" inverted>
-              Next <Icon name="caret right" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
       </div>
 
 
