@@ -55,6 +55,7 @@ const UserSchema = new mongoose.Schema({
   facebookId: {
     type: String
   },
+  // password should be taken out of mongo, a security concern
   password: {
     type: String
   },

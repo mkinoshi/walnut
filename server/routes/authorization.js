@@ -22,7 +22,6 @@ import adminApp from '../firebaseAdmin';
         firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
-        password: req.body.password,
         portfolio: [
           {name: 'media', data: []},
           {name: 'documents', data: []},
