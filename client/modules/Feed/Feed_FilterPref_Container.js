@@ -7,6 +7,7 @@ import Select from 'react-select';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
+import { Icon, Label } from 'semantic-ui-react';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -94,8 +95,15 @@ class FilterPrefContainer extends React.Component {
     return '';
   }
 
+  handleRemove(filter) {
+    const newState = this.state.useFilters.filter((f) => filter.name !== f.name);
+    this.setState({useFilters: newState});
+    this.props.toggleTempChecked(newState.map((filt) => filt._id));
+    // this.props.toggleChecked(filter._id);
+  }
+
   render() {
-    const filters = this.props.defaultFilters ? this.props.defaultFilters.concat(this.state.useFilters) : null;
+    const filters = this.state.useFilters;
     const options = this.selectOptions();
     const checked = this.props.defaultFilters ? filters.map((filter) => this.checkedBoxTagAdd(filter._id)) : null;
     console.log(checked);
@@ -105,11 +113,15 @@ class FilterPrefContainer extends React.Component {
           {filters ?
             filters.map((filter, index) => (
                 <p key={index}>
-                  <input type="checkbox" id={index}
+                  <Label image>
+                    # {filter.name}
+                    <Icon name="delete" onClick={() => this.handleRemove(filter)} />
+                  </Label>
+                  {/* <input type="checkbox" id={index}
                     checked={checked[index]}
                     value={filter.name}
                     onChange={() => { console.log('I am toggling here', filter); this.props.toggleChecked(filter._id); }} />
-                  <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label>
+                  <label htmlFor={index} className="tagItemLabel" ># {filter.name}</label> */}
                 </p>
               ))
            :

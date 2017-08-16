@@ -283,14 +283,19 @@ router.post('/toggle/checked', (req, res) => {
 router.post('/toggle/checkedtemp', (req, res) => {
   let posts = [];
   let filter;
-  if (req.user.communityPreference.indexOf(req.body.useFilters) === -1) {
-    console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
-    filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
+  // if (req.user.communityPreference.indexOf(req.body.useFilters) === -1) {
+  //   console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
+  //   filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
+  // } else {
+  //   filter =  { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity };
+  // }
+  if (req.body.useFilters.length > 0) {
+    filter =  { tags: { $in: req.body.useFilters }, community: req.user.currentCommunity };
   } else {
-    filter =  { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity };
+    filter = {community: req.user.currentCommunity};
   }
   Post.find(filter)
-        .limit(10)
+        .limit(11)
         .sort({ createdAt: -1 })
         .populate('tags')
         .populate('comments')
@@ -321,7 +326,12 @@ router.post('/toggle/checkedtemp', (req, res) => {
               })
             };
           });
-          res.json({ posts: posts, lastRefresh: new Date()});
+          if (posts.length > 10) {
+            posts.splice(10);
+            res.json({ posts: posts, lastRefresh: new Date(), hasMore: true});
+          } else {
+            res.json({ posts: posts, lastRefresh: new Date(), hasMore: false});
+          }
         })
         .catch((err) => {
           console.log('error 1', err);

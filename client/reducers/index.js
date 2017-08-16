@@ -9,8 +9,10 @@ import deckReducer from './deckReducer';
 import getCommunityReducer from './getCommunityReducer';
 import newTagsReducer from './newTagsReducer';
 import navBarReducer from './navBarReducer';
+import conversationReducer from './conversationReducer';
 
 const rootReducer = combineReducers({
+  conversationReducer: conversationReducer,
   userReducer: userReducer,
   directoryReducer: directoryReducer,
   discoverReducer: discoverReducer,
