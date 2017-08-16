@@ -11,7 +11,7 @@
     border-radius: 5px;
 }
 
-.editCard > .ui.dropdown > .text {
+#graduation .text {
     font-size: 14px !important;
 }
 
