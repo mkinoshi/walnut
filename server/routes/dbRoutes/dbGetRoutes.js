@@ -268,4 +268,12 @@ router.post('/linkpreview', (req, res) => {
     });
 });
 
+router.get('/myconversations/:postIds', (req, res) => {
+  const postIds = req.params.postIds.split('+');
+  Post.find({ _id: { $in: postIds}})
+  .then((posts) => {
+    res.json({posts: posts})
+  });
+});
+
 module.exports = router;

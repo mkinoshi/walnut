@@ -172,8 +172,10 @@ class ModalInstance extends React.Component {
   }
 
   joinConversation() {
-    this.setState({isInConversation: true});
-    this.props.joinConversation(this.props.postData.postId);
+    const user = firebaseApp.auth().currentUser;
+    const updates = {};
+    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    firebaseApp.database().ref().update(updates);
   }
 
   render() {
@@ -206,7 +208,7 @@ class ModalInstance extends React.Component {
                 circular
                 id="joinButton"
                 animated="vertical">
-                <Button.Content hidden>Join</Button.Content>
+                <Button.Content hidden>Follow</Button.Content>
                 <Button.Content visible>
                   <Icon name="plus" />
                 </Button.Content>
