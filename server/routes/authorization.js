@@ -69,8 +69,11 @@ import adminApp from '../firebaseAdmin';
       })
       .then((doc) => {
         const opts = [
-          {path: 'communities'},
-          {path: 'currentCommunity'}
+          { path: 'communities'},
+          { path: 'currentCommunity'},
+          { path: 'currentCommunity.admins'},
+          { path: 'currentCommunity.defaultTags'},
+          { path: 'currentCommunity.users'}
         ]
         return User.populate(doc, opts)
         .then((populated) => {

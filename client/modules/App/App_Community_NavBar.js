@@ -8,6 +8,9 @@ import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
 import EditCommunityModal from './App_EditCommunityModal';
+import updateCommunity from '../../thunks/community_thunks/updateCommunityThunk';
+import axios from 'axios';
+import URL from '../../info';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -29,14 +32,32 @@ class Navbar extends React.Component {
 
   handleLogoClick() {
     console.log('it is here');
-    if (this.props.community.admins.indexOf(this.props.user) !== -1) {
-      this.setState({admin: true});
+    if (this.props.community.admins.filter((user) => (user._id === this.props.user)).length > 0) {
+      this.setState({admin: !this.state.admin});
     }
   }
 
-  handleSubmit(image, titleValue, defaultFilters) {
-    // this.props.createCommunity(image, titleValue, defaultFilters);
-    window.location.reload();
+  handleClose() {
+    this.setState({admin: false});
+  }
+
+  handleSubmit(image, titleValue, oldT, newT, admins) {
+    // this.props.updateCommunity(image, titleValue, oldT, newT, admins);
+    console.log(image);
+    console.log(titleValue);
+    console.log(oldT);
+    console.log(newT);
+    console.log(admins);
+    axios.post(URL + 'db/update/community', {
+      title: titleValue,
+      image: image,
+      oldFilters: oldT,
+      newFilters: newT,
+      admins: admins
+    })
+    .then(() => {
+      window.location.reload();
+    });
   }
 
   render() {
@@ -53,8 +74,8 @@ class Navbar extends React.Component {
                   <Icon name="content" size="big" />
                 </Link>
               <div className="communityNavBarLogo">
-                <img className="communityImage" src={this.props.community.icon} onClick={() => this.handleLogoClick()}/>
-                <h3 className="communityTitle">{this.props.community.title}</h3>
+                <img className="communityImage" src={this.props.community.icon} onClick={() => this.handleLogoClick()} />
+                <h3 className="communityTitle" onClick={() => this.handleLogoClick()}>{this.props.community.title}</h3>
               </div>
 
               <div className="navBarLinks">
@@ -127,7 +148,11 @@ class Navbar extends React.Component {
                 Logout</a> */}
             </div>
             {this.state.admin ?
-              <EditCommunityModal handleCreate={(image, titleValue, defaultFilters) => this.handleSubmit(image, titleValue, defaultFilters)} /> :
+              <EditCommunityModal
+                handleUpdate={(image, titleValue, oldT, newT, admins) => this.handleSubmit(image, titleValue, oldT, newT, admins)}
+                handleLogoClose={() => this.handleClose()}
+                community={this.props.community}
+                /> :
               null
             }
         </div>
@@ -143,7 +168,8 @@ Navbar.propTypes = {
   fullName: PropTypes.string,
   onLogout: PropTypes.func,
   history: PropTypes.object,
-  user: PropTypes.string
+  user: PropTypes.string,
+  updateCommunity: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -156,7 +182,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
-  onLogout: (his) => dispatch(signOutThunk(his))
+  onLogout: (his) => dispatch(signOutThunk(his)),
+  updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins))
 });
 
 

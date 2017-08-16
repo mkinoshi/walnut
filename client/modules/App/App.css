@@ -226,3 +226,13 @@
 button.ui.button > input {
     display: inline !important;
 }
+
+.modalEditTrigger {
+    position: absolute !important;
+    top: 50px !important;
+    margin-left: 80px !important;
+}
+
+.adminFname {
+    color: white !important;
+}
