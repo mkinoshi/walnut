@@ -11,7 +11,7 @@ const toggleFilterCheckedThunk = (id) => (dispatch) => {
   })
   .then((response) => {
     console.log('backend response', response);
-    dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
+    // dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     dispatch({ type: 'GET_DISCOVER_POSTS_DONE', posts: response.data.posts, lastRefresh: response.data.lastRefresh });
     dispatch({type: 'HAS_MORE'});
   })

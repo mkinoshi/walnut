@@ -70,6 +70,11 @@ const discoverReducer = (state = {
         ...state,
         hasMore: true
       };
+    case 'NO_MORE':
+      return {
+        ...state,
+        hasMore: false
+      };
     default:
       return state;
   }

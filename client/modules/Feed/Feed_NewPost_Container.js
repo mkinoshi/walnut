@@ -47,18 +47,18 @@ class NewPostContainer extends React.Component {
     this.props.newTag(tag);
   }
 
-  addTempTags(tags) {
-    const whole = [].concat(tags);
-    const tempTagsCopy = this.state.tempTags.slice();
-    const postTagsCopy = this.state.postTags.slice();
-    whole.forEach((tag) => {
-      if(!tempTagsCopy.includes(tag)) {
-        tempTagsCopy.push(tag);
-        postTagsCopy.push(tag._id);
-        this.setState({tempTags: tempTagsCopy, postTags: postTagsCopy});
-      }
-    });
-  }
+  // addTempTags(tags) {
+  //   const whole = [].concat(tags);
+  //   const tempTagsCopy = this.state.tempTags.slice();
+  //   const postTagsCopy = this.state.postTags.slice();
+  //   whole.forEach((tag) => {
+  //     if(!tempTagsCopy.includes(tag)) {
+  //       tempTagsCopy.push(tag);
+  //       postTagsCopy.push(tag._id);
+  //       this.setState({tempTags: tempTagsCopy, postTags: postTagsCopy});
+  //     }
+  //   });
+  // }
 
   removeTag(tag) {
     const newTagsCopy = this.state.newTags.slice();

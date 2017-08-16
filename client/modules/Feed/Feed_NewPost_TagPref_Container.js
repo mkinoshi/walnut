@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Creatable } from 'react-select';
-import { Icon, Button } from 'semantic-ui-react';
+import { Icon, Button, Label } from 'semantic-ui-react';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
 // TODO Filter component box style
@@ -37,7 +37,7 @@ class TagPref extends React.Component {
       if (send.length === 0) {
         this.props.newTagThunk(options);
       }
-      this.props.addTempTags(send);
+      this.props.addTags(send);
       this.setState({value: []});
     }
   }
@@ -53,7 +53,7 @@ class TagPref extends React.Component {
   render() {
     return (
       <div>
-        <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
+        {/* <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {this.props.defaultFilters.map((filter, index) => (
             <div key={index} className="choiceForm">
               <input type="checkbox" id={filter.name}
@@ -86,7 +86,18 @@ class TagPref extends React.Component {
                   <label id="tag" htmlFor={tag.name}># {tag.name}</label>
                 </div>
             ))}
-        </form>
+        </form> */}
+        {this.props.tags ?
+          this.props.tags.map((filter, index) => (
+                <p key={index}>
+                  <Label image>
+                    # {filter.name}
+                    <Icon name="delete" onClick={() => this.handleRemove(filter)} />
+                  </Label>
+                </p>
+              )) :
+          null
+        }
         <form onSubmit={(e) => this.handleNew(e)} id="addingTags">
           <Creatable
               className="searchTags"

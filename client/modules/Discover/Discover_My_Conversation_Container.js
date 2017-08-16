@@ -16,9 +16,9 @@ class MyConversationContainer extends React.Component {
     return (
         <div className="myConversationBox">
             <p>conversation box with infinite scroll</p>
-            {this.props.currentConversations.map((conv) =>
+            {/* {this.props.currentConversations.map((conv) =>
               <ConversationCard data={conv} />
-            )}
+            )} */}
         </div>
         );
   }
