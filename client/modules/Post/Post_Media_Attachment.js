@@ -9,13 +9,12 @@ class MediaAttachment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hoverDownloadCard: false,
-      hoverViewPdf: false
+      hoverDownloadCard: false
     };
   }
 
   toggleDownloadHover() {
-    this.setState({ hoverDownloadCard: !this.state.hoverDownloadCard, hoverViewPdf: !this.state.hoverViewPdf});
+    this.setState({ hoverDownloadCard: !this.state.hoverDownloadCard});
   }
 
   downloadS3(url, name) {
@@ -35,14 +34,14 @@ class MediaAttachment extends React.Component {
       return (
         <div className="mediaDownloadAttachment">
             <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-            {this.state.hoverViewPdf ?
-              <div className="previewPdf">
-                <td className="pdfClickMe"><a className="pdfClickMeText" href={this.props.data.url} target="pdf-frame">click to view</a></td>
-              </div> : null
-            }
-            <Icon name="file pdf outline" size="huge"/>
+            <Icon id="mediaIcon" name="file pdf outline" size="huge"/>
             <p className="downloadFileName">{this.props.data.name}</p>
-              {this.state.hoverDownloadCard ? <a href={this.props.data.url} download><Icon className="downloadButton" name="cloud download" size="big" /></a> : null}
+               {this.state.hoverDownloadCard ?
+            <div className="pdfIcons">
+              <a href={this.props.data.url} target="pdf-frame"><Icon className="viewButtonPDF" name="eye" size="big" /></a>
+              <a href={this.props.data.url} download><Icon className="downloadButtonPDF" name="cloud download" size="big" /></a>
+            </div>
+              : null }
             </Card>
           </div>
       );
@@ -51,7 +50,7 @@ class MediaAttachment extends React.Component {
       return (
         <div className="mediaDownloadAttachment">
           <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-            <Icon name="file video outline" size="huge" />
+            <Icon id="mediaIcon" name="file video outline" size="huge" />
             <p className="downloadFileName">{this.props.data.name}</p>
             {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.data.url, this.props.data.name)} className="downloadButton" name="cloud download" size="big" /> : null}
           </Card>ki
@@ -62,7 +61,7 @@ class MediaAttachment extends React.Component {
       return (
           <div className="mediaDownloadAttachment">
             <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-              <Icon name="file code outline" size="huge"/>
+            <Icon id="mediaIcon" name="file code outline" size="huge"/>
               <p className="downloadFileName">{this.props.data.name}</p>
               {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.data.url, this.props.data.name)} className="downloadButton" name="cloud download" size="big" /> : null}
             </Card>
@@ -72,7 +71,7 @@ class MediaAttachment extends React.Component {
     return (
         <div className="mediaDownloadAttachment">
           <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
-              <Icon name="file outline" size="huge" className="downloadFileIcon"/>
+          <Icon id="mediaIcon" name="file outline" size="huge" className="downloadFileIcon"/>
               <p className="downloadFileName">{this.props.data.name}</p>
               {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.data.url, this.props.data.name)} className="downloadButton" name="cloud download" size="big" /> : null}
           </Card>

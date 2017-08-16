@@ -13,6 +13,7 @@ const updateUserCommunityThunk = (community) => (dispatch) => {
     .then((response) => {
       console.log(community);
       console.log(response.data);
+      // TODO: same dispatch user reducer to update currentConversation
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
       dispatch({
         type: 'GET_DISCOVER_DATA_DONE',

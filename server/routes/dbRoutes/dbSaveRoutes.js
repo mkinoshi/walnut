@@ -79,6 +79,11 @@ router.post('/post', (req, res) => {
     });
 });
 
+router.post('/joinconversation', (req, res) => {
+  res.json({success: req.body.postId});
+});
+
+
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
       .then((response) => {
