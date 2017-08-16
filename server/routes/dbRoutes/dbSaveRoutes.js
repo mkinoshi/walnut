@@ -79,6 +79,11 @@ router.post('/post', (req, res) => {
     });
 });
 
+router.post('/joinconversation', (req, res) => {
+  res.json({success: req.body.postId});
+});
+
+
 router.post('/save/comment', (req, res) => {
   Post.findById(req.body.postId)
       .then((response) => {
@@ -197,9 +202,9 @@ router.post('/about', (req, res) => {
            if (req.body.colleges) {
              let addr;
              req.body.colleges.forEach((college) => {
-               if (college.attendedFor === 'Undergraduate' && !addr) {
+              //  if (college.attendedFor === 'Undergraduate' && !addr) {
                  addr = college.name.split(' ').join('+');
-               }
+              //  }
              });
              const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;
              return axios.get(locationUrl);
