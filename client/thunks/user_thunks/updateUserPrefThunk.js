@@ -13,6 +13,7 @@ const updateUserPrefThunk = (preference) => (dispatch) => {
   })
     .then((response) => {
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
+      // TODO: same user dipatch as join community
       // dispatch({type: 'DISCOVER_READY'});
       // .push('/app/community/' + community.title.split(' ').join('') + '/discover');
     })

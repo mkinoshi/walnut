@@ -1,7 +1,7 @@
 import axios from 'axios';
 import URL from '../../info';
 
-const newCommentLikeThunk = (postId) => (dispatch) => {
+const joinConversationThunk = (postId) => (dispatch) => {
   axios.post(URL + 'db/save/joinconversation', {
     postId: postId,
   })
@@ -13,4 +13,4 @@ const newCommentLikeThunk = (postId) => (dispatch) => {
       console.log('error inside join conversation thunk', err);
     });
 };
-export default newCommentLikeThunk;
+export default joinConversationThunk;
