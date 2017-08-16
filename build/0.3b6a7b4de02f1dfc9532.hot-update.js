@@ -1,0 +1,11 @@
+webpackHotUpdate(0,{
+
+/***/ 711:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n/**\n * Created by ebadgio on 7/25/17.\n */\nvar newTagsReducer = function newTagsReducer() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];\n  var action = arguments[1];\n\n  switch (action.type) {\n    // case 'NEW_TAG':\n    //   const newState = state.slice();\n    //   newState.push(action.tag);\n    //   return newState;\n    case 'NEW_TAG_ERROR':\n      return state;\n    default:\n      return state;\n  }\n};\n\nexports.default = newTagsReducer;//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiNzExLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vY2xpZW50L3JlZHVjZXJzL25ld1RhZ3NSZWR1Y2VyLmpzPzcwYjAiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzdHJpY3QnO1xuXG5PYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgXCJfX2VzTW9kdWxlXCIsIHtcbiAgdmFsdWU6IHRydWVcbn0pO1xuLyoqXG4gKiBDcmVhdGVkIGJ5IGViYWRnaW8gb24gNy8yNS8xNy5cbiAqL1xudmFyIG5ld1RhZ3NSZWR1Y2VyID0gZnVuY3Rpb24gbmV3VGFnc1JlZHVjZXIoKSB7XG4gIHZhciBzdGF0ZSA9IGFyZ3VtZW50cy5sZW5ndGggPiAwICYmIGFyZ3VtZW50c1swXSAhPT0gdW5kZWZpbmVkID8gYXJndW1lbnRzWzBdIDogW107XG4gIHZhciBhY3Rpb24gPSBhcmd1bWVudHNbMV07XG5cbiAgc3dpdGNoIChhY3Rpb24udHlwZSkge1xuICAgIC8vIGNhc2UgJ05FV19UQUcnOlxuICAgIC8vICAgY29uc3QgbmV3U3RhdGUgPSBzdGF0ZS5zbGljZSgpO1xuICAgIC8vICAgbmV3U3RhdGUucHVzaChhY3Rpb24udGFnKTtcbiAgICAvLyAgIHJldHVybiBuZXdTdGF0ZTtcbiAgICBjYXNlICdORVdfVEFHX0VSUk9SJzpcbiAgICAgIHJldHVybiBzdGF0ZTtcbiAgICBkZWZhdWx0OlxuICAgICAgcmV0dXJuIHN0YXRlO1xuICB9XG59O1xuXG5leHBvcnRzLmRlZmF1bHQgPSBuZXdUYWdzUmVkdWNlcjtcblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL2NsaWVudC9yZWR1Y2Vycy9uZXdUYWdzUmVkdWNlci5qc1xuLy8gbW9kdWxlIGlkID0gNzExXG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///711\n");
+
+/***/ })
+
+})
