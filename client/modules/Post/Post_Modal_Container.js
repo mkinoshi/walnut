@@ -23,6 +23,7 @@ class ModalInstance extends React.Component {
     this.state = {
       commentBody: '',
       messages: [],
+      typers: [],
       hitBottom: false,
       c: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
@@ -90,7 +91,23 @@ class ModalInstance extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({commentBody: e.target.value});
+    console.log('val', e.target.value);
+    if (e.target.value) {
+      const updates = {};
+      const typeInfo = {
+        typer: this.state.user.displayName,
+        typerId: this.state.user.uid,
+        typerPhoto: this.props.currentUser.pictureURL
+      };
+      updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = typeInfo;
+      firebaseApp.database().ref().update(updates);
+      this.setState({commentBody: e.target.value});
+    } else {
+      const updates = {};
+      updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
+      firebaseApp.database().ref().update(updates);
+      this.setState({commentBody: e.target.value});
+    }
   }
 
   findEnter() {
@@ -104,8 +121,10 @@ class ModalInstance extends React.Component {
   }
 
   handleClick(id) {
+    const updates = {};
+    updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
+    firebaseApp.database().ref().update(updates);
     if (this.state.commentBody.length > 0) {
-      const user = firebaseApp.auth().currentUser;
       const commentBody = this.state.commentBody;
       const split = commentBody.split(' ');
       split.forEach((word, idx) => {
@@ -117,17 +136,17 @@ class ModalInstance extends React.Component {
       });
       const useBody = split.join(' ');
       const message = {
-        author: user.displayName,
-        authorId: user.uid,
+        author: this.state.user.displayName,
+        authorId: this.state.user.uid,
         content: useBody,
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL
       };
       this.setState({commentBody: ''});
-      const updates = {};
+      const update = {};
       const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
-      updates['/messages/' + id + '/' + newMessageKey] = message;
-      firebaseApp.database().ref().update(updates);
+      update['/messages/' + id + '/' + newMessageKey] = message;
+      firebaseApp.database().ref().update(update);
       const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
       messagesCountRef.transaction((currentValue) => {
         return (currentValue || 0) + 1;
@@ -150,7 +169,11 @@ class ModalInstance extends React.Component {
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
-          this.setState({messages: send, firstKey: Object.keys(snapshot.val())[0], firstId: ID, hasMore: true, hitBottom: true});
+          this.setState({messages: send,
+              firstKey: Object.keys(snapshot.val())[0],
+              firstId: ID,
+              hasMore: true,
+              hitBottom: true, user: user});
           if (this.state.c === 0 || send[send.length - 1].authorId === user.uid) {
             this.scrollToBottom(bottomID);
           }
@@ -163,11 +186,31 @@ class ModalInstance extends React.Component {
     }
   }
 
+  watchForTypers() {
+    const typersRef = firebaseApp.database().ref('/typers' + '/' + this.props.postData.postId);
+    typersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        console.log(snapshot.val());
+        const pairs = _.pairs(snapshot.val());
+        const typers = pairs.filter((pair) => pair[1]).map((typer) => typer[1]);
+        console.log('typers', typers);
+        this.setState({typers: typers});
+      } else {
+        console.log('missing typer snapshot');
+      }
+    });
+  }
+
   handleClose() {
     const updates = {};
     const user = firebaseApp.auth().currentUser;
     updates['/members/' + this.props.postData.postId + '/' + user.uid] = false;
     firebaseApp.database().ref().update(updates);
+
+    const updatesEx = {};
+    updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
+    firebaseApp.database().ref().update(updatesEx);
+
     this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', c: 0});
   }
 
@@ -187,7 +230,7 @@ class ModalInstance extends React.Component {
 
   render() {
     return (
-      <Modal onOpen={() => {this.startListen(this.props.postData);}}
+      <Modal onOpen={() => {this.startListen(this.props.postData); this.watchForTypers()}}
              onClose={() => {this.handleClose();}}
              size={'small'}
              basic
@@ -253,8 +296,12 @@ class ModalInstance extends React.Component {
                           authorId={message.authorId}
                       />
                 ))}
-                <div id="bottom"></div>
             </InfiniteScroll>
+            <div className="typersContainer">
+                {this.state.typers.map((typer) =>
+                    <p style={{color: '#fff'}} key={uuidv4()}>{typer.typer} is typing...</p>
+                )}
+            </div>
         </Modal.Content>
         <Modal.Actions>
           <Form>
