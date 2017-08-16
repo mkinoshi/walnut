@@ -178,6 +178,13 @@ class ModalInstance extends React.Component {
     firebaseApp.database().ref().update(updates);
   }
 
+  leaveConversation() {
+    const user = firebaseApp.auth().currentUser;
+    const updates = {};
+    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
+    firebaseApp.database().ref().update(updates);
+  }
+
   render() {
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData);}}
@@ -200,8 +207,16 @@ class ModalInstance extends React.Component {
             <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
             <Icon size="big" name="users" className="users" color="grey" />
           </div>
-          {this.state.isInConversation ?
-          null :
+          {this.props.myConvoIds.indexOf(this.props.postData.postId) > -1 ?
+          <div className="joinConversation">
+            <Button
+                onClick={() => this.leaveConversation()}
+                circular
+                id="joinButton"
+                animated="vertical">
+              <Button.Content>unFollow</Button.Content>
+            </Button>
+          </div> :
             <div className="joinConversation">
               <Button
                 onClick={() => this.joinConversation()}
@@ -264,9 +279,11 @@ ModalInstance.propTypes = {
   newCommentLike: PropTypes.func,
   currentUser: PropTypes.object,
   startListen: PropTypes.func,
-  joinConversation: PropTypes.func
+  joinConversation: PropTypes.func,
+  myConvoIds: PropTypes.array
 };
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  myConvoIds: state.conversationReducer.iDs,
 });
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),

@@ -29,6 +29,7 @@ class MyConversationContainer extends React.Component {
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
           if (myConvs && myConvs.length > 0) {
             this.props.getConvos(myConvs);
+            this.props.addIds(myConvs);
           }
         }
       });
@@ -48,7 +49,9 @@ class MyConversationContainer extends React.Component {
       );
     }
     return (
-        <Loader active inline="centered" />
+        <div className="myConversationBox">
+          <p>conversation box with infinite scroll</p>
+        </div>
     );
   }
 }
@@ -57,7 +60,8 @@ MyConversationContainer.propTypes = {
   myConversations: PropTypes.array,
   currentUser: PropTypes.object,
   currentCommunity: PropTypes.string,
-  getConvos: PropTypes.func
+  getConvos: PropTypes.func,
+  addIds: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -67,7 +71,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getConvos: (convos) => getMyConvosThunk(convos)(dispatch)
+  getConvos: (convos) => getMyConvosThunk(convos)(dispatch),
+  addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyConversationContainer);
