@@ -64,6 +64,9 @@ const UserSchema = new mongoose.Schema({
   preferences: {
     type: Array
   },
+  conversations: {
+    type: Array
+  },
   communityPreference: {
     type: Array
   },

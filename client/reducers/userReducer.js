@@ -7,6 +7,7 @@ const userObj = {
   password: '',
   pictureURL: '',
   preferences: [],
+  conversations: [],
   communityPreference: [],
   location: {
     college: [],
@@ -48,7 +49,8 @@ const userObj = {
   isCreated: true,
   isEdited: true,
   isVerified: true,
-  isError: false
+  isError: false,
+  currentConversations: []
 };
 
 const userReducer = (state = userObj, action) => {

@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import newCommentThunk from '../../thunks/post_thunks/newCommentThunk';
 import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
+import joinConversationThunk from '../../thunks/post_thunks/joinConversationThunk';
 import Comment from './Post_Comment';
 import './Post.css';
-import { Form, Icon, Modal, TextArea, Loader } from 'semantic-ui-react';
+import { Form, Icon, Modal, TextArea, Loader, Button } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
@@ -24,6 +25,8 @@ class ModalInstance extends React.Component {
       messages: [],
       hitBottom: false,
       c: 0,
+      // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
+      isInConversation: false
     };
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
@@ -168,8 +171,12 @@ class ModalInstance extends React.Component {
     this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', c: 0});
   }
 
+  joinConversation() {
+    this.setState({isInConversation: true});
+    this.props.joinConversation(this.props.postData.postId);
+  }
+
   render() {
-    const self = this;
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData);}}
              onClose={() => {this.handleClose();}}
@@ -191,6 +198,21 @@ class ModalInstance extends React.Component {
             <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
             <Icon size="big" name="users" className="users" color="grey" />
           </div>
+          {this.state.isInConversation ?
+          null :
+            <div className="joinConversation">
+              <Button
+                onClick={() => this.joinConversation()}
+                circular
+                id="joinButton"
+                animated="vertical">
+                <Button.Content hidden>Join</Button.Content>
+                <Button.Content visible>
+                  <Icon name="plus" />
+                </Button.Content>
+              </Button>
+            </div>
+          }
         </Modal.Header>
         <Modal.Content scrolling className="scrollContentClass">
             <InfiniteScroll
@@ -239,12 +261,14 @@ ModalInstance.propTypes = {
   newLike: PropTypes.func,
   newCommentLike: PropTypes.func,
   currentUser: PropTypes.object,
-  startListen: PropTypes.func
+  startListen: PropTypes.func,
+  joinConversation: PropTypes.func
 };
 const mapStateToProps = () => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
+  joinConversation: (postId) => dispatch(joinConversationThunk(postId)),
   newComment: (commentBody, postId) => newCommentThunk(commentBody, postId)(dispatch),
   newCommentLike: (postId, commentId) => newCommentLikeThunk(postId, commentId)(dispatch)
 });
