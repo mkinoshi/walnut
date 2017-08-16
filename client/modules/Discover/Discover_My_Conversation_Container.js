@@ -17,10 +17,10 @@ class MyConversationContainer extends React.Component {
   }
 
   componentDidMount() {
-    const user = firebaseApp.auth().currentUser;
     console.log('currentCom', this.props.currentCommunity);
-    if (user) {
-      const followsRef = firebaseApp.database().ref('/follows/' + user.uid + '/' + this.props.currentCommunity);
+    console.log('currentUser', this.props.currentUser);
+    if (this.props.currentUser) {
+      const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
         console.log('firebase return', snapshot.val());
         if (snapshot.val()) {
@@ -36,7 +36,7 @@ class MyConversationContainer extends React.Component {
   }
 
   render() {
-    if (this.props.myConversations.length > 0) {
+    if (this.props.myConversations && this.props.myConversations.length > 0) {
       return (
         <div className="myConversationBox">
             <p>conversation box with infinite scroll</p>

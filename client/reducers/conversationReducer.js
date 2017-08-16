@@ -1,7 +1,7 @@
 /**
  * Created by ebadgio on 8/16/17.
  */
-const conversationReducer = (state = {}, action) => {
+const conversationReducer = (state = { current: '', convos: []}, action) => {
   switch(action.type) {
     case 'GET_MY_CONVOS_DONE':
       return {
