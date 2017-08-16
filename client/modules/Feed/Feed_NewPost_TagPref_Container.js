@@ -43,7 +43,7 @@ class TagPref extends React.Component {
   }
 
   handleChange(e) {
-    this.props.addTags(e.target.value);
+    this.props.addNewTags(e.target.value);
   }
 
   handleSubmit(e) {
@@ -51,6 +51,11 @@ class TagPref extends React.Component {
   }
 
   render() {
+    console.log('all of the tags here');
+    console.log(this.props.defaultFilters);
+    console.log(this.props.tempTags);
+    console.log(this.props.newTags);
+    console.log(this.props.tags);
     return (
       <div>
         {/* <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
@@ -135,7 +140,6 @@ TagPref.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultFilters: state.discoverReducer.defaultFilters,
   otherFilters: state.discoverReducer.otherFilters,
   newTags: state.newTagsReducer
 });

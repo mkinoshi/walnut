@@ -24,14 +24,14 @@ class NewPostContainer extends React.Component {
     this.state = {
       postBody: '',
       postTags: [],
-      newTags: [],
-      tempTags: [],
       newFileName: null,
       file: ''
     };
   }
 
   addTags(tag) {
+    console.log('you are trying to add this');
+    console.log(tag);
     const postTagsCopy = this.state.postTags.slice();
     if(postTagsCopy.includes(tag)) {
       const index = postTagsCopy.indexOf(tag);
@@ -135,10 +135,8 @@ class NewPostContainer extends React.Component {
         <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
-                            tags={this.state.postTags}
-                            addTempTags={(tag) => (this.addTempTags(tag))}
-                            tempTags={this.state.tempTags}
-                            newTags={this.state.newTags} />
+                            addNewTags={(tag) => {this.addNewTags(tag);}}
+                            tags={this.state.postTags} />
           {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
           <div className="row newPostFooter">
@@ -171,11 +169,13 @@ NewPostContainer.propTypes = {
   newPost: PropTypes.func,
   newTag: PropTypes.func,
   refreshDiscover: PropTypes.func,
-  lastRefresh: PropTypes.string
+  lastRefresh: PropTypes.string,
+  defaultFilters: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
-  lastRefresh: state.discoverReducer.lastRefresh
+  lastRefresh: state.discoverReducer.lastRefresh,
+  defaultFilters: state.discoverReducer.defaultFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({
