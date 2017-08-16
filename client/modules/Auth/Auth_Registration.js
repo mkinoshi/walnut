@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'semantic-ui-react';
+import InfiniteScroll from 'react-infinite-scroller';
 import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
 import './Auth.css';
 
@@ -47,10 +48,18 @@ class Register extends React.Component {
 
   render() {
     return (
-        <div>
-            <Link to="/login">Back to Login</Link>
-            <div className="loginPage">
-            <div className="loginCard">
+        <div>        
+            <div className="ui buttons">
+            <Link to="/login">
+              <Button className="ui labeled icon button">
+                <i className="left chevron icon"></i>
+                Back to Login
+              </Button>
+              </Link>
+            </div>
+            <div className="loginPage" style={{height: '88vh', overflow: 'auto'}}>
+            <InfiniteScroll useWindow={false} pageStart={0}>
+            <div className="registerCard">
               <h1>Register</h1>
               <div className="loginBox">
                 {this.state.failed ? 
@@ -101,8 +110,9 @@ class Register extends React.Component {
                 </Form>
             </div>
         </div>
-        </div>
-        </div>
+      </InfiniteScroll>
+    </div>
+  </div>
     );
   }
 }
