@@ -40,7 +40,7 @@ class DirectoryCard extends React.Component {
                 </Card.Meta>
             </Card.Content>
             <Card.Content extra>
-                <a>
+                <a href={"mailto:"+ this.props.email}>
                     <Icon name="user" />
                     {this.props.email}
                 </a>

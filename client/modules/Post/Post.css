@@ -65,7 +65,7 @@
     margin-right: auto;
 }
 
- .downloadButton{
+.downloadButton{
     position: absolute;
     right: 10px;
     top: 23px;    
@@ -73,12 +73,35 @@
 } 
 
 
- .downloadButton:hover {
+.downloadButton:hover {
     position: absolute;
     right: 10px;
     top: 23px;
     color: darkblue;
 } 
+
+.downloadButtonPDF {
+    position: absolute;
+    right: 10px;
+}
+
+.downloadButtonPDF {
+    position: absolute;
+    right: 10px;
+}
+
+.pdfIcons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.viewButtonPDF {
+    margin-left: 10px !important;
+    margin-bottom: 5px !important;
+}
 
 .downloadCard {
     width: 400px !important;
@@ -412,7 +435,7 @@ iframe {
 
 .previewPdf {
     height: 59px;
-    width: 49px;
+    width: 56px;
     background-color: #98C1D9;
     display: flex;
     justify-content: center;
@@ -427,4 +450,16 @@ iframe {
 
 .pdfClickMeText {
     color: white;
+}
+
+#mediaIcon {
+    color: red;
+}
+
+.joinConversation {
+    margin-left: 210px;
+}
+
+.joinButton {
+    
 }

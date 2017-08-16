@@ -124,7 +124,6 @@ class NewPostContainer extends React.Component {
 
     return (
       <div className="newPost">
-        <h3 id="newPostHeader">New Conversation</h3>
         <div className="row newPostContent">
           <Textarea id="textarea1"
             value={this.state.postBody}

@@ -8,8 +8,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
+import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
-import { Loader } from 'semantic-ui-react';
+import { Loader, Button, Modal, Header } from 'semantic-ui-react';
 
 
 let refresh;
@@ -20,7 +21,8 @@ class Feed extends React.Component {
     this.state = {
       showFilterPref: false,
       filters: [],
-      count: 0
+      count: 0,
+      modalIsOpen: false
     };
   }
 
@@ -44,9 +46,25 @@ class Feed extends React.Component {
     this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh);
   }
 
+  newConversationModal() {
+    this.setState({modalIsOpen: !this.state.modalIsOpen});
+  }
+
   render() {
     return (
       <div className="Feed_Wrapper">
+        <div className="feedTop">
+          <div className="discoverTitleBox">
+            <h1 className="discoverTitle">Discover</h1>
+            <div id="discoverLine" className="discoverTitleLine"></div>
+          </div>
+          <div>
+            <Button
+            onClick={() => this.newConversationModal()}
+            id="newConversationButton"
+            content="New conversation"/>
+          </div>
+        </div>
         {this.props.data.isFetching || !this.props.isReady ?
             <Loader active inline="centered" /> :
            <div style={{height: '88vh', overflow: 'auto'}}>
@@ -71,6 +89,17 @@ class Feed extends React.Component {
             </InfiniteScroll>
            </div>
         }
+        <Modal
+        basic
+        open={this.state.modalIsOpen}
+        onClose={() => this.newConversationModal()}>
+          <Header
+          id="conversationHeader"
+          content="New conversations" />
+          <Modal.Content className="newConversationOuter">
+            <NewPostContainer/>
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }

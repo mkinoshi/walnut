@@ -20,9 +20,8 @@
 
 .discoverTitle {
   font-family: Avenir Next;
-  font-weight: bold;
   margin-right: 20px;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 41px;
   margin-bottom: 0px;
 }
@@ -31,6 +30,7 @@
   width: 200px;
   height: 2px;
   background-color: #F1F1EF;
+  margin-bottom: 10px;
 }
 
 .discoverImage {
@@ -75,4 +75,8 @@
   margin-right: 50px !important;
   background-color: #DADDD8 !important;
   color: #314460 !important;
+}
+
+.myConversationBox {
+  background-color: red;
 }

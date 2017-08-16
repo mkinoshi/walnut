@@ -1,0 +1,25 @@
+.editPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.editCard {
+    background-color: #DADDD8;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#graduation .text {
+    font-size: 14px !important;
+}
+
+.six.wide.field > .ui.dropdown {
+    margin-top: 0px;
+}
+
+#PlacesAutocomplete__root input {
+    background-color: white;
+    border-radius: .28571429rem;
+}
