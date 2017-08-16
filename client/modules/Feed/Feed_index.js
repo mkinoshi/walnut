@@ -77,7 +77,7 @@ class Feed extends React.Component {
             hasMore={this.props.hasMore}
             threshold={250}
             loader={<Loader active inline="centered" />}
-            useWindow={false}
+            useWindow
             >
             {/* <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>*/}
           {this.props.data.posts.map((post) => (
