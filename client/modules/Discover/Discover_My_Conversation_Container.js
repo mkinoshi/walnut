@@ -17,12 +17,9 @@ class MyConversationContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log('currentCom', this.props.currentCommunity);
-    console.log('currentUser', this.props.currentUser);
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
-        console.log('firebase return', snapshot.val());
         if (snapshot.val()) {
           const follows = _.pairs(snapshot.val());
           // this will filter down to only those postIds which are mapped to true

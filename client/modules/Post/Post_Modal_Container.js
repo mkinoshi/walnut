@@ -7,7 +7,7 @@ import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 import joinConversationThunk from '../../thunks/post_thunks/joinConversationThunk';
 import Comment from './Post_Comment';
 import './Post.css';
-import { Form, Icon, Modal, TextArea, Loader, Button } from 'semantic-ui-react';
+import { Form, Icon, Modal, TextArea, Loader, Button, Popup } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
@@ -23,6 +23,7 @@ class ModalInstance extends React.Component {
     this.state = {
       commentBody: '',
       messages: [],
+      typers: [],
       hitBottom: false,
       c: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
@@ -90,7 +91,9 @@ class ModalInstance extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({commentBody: e.target.value});
+    if (e.target.value) {
+      this.setState({commentBody: e.target.value});
+    }
   }
 
   findEnter() {
@@ -104,8 +107,10 @@ class ModalInstance extends React.Component {
   }
 
   handleClick(id) {
+    const updates = {};
+    updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updates);
     if (this.state.commentBody.length > 0) {
-      const user = firebaseApp.auth().currentUser;
       const commentBody = this.state.commentBody;
       const split = commentBody.split(' ');
       split.forEach((word, idx) => {
@@ -117,17 +122,17 @@ class ModalInstance extends React.Component {
       });
       const useBody = split.join(' ');
       const message = {
-        author: user.displayName,
-        authorId: user.uid,
+        author: this.state.user.displayName,
+        authorId: this.state.user.uid,
         content: useBody,
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL
       };
-      this.setState({commentBody: ''});
-      const updates = {};
+      this.setState({commentBody: '', prevBody: ''});
+      const update = {};
       const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
-      updates['/messages/' + id + '/' + newMessageKey] = message;
-      firebaseApp.database().ref().update(updates);
+      update['/messages/' + id + '/' + newMessageKey] = message;
+      firebaseApp.database().ref().update(update);
       const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
       messagesCountRef.transaction((currentValue) => {
         return (currentValue || 0) + 1;
@@ -140,8 +145,31 @@ class ModalInstance extends React.Component {
   startListen(data) {
     const updates = {};
     const user = firebaseApp.auth().currentUser;
+    this.setState({user: user});
     updates['/members/' + this.props.postData.postId + '/' + user.uid] = true;
     firebaseApp.database().ref().update(updates);
+
+    setInterval(() => {
+      if (this.state.commentBody) {
+        if (this.state.commentBody !== this.state.prevBody) {
+          if (this.state.did === 0) {
+            const updaters = {};
+            const typeInfo = {
+              typer: user.displayName,
+              typerId: user.uid,
+              typerPhoto: this.props.currentUser.pictureURL
+            };
+            updaters['/typers/' + this.props.postData.postId + '/' + user.uid] = typeInfo;
+            firebaseApp.database().ref().update(updaters);
+          }
+          this.setState({prevBody: this.state.commentBody, did: 1});
+        } else {
+          const updatesEx = {};
+          updatesEx['/typers/' + this.props.postData.postId + '/' + user.uid] = null;
+          firebaseApp.database().ref().update(updatesEx);
+          this.setState({did: 0});
+        }
+      }}, 300);
 
     if (data.postId) {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
@@ -150,7 +178,11 @@ class ModalInstance extends React.Component {
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
-          this.setState({messages: send, firstKey: Object.keys(snapshot.val())[0], firstId: ID, hasMore: true, hitBottom: true});
+          this.setState({messages: send,
+              firstKey: Object.keys(snapshot.val())[0],
+              firstId: ID,
+              hasMore: true,
+              hitBottom: true});
           if (this.state.c === 0 || send[send.length - 1].authorId === user.uid) {
             this.scrollToBottom(bottomID);
           }
@@ -163,31 +195,51 @@ class ModalInstance extends React.Component {
     }
   }
 
+  watchForTypers() {
+    const user = firebaseApp.auth().currentUser;
+    const typersRef = firebaseApp.database().ref('/typers' + '/' + this.props.postData.postId);
+    typersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        console.log('snapshot', snapshot.val());
+        const pairs = _.pairs(snapshot.val());
+        const typers = pairs.filter((pair) => pair[1])
+            .map((typer) => typer[1])
+            .filter((obj) => obj.typerId !== user.uid);
+        this.setState({typers: typers});
+      } else {
+        this.setState({typers: []});
+        console.log('missing typer snapshot');
+      }
+    });
+  }
+
   handleClose() {
     const updates = {};
-    const user = firebaseApp.auth().currentUser;
-    updates['/members/' + this.props.postData.postId + '/' + user.uid] = false;
+    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
     firebaseApp.database().ref().update(updates);
-    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', c: 0});
+
+    const updatesEx = {};
+    updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updatesEx);
+
+    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', prevBody: '', did: 0, c: 0});
   }
 
   joinConversation() {
-    const user = firebaseApp.auth().currentUser;
     const updates = {};
-    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
     firebaseApp.database().ref().update(updates);
   }
 
   leaveConversation() {
-    const user = firebaseApp.auth().currentUser;
     const updates = {};
-    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
     firebaseApp.database().ref().update(updates);
   }
 
   render() {
     return (
-      <Modal onOpen={() => {this.startListen(this.props.postData);}}
+      <Modal onOpen={() => {this.startListen(this.props.postData); this.watchForTypers();}}
              onClose={() => {this.handleClose();}}
              size={'small'}
              basic
@@ -253,10 +305,24 @@ class ModalInstance extends React.Component {
                           authorId={message.authorId}
                       />
                 ))}
-                <div id="bottom"></div>
             </InfiniteScroll>
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Content className="typersContainer">
+            {this.state.typers.map((typer) =>
+            <div key={uuidv4()} className="typerGroup">
+                <Popup
+                    trigger= {<div className="imageWrapper messageAvatarOther typingImage">
+                      <img className="postUserImage" src={typer.typerPhoto} />
+                    </div>}
+                    content={typer.typer}
+                    position="left center"
+                    inverted
+                />
+                <Icon className="typingIcon" name="ellipsis horizontal" size="big"/>
+            </div>
+            )}
+        </Modal.Content>
+        <Modal.Actions className="modalActions">
           <Form className="textBoxForm">
             <TextArea
               id="messageInput"
