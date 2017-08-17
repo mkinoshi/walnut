@@ -80,6 +80,7 @@
 .myConversationBox {
   height: 528px;
   overflow-y: scroll;
+  margin-left: 20px;
 }
 
 .conversationCardWrapper {

@@ -257,7 +257,7 @@ class ModalInstance extends React.Component {
             </InfiniteScroll>
         </Modal.Content>
         <Modal.Actions>
-          <Form>
+          <Form className="textBoxForm">
             <TextArea
               id="messageInput"
               autoHeight
