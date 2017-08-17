@@ -202,7 +202,7 @@ class ModalInstance extends React.Component {
       if (snapshot.val()) {
         console.log('snapshot', snapshot.val());
         const pairs = _.pairs(snapshot.val());
-        const typers = pairs.filter((pair) => pair[1] && pair[0] !== user.uid).map((typer) => typer[1]);
+        const typers = pairs.filter((pair) => pair[1]).map((typer) => typer[1]).filter((obj) => obj.typerId !== user.uid);
         console.log('typers', typers);
         this.setState({typers: typers});
       } else {
@@ -321,7 +321,7 @@ class ModalInstance extends React.Component {
             </div>
             )}
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Actions className="modalActions">
           <Form className="textBoxForm">
             <TextArea
               id="messageInput"
