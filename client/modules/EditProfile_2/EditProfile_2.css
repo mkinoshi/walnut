@@ -23,3 +23,9 @@
     background-color: white;
     border-radius: .28571429rem;
 }
+
+.editProfilePic {
+    background-color: #DADDD8;
+    padding: 20px;
+    border-radius: 5px;
+}

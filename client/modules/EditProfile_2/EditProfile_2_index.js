@@ -1,92 +1,102 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import { Button, Form, Dropdown } from 'semantic-ui-react';
+import { Button, Image, Dropdown } from 'semantic-ui-react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
-import YearSelect from '../SelectorDataSets/Years';
 import './EditProfile_2.css';
+import url from '../../info.js';
 
-const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012}, 
+const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
-    {text: 2016, value: 2016}, {text: 2017, value: 2017}, {text: 2018, value: 2018}, 
+    {text: 2016, value: 2016}, {text: 2017, value: 2017}, {text: 2018, value: 2018},
     {text: 2019, value: 2019}, {text: 2020, value: 2020}, {text: 2021, value: 2021},
-    {text: 2022, value: 2022}, {text: 2023, value: 2023}, {text: 2024, value: 2024}]
+    {text: 2022, value: 2022}, {text: 2023, value: 2023}, {text: 2024, value: 2024}];
 
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        homeTown: props.homeTown,
-        school: props.school,
-        concentration: props.concentration,
-        graduation: props.graduation,
-        position: props.position,
-        company: props.company,
-        location: props.location,
-        saved: false
+      homeTown: props.homeTown,
+      school: props.school,
+      concentration: props.concentration,
+      graduation: props.graduation,
+      position: props.position,
+      company: props.company,
+      location: props.location,
+      saved: false
     };
     this.handleChangeLocation = (location) => this.setState({location});
     this.handleChangeHome = (location) => this.setState({homeTown: location});
   }
 
   componentDidMount() {
-      this.setState({saved: false});
+    this.setState({saved: false});
   }
 
   handleSubmit(e) {
-      console.log('hello');
-      e.preventDefault();
-      this.props.saveAbout({
-          colleges: [{
-            name: this.state.school,
-            endedAt: this.state.graduation,
-            concentrations: [this.state.concentration],
-          }],
-          works: [{
-            company: this.state.company,
-            position: this.state.position,
-            location: this.state.location
-          }],
-          places: {
-            current: this.state.homeTown
-          }
-      });
+    console.log('hello');
+    e.preventDefault();
+    this.props.saveAbout({
+      colleges: [{
+        name: this.state.school,
+        endedAt: this.state.graduation,
+        concentrations: [this.state.concentration],
+      }],
+      works: [{
+        company: this.state.company,
+        position: this.state.position,
+        location: this.state.location
+      }],
+      places: {
+        current: this.state.homeTown
+      }
+    });
   }
 
   handleChangeSchool(e) {
-      this.setState({school: e.target.value});
+    this.setState({school: e.target.value});
   }
 
   handleChangeConcentration(e) {
-      this.setState({concentration: e.target.value});
+    this.setState({concentration: e.target.value});
   }
-  
+
   handleChangeGraduation(e, props) {
-      this.setState({graduation: props.value});
+    this.setState({graduation: props.value});
   }
 
   handleChangePosition(e) {
-      this.setState({position: e.target.value});
+    this.setState({position: e.target.value});
   }
 
   handleChangeCompany(e) {
-      this.setState({company: e.target.value});
+    this.setState({company: e.target.value});
   }
 
   render() {
-      const inputPropsHome = {
-        value: this.state.homeTown,
-        onChange: this.handleChangeHome,
-        placeholder: 'ex. Boston'
-      };
-      const inputProps = {
-        value: this.state.location,
-        onChange: this.handleChangeLocation,
-        placeholder: 'ex. Mountain View'
-      };
-      return (
+    const inputPropsHome = {
+      value: this.state.homeTown,
+      onChange: this.handleChangeHome,
+      placeholder: 'ex. Boston'
+    };
+    const inputProps = {
+      value: this.state.location,
+      onChange: this.handleChangeLocation,
+      placeholder: 'ex. Mountain View'
+    };
+    const optionsForUpload = {
+      baseUrl: url + '/aws/upload/profile',
+      multiple: false,
+      accept: 'image/*',
+      uploadSuccess: (resp) => {
+        console.log('upload success!', resp);
+      },
+      uploadError: (err) => {
+        console.log('error in aws upload', err.message);
+      }
+    };
+    return (
         <div className="editPage">
             <div className="editCard">
                 <form className="ui form" onSubmit={this.handleSubmit.bind(this)}>
@@ -99,7 +109,7 @@ class EditProfile extends React.Component {
                     <h4 className="ui dividing header">Education</h4>
                         <div className="field">
                             <label>Current School (or most recent if graduated)</label>
-                            <input type="text" name="College" placeholder="ex. University of Pennsylvania" 
+                            <input type="text" name="College" placeholder="ex. University of Pennsylvania"
                             value={this.state.school}
                             onChange={this.handleChangeSchool.bind(this)}/>
                         </div>
@@ -141,11 +151,14 @@ class EditProfile extends React.Component {
                         </div>
                     <span>
                     <Button type="submit" onClick={() => this.setState({saved: true})}>Save</Button>
-                    {this.state.saved ? 
+                    {this.state.saved ?
                     <div style={{color: 'black'}}>Your changes have been saved!</div>
                     : null}
                     </span>
                 </form>
+            </div>
+            <div className="editProfilePic">
+            <Image href={this.props.pictureURL} size="small" />
             </div>
         </div>
       );
@@ -154,29 +167,31 @@ class EditProfile extends React.Component {
 
 
 EditProfile.propTypes = {
-    school: PropTypes.string,
-    homeTown: PropTypes.string,
-    concentration: PropTypes.string,
-    graduation: PropTypes.string,
-    position: PropTypes.string,
-    company: PropTypes.string,
-    saveAbout: PropTypes.func
+  school: PropTypes.string,
+  homeTown: PropTypes.string,
+  concentration: PropTypes.string,
+  graduation: PropTypes.string,
+  position: PropTypes.string,
+  company: PropTypes.string,
+  saveAbout: PropTypes.func,
+  pictureURL: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-    homeTown: state.userReducer.placesLived.current,
-    school: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].name : '',
-    concentration: state.userReducer.education.colleges[0] ? 
-        (state.userReducer.education.colleges[0].concentrations ? state.userReducer.education.colleges[0].concentrations[0] : '')  
+  homeTown: state.userReducer.placesLived.current,
+  school: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].name : '',
+  concentration: state.userReducer.education.colleges[0] ?
+        (state.userReducer.education.colleges[0].concentrations ? state.userReducer.education.colleges[0].concentrations[0] : '')
         : '',
-    graduation: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].endedAt : '',
-    position: state.userReducer.work[0] ? state.userReducer.work[0].position : '',
-    company: state.userReducer.work[0] ? state.userReducer.work[0].company : '',
-    location: state.userReducer.work[0] ? state.userReducer.work[0].location : '',
+  graduation: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].endedAt : '',
+  position: state.userReducer.work[0] ? state.userReducer.work[0].position : '',
+  company: state.userReducer.work[0] ? state.userReducer.work[0].company : '',
+  location: state.userReducer.work[0] ? state.userReducer.work[0].location : '',
+  profilePic: state.userReducer.pictureURL
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    saveAbout: (about) => saveAboutThunk(about)(dispatch)
+  saveAbout: (about) => saveAboutThunk(about)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
