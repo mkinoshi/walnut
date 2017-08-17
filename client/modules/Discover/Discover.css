@@ -164,3 +164,7 @@
 .LeftSidebar_Online {
   margin-top: 20px;
 }
+
+.miniPostCard {
+  box-shadow: none !important;
+}
