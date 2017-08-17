@@ -200,6 +200,7 @@ class ModalInstance extends React.Component {
     const typersRef = firebaseApp.database().ref('/typers' + '/' + this.props.postData.postId);
     typersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
+        console.log('snapshot', snapshot.val());
         const pairs = _.pairs(snapshot.val());
         const typers = pairs.filter((pair) => pair[1])
             .map((typer) => typer[1])
