@@ -20,7 +20,7 @@ class Online extends React.Component {
         if (user) {
             console.log('curr user', user, user.displayName, user.uid);
             const amOnline = firebaseApp.database().ref('.info/connected');
-            const userRef = firebaseApp.database().ref('/presence/' + user.uid);
+            const userRef = firebaseApp.database().ref('/presence/' + nextProps.user.currentCommunity._id + '/' + user.uid);
             amOnline.on('value', snapshot => {
               if (snapshot.val()) {
                 console.log('hallelujah', snapshot.val());
@@ -40,7 +40,7 @@ class Online extends React.Component {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log('curr user', user, user.displayName, user.uid);
-            const allUser = firebaseApp.database().ref('/presence/');
+            const allUser = firebaseApp.database().ref('/presence/' + realThis.props.user.currentCommunity._id);
             allUser.on('value', snapshot => {
                 console.log('allUsers', snapshot.val());
                 realThis.setState({people: Object.values(snapshot.val())});
