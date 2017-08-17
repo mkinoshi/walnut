@@ -43,7 +43,8 @@ class MyConversationContainer extends React.Component {
             <p>conversation box with infinite scroll</p>
             {this.props.myConversations.map((conv) =>
                 <ConversationCard data={conv}
-                                  key={uuidv4()}/>
+                                  key={uuidv4()}
+                                  user={this.props.currentUser}/>
             )}
         </div>
       );
