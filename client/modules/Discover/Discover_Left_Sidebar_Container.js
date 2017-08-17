@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import FilterPrefContainer from '../Feed/Feed_FilterPref_Container';
+import Online from './Discover_Online';
 
 import './Discover.css';
 class LeftSideBar extends React.Component {
@@ -35,6 +36,7 @@ class LeftSideBar extends React.Component {
              <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/>
           </div>
         </div>
+        <Online />
       </div>
     );
   }

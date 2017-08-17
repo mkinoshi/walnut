@@ -176,12 +176,13 @@
 }
 
 .postOuter {
-    background-color: #F1F1EF;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
     border-radius: 3px;
     width: 513.67px;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
 }
 
 .postContent {
