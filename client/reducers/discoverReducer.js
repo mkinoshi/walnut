@@ -78,7 +78,7 @@ const discoverReducer = (state = {
     case 'NEW_TAG':
       return {
         ...state,
-        otherFilters: this.state.otherFilters.concat(action.tag)
+        otherFilters: state.otherFilters.concat(action.tag)
       };
     default:
       return state;

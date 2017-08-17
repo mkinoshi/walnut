@@ -23,28 +23,31 @@ class NewPostContainer extends React.Component {
     super(props);
     this.state = {
       postBody: '',
-      postTags: [],
       newFileName: null,
       file: ''
     };
   }
 
   addTags(tag) {
-    console.log('you are trying to add this');
-    console.log(tag);
-    const postTagsCopy = this.state.postTags.slice();
-    if(postTagsCopy.includes(tag)) {
-      const index = postTagsCopy.indexOf(tag);
-      postTagsCopy.splice(index, 1);
-      this.setState({postTags: postTagsCopy});
-    } else {
-      postTagsCopy.push(tag);
-      this.setState({postTags: postTagsCopy});
+    // console.log('you are trying to add this');
+    // console.log(tag);
+    // const postTagsCopy = this.state.postTags.slice();
+    // if(postTagsCopy.includes(tag)) {
+    //   const index = postTagsCopy.indexOf(tag);
+    //   postTagsCopy.splice(index, 1);
+    //   this.setState({postTags: postTagsCopy});
+    // } else {
+    //   postTagsCopy.push(tag);
+    //   this.setState({postTags: postTagsCopy});
+    // }
+    if (this.postTags.filter((t) => t._id === tag._id).length === 0) {
+      this.props.addTag(tag);
     }
   }
 
   addNewTags(tag) {
     this.props.newTag(tag);
+    this.setState({postTags: this.state.postTags.concat([tag])});
   }
 
   // addTempTags(tags) {
@@ -136,7 +139,7 @@ class NewPostContainer extends React.Component {
         <div className="row newPostTagsPref">
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
                             addNewTags={(tag) => {this.addNewTags(tag);}}
-                            tags={this.state.postTags} />
+                            tags={this.props.postTags} />
           {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
           <div className="row newPostFooter">
@@ -170,18 +173,21 @@ NewPostContainer.propTypes = {
   newTag: PropTypes.func,
   refreshDiscover: PropTypes.func,
   lastRefresh: PropTypes.string,
-  defaultFilters: PropTypes.array
+  defaultFilters: PropTypes.array,
+  postTags: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
-  defaultFilters: state.discoverReducer.defaultFilters
+  defaultFilters: state.discoverReducer.defaultFilters,
+  postTags: state.postReducer.postTags
 });
 
 const mapDispatchToProps = (dispatch) => ({
   refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
   newPost: (postBody, postTags, lastRefresh) => dispatch(newPostThunk(postBody, postTags, lastRefresh)),
   newTag: (tag) => dispatch(newTagThunk(tag)),
+  addTag: (tag) => dispatch({type: 'ADD_TAG', tag: tag})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

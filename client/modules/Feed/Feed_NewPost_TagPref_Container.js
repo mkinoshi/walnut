@@ -36,8 +36,10 @@ class TagPref extends React.Component {
       console.log('here', send);
       if (send.length === 0) {
         this.props.newTagThunk(options);
+      } else {
+        this.props.addTags(send);
       }
-      this.props.addTags(send);
+      // this.props.addTags(send);
       this.setState({value: []});
     }
   }
@@ -136,7 +138,8 @@ TagPref.propTypes = {
   addTempTags: PropTypes.func,
   tempTags: PropTypes.array,
   newTags: PropTypes.array,
-  newTagThunk: PropTypes.func
+  newTagThunk: PropTypes.func,
+  addNewTags: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
