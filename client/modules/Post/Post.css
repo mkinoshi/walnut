@@ -141,8 +141,9 @@
     padding-bottom: 4px;
     padding-left: 10px;
     padding-right: 10px;
-    display: inline;
+    display: inline-block;
     margin-right: 5px;
+    margin-bottom: 5px;
 }
 
 .hashtag {

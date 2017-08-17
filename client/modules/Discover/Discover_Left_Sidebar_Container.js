@@ -32,7 +32,6 @@ class LeftSideBar extends React.Component {
         </div>
         <div className="LeftSideBar_Preference">
           <div>
-             <div className="outerTitle"><p className="outeritem">Topic Preference</p></div>
              <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/>
           </div>
         </div>
