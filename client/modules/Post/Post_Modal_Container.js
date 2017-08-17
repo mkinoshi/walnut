@@ -35,6 +35,7 @@ class ModalInstance extends React.Component {
       commentBody: '',
       messages: [],
       typers: [],
+      members: [],
       hitBottom: false,
       c: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
@@ -47,8 +48,9 @@ class ModalInstance extends React.Component {
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());
-      const members = peeps.filter((peep) => peep);
-      this.setState({members: members.length});
+      const members = peeps.filter((peep) => typeof (peep) === 'object');
+      console.log('members mount', members);
+      this.setState({membersCount: members.length, members: members});
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
     countRef.on('value', (snapshot) => {
@@ -157,7 +159,12 @@ class ModalInstance extends React.Component {
     const updates = {};
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});
-    updates['/members/' + this.props.postData.postId + '/' + user.uid] = true;
+    const member = {
+      name: user.displayName,
+      avatar: this.props.currentUser.pictureURL,
+      uid: user.uid
+    };
+    updates['/members/' + this.props.postData.postId + '/' + user.uid] = member;
     firebaseApp.database().ref().update(updates);
 
     setInterval(() => {
@@ -224,7 +231,7 @@ class ModalInstance extends React.Component {
 
   handleClose() {
     const updates = {};
-    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
+    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
 
     const updatesEx = {};
@@ -254,7 +261,7 @@ class ModalInstance extends React.Component {
              basic
              trigger={
         <div className="commentDiv">
-          <span className="userNum">{this.state.members > 0 ? this.state.members : ''}</span>
+          <span className="userNum">{this.state.members > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="users" />
           <span className="commentNum">+{this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
@@ -264,10 +271,20 @@ class ModalInstance extends React.Component {
         <Modal.Header className="modalHeader">
           <NestedPostModal postData={this.props.postData}
                            currentUser={this.props.currentUser}/>
-          <div className="inModalUsers">
-            <span className="userNum">{this.state.members > 0 ? this.state.members : ''}</span>
-            <Icon size="big" name="users" className="users" color="grey" />
-          </div>
+          <Popup
+            className="membersPopup"
+            trigger={ <div className="inModalUsers">
+              <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+              <Icon size="big" name="users" className="users" color="grey" />
+            </div>}
+            content={<div>{this.state.members.map((member) => <div className="imageWrapper messageAvatarOther popupAvatar">
+              <img className="postUserImage" src={member.avatar} />
+            </div>)}</div>}
+            position="right center"
+            inverted
+            hoverable
+            size={'small'}
+          />
           {this.props.myConvoIds.indexOf(this.props.postData.postId) > -1 ?
           <div className="joinConversation">
             <Button
