@@ -82,16 +82,14 @@ class FilterPrefContainer extends React.Component {
     const filters = this.props.useFilters;
     const options = this.selectOptions();
     return (
-      <div style={{clear: 'both', padding: '5%', paddingTop: '20px'}}>
+      <div>
         <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
           {filters ?
             filters.map((filter, index) => (
-                <p key={index}>
-                  <Label image>
-                    # {filter.name}
-                    <Icon name="delete" onClick={() => this.handleRemove(filter)} />
-                  </Label>
-                </p>
+              <div key={index} className="tag">
+                <text className="hashtag"># {filter.name}</text>
+                <Icon name="delete" onClick={() => this.handleRemove(filter)} />
+              </div>
               ))
            :
             null
