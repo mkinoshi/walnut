@@ -1,8 +1,7 @@
 #Discover {
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
-  background-color: #313D4D;
+  margin-top: 20px;;
 }
 
 .RightSideBar_Container {
@@ -21,15 +20,16 @@
 .discoverTitle {
   font-family: Avenir Next;
   margin-right: 20px;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 41px;
   margin-bottom: 0px;
+  color: #0A2651;
 }
 
 .discoverTitleLine {
   width: 200px;
   height: 2px;
-  background-color: #F1F1EF;
+  background-color: #0A2651;
   margin-bottom: 10px;
 }
 
