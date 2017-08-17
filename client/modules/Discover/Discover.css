@@ -40,7 +40,6 @@
 
 .LeftSideBar_Preference {
   margin-left: 20px;
-  background-color: #F1F1EF;
   padding-top: 6px;
   padding-bottom: 2px;
   margin-top: 20px;
@@ -141,4 +140,23 @@
     align-items: center;
     overflow: hidden;
     margin-left: 143px;
+}
+
+.imageWrapperOnline {
+  margin-left: 10px;
+  background-color: red;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  overflow: hidden;
+  margin-right: 15px
+}
+
+.middle.aligned.content {
+  display: flex !important;
+}
+
+.onlineName {
+  margin-top: 5px;
 }
