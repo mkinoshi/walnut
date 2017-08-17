@@ -201,7 +201,9 @@ class ModalInstance extends React.Component {
     typersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
         const pairs = _.pairs(snapshot.val());
-        const typers = pairs.filter((pair) => pair[1]).map((typer) => typer[1]).filter((obj) => obj.typerId !== user.uid);
+        const typers = pairs.filter((pair) => pair[1])
+            .map((typer) => typer[1])
+            .filter((obj) => obj.typerId !== user.uid);
         this.setState({typers: typers});
       } else {
         this.setState({typers: []});
