@@ -4,12 +4,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../firebase';
-import { Icon, Label } from 'semantic-ui-react';
+import { Icon, Label, Image } from 'semantic-ui-react';
 
 class Online extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+        people: []
     };
   }
 
@@ -33,13 +34,8 @@ class Online extends React.Component {
             });
             allUser.on('value', snapshot => {
                 console.log('allUsers', snapshot.val());
+                realThis.setState({people: Object.values(snapshot.val())});
             })
-            // const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey()
-            // .endAt(this.state.firstKey).limitToLast(15);
-            const users = firebaseApp.database().ref('/presence/');
-            console.log('pickles', users);
-        } else {
-          // No user is signed in.
         }
       });
   }
@@ -49,7 +45,12 @@ class Online extends React.Component {
     return (
       <div>
           <div style={{color: 'black'}}>Online</div>
-          {/* array.map */}
+          {this.state.people.map(person => (
+            <span>
+                <Image src={person.pictureURL} shape="circular" size="tiny"/>
+                {person.name}
+            </span>
+          ))}
       </div>
     );
   }
