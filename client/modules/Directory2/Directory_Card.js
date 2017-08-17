@@ -19,7 +19,6 @@ class DirectoryCard extends React.Component {
   }
 
   render() {
-    console.log('this.props.school', this.props.school);
     return (
         <Card className="directoryCard">
             <Image className="cardImage" src={this.props.picture} />

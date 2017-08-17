@@ -31,6 +31,8 @@ class Directory2 extends React.Component {
     const urls = this.props.location.pathname;
     localStorage.setItem('url', urls);
     sessionStorage.setItem('url', urls);
+    // testing here:
+    // this.setState({currentCards: this.props.users});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,9 +41,10 @@ class Directory2 extends React.Component {
   }
 
   handleChange(value) {
-    console.log('it works!', value);
+    // console.log('it works!', value);
     const substring = (value ? value : '').toLowerCase();
     const filteredCards = this.props.users.filter((user) => {return user.fullName.toLowerCase().includes(substring);});
+    this.setState({query: substring});
     this.setState({currentCards: filteredCards});
   }
 
@@ -54,8 +57,6 @@ class Directory2 extends React.Component {
           name="selected-state"
           value={this.state.query}
           simpleValue
-          autofocus
-          clearable
           options={this.props.users.map((user) => {
             return {value: user.fullName, label: user.fullName};
           })}

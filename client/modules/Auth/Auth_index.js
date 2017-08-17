@@ -22,13 +22,13 @@ class Auth extends React.Component {
 
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log(user);
+      // console.log(user);
       if (!user) {
         // this.context.history.push('/walnuthome');
         history.replace('/login');
         // history.push('/walnuthome');
       } else {
-        console.log('calling this get User');
+        // console.log('calling this get User');
         this.props.getUser();
         const isUserInCommunity = localStorage.getItem('isUserInCommunity');
         if (this.props.isCreated && !isUserInCommunity) {
