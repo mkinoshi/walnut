@@ -463,3 +463,26 @@ iframe {
 .joinButton {
     
 }
+
+.typersContainer {
+    padding: 4px !important;
+    display: inline-flex !important;
+}
+
+.typerGroup {
+    display: inline-flex;
+}
+
+.typingIcon {
+    padding-top: 12px !important;
+    padding-left: 5px !important;
+}
+
+.typingImage {
+    margin: 0 !important;
+}
+
+.modalActions {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
