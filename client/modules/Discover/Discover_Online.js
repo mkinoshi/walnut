@@ -52,7 +52,7 @@ class Online extends React.Component {
 
   render() {
     return (
-      <div className="LeftSidebar_Container">
+      <div className="LeftSidebar_Online">
         <div className="discoverTitleBox">
             <h1 className="discoverTitle">Currently Active</h1>
             <div className="discoverTitleLine"></div>
