@@ -154,6 +154,7 @@
 .scrollContentClass {
     display: flex !important;
     flex-direction: column !important;
+    padding-bottom: 5px !important;
 }
 
 
@@ -175,12 +176,13 @@
 }
 
 .postOuter {
-    background-color: #F1F1EF;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
     border-radius: 3px;
     width: 513.67px;
+    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
 }
 
 .postContent {
@@ -469,6 +471,7 @@ iframe {
 .typersContainer {
     padding: 4px !important;
     display: inline-flex !important;
+    min-height: 47px;
 }
 
 .typerGroup {
