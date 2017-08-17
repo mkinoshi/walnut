@@ -154,6 +154,7 @@
 .scrollContentClass {
     display: flex !important;
     flex-direction: column !important;
+    padding-bottom: 5px !important;
 }
 
 
@@ -470,6 +471,7 @@ iframe {
 .typersContainer {
     padding: 4px !important;
     display: inline-flex !important;
+    min-height: 47px;
 }
 
 .typerGroup {
