@@ -273,7 +273,21 @@ router.get('/myconversations/:postIds', (req, res) => {
   Post.find({ _id: { $in: postIds}})
   .populate('tags')
   .populate('createdBy')
-  .then((posts) => {
+  .then((postArr) => {
+    const posts = postArr.map((postObj) => {
+      return {
+        postId: postObj._id,
+        username: postObj.createdBy.fullName,
+        pictureURL: postObj.createdBy.pictureURL,
+        content: postObj.content,
+        createdAt: postObj.createdAt,
+        tags: postObj.tags,
+        likes: postObj.likes,
+        commentNumber: postObj.commentNumber,
+        link: postObj.link,
+        attachment: postObj.attachment,
+        comments: postObj.comments
+      };});
     res.json({posts: posts});
   });
 });
