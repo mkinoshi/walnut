@@ -10,7 +10,7 @@ import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
-import { Loader, Button, Modal, Header } from 'semantic-ui-react';
+import { Loader, Button, Modal, Icon, Header } from 'semantic-ui-react';
 
 
 let refresh;
@@ -97,9 +97,15 @@ class Feed extends React.Component {
         <Modal
         basic
         open={this.props.modalIsOpen}>
-          <Header
+          <Modal.Header
           id="conversationHeader"
-          content="New conversations" />
+          >
+            <h1 className="newConvHeader">New Conversation</h1>
+            <Button onClick={() => this.props.toggleModal()} className="cancelButton">
+              <Icon name="cancel"/>
+              Cancel
+            </Button>
+          </Modal.Header>
           <Modal.Content className="newConversationOuter">
             <NewPostContainer />
           </Modal.Content>
