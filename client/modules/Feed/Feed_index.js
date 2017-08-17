@@ -14,6 +14,7 @@ import { Loader, Button, Modal, Header } from 'semantic-ui-react';
 
 
 let refresh;
+let curScroll = 0;
 
 class Feed extends React.Component {
   constructor(props) {
@@ -72,12 +73,13 @@ class Feed extends React.Component {
            <div style={{height: '88vh', overflow: 'auto'}}>
             <InfiniteScroll
             className="banterScroller"
+              id="banterScroller"
             pageStart={0}
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}
             threshold={250}
             loader={<Loader active inline="centered" />}
-            useWindow
+            useWindow={false}
             >
             {/* <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>*/}
           {this.props.data.posts.map((post) => (
