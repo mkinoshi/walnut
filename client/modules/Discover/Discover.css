@@ -42,7 +42,7 @@
   margin-left: 20px;
   padding-top: 6px;
   padding-bottom: 2px;
-  margin-top: 20px;
+  margin-top: 10px;
   border-radius: 4px;
   margin-right: 10px;
   width: 250px;
@@ -159,4 +159,8 @@
 
 .onlineName {
   margin-top: 5px;
+}
+
+.LeftSidebar_Online {
+  margin-top: 20px;
 }
