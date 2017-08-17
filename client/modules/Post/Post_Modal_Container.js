@@ -15,7 +15,18 @@ import $ from 'jquery';
 import NestedPostModal from './Nested_Post_Modal';
 import InfiniteScroll from 'react-infinite-scroller';
 
-
+const testers = [
+  {
+    typer: 'Eli Badgio',
+    typerId: 'abcde',
+    typerPhoto: 'https://s3-us-west-1.amazonaws.com/walnut-test/598b4634733b59030911d402Screen Shot 2017-07-31 at 12.31.45 AM.png1502299915152'
+  },
+  {
+    typer: 'Alex Latif',
+    typerId: 'fgfgfjgk',
+    typerPhoto: 'https://s3-us-west-1.amazonaws.com/walnut-test/598b4634733b59030911d402Screen Shot 2017-07-31 at 12.31.45 AM.png1502299915152'
+  }
+];
 
 class ModalInstance extends React.Component {
   constructor(props) {
@@ -200,7 +211,6 @@ class ModalInstance extends React.Component {
     const typersRef = firebaseApp.database().ref('/typers' + '/' + this.props.postData.postId);
     typersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
-        console.log('snapshot', snapshot.val());
         const pairs = _.pairs(snapshot.val());
         const typers = pairs.filter((pair) => pair[1])
             .map((typer) => typer[1])
@@ -208,7 +218,6 @@ class ModalInstance extends React.Component {
         this.setState({typers: typers});
       } else {
         this.setState({typers: []});
-        console.log('missing typer snapshot');
       }
     });
   }
@@ -306,21 +315,21 @@ class ModalInstance extends React.Component {
                       />
                 ))}
             </InfiniteScroll>
-        </Modal.Content>
-        <Modal.Content className="typersContainer">
-            {this.state.typers.map((typer) =>
-            <div key={uuidv4()} className="typerGroup">
-                <Popup
-                    trigger= {<div className="imageWrapper messageAvatarOther typingImage">
-                      <img className="postUserImage" src={typer.typerPhoto} />
-                    </div>}
-                    content={typer.typer}
-                    position="left center"
-                    inverted
-                />
-                <Icon className="typingIcon" name="ellipsis horizontal" size="big"/>
-            </div>
-            )}
+            <Modal.Description className="typersContainer">
+                {this.state.typers.map((typer) =>
+                    <div key={uuidv4()} className="typerGroup">
+                      <Popup
+                          trigger= {<div className="imageWrapper messageAvatarOther typingImage">
+                            <img className="postUserImage" src={typer.typerPhoto} />
+                          </div>}
+                          content={typer.typer}
+                          position="left center"
+                          inverted
+                      />
+                      <Icon className="typingIcon" name="ellipsis horizontal" size="big"/>
+                    </div>
+                )}
+            </Modal.Description>
         </Modal.Content>
         <Modal.Actions className="modalActions">
           <Form className="textBoxForm">
