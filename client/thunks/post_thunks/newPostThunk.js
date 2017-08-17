@@ -2,15 +2,16 @@
 import axios from 'axios';
 import URL from '../../info';
 
-const newPostThunk = (postBody, postTags, lastRefresh) => (dispatch) => {
+const newPostThunk = (postBody, postTags, lastRefresh, filters) => (dispatch) => {
   axios.post(URL + 'db/save/post', {
     postBody: postBody,
     postTags: postTags,
-    lastRefresh: lastRefresh
+    lastRefresh: lastRefresh,
+    filters: filters
   })
     .then((response) => {
-      console.log('new post', response);
-      dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: response.data.posts, lastRefresh: response.data.lastRefresh });
+      dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: response.data.posts, lastRefresh: response.data.lastRefresh});
+      dispatch({type: 'MODAL_TOGGLE'});
     })
     .catch((err) =>{
       console.log('error in new post', err);
