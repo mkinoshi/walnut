@@ -26,6 +26,10 @@ const defaults = {
 };
 
 class ConversationCard extends React.Component {
+  constructor() {
+    super();
+  }
+
   render() {
     console.log('card content', this.props.data);
     return (
@@ -34,9 +38,9 @@ class ConversationCard extends React.Component {
               <Card.Content className="conversationCardContent">
                 <div className="conversationCardHeader">
                   <div className="conversationCardWrapper">
-                    <img className="conversationCardUserImage" src={this.props.data.createdBy.pictureURL} />
+                    <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
                   </div>
-                    <h3 className="conversationCardHeaderUser">{this.props.data.createdBy.fullName}</h3>
+                    <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
                 </div>
                 <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>
                 <div className="conversationFootnote">
