@@ -2,8 +2,8 @@
 import axios from 'axios';
 import URL from '../../info';
 
-const discoverRefreshThunk = (lastRefresh) => (dispatch) => {
-  axios.get(URL + 'db/get/discoverrefresh?lastRefresh=' + lastRefresh)
+const discoverRefreshThunk = (lastRefresh, filters) => (dispatch) => {
+  axios.get(URL + 'db/get/discoverrefresh?lastRefresh=' + lastRefresh + '&filters=' + JSON.stringify(filters))
     .then((response) => {
       console.log('discover refresh thunk response', response);
       dispatch({

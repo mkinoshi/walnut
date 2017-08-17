@@ -63,6 +63,7 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
+  console.log('this is the profile pic from the upload', req.file);
   User.findById(req.user._id)
     .then((user) => {
       const url = req.file.location;
@@ -71,14 +72,14 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
     })
     .then((user) => {
       console.log('end of upload', user);
-      // user pic thunk and reducer data refresh
-      res.json({pictureURL: user.pictureURL});
+      res.json({user: user});
     })
     .catch((error) => console.log('error in aws db save', error));
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
   console.log('upload', req.file);
+  // console.log(JSON.parse(req.body.tags));
   const newPost = new Post({
     content: req.body.body,
     createdAt: new Date(),
@@ -98,8 +99,22 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   newPost.save()
     .then((post) => {
       let posts = [];
-      const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
-        : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+      let filters;
+      if (req.body.useFilters) {
+        if (typeof req.body.useFilters === 'object') {
+          filters = req.body.useFilters;
+        } else {
+          filters = [req.body.useFilters];
+        }
+      } else {
+        filters = [];
+      }
+      let filter;
+      if (filters.length > 0) {
+        filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+      } else {
+        filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) }};
+      }
       Post.find(filter)
         .sort({ createdAt: -1 })
         .populate('tags')

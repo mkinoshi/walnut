@@ -23,18 +23,7 @@ module.exports = {
       {
          test: /\.css$/, 
          use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loaders: [
-            'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-            'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
-        ]
-      },
-      {
-          loader: 'url-loader',
-          test: /\.(svg|eot|ttf|woff|woff2)?$/
-      },
+      }
     ]
   },
   resolve: {
@@ -48,5 +37,14 @@ module.exports = {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static'
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'node-static',
+      filename: 'node-static.js',
+      algorithm: "gzip",
+      minChunks(module, count) {
+        var context = module.context;
+        return context && context.indexOf('node_modules') >= 0;
+      }
+    })
   ]
 };
