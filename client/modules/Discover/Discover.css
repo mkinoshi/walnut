@@ -80,3 +80,41 @@
 .myConversationBox {
   background-color: red;
 }
+
+.conversationCardWrapper {
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.conversationCardUserImage {
+    max-width: 110%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+.conversationCardContent {
+  padding: 6px !important;
+}
+
+.conversationCardHeader {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.conversationCardHeaderUser {
+    margin-left: 6px;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.conversationCardBody {
+    font-size: 10px;
+    margin: 10px;
+}

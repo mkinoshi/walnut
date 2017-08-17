@@ -310,13 +310,15 @@ router.post('/tag', (req, res) => {
   .then((response) => {
     Community.findById(req.user.currentCommunity)
         .then((community) => {
-          if (req.body.isDefault) {
-            community.defaultTags.push(response._id);
-            return community.save();
-          } else {
-            community.otherTags.push(response._id);
-            return community.save();
-          }
+          community.otherTags.push(response._id);
+          return community.save();
+          // if (req.body.isDefault) {
+          //   community.defaultTags.push(response._id);
+          //   return community.save();
+          // } else {
+          //   community.otherTags.push(response._id);
+          //   return community.save();
+          // }
         })
         .then((response2) => {
           res.json({success: true, tag: response});

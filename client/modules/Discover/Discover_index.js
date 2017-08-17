@@ -54,14 +54,15 @@ Home.propTypes = {
   posts: PropTypes.array,
   getDiscoverRefresh: PropTypes.func,
   lastRefresh: PropTypes.string,
-  currentCommunity: PropTypes.object
+  currentCommunity: PropTypes.object,
+  updateCom: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   isReady: state.discoverReducer.isReady,
   posts: state.discoverReducer.posts,
   lastRefresh: state.discoverReducer.lastRefresh,
-  currentCommunity: state.userReducer.currentCommunity
+  currentCommunity: state.conversationReducer.current
 });
 
 const mapDispatchToProps = (dispatch) => ({

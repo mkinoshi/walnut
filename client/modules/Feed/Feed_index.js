@@ -14,6 +14,7 @@ import { Loader, Button, Modal, Header } from 'semantic-ui-react';
 
 
 let refresh;
+let curScroll = 0;
 
 class Feed extends React.Component {
   constructor(props) {
@@ -43,7 +44,9 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
-    this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh);
+    if (this.props.lastRefresh) {
+      this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh);
+    }
   }
 
   newConversationModal() {
@@ -70,6 +73,7 @@ class Feed extends React.Component {
            <div style={{height: '88vh', overflow: 'auto'}}>
             <InfiniteScroll
             className="banterScroller"
+              id="banterScroller"
             pageStart={0}
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}

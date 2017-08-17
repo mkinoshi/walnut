@@ -31,6 +31,10 @@ class EditProfile extends React.Component {
     this.handleChangeHome = (location) => this.setState({homeTown: location});
   }
 
+  componentDidMount() {
+      this.setState({saved: false});
+  }
+
   handleSubmit(e) {
       console.log('hello');
       e.preventDefault();
@@ -152,6 +156,10 @@ class EditProfile extends React.Component {
 EditProfile.propTypes = {
     school: PropTypes.string,
     homeTown: PropTypes.string,
+    concentration: PropTypes.string,
+    graduation: PropTypes.string,
+    position: PropTypes.string,
+    company: PropTypes.string,
     saveAbout: PropTypes.func
 };
 

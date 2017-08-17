@@ -172,8 +172,17 @@ class ModalInstance extends React.Component {
   }
 
   joinConversation() {
-    this.setState({isInConversation: true});
-    this.props.joinConversation(this.props.postData.postId);
+    const user = firebaseApp.auth().currentUser;
+    const updates = {};
+    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    firebaseApp.database().ref().update(updates);
+  }
+
+  leaveConversation() {
+    const user = firebaseApp.auth().currentUser;
+    const updates = {};
+    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
+    firebaseApp.database().ref().update(updates);
   }
 
   render() {
@@ -198,15 +207,23 @@ class ModalInstance extends React.Component {
             <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
             <Icon size="big" name="users" className="users" color="grey" />
           </div>
-          {this.state.isInConversation ?
-          null :
+          {this.props.myConvoIds.indexOf(this.props.postData.postId) > -1 ?
+          <div className="joinConversation">
+            <Button
+                onClick={() => this.leaveConversation()}
+                circular
+                id="leaveButton"
+                animated="vertical">
+              <Button.Content>unFollow</Button.Content>
+            </Button>
+          </div> :
             <div className="joinConversation">
               <Button
                 onClick={() => this.joinConversation()}
                 circular
                 id="joinButton"
                 animated="vertical">
-                <Button.Content hidden>Join</Button.Content>
+                <Button.Content hidden>Follow</Button.Content>
                 <Button.Content visible>
                   <Icon name="plus" />
                 </Button.Content>
@@ -262,9 +279,11 @@ ModalInstance.propTypes = {
   newCommentLike: PropTypes.func,
   currentUser: PropTypes.object,
   startListen: PropTypes.func,
-  joinConversation: PropTypes.func
+  joinConversation: PropTypes.func,
+  myConvoIds: PropTypes.array
 };
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  myConvoIds: state.conversationReducer.iDs,
 });
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
