@@ -145,6 +145,7 @@ class ModalInstance extends React.Component {
   startListen(data) {
     const updates = {};
     const user = firebaseApp.auth().currentUser;
+    this.setState({user: user});
     updates['/members/' + this.props.postData.postId + '/' + user.uid] = true;
     firebaseApp.database().ref().update(updates);
 
@@ -158,7 +159,7 @@ class ModalInstance extends React.Component {
               typerId: user.uid,
               typerPhoto: this.props.currentUser.pictureURL
             };
-            updaters['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = typeInfo;
+            updaters['/typers/' + this.props.postData.postId + '/' + user.uid] = typeInfo;
             firebaseApp.database().ref().update(updaters);
           }
           this.setState({prevBody: this.state.commentBody, did: 1});
@@ -181,7 +182,7 @@ class ModalInstance extends React.Component {
               firstKey: Object.keys(snapshot.val())[0],
               firstId: ID,
               hasMore: true,
-              hitBottom: true, user: user});
+              hitBottom: true});
           if (this.state.c === 0 || send[send.length - 1].authorId === user.uid) {
             this.scrollToBottom(bottomID);
           }
@@ -195,12 +196,13 @@ class ModalInstance extends React.Component {
   }
 
   watchForTypers() {
+    const user = firebaseApp.auth().currentUser;
     const typersRef = firebaseApp.database().ref('/typers' + '/' + this.props.postData.postId);
     typersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
-        console.log(snapshot.val());
+        console.log('snapshot', snapshot.val());
         const pairs = _.pairs(snapshot.val());
-        const typers = pairs.filter((pair) => pair[1]).map((typer) => typer[1]);
+        const typers = pairs.filter((pair) => pair[1] && pair[0] !== user.uid).map((typer) => typer[1]);
         console.log('typers', typers);
         this.setState({typers: typers});
       } else {
@@ -212,28 +214,25 @@ class ModalInstance extends React.Component {
 
   handleClose() {
     const updates = {};
-    const user = firebaseApp.auth().currentUser;
-    updates['/members/' + this.props.postData.postId + '/' + user.uid] = false;
+    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
     firebaseApp.database().ref().update(updates);
 
     const updatesEx = {};
     updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updatesEx);
 
-    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', prevBody: '', did:0, c: 0});
+    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', prevBody: '', did: 0, c: 0});
   }
 
   joinConversation() {
-    const user = firebaseApp.auth().currentUser;
     const updates = {};
-    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
     firebaseApp.database().ref().update(updates);
   }
 
   leaveConversation() {
-    const user = firebaseApp.auth().currentUser;
     const updates = {};
-    updates['/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
     firebaseApp.database().ref().update(updates);
   }
 
