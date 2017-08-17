@@ -63,6 +63,7 @@ router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
+  console.log('this is the profile pic from the upload', req.file);
   User.findById(req.user._id)
     .then((user) => {
       const url = req.file.location;
@@ -71,8 +72,7 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
     })
     .then((user) => {
       console.log('end of upload', user);
-      // user pic thunk and reducer data refresh
-      res.json({pictureURL: user.pictureURL});
+      res.json({user: user});
     })
     .catch((error) => console.log('error in aws db save', error));
 });

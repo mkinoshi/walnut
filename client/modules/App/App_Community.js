@@ -34,14 +34,12 @@ class Community extends React.Component {
     return (
       <div>
         <NavBar />
-         <div className="Container">
          <Switch>
             <Route path="/community/:communityName/directory" component={Directory} />
             <Route path="/community/:communityName/map" component={MapContainer}/>
             <Route path="/community/:communityName/discover" component={Discover} />
             <Route path="/community/:communityName/editProfile" component={EditProfile} />
          </Switch>
-         </div>
        </div>
     );
   }

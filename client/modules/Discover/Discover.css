@@ -78,5 +78,67 @@
 }
 
 .myConversationBox {
-  background-color: red;
+  height: 528px;
+  overflow-y: scroll;
+  margin-left: 20px;
+}
+
+.conversationCardWrapper {
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.conversationCardUserImage {
+    max-width: 110%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+.conversationCardContent {
+  padding: 6px !important;
+  padding-bottom: 0px !important;
+}
+
+.conversationCardHeader {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.conversationCardHeaderUser {
+    margin-left: 6px;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.conversationCardBody {
+    font-size: 10px;
+    margin-left: 8px !important;
+    margin-bottom: 0px !important;
+}
+
+.myConversationCard {
+  margin-bottom: 5px !important;
+}
+
+.tagContainerConversation {
+    margin-left: 10px;
+    margin-top: 16px;
+    width: 400px;
+    overflow-x: scroll;
+}
+
+.conversationFootnote {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 143px;
 }

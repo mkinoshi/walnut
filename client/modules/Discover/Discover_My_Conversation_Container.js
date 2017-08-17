@@ -40,10 +40,10 @@ class MyConversationContainer extends React.Component {
     if (this.props.myConversations && this.props.myConversations.length > 0) {
       return (
         <div className="myConversationBox">
-            <p>conversation box with infinite scroll</p>
             {this.props.myConversations.map((conv) =>
                 <ConversationCard data={conv}
-                                  key={uuidv4()}/>
+                                  key={uuidv4()}
+                                  user={this.props.currentUser}/>
             )}
         </div>
       );
