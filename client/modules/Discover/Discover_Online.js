@@ -4,7 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../firebase';
-import { Icon, Label, Image } from 'semantic-ui-react';
+import { Icon, Label, Image, Item } from 'semantic-ui-react';
+import "./Discover.css";
 
 class Online extends React.Component {
   constructor(props) {
@@ -15,13 +16,11 @@ class Online extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const realThis = this;
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log('curr user', user, user.displayName, user.uid);
             const amOnline = firebaseApp.database().ref('.info/connected');
             const userRef = firebaseApp.database().ref('/presence/' + user.uid);
-            const allUser = firebaseApp.database().ref('/presence/');
             amOnline.on('value', snapshot => {
               if (snapshot.val()) {
                 console.log('hallelujah', snapshot.val());
@@ -32,6 +31,16 @@ class Online extends React.Component {
                 });
               }
             });
+        }
+      });
+  }
+
+  componentDidMount() {
+    const realThis = this;
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('curr user', user, user.displayName, user.uid);
+            const allUser = firebaseApp.database().ref('/presence/');
             allUser.on('value', snapshot => {
                 console.log('allUsers', snapshot.val());
                 realThis.setState({people: Object.values(snapshot.val())});
@@ -43,14 +52,23 @@ class Online extends React.Component {
 
   render() {
     return (
-      <div>
-          <div style={{color: 'black'}}>Online</div>
-          {this.state.people.map(person => (
-            <span>
-                <Image src={person.pictureURL} shape="circular" size="tiny"/>
-                {person.name}
-            </span>
-          ))}
+      <div className="LeftSidebar_Container">
+        <div className="discoverTitleBox">
+            <h1 className="discoverTitle">Currently Active</h1>
+            <div className="discoverTitleLine"></div>
+            <Item.Group>
+                {this.state.people.map(person => (
+                    <Item>
+                        <Item.Content verticalAlign="middle">
+                                <div className="imageWrapperOnline">
+                                    <img className="postUserImage" src={person.pictureURL} />
+                                </div>
+                            <div className="onlineName">{person.name}</div>
+                        </Item.Content>
+                    </Item>
+                ))}
+            </Item.Group>
+        </div>
       </div>
     );
   }
