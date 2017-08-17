@@ -15,13 +15,11 @@ class Online extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const realThis = this;
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             console.log('curr user', user, user.displayName, user.uid);
             const amOnline = firebaseApp.database().ref('.info/connected');
             const userRef = firebaseApp.database().ref('/presence/' + user.uid);
-            const allUser = firebaseApp.database().ref('/presence/');
             amOnline.on('value', snapshot => {
               if (snapshot.val()) {
                 console.log('hallelujah', snapshot.val());
@@ -32,6 +30,16 @@ class Online extends React.Component {
                 });
               }
             });
+        }
+      });
+  }
+
+  componentDidMount() {
+    const realThis = this;
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('curr user', user, user.displayName, user.uid);
+            const allUser = firebaseApp.database().ref('/presence/');
             allUser.on('value', snapshot => {
                 console.log('allUsers', snapshot.val());
                 realThis.setState({people: Object.values(snapshot.val())});
@@ -44,7 +52,8 @@ class Online extends React.Component {
   render() {
     return (
       <div>
-          <div style={{color: 'black'}}>Online</div>
+          <h1 className="discoverTitle">Online</h1>
+          <div className="discoverTitleLine"></div>
           {this.state.people.map(person => (
             <span>
                 <Image src={person.pictureURL} shape="circular" size="tiny"/>
