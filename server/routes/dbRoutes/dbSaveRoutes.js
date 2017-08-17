@@ -34,8 +34,16 @@ router.post('/post', (req, res) => {
       // start[ ''/* firebaseId*/] = true;
       // firebaseApp.database().ref('members/' + r._id).set(start);
       let posts = [];
-      const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
-        : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+      console.log(req.body);
+      // const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
+      //   : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+      const filters = req.body.filters;
+      let filter;
+      if (filters.length > 0) {
+        filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+      } else {
+        filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) }};
+      }
       Post.find(filter)
         .sort({ createdAt: -1 })
         .populate('tags')

@@ -14,6 +14,7 @@ import { Loader, Button, Modal, Header } from 'semantic-ui-react';
 
 
 let refresh;
+let curScroll = 0;
 
 class Feed extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Feed extends React.Component {
       showFilterPref: false,
       filters: [],
       count: 0,
-      modalIsOpen: false
+      // modalIsOpen: false
     };
   }
 
@@ -31,7 +32,7 @@ class Feed extends React.Component {
   }
 
   mofoMouseOver() {
-    refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh); }, 5000);
+    refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 5000);
   }
 
   mofoMouseOff() {
@@ -44,12 +45,13 @@ class Feed extends React.Component {
 
   _loadMore() {
     if (this.props.lastRefresh) {
-      this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh);
+      this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh, this.props.useFilters);
     }
   }
 
   newConversationModal() {
-    this.setState({modalIsOpen: !this.state.modalIsOpen});
+    this.props.toggleModal();
+    // this.setState({modalIsOpen: !this.state.modalIsOpen});
   }
 
   render() {
@@ -72,6 +74,7 @@ class Feed extends React.Component {
            <div style={{height: '88vh', overflow: 'auto'}}>
             <InfiniteScroll
             className="banterScroller"
+              id="banterScroller"
             pageStart={0}
             loadMore={() => this._loadMore()}
             hasMore={this.props.hasMore}
@@ -93,13 +96,12 @@ class Feed extends React.Component {
         }
         <Modal
         basic
-        open={this.state.modalIsOpen}
-        onClose={() => this.newConversationModal()}>
+        open={this.props.modalIsOpen}>
           <Header
           id="conversationHeader"
           content="New conversations" />
           <Modal.Content className="newConversationOuter">
-            <NewPostContainer/>
+            <NewPostContainer />
           </Modal.Content>
         </Modal>
       </div>
@@ -115,7 +117,10 @@ Feed.propTypes = {
   hasMore: PropTypes.bool,
   user: PropTypes.object,
   isReady: PropTypes.bool,
-  lastRefresh: PropTypes.string
+  lastRefresh: PropTypes.string,
+  useFilters: PropTypes.array,
+  modalIsOpen: PropTypes.bool,
+  toggleModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -123,13 +128,16 @@ const mapStateToProps = (state) => ({
   hasMore: state.discoverReducer.hasMore,
   user: state.userReducer,
   isReady: state.discoverReducer.isReady,
-  lastRefresh: state.discoverReducer.lastRefresh
+  lastRefresh: state.discoverReducer.lastRefresh,
+  useFilters: state.discoverReducer.useFilters,
+  modalIsOpen: state.discoverReducer.modalIsOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
   newLike: (id) => newLikeThunk(id)(dispatch),
-  getRefresh: (lastRefresh) => dispatch(discoverRefreshThunk(lastRefresh)),
-  getNext10: (param, lastRefresh) => dispatch(nextTenThunk(param, lastRefresh))
+  getRefresh: (lastRefresh, filters) => dispatch(discoverRefreshThunk(lastRefresh, filters)),
+  getNext10: (param, lastRefresh, filters) => dispatch(nextTenThunk(param, lastRefresh, filters)),
+  toggleModal: () => dispatch({type: 'MODAL_TOGGLE'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);

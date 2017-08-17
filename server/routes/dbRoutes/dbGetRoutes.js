@@ -51,7 +51,8 @@ router.get('/discoverinfo', (req, res) => {
             const defaultFilters = community.defaultTags;
             const otherFilters = community.otherTags;
             let posts = [];
-            const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity } : {community: req.user.currentCommunity};
+            // const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity } : {community: req.user.currentCommunity};
+            const filter = {community: req.user.currentCommunity};
             Post.find(filter)
                     .limit(10)
                     .sort({ createdAt: -1 })
@@ -100,9 +101,14 @@ router.get('/discoverinfo', (req, res) => {
 
 router.get('/discoverrefresh', (req, res) => {
   console.log('date comparison', new Date() > new Date(req.query.lastRefresh));
+  const filters = JSON.parse(req.query.filters);
+  let filter;
   let posts = [];
-  const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } }
-    : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } };
+  if (filters.length > 0) {
+    filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+  } else {
+    filter = {community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) }};
+  }
   Post.find(filter)
     .sort({ createdAt: -1 })
     .populate('tags')
@@ -143,6 +149,8 @@ router.get('/discoverrefresh', (req, res) => {
 });
 
 router.get('/next10', (req, res) => {
+  console.log(req.query.filters);
+  const filters = JSON.parse(req.query.filters);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')
         .populate('otherTags')
@@ -153,10 +161,16 @@ router.get('/next10', (req, res) => {
           if (community.length === 0) {
             res.json({error: 'No authorization'});
           } else{
-            const filters = community.tags;
+            // const filters = community.tags;
+            let filter;
             let posts = [];
-            const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } }
-              : { community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+            // const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } }
+            //   : { community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+            if (filters.length > 0) {
+              filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+            } else {
+              filter = {community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) }};
+            }
             Post.find(filter)
                     .sort({createdAt: -1})
                     .skip(Number(req.query.lastOne))
@@ -190,7 +204,7 @@ router.get('/next10', (req, res) => {
                           })
                         };
                       });
-                      res.json({filters: filters, posts: posts});
+                      res.json({filters: filter, posts: posts});
                     })
                     .catch((err) => {
                       console.log('error 1', err);
@@ -271,8 +285,24 @@ router.post('/linkpreview', (req, res) => {
 router.get('/myconversations/:postIds', (req, res) => {
   const postIds = req.params.postIds.split('+');
   Post.find({ _id: { $in: postIds}})
-  .then((posts) => {
-    res.json({posts: posts})
+  .populate('tags')
+  .populate('createdBy')
+  .then((postArr) => {
+    const posts = postArr.map((postObj) => {
+      return {
+        postId: postObj._id,
+        username: postObj.createdBy.fullName,
+        pictureURL: postObj.createdBy.pictureURL,
+        content: postObj.content,
+        createdAt: postObj.createdAt,
+        tags: postObj.tags,
+        likes: postObj.likes,
+        commentNumber: postObj.commentNumber,
+        link: postObj.link,
+        attachment: postObj.attachment,
+        comments: postObj.comments
+      };});
+    res.json({posts: posts});
   });
 });
 

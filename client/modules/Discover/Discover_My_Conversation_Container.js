@@ -27,7 +27,7 @@ class MyConversationContainer extends React.Component {
           const follows = _.pairs(snapshot.val());
           // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
-          if (myConvs && myConvs.length > 0) {
+          if (myConvs) {
             this.props.getConvos(myConvs);
             this.props.addIds(myConvs);
           }
@@ -40,10 +40,10 @@ class MyConversationContainer extends React.Component {
     if (this.props.myConversations && this.props.myConversations.length > 0) {
       return (
         <div className="myConversationBox">
-            <p>conversation box with infinite scroll</p>
             {this.props.myConversations.map((conv) =>
                 <ConversationCard data={conv}
-                                  key={uuidv4()}/>
+                                  key={uuidv4()}
+                                  user={this.props.currentUser}/>
             )}
         </div>
       );

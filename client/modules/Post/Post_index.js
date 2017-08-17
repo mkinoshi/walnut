@@ -151,8 +151,7 @@ class Post extends React.Component {
           </div>))}
         </div>
         <div></div>
-        {!this.props.nested ? <ModalContainer startListen={this.startListen} postData={this.props.postData} currentUser={this.props.currentUser}/>
-        : null}
+        <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
       </div>
     </div>
     );

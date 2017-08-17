@@ -24,7 +24,7 @@ class Home extends React.Component {
       console.log('in here');
       this.props.getDiscoverContent();
     } else {
-      this.props.getDiscoverRefresh(this.props.lastRefresh);
+      this.props.getDiscoverRefresh(this.props.lastRefresh, this.props.useFilters);
     }
   }
 
@@ -55,14 +55,16 @@ Home.propTypes = {
   getDiscoverRefresh: PropTypes.func,
   lastRefresh: PropTypes.string,
   currentCommunity: PropTypes.object,
-  updateCom: PropTypes.func
+  updateCom: PropTypes.func,
+  useFilters: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   isReady: state.discoverReducer.isReady,
   posts: state.discoverReducer.posts,
   lastRefresh: state.discoverReducer.lastRefresh,
-  currentCommunity: state.conversationReducer.current
+  currentCommunity: state.conversationReducer.current,
+  useFilters: state.discoverReducer.useFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({

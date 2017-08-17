@@ -23,48 +23,27 @@ class NewPostContainer extends React.Component {
     super(props);
     this.state = {
       postBody: '',
-      postTags: [],
       newFileName: null,
       file: ''
     };
   }
 
   addTags(tag) {
-    console.log('you are trying to add this');
-    console.log(tag);
-    const postTagsCopy = this.state.postTags.slice();
-    if(postTagsCopy.includes(tag)) {
-      const index = postTagsCopy.indexOf(tag);
-      postTagsCopy.splice(index, 1);
-      this.setState({postTags: postTagsCopy});
-    } else {
-      postTagsCopy.push(tag);
-      this.setState({postTags: postTagsCopy});
+    if (this.props.postTags.filter((t) => t._id === tag._id).length === 0) {
+      this.props.addTag(tag);
     }
   }
 
   addNewTags(tag) {
     this.props.newTag(tag);
+    this.setState({postTags: this.state.postTags.concat([tag])});
   }
 
-  // addTempTags(tags) {
-  //   const whole = [].concat(tags);
-  //   const tempTagsCopy = this.state.tempTags.slice();
-  //   const postTagsCopy = this.state.postTags.slice();
-  //   whole.forEach((tag) => {
-  //     if(!tempTagsCopy.includes(tag)) {
-  //       tempTagsCopy.push(tag);
-  //       postTagsCopy.push(tag._id);
-  //       this.setState({tempTags: tempTagsCopy, postTags: postTagsCopy});
-  //     }
-  //   });
+  // removeTag(tag) {
+  //   const newTagsCopy = this.state.newTags.slice();
+  //   newTagsCopy.splice(newTagsCopy.indexOf(tag), 1);
+  //   this.setState({newTags: newTagsCopy});
   // }
-
-  removeTag(tag) {
-    const newTagsCopy = this.state.newTags.slice();
-    newTagsCopy.splice(newTagsCopy.indexOf(tag), 1);
-    this.setState({newTags: newTagsCopy});
-  }
 
   handleChange(e) {
     this.setState({postBody: e.target.value});
@@ -74,8 +53,9 @@ class NewPostContainer extends React.Component {
     if (this.state.file !== '') {
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
-      .field('tags', this.state.postTags ? this.state.postTags : [])
+      .field('tags', this.props.postTags ? this.props.postTags.map((tag) => tag._id) : [])
       .field('name', this.state.newFileName ? this.state.newFileName : '')
+      .field('useFilters', this.props.useFilters ? this.props.useFilters.map((tag) => tag._id) : [])
       .field('lastRefresh', this.props.lastRefresh)
       .attach('attach', this.state.file)
       .end((err, res) => {
@@ -83,18 +63,21 @@ class NewPostContainer extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
-        console.log('resssssssssss', res);
+        this.props.clearPostTag();
+        this.props.toggleModal();
+        this.setState({postBody: '', file: '', newFileName: null});
         this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
-        this.setState({postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
       });
     } else {
       if (this.state.postBody && this.state.file === '') {
-        this.props.newPost(this.state.postBody, this.state.postTags, this.props.lastRefresh);
-        this.setState({ postBody: '', postTags: [], showTagPref: false, file: '', tempTags: [], newTags: []});
+        this.props.newPost(this.state.postBody, this.props.postTags.map((tag) => tag._id), this.props.lastRefresh, this.props.useFilters);
+        this.setState({ postBody: '', file: ''});
+        this.props.clearPostTag();
       } else {
         alert('Oops, post is empty');
       }
     }
+    // this.props.handleClose();
   }
 
   handleUpload(file) {
@@ -113,6 +96,10 @@ class NewPostContainer extends React.Component {
     }
   }
 
+  handleRemove(tag) {
+    this.props.handleRemove(tag);
+  }
+
   render() {
     const optionsForUpload = {
       baseUrl: 'xxx',
@@ -121,7 +108,6 @@ class NewPostContainer extends React.Component {
         this.handleUpload(files[0]);
       },
     };
-
     return (
       <div className="newPost">
         <div className="row newPostContent">
@@ -136,7 +122,8 @@ class NewPostContainer extends React.Component {
         <div className="row newPostTagsPref">
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
                             addNewTags={(tag) => {this.addNewTags(tag);}}
-                            tags={this.state.postTags} />
+                            tags={this.props.postTags}
+                            handleRemove={(tag) => this.handleRemove(tag)} />
           {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
           <div className="row newPostFooter">
@@ -170,18 +157,31 @@ NewPostContainer.propTypes = {
   newTag: PropTypes.func,
   refreshDiscover: PropTypes.func,
   lastRefresh: PropTypes.string,
-  defaultFilters: PropTypes.array
+  defaultFilters: PropTypes.array,
+  postTags: PropTypes.array,
+  addTag: PropTypes.func,
+  handleRemove: PropTypes.func,
+  clearPostTag: PropTypes.func,
+  handleClose: PropTypes.func,
+  toggleModal: PropTypes.func,
+  useFilters: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
-  defaultFilters: state.discoverReducer.defaultFilters
+  defaultFilters: state.discoverReducer.defaultFilters,
+  postTags: state.postReducer.postTags,
+  useFilters: state.discoverReducer.useFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({
   refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
-  newPost: (postBody, postTags, lastRefresh) => dispatch(newPostThunk(postBody, postTags, lastRefresh)),
+  newPost: (postBody, postTags, lastRefresh, filter) => dispatch(newPostThunk(postBody, postTags, lastRefresh, filter)),
   newTag: (tag) => dispatch(newTagThunk(tag)),
+  addTag: (tag) => dispatch({type: 'ADD_TAG', tag: tag}),
+  handleRemove: (tag) => dispatch({type: 'DELETE_TAG', tag: tag}),
+  clearPostTag: () => dispatch({type: 'CLEAR_POST_TAG'}),
+  toggleModal: () => dispatch({type: 'MODAL_TOGGLE'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

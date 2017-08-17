@@ -4,8 +4,8 @@
 import axios from 'axios';
 import URL from '../../info';
 
-const nextTenThunk = (lastOne, lastRefresh) => (dispatch) => {
-  axios.get(URL + 'db/get/next10' + '?lastOne=' + lastOne + '&lastRefresh=' + lastRefresh)
+const nextTenThunk = (lastOne, lastRefresh, filters) => (dispatch) => {
+  axios.get(URL + 'db/get/next10' + '?lastOne=' + lastOne + '&lastRefresh=' + lastRefresh + '&filters=' + JSON.stringify(filters))
     .then((response) => {
       dispatch({type: 'GET_NEXT_TEN_DONE',
           defaultFilters: response.data.defaultFilters,
