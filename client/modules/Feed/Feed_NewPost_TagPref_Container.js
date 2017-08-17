@@ -30,15 +30,18 @@ class TagPref extends React.Component {
     // make sure not to have empty strings
     if (this.state.value.length > 0) {
       const options = this.state.value.map((obj) => {return obj.value.replace(/\W/g, '');});
+      console.log('hehehehehhehehe', options);
       // const options = this.state.value.split(',');
       // send is an array that only includes the objects that are being added
-      const send = this.props.otherFilters.filter((filter) => (options.indexOf(filter.name) > -1));
-      console.log('here', send);
-      if (send.length === 0) {
-        this.props.newTagThunk(options);
-      } else {
-        this.props.addTags(send);
-      }
+      options.forEach((newTag) => {
+        const send = this.props.otherFilters.filter((filter) => newTag === filter.name);
+        console.log('here', send);
+        if (send.length === 0) {
+          this.props.newTagThunk(newTag);
+        } else {
+          this.props.addTags(send);
+        }
+      });
       // this.props.addTags(send);
       this.setState({value: []});
     }
@@ -54,52 +57,14 @@ class TagPref extends React.Component {
 
   render() {
     console.log('all of the tags here');
-    console.log(this.props.defaultFilters);
-    console.log(this.props.tempTags);
-    console.log(this.props.newTags);
-    console.log(this.props.tags);
     return (
       <div>
-        {/* <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {this.props.defaultFilters.map((filter, index) => (
-            <div key={index} className="choiceForm">
-              <input type="checkbox" id={filter.name}
-                checked={(this.props.tags.includes(filter._id)) ? 'checked' : ''}
-                value={filter._id}
-                onClick={(e) => {this.handleChange(e);}}
-              />
-              <label id="tag" htmlFor={filter.name}># {filter.name}</label>
-            </div>
-            ))}
-            {this.props.tempTags.map((tag, idx) => (
-            <div key={idx} className="choiceForm">
-                  <input type="checkbox"
-                         id={tag.name}
-                         checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
-                         value={tag._id}
-                         onClick={(e) => {this.handleChange(e);}}
-                  />
-                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
-                </div>
-            ))}
-            {this.props.newTags.map((tag, idx) => (
-            <div key={idx} className="choiceForm">
-                  <input type="checkbox"
-                         id={tag.name}
-                         checked={(this.props.tags.includes(tag._id)) ? 'checked' : ''}
-                         value={tag._id}
-                         onClick={(e) => {this.handleChange(e);}}
-                  />
-                  <label id="tag" htmlFor={tag.name}># {tag.name}</label>
-                </div>
-            ))}
-        </form> */}
         {this.props.tags ?
           this.props.tags.map((filter, index) => (
                 <p key={index}>
                   <Label image>
                     # {filter.name}
-                    <Icon name="delete" onClick={() => this.handleRemove(filter)} />
+                    <Icon name="delete" onClick={() => this.props.handleRemove(filter)} />
                   </Label>
                 </p>
               )) :
@@ -139,7 +104,8 @@ TagPref.propTypes = {
   tempTags: PropTypes.array,
   newTags: PropTypes.array,
   newTagThunk: PropTypes.func,
-  addNewTags: PropTypes.func
+  addNewTags: PropTypes.func,
+  handleRemove: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({

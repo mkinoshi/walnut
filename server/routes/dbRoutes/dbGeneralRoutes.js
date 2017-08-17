@@ -283,12 +283,6 @@ router.post('/toggle/checked', (req, res) => {
 router.post('/toggle/checkedtemp', (req, res) => {
   let posts = [];
   let filter;
-  // if (req.user.communityPreference.indexOf(req.body.useFilters) === -1) {
-  //   console.log(req.body.useFilters, req.user.communityPreference.concat(req.body.useFilters));
-  //   filter =  { tags: { $in: req.user.communityPreference.concat(req.body.useFilters) }, community: req.user.currentCommunity };
-  // } else {
-  //   filter =  { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity };
-  // }
   if (req.body.useFilters.length > 0) {
     filter =  { tags: { $in: req.body.useFilters }, community: req.user.currentCommunity };
   } else {

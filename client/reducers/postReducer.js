@@ -12,6 +12,16 @@ const postReducer = (state = {
         ...state,
         postTags: state.postTags.concat(action.tag)
       };
+    case 'DELETE_TAG':
+      return {
+        ...state,
+        postTags: state.postTags.filter((tag) => tag._id !== action.tag._id)
+      };
+    case 'CLEAR_POST_TAG':
+      return {
+        ...state,
+        postTags: []
+      };
     default:
       return state;
   }

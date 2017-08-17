@@ -8,7 +8,9 @@ const discoverReducer = (state = {
   isFetching: true,
   isReady: true,
   holdDiscover: false,
-  lastRefresh: ''
+  lastRefresh: '',
+  useFilters: [],
+  modalIsOpen: false
 }, action) => {
   switch (action.type) {
     case 'DISCOVER_IS_LOADING':
@@ -75,10 +77,25 @@ const discoverReducer = (state = {
         ...state,
         hasMore: false
       };
+    case 'ADD_FILTERS':
+      return {
+        ...state,
+        useFilters: state.useFilters.concat(action.tags)
+      };
+    case 'REMOVE_FILTER':
+      return {
+        ...state,
+        useFilters: action.tags
+      };
     case 'NEW_TAG':
       return {
         ...state,
         otherFilters: state.otherFilters.concat(action.tag)
+      };
+    case 'MODAL_TOGGLE':
+      return {
+        ...state,
+        modalIsOpen: !state.modalIsOpen
       };
     default:
       return state;
