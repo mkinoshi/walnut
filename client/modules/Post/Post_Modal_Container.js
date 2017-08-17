@@ -261,7 +261,7 @@ class ModalInstance extends React.Component {
              basic
              trigger={
         <div className="commentDiv">
-          <span className="userNum">{this.state.members > 0 ? this.state.membersCount : ''}</span>
+          <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="users" />
           <span className="commentNum">+{this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
