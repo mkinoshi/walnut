@@ -193,7 +193,7 @@ class ModalInstance extends React.Component {
              basic
              trigger={
         <div className="commentDiv">
-          <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
+          <span className="userNum">{this.state.members > 0 ? this.state.members : ''}</span>
           <Icon size="big" name="users" className="users" />
           <span className="commentNum">+{this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
@@ -204,7 +204,7 @@ class ModalInstance extends React.Component {
           <NestedPostModal postData={this.props.postData}
                            currentUser={this.props.currentUser}/>
           <div className="inModalUsers">
-            <span className="userNum">+{this.state.members > 0 ? this.state.members : ''}</span>
+            <span className="userNum">{this.state.members > 0 ? this.state.members : ''}</span>
             <Icon size="big" name="users" className="users" color="grey" />
           </div>
           {this.props.myConvoIds.indexOf(this.props.postData.postId) > -1 ?

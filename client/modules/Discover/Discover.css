@@ -78,7 +78,8 @@
 }
 
 .myConversationBox {
-  background-color: red;
+  height: 528px;
+  overflow-y: scroll;
 }
 
 .conversationCardWrapper {
@@ -101,6 +102,7 @@
 
 .conversationCardContent {
   padding: 6px !important;
+  padding-bottom: 0px !important;
 }
 
 .conversationCardHeader {
@@ -116,5 +118,26 @@
 
 .conversationCardBody {
     font-size: 10px;
-    margin: 10px;
+    margin-left: 8px !important;
+    margin-bottom: 0px !important;
+}
+
+.myConversationCard {
+  margin-bottom: 5px !important;
+}
+
+.tagContainerConversation {
+    margin-left: 10px;
+    margin-top: 16px;
+    width: 400px;
+    overflow-x: scroll;
+}
+
+.conversationFootnote {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 143px;
 }

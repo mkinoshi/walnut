@@ -30,7 +30,6 @@ class ConversationCard extends React.Component {
     console.log('card content', this.props.data);
     return (
         <div className="myConversationCard">
-            <p>conversation card</p>
             <Card>
               <Card.Content className="conversationCardContent">
                 <div className="conversationCardHeader">
@@ -40,13 +39,9 @@ class ConversationCard extends React.Component {
                     <h3 className="conversationCardHeaderUser">{this.props.data.createdBy.fullName}</h3>
                 </div>
                 <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>
-                <div className="tagContainer">
-                  {this.props.data.tags.map((tag, index) => (
-                    <div key={index} className="tag">
-                      <text className="hashtag">#{tag.name}</text>
-                    </div>))}
+                <div className="conversationFootnote">
+                  <ModalContainer postData={this.props.data} currentUser={this.props.user} />
                 </div>
-                <ModalContainer postData={this.props.data} currentUser={this.props.user} />
               </Card.Content>
             </Card>
         </div>
@@ -60,5 +55,3 @@ ConversationCard.propTypes = {
 };
 
 export default ConversationCard;
-
-

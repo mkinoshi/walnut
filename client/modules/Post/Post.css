@@ -249,6 +249,7 @@
     flex-direction: row;
     height: 40px;
     align-items: center;
+    overflow: hidden;
 }
 
 .commentIcon {
@@ -270,6 +271,7 @@
 }
 
 .commentDiv {
+    font-size: smaller;
     margin-left: 40px;
     margin-left: 53px;
     color: #313D4D !important;
