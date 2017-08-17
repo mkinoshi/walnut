@@ -10,8 +10,10 @@ import getCommunityReducer from './getCommunityReducer';
 import newTagsReducer from './newTagsReducer';
 import navBarReducer from './navBarReducer';
 import postReducer from './postReducer';
+import conversationReducer from './conversationReducer';
 
 const rootReducer = combineReducers({
+  conversationReducer: conversationReducer,
   userReducer: userReducer,
   directoryReducer: directoryReducer,
   discoverReducer: discoverReducer,

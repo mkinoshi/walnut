@@ -19,18 +19,20 @@ class RightSideBar extends React.Component {
           <h1 className="discoverTitle">My conversations</h1>
           <div className="discoverTitleLine"></div>
         </div>
-        <MyConversationContainer />
+        {this.props.currentCommunity && this.props.currentUser.firebaseId ? <MyConversationContainer /> : null}
       </div>
     );
   }
 }
 
 RightSideBar.propTypes = {
-  community: PropTypes.object
+  currentCommunity: PropTypes.string,
+  currentUser: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
-  community: state.userReducer.currentCommunity
+  currentUser: state.userReducer,
+  currentCommunity: state.conversationReducer.current
 });
 
 export default connect(mapStateToProps)(RightSideBar);

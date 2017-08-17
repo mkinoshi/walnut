@@ -43,6 +43,7 @@ class WalnutHomeContainer extends React.Component {
 
 
   toggleCommunity(com) {
+    this.props.updateConvos(com._id);
     this.props.changeCommunity(com);
   }
 
@@ -118,7 +119,8 @@ WalnutHomeContainer.propTypes = {
   userCommunities: PropTypes.array,
   changeCommunity: PropTypes.func,
   getAllCommunities: PropTypes.func,
-  isCreated: PropTypes.bool
+  isCreated: PropTypes.bool,
+  updateConvos: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -132,7 +134,8 @@ const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => dispatch(createCommunityThunk(image, title, filters)),
   changeCommunity: (updateObj) => dispatch(updateUserCommunityThunk(updateObj)),
-  getAllCommunities: () => dispatch(getAllCommunities())
+  getAllCommunities: () => dispatch(getAllCommunities()),
+  updateConvos: (id) => dispatch({type: 'SWITCH_COM', communityId: id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

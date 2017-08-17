@@ -7,7 +7,6 @@ const userObj = {
   password: '',
   pictureURL: '',
   preferences: [],
-  conversations: [],
   communityPreference: [],
   location: {
     college: [],
