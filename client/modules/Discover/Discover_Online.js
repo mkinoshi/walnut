@@ -4,7 +4,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../firebase';
-import { Icon, Label, Image } from 'semantic-ui-react';
+import { Icon, Label, Image, Item } from 'semantic-ui-react';
+import "./Discover.css";
 
 class Online extends React.Component {
   constructor(props) {
@@ -51,15 +52,23 @@ class Online extends React.Component {
 
   render() {
     return (
-      <div>
-          <h1 className="discoverTitle">Online</h1>
-          <div className="discoverTitleLine"></div>
-          {this.state.people.map(person => (
-            <span>
-                <Image src={person.pictureURL} shape="circular" size="tiny"/>
-                {person.name}
-            </span>
-          ))}
+      <div className="LeftSidebar_Container">
+        <div className="discoverTitleBox">
+            <h1 className="discoverTitle">Currently Active</h1>
+            <div className="discoverTitleLine"></div>
+            <Item.Group>
+                {this.state.people.map(person => (
+                    <Item>
+                        <Item.Content verticalAlign="middle">
+                                <div className="imageWrapperOnline">
+                                    <img className="postUserImage" src={person.pictureURL} />
+                                </div>
+                            <div className="onlineName">{person.name}</div>
+                        </Item.Content>
+                    </Item>
+                ))}
+            </Item.Group>
+        </div>
       </div>
     );
   }

@@ -142,3 +142,22 @@
     overflow: hidden;
     margin-left: 143px;
 }
+
+.imageWrapperOnline {
+  margin-left: 10px;
+  background-color: red;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  overflow: hidden;
+  margin-right: 15px
+}
+
+.middle.aligned.content {
+  display: flex !important;
+}
+
+.onlineName {
+  margin-top: 5px;
+}
