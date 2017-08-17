@@ -1,8 +1,8 @@
 .editPage {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .editCard {
@@ -28,4 +28,9 @@
     background-color: #DADDD8;
     padding: 20px;
     border-radius: 5px;
+}
+
+.profilePicBox {
+    width: 150px;
+    height: 160px;
 }

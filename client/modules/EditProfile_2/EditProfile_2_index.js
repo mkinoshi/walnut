@@ -5,7 +5,8 @@ import { Button, Image, Dropdown } from 'semantic-ui-react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 import './EditProfile_2.css';
-import url from '../../info.js';
+import superagent from 'superagent';
+import ReactUploadFile from 'react-upload-file';
 
 const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
@@ -24,7 +25,9 @@ class EditProfile extends React.Component {
       position: props.position,
       company: props.company,
       location: props.location,
-      saved: false
+      saved: false,
+      file: '',
+      pic: ''
     };
     this.handleChangeLocation = (location) => this.setState({location});
     this.handleChangeHome = (location) => this.setState({homeTown: location});
@@ -74,6 +77,25 @@ class EditProfile extends React.Component {
     this.setState({company: e.target.value});
   }
 
+  handleUpload(file) {
+    console.log('this is the file', file);
+    this.setState({ file: file });
+  }
+
+  saveImage() {
+    superagent.post('/aws/upload/profile')
+          .attach('profile', this.state.file)
+          .end((err, res) => {
+            if (err) {
+              console.log(err);
+              alert('failed uploaded!');
+            }
+            console.log('finally at the front', res.body);
+            this.setState({ file: ''});
+            this.props.refreshUser({ user: res.body.user});
+          });
+  }
+
   render() {
     const inputPropsHome = {
       value: this.state.homeTown,
@@ -86,15 +108,12 @@ class EditProfile extends React.Component {
       placeholder: 'ex. Mountain View'
     };
     const optionsForUpload = {
-      baseUrl: url + '/aws/upload/profile',
+      baseUrl: 'xxx',
       multiple: false,
       accept: 'image/*',
-      uploadSuccess: (resp) => {
-        console.log('upload success!', resp);
+      didChoose: (files) => {
+        this.handleUpload(files[0]);
       },
-      uploadError: (err) => {
-        console.log('error in aws upload', err.message);
-      }
     };
     return (
         <div className="editPage">
@@ -158,7 +177,13 @@ class EditProfile extends React.Component {
                 </form>
             </div>
             <div className="editProfilePic">
-            <Image href={this.props.pictureURL} size="small" />
+                <div className="profilePicBox">
+                   <Image src={this.props.profilePic} size="small" /> 
+                  </div>
+                <ReactUploadFile
+                    chooseFileButton={<Button>Change</Button>}
+                    options={optionsForUpload} />
+                {this.state.file ? <Button value="save" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
         </div>
       );
@@ -174,7 +199,9 @@ EditProfile.propTypes = {
   position: PropTypes.string,
   company: PropTypes.string,
   saveAbout: PropTypes.func,
-  pictureURL: PropTypes.string
+  location: PropTypes.string,
+  profilePic: PropTypes.string,
+  refreshUser: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -191,7 +218,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveAbout: (about) => saveAboutThunk(about)(dispatch)
+  saveAbout: (about) => saveAboutThunk(about)(dispatch),
+  refreshUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user: user})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
