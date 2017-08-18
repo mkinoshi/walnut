@@ -76,3 +76,8 @@ body ::-webkit-scrollbar-track {
 .extra.content {
     padding: 0.2em;
 }
+
+.cardImage {
+    object-fit: cover !important;
+}
+
