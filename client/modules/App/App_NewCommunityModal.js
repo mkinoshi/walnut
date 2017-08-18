@@ -67,7 +67,7 @@ class NewCommunityModal extends React.Component {
                 <Button className="addButton" content="Add" icon="add" onClick={(e) => {this.handleClick(e);}} />
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={() => this.handleCreate()}>
+                <Button onClick={() => this.props.handleCreate(this.state.image, this.state.titleValue, this.state.defaultFilters)}>
                     Create
                     <Icon name="lightning" />
                 </Button>

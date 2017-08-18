@@ -34,8 +34,8 @@ router.post('/create/community', (req, res) => {
             users: [req.user._id],
             admins: [req.user._id],
             icon: req.body.image,
-            defaultTags: values.map((val) => val._id),
-            otherTags: []
+            otherTags: values.map((val) => val._id),
+            defaultTags: []
           });
           return community.save();
         })

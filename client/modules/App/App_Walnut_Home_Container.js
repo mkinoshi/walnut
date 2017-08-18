@@ -67,7 +67,7 @@ class WalnutHomeContainer extends React.Component {
                 <hr />
             </div>
                 <div>
-                  <NewCommunityModal handleCreate={this.handleSubmit} />
+                  <NewCommunityModal handleCreate={(image, title, filters) => this.handleSubmit(image, title, filters)} />
                 </div>
                <h2 className="subHead">Your Communities</h2>
                <div className="communitiesContainer">
