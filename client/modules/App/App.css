@@ -178,7 +178,7 @@
 }
 
 .communitiesContainer {
-    display: -webkit-inline-box;
+    display: flex;
     overflow: auto;
 
 }
@@ -186,7 +186,7 @@
 .walnutContainer {
     display: flex;
     flex-direction: column;
-    background-color: #313D4D;
+    background-color: #EEEEF3;
 }
 
 .communityCardContent {
@@ -194,13 +194,13 @@
 }
 
 .Heading {
-    color: #F1F1EF;
+    color: #313D4D;
     padding: 20px 20px 10px 20px;
 }
 
 .subHead {
     padding: 0px 20px 0px 35px;
-    color: #F1F1EF;
+    color: #313D4D;
 }
 
 .modalTrigger {
@@ -230,7 +230,7 @@
 
 .imageWrapperCommunity {
     margin-left: 10px;
-    margin-top: 6px;
+    margin-top: 7px;
     background-color: red;
     width: 30px;
     height: 30px;
