@@ -175,6 +175,7 @@
 
 .communityCardImage {
     object-fit: cover !important;
+    height: 210px;
 }
 
 .communitiesContainer {

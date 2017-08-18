@@ -85,8 +85,8 @@ class WalnutHomeContainer extends React.Component {
                                     title={community.title}
                                     key={idx} /></Link>)}
                </div>
-                <h2 className="subHead">Search For new Communities</h2>
-                <div className="communitiesContainer">
+                  {/* <h2 className="subHead">Search For new Communities</h2>
+                <div className="communitiesContainer"> */} */}
                     {/* {this.props.communities.filter((com) => {*/}
                       {/* return !(userCommunityTitles.indexOf(com.title) > -1);*/}
                     {/* }).map((community, idx) => <div key={idx}>*/}
@@ -95,15 +95,15 @@ class WalnutHomeContainer extends React.Component {
                         {/* <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>*/}
                     {/* </div> )*/}
                     {/* }*/}
-                    {this.props.communities.filter((com) => {
-                      return !(userCommunityTitles.indexOf(com.title) > -1);
-                    }).map((community, idx) => <CommunityCard icon={community.icon}
+                     {/* {this.props.communities.filter((com) => {
+                       return !(userCommunityTitles.indexOf(com.title) > -1);
+                     }).map((community, idx) => <CommunityCard icon={community.icon}
                                                               title={community.title}
                                                               communityId={community._id}
                                                               join={this.joinCommunity}
                                                               key={idx}/>)
-                    }
-                </div>
+                    } */}
+               {/* </div> */}
         </div>
     );
   }
