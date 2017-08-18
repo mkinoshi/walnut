@@ -141,6 +141,20 @@ class ModalInstance extends React.Component {
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL
       };
+      // use follows, and subtract members (members is currently on)
+      // notification stuff
+      console.log('members array here', this.state.members);
+      let temp = {};
+      this.state.members.forEach(member => {
+        // let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
+        firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId).once('value', snapshot => {
+          let unreadCount =  snapshot.val();
+          console.log('unreadCount', snapshot.val());
+          temp['/unreads/' + member.uid + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
+          firebaseApp.database().ref().update(temp);
+        });
+      });
+      // notification stuff ends here
       this.setState({commentBody: '', prevBody: ''});
       const update = {};
       const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
@@ -244,6 +258,7 @@ class ModalInstance extends React.Component {
   joinConversation() {
     const updates = {};
     updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;
     firebaseApp.database().ref().update(updates);
   }
 
