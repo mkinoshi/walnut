@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Creatable } from 'react-select';
+import {Creatable}  from 'react-select';
 import { Icon, Button, Label } from 'semantic-ui-react';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
@@ -18,17 +18,37 @@ class TagPref extends React.Component {
     };
   }
 
-  handleSelectChange(value) {
+  handleSelectChange(obj) {
     // if (value.trim().length > 0) {
-    this.setState({value});
-    // }
+    this.setState({obj});
+    console.log(obj);
+    if (obj) {
+      const options = obj.value.replace(/\W/g, '');
+      console.log('hehehehehhehehe', options);
+      const send = this.props.otherFilters.filter((filter) => options === filter.name);
+      if (send.length === 0) {
+        this.props.addNewTags(options);
+      } else {
+        this.props.addTags(send);
+      }
+      // this.props.addTags(send);
+      this.setState({value: []});
+    }
   }
 
-  handleNew(event) {
+  // handleKeyPress(event) {
+  //   if(event.key == 'Enter') {
+  //     console.log(event);
+  //     console.log('clicked');
+  //     console.log(this.state.value);
+  //   }
+  // }
+
+  handleNew(value) {
     event.preventDefault();
     console.log('this.state.value', this.state.value);
     // make sure not to have empty strings
-    if (this.state.value.length > 0) {
+    if (value) {
       const options = this.state.value.map((obj) => {return obj.value.replace(/\W/g, '');});
       console.log('hehehehehhehehe', options);
       // const options = this.state.value.split(',');
@@ -59,37 +79,28 @@ class TagPref extends React.Component {
     console.log('all of the tags here');
     return (
       <div>
-        {this.props.tags ?
-          this.props.tags.map((filter, index) => (
+        {this.props.tags || this.props.newtags ?
+          this.props.tags.concat(this.props.newtags).map((filter, index) => (
                 <p key={index}>
                   <Label image>
-                    # {filter.name}
+                    # {typeof filter === 'string' ? filter : filter.name}
                     <Icon name="delete" onClick={() => this.props.handleRemove(filter)} />
                   </Label>
                 </p>
               )) :
           null
         }
-        <form onSubmit={(e) => this.handleNew(e)} id="addingTags">
           <Creatable
               className="searchTags"
               name="form-field-name"
-              multi
-              clearable
               placeholder="Select Tag or Type your own..."
               value={this.state.value}
+              clearable
               options={this.props.otherFilters.map((tag) => {
                 return {value: tag.name, label: '#' + tag.name};
               })}
-              onChange={this.handleSelectChange.bind(this)}
+              onChange={(e) => this.handleSelectChange(e)}
           />
-          <Button animated="vertical" id="addTagButton">
-            <Button.Content visible>Add</Button.Content>
-            <Button.Content hidden>
-              <Icon name="hashtag" />
-            </Button.Content>
-          </Button>
-        </form>
       </div>
     );
   }
@@ -105,7 +116,8 @@ TagPref.propTypes = {
   newTags: PropTypes.array,
   newTagThunk: PropTypes.func,
   addNewTags: PropTypes.func,
-  handleRemove: PropTypes.func
+  handleRemove: PropTypes.func,
+  newtags: PropTypes.array
 };
 
 const mapStateToProps = (state) => ({

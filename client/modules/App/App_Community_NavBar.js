@@ -32,6 +32,7 @@ class Navbar extends React.Component {
     } else {
       title = 'missing';
     }
+    console.log('rendering');
     return (
           <div className="row" id="navBar">
 

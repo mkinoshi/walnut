@@ -8,83 +8,92 @@ import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
   console.log('thththththththththt', req.body.lastRefresh);
-  const newPost = new Post({
-    content: req.body.postBody,
-    createdAt: new Date(),
-    createdBy: req.user._id,
-    likes: [],
-    tags: req.body.postTags,
-    comments: [],
-    commentNumber: 0,
-    community: req.user.currentCommunity,
-    link: '',
-    attachments: {
-      name: '',
-      url: '',
-      type: ''
-    }
-  });
-  newPost.save()
-    .then((r) => {
-      // firebaseApp.database().ref('chats/' + r._id).set({
-      //   title: r.content,
-      //   createdAt: r.createdAt,
-      // });
-      // const start = {};
-      // start[ ''/* firebaseId*/] = true;
-      // firebaseApp.database().ref('members/' + r._id).set(start);
-      let posts = [];
-      console.log(req.body);
-      // const filter = req.user.communityPreference.length > 0 ? { tags: { $in: req.user.communityPreference }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } }
-      //   : { community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
-      const filters = req.body.filters;
-      let filter;
-      if (filters.length > 0) {
-        filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
-      } else {
-        filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) }};
-      }
-      Post.find(filter)
-        .sort({ createdAt: -1 })
-        .populate('tags')
-        .populate('comments')
-        .populate('comments.createdBy')
-        .populate('createdBy')
-        .then((postArr) => {
-          posts = postArr.map((postObj) => {
-            return {
-              postId: postObj._id,
-              username: postObj.createdBy.fullName,
-              pictureURL: postObj.createdBy.pictureURL,
-              content: postObj.content,
-              createdAt: postObj.createdAt,
-              tags: postObj.tags,
-              likes: postObj.likes,
-              commentNumber: postObj.commentNumber,
-              link: postObj.link,
-              attachment: postObj.attachment,
-              comments: postObj.comments.map((commentObj) => {
-                return {
-                  commentId: commentObj._id,
-                  username: commentObj.createdBy.username,
-                  pictureURL: commentObj.createdBy.pictureURL,
-                  content: commentObj.content,
-                  createdAt: commentObj.createdAt,
-                  likes: commentObj.likes
-                };
-              })
-            };
-          });
-          res.json({ posts: posts, lastRefresh: new Date() });
+  const tagModels = req.body.newTags.map((filter) =>
+        new Tag({
+          name: filter
         })
-        .catch((err) => {
-          console.log('error in new post not aws refresh', err);
-          res.json(err);
-        });
-    }).catch((err) => {
-      console.log('got error', err);
-      res.json({data: null});
+    );
+  let savedTags;
+  Promise.all(tagModels.map((tag) => tag.save()))
+  .then((values) => {
+    savedTags = values.map((v) => v._id).concat(req.body.postTags);
+    const newPost = new Post({
+      content: req.body.postBody,
+      createdAt: new Date(),
+      createdBy: req.user._id,
+      likes: [],
+      tags: savedTags,
+      comments: [],
+      commentNumber: 0,
+      community: req.user.currentCommunity,
+      link: '',
+      attachments: {
+        name: '',
+        url: '',
+        type: ''
+      }
     });
+    return newPost.save();
+  })
+  .then((r) => {
+    let posts = [];
+    console.log(req.body);
+    const filters = req.body.filters;
+    let filter;
+    if (filters.length > 0) {
+      filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) } };
+    } else {
+      filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.body.lastRefresh) }};
+    }
+    Post.find(filter)
+    .sort({ createdAt: -1 })
+    .populate('tags')
+    .populate('comments')
+    .populate('comments.createdBy')
+    .populate('createdBy')
+    .then((postArr) => {
+      posts = postArr.map((postObj) => {
+        return {
+          postId: postObj._id,
+          username: postObj.createdBy.fullName,
+          pictureURL: postObj.createdBy.pictureURL,
+          content: postObj.content,
+          createdAt: postObj.createdAt,
+          tags: postObj.tags,
+          likes: postObj.likes,
+          commentNumber: postObj.commentNumber,
+          link: postObj.link,
+          attachment: postObj.attachment,
+          comments: postObj.comments.map((commentObj) => {
+            return {
+              commentId: commentObj._id,
+              username: commentObj.createdBy.username,
+              pictureURL: commentObj.createdBy.pictureURL,
+              content: commentObj.content,
+              createdAt: commentObj.createdAt,
+              likes: commentObj.likes
+            };
+          })
+        };
+      });
+      return Community.findById(req.user.currentCommunity);
+    })
+    .then((com) => {
+      com.otherTags = savedTags;
+      return com.save();
+    })
+    .then((result) => {
+      res.json({ posts: posts, lastRefresh: new Date() });
+    })
+    .catch((err) => {
+      console.log('error in new post not aws refresh', err);
+      res.json(err);
+    });
+  })
+  .catch((err) => {
+    console.log('got error', err);
+    res.json({data: null});
+  });
 });
 
 router.post('/joinconversation', (req, res) => {
