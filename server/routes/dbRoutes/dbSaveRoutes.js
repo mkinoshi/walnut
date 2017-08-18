@@ -14,9 +14,11 @@ router.post('/post', (req, res) => {
         })
     );
   let savedTags;
+  let newTags;
   Promise.all(tagModels.map((tag) => tag.save()))
   .then((values) => {
-    savedTags = values.map((v) => v._id).concat(req.body.postTags);
+    newTags = values.map((v) => v._id);
+    savedTags = newTags.concat(req.body.postTags);
     console.log('it is here !!!!!!!!!');
     console.log(savedTags);
     const newPost = new Post({
@@ -81,7 +83,7 @@ router.post('/post', (req, res) => {
       return Community.findById(req.user.currentCommunity);
     })
     .then((com) => {
-      com.otherTags = com.otherTags.concat(savedTags);
+      com.otherTags = com.otherTags.concat(newTags);
       return com.save();
     })
     .then((result) => {

@@ -84,6 +84,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   // console.log(JSON.parse(req.body.tags));
   console.log('thththththththththt', req.body.lastRefresh);
   let newTags;
+  let newt;
   let tags;
   let savedTags;
   if (req.body.newTags) {
@@ -111,7 +112,8 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   }
   Promise.all(tagModels.map((tag) => tag.save()))
   .then((values) => {
-    savedTags = values.map((v) => v._id).concat(tags);
+    newt = values.map((v) => v._id);
+    savedTags = newt.concat(tags);
     const newPost = new Post({
       content: req.body.body,
       createdAt: new Date(),
@@ -183,7 +185,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
       return Community.findById(req.user.currentCommunity);
     })
     .then((com) => {
-      com.otherTags = com.otherTags.concat(savedTags);
+      com.otherTags = com.otherTags.concat(newt);
       return com.save();
     })
     .then((result) => {
