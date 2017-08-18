@@ -3,7 +3,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Dropdown} from 'semantic-ui-react';
+import { Icon, Dropdown, Image, Sticky } from 'semantic-ui-react';
 import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
@@ -34,12 +34,13 @@ class Navbar extends React.Component {
     }
     return (
           <div className="row" id="navBar">
-
-                <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
-                  <Icon name="content" size="big" />
-                </Link>
+              <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
+                <Icon name="home" size="big" />
+              </Link>
               <div className="communityNavBarLogo">
-                <img className="communityImage" src={this.props.community.icon} />
+                <div className="imageWrapperCommunity">
+                  <img className="communityImage" src={this.props.community.icon} />
+                </div>
                 <h3 className="communityTitle">{this.props.community.title}</h3>
               </div>
 
@@ -116,6 +117,7 @@ class Navbar extends React.Component {
         );
   }
 }
+
 
 Navbar.propTypes = {
   pictureURL: PropTypes.string,

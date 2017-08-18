@@ -48,7 +48,6 @@
     left: 10px;
     right: auto;
     position: absolute;
-    margin-top: 13px;
     color: #F1F1EF;
 }
 
@@ -66,15 +65,15 @@
 }
 
 .communityImage {
-    width:30px;
-    height: 30px;
+    width: 100%;
+    height: auto;
     margin-top: 10px;
 }
 
 .communityTitle {
     margin-left: 10px;
     color: #F1F1EF;
-    margin-top: 15px;
+    margin-top: 19px;
 }
 
 .navBarLink {
@@ -214,4 +213,25 @@
 
 .titleInput {
     margin-bottom: 15px;
+}
+
+.stickyDiv {
+    display: flex;
+}
+
+.imageWrapperCommunity {
+    margin-left: 10px;
+    margin-top: 10px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    overflow: hidden;
+}
+
+.communityImage {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
 }
