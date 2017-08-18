@@ -181,6 +181,10 @@ router.get('/next10', (req, res) => {
                     .populate('createdBy')
                     .then((postArr) => {
                       posts = postArr.map((postObj) => {
+                        if (!postObj.createdBy) {
+                          console.log('found a fucking error');
+                          console.log(postObj.createdBy);
+                        }
                         return {
                           postId: postObj._id,
                           username: postObj.createdBy.fullName,

@@ -35,8 +35,11 @@ class NewPostContainer extends React.Component {
   }
 
   addNewTags(tag) {
-    this.props.newTag(tag);
-    this.setState({postTags: this.state.postTags.concat([tag])});
+    if (this.props.postTags.filter((t) => t.name === tag).length === 0 &&
+        this.props.newPostTags.filter((t) => t === tag).length === 0) {
+      this.props.newTag(tag);
+    }
+    // this.setState({postTags: this.state.postTags.concat([tag])});
   }
 
   // removeTag(tag) {
@@ -54,8 +57,9 @@ class NewPostContainer extends React.Component {
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
       .field('tags', this.props.postTags ? this.props.postTags.map((tag) => tag._id) : [])
-      .field('name', this.state.newFileName ? this.state.newFileName : '')
       .field('useFilters', this.props.useFilters ? this.props.useFilters.map((tag) => tag._id) : [])
+      .field('newTags', this.props.newPostTags ? this.props.newPostTags : [])
+      .field('name', this.state.newFileName ? this.state.newFileName : '')
       .field('lastRefresh', this.props.lastRefresh)
       .attach('attach', this.state.file)
       .end((err, res) => {
@@ -70,7 +74,7 @@ class NewPostContainer extends React.Component {
       });
     } else {
       if (this.state.postBody && this.state.file === '') {
-        this.props.newPost(this.state.postBody, this.props.postTags.map((tag) => tag._id), this.props.lastRefresh, this.props.useFilters);
+        this.props.newPost(this.state.postBody, this.props.postTags.map((tag) => tag._id), this.props.newPostTags, this.props.lastRefresh, this.props.useFilters);
         this.setState({ postBody: '', file: ''});
         this.props.clearPostTag();
       } else {
@@ -97,7 +101,11 @@ class NewPostContainer extends React.Component {
   }
 
   handleRemove(tag) {
-    this.props.handleRemove(tag);
+    if (typeof tag === 'string') {
+      this.props.handleNewRemove(tag);
+    } else {
+      this.props.handleRemove(tag);
+    }
   }
 
   render() {
@@ -123,6 +131,7 @@ class NewPostContainer extends React.Component {
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
                             addNewTags={(tag) => {this.addNewTags(tag);}}
                             tags={this.props.postTags}
+                            newtags={this.props.newPostTags}
                             handleRemove={(tag) => this.handleRemove(tag)} />
           {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
@@ -157,29 +166,33 @@ NewPostContainer.propTypes = {
   newTag: PropTypes.func,
   refreshDiscover: PropTypes.func,
   lastRefresh: PropTypes.string,
-  defaultFilters: PropTypes.array,
+  otherTags: PropTypes.array,
   postTags: PropTypes.array,
   addTag: PropTypes.func,
   handleRemove: PropTypes.func,
   clearPostTag: PropTypes.func,
   handleClose: PropTypes.func,
   toggleModal: PropTypes.func,
-  useFilters: PropTypes.array
+  useFilters: PropTypes.array,
+  newPostTags: PropTypes.array,
+  handleNewRemove: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
-  defaultFilters: state.discoverReducer.defaultFilters,
+  otherTags: state.discoverReducer.otherTags,
   postTags: state.postReducer.postTags,
-  useFilters: state.discoverReducer.useFilters
+  useFilters: state.discoverReducer.useFilters,
+  newPostTags: state.postReducer.newPostTags
 });
 
 const mapDispatchToProps = (dispatch) => ({
   refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
-  newPost: (postBody, postTags, lastRefresh, filter) => dispatch(newPostThunk(postBody, postTags, lastRefresh, filter)),
-  newTag: (tag) => dispatch(newTagThunk(tag)),
+  newPost: (postBody, postTags, newTags, lastRefresh, filter) => dispatch(newPostThunk(postBody, postTags, newTags, lastRefresh, filter)),
+  newTag: (tag) => dispatch({type: 'ADD_NEW_TAG', tag: tag}),
   addTag: (tag) => dispatch({type: 'ADD_TAG', tag: tag}),
   handleRemove: (tag) => dispatch({type: 'DELETE_TAG', tag: tag}),
+  handleNewRemove: (tag) => dispatch({type: 'DELETE_NEW_TAG', tag: tag}),
   clearPostTag: () => dispatch({type: 'CLEAR_POST_TAG'}),
   toggleModal: () => dispatch({type: 'MODAL_TOGGLE'})
 });

@@ -1,6 +1,6 @@
 
 const discoverReducer = (state = {
-  defaultFilters: [],
+  otherTags: [],
   otherFilters: [],
   filters: [],
   posts: [],
@@ -21,7 +21,7 @@ const discoverReducer = (state = {
     case 'GET_DISCOVER_DATA_DONE':
       return  {
         ...state,
-        defaultFilters: action.defaultFilters,
+        otherTags: action.otherTags,
         otherFilters: action.otherFilters,
         posts: action.posts,
         hasMore: true,

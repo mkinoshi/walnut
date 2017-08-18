@@ -1,11 +1,12 @@
 const postReducer = (state = {
-  postTags: []
+  postTags: [],
+  newPostTags: [],
 }, action) => {
   switch(action.type) {
-    case 'NEW_TAG':
+    case 'ADD_NEW_TAG':
       return {
         ...state,
-        postTags: state.postTags.concat(action.tag)
+        newPostTags: state.newPostTags.concat(action.tag)
       };
     case 'ADD_TAG':
       return {
@@ -17,10 +18,16 @@ const postReducer = (state = {
         ...state,
         postTags: state.postTags.filter((tag) => tag._id !== action.tag._id)
       };
+    case 'DELETE_NEW_TAG':
+      return {
+        ...state,
+        newPostTags: state.newPostTags.filter((tag) => tag !== action.tag)
+      };
     case 'CLEAR_POST_TAG':
       return {
         ...state,
-        postTags: []
+        postTags: [],
+        newPostTags: []
       };
     default:
       return state;

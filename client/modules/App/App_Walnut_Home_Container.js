@@ -17,7 +17,7 @@ class WalnutHomeContainer extends React.Component {
     this.state = {
       titleValue: '',
       image: 'https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      defaultFilters: [],
+      otherTags: [],
       filterValue: '',
       isCalled: false
     };
@@ -47,8 +47,8 @@ class WalnutHomeContainer extends React.Component {
     this.props.changeCommunity(com);
   }
 
-  handleSubmit(image, titleValue, defaultFilters) {
-    this.props.createCommunity(image, titleValue, defaultFilters);
+  handleSubmit(image, titleValue, otherTags) {
+    this.props.createCommunity(image, titleValue, otherTags);
   }
 
 

@@ -47,7 +47,7 @@ class FilterPrefContainer extends React.Component {
     if(this.props.isFetching) {
       return null;
     }
-    if(!this.props.defaultFilters) {
+    if(!this.props.otherFilters) {
       return null;
     }
     if(this.props.useFilters.length === 0) {
@@ -66,6 +66,8 @@ class FilterPrefContainer extends React.Component {
     const indxs = this.props.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
     const arrFilt = this.props.otherFilters.slice();
     indxs.forEach((indx) => arrFilt.splice(indx, 1));
+    console.log('this should be the tagg');
+    console.log(arrFilt);
     return arrFilt.map((tag) => {
       return {value: tag.name, label: '#' + tag.name};
     });
@@ -111,7 +113,6 @@ class FilterPrefContainer extends React.Component {
 }
 
 FilterPrefContainer.propTypes = {
-  defaultFilters: PropTypes.array,
   otherFilters: PropTypes.array,
   communityPreference: PropTypes.array,
   toggleChecked: PropTypes.func,
@@ -126,7 +127,6 @@ FilterPrefContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultFilters: state.discoverReducer.defaultFilters,
   otherFilters: state.discoverReducer.otherFilters,
   isFetching: state.discoverReducer.isFetching,
   communityPreference: state.userReducer.communityPreference,

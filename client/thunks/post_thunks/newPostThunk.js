@@ -2,10 +2,11 @@
 import axios from 'axios';
 import URL from '../../info';
 
-const newPostThunk = (postBody, postTags, lastRefresh, filters) => (dispatch) => {
+const newPostThunk = (postBody, postTags, newTags, lastRefresh, filters) => (dispatch) => {
   axios.post(URL + 'db/save/post', {
     postBody: postBody,
     postTags: postTags,
+    newTags: newTags,
     lastRefresh: lastRefresh,
     filters: filters
   })

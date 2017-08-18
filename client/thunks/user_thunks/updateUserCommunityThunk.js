@@ -17,7 +17,6 @@ const updateUserCommunityThunk = (community) => (dispatch) => {
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
       dispatch({
         type: 'GET_DISCOVER_DATA_DONE',
-        defaultFilters: response.data.defaultFilters,
         otherFilters: response.data.otherFilters,
         posts: response.data.posts,
         lastRefresh: response.data.lastRefresh
