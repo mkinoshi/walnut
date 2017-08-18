@@ -169,6 +169,8 @@ body ::-webkit-scrollbar-thumb {
 
 #newConversationButton {
     margin-left: 59px !important;
+    background-color: rgba(0, 166, 251, 57);
+    color: #F1F1EF;
 }
 
 .feedTop {

@@ -3,7 +3,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Dropdown, Image, Sticky } from 'semantic-ui-react';
+import { Icon, Dropdown, Button } from 'semantic-ui-react';
 import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
@@ -13,8 +13,12 @@ class Navbar extends React.Component {
     super(props);
     this.state = {
       isOpen: this.props.isEdited,
-      tab: 1
+      pos: 1
     };
+  }
+
+  componentDidMount() {
+    this.navBarChoice();
   }
 
   handleClick(num) {
@@ -25,6 +29,23 @@ class Navbar extends React.Component {
     this.props.onLogout(history);
   }
 
+  navBarChoice() {
+    console.log('this is the window loc', window.location.href.split('/')[window.location.href.split('/').length - 1] );
+    if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'discover') {
+      this.setState({ pos: 1 });
+    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'directory') {
+      this.setState({ pos: 2 });
+    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'map') {
+      this.setState({ pos: 3 });
+    } else {
+      this.setState({ pos: 0 });
+    }
+  }
+
+  navBarChoiceArt(pos) {
+    this.setState({pos: pos});
+  }
+
   render() {
     let title;
     if (this.props.community) {
@@ -32,9 +53,10 @@ class Navbar extends React.Component {
     } else {
       title = 'missing';
     }
+    console.log('position of navbar', this.state.pos);
     return (
           <div className="row" id="navBar">
-              <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
+              <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true}); }}>
                 <Icon name="home" size="big" />
               </Link>
               <div className="communityNavBarLogo">
@@ -45,34 +67,22 @@ class Navbar extends React.Component {
               </div>
 
               <div className="navBarLinks">
-                <div className="navBarLink" onClick={() => {this.handleClick(1); this.setState({isOpen: true});}}>
+                <div className="navBarLink" onClick={() => { this.handleClick(1); this.setState({ isOpen: true }); this.navBarChoiceArt(1);}}>
                   <Link className="tabs" to={'/community/' + title + '/discover'}>
-                    <Icon className="navBarIcon" name="talk outline" size="large" />
+                     <Button className={(this.state.pos === 1) ? 'navbarLinkOn' : 'navbarLinkOff' } content="Discover" />
                   </Link>
-                  {(this.state.tab === 1) ?
-                    <div className="bar">
-                      </div> : null
-                  }
                 </div>
 
-                <div className="navBarLink" onClick={() => {this.handleClick(2); this.setState({isOpen: true});}}>
+                <div className="navBarLink" onClick={() => { this.handleClick(2); this.setState({ isOpen: true }); this.navBarChoiceArt(2);}}>
                   <Link className="tabs" to={'/community/' + title + '/directory'}>
-                    <Icon className="navBarIcon" name="address card outline" size="large"/>
+                     <Button className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'} content="Directory" />
                   </Link>
-                  {(this.state.tab === 2) ?
-                    <div className="bar">
-                      </div> : null
-                    }
                 </div>
 
-                <div className="navBarLink" onClick={() => {this.handleClick(3); this.setState({isOpen: true});}}>
+                <div className="navBarLink" onClick={() => { this.handleClick(3); this.setState({ isOpen: true }); this.navBarChoiceArt(3);}}>
                   <Link className="tabs" to={'/community/' + title + '/map'}>
-                    <Icon className="navBarIcon" name="marker" size="large"/>
+                     <Button className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}  content="Map" />
                   </Link>
-                  {(this.state.tab === 3) ?
-                    <div className="bar">
-                      </div> : null
-                    }
                 </div>
 
                 {/* <div className="navBarLink" onClick={() => this.handleClick(4)}>
@@ -87,7 +97,7 @@ class Navbar extends React.Component {
               </div>
 
             <div className="navBarLinksRight">
-              <div className="imageWrapper">
+              <div className="imageWrapperNav">
                 <img className="postUserImage" src={this.props.pictureURL} />
                 {/* {!(this.state.isOpen || this.props.isEdited) ?*/}
                   {/* <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>*/}
@@ -101,8 +111,8 @@ class Navbar extends React.Component {
               </div>
               <Dropdown className="profileDropdown link item" text={this.props.fullName} pointing>
                 <Dropdown.Menu>
-                   <Dropdown.Item>
-                    <Link className="profilePopeoutHeaderTab" to={'/community/' + title + '/editprofile'}>
+                  <Dropdown.Item>
+                    <Link className="profilePopeoutHeaderTab" to={'/community/' + title + '/editprofile'} >
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
