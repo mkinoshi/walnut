@@ -38,6 +38,7 @@ class ModalInstance extends React.Component {
       members: [],
       hitBottom: false,
       c: 0,
+      unread: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
       isInConversation: false
     };
@@ -55,6 +56,18 @@ class ModalInstance extends React.Component {
     const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
     countRef.on('value', (snapshot) => {
       this.setState({count: snapshot.val()});
+    });
+    // notification stuff
+    const updates = {};
+    const userId = firebase.auth().currentUser.uid;
+    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+      let unreadCount =  snapshotB.val();
+      if (!isNaN(unreadCount)) {
+        if (unreadCount > 0) {
+          this.setState({unread: unreadCount});
+          console.log('unread set to true');
+        }
+      }
     });
   }
 
@@ -151,6 +164,7 @@ class ModalInstance extends React.Component {
         const memberIds = this.state.members.map(member => member.uid);
         followers.forEach(follower => {
           // let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
+          console.log('got in here?', memberIds, follower, snapshot.val()[follower])
           if (snapshot.val()[follower] && !memberIds.includes(follower)) {
             firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
               let unreadCount =  snapshotB.val();
@@ -187,6 +201,11 @@ class ModalInstance extends React.Component {
     };
     updates['/members/' + this.props.postData.postId + '/' + user.uid] = member;
     firebaseApp.database().ref().update(updates);
+    // unread messages stuff
+    firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).set(0);
+    this.setState({unread: 0});
+    // unread stuff ends
+
 
     setInterval(() => {
       if (this.state.commentBody) {
@@ -282,7 +301,9 @@ class ModalInstance extends React.Component {
              onClose={() => {this.handleClose();}}
              size={'small'}
              basic
-             trigger={
+             trigger={this.state.unread > 0 ? 
+        <div className="commentDiv" style={{color: 'red'}}>{this.state.unread} unread</div>
+        :
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="users" />
