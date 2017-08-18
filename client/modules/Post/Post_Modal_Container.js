@@ -301,13 +301,11 @@ class ModalInstance extends React.Component {
              onClose={() => {this.handleClose();}}
              size={'small'}
              basic
-             trigger={this.state.unread > 0 ? 
-        <div className="commentDiv" style={{color: 'red'}}>{this.state.unread} unread</div>
-        :
+             trigger={
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="users" />
-          <span className="commentNum">{this.state.count}</span>
+          <span className={(this.state.unread) ? 'commentNumUn' : 'commentNum'}>{this.state.unread ? this.state.unread : this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
         </div>}
         closeIcon="close"
