@@ -53,7 +53,6 @@ class Navbar extends React.Component {
     } else {
       title = 'missing';
     }
-    console.log('position of navbar', this.state.pos);
     return (
           <div className="row" id="navBar">
               <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true}); }}>
