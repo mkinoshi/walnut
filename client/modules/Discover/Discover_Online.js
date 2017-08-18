@@ -16,41 +16,64 @@ class Online extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log('curr user', user, user.displayName, user.uid);
-            const amOnline = firebaseApp.database().ref('.info/connected');
-            const userRef = firebaseApp.database().ref('/presence/' + user.uid);
-            amOnline.on('value', snapshot => {
-              if (snapshot.val()) {
-                console.log('hallelujah', snapshot.val());
-                userRef.onDisconnect().remove();
-                userRef.set({
-                    name: user.displayName,
-                    pictureURL: nextProps.user.pictureURL
+    const realThis = this;
+    if (nextProps.user.pictureURL) {
+        firebaseApp.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log('curr user', user, user.displayName, user.uid);
+                console.log('nextProps', nextProps);
+                const amOnline = firebaseApp.database().ref('.info/connected');
+                const userRef = firebaseApp.database().ref('/presence/' + nextProps.user.currentCommunity._id + '/' + user.uid);
+                amOnline.on('value', snapshot => {
+                  if (snapshot.val()) {
+                    console.log('hallelujah', snapshot.val());
+                    userRef.onDisconnect().remove();
+                    userRef.set({
+                        name: user.displayName,
+                        pictureURL: nextProps.user.pictureURL
+                    });
+                  }
                 });
-              }
-            });
-        }
-      });
+                if (!realThis.props.user.pictureURL) {
+                    console.log('inside componentWillReceiveProps', nextProps);
+                    const allUser = firebaseApp.database().ref('/presence/' + nextProps.user.currentCommunity._id);
+                    allUser.on('value', snapshot => {
+                        console.log('allUsers', snapshot.val());
+                        realThis.setState({people: Object.values(snapshot.val())});
+                    })
+                }
+                else {
+                    console.log('this.props is not empty', realThis.props);
+                    const allUser = firebaseApp.database().ref('/presence/' + realThis.props.user.currentCommunity._id);
+                    allUser.on('value', snapshot => {
+                        console.log('allUsers', snapshot.val());
+                        realThis.setState({people: Object.values(snapshot.val())});
+                    })
+                }
+            }
+          });
+    }
   }
 
   componentDidMount() {
-    const realThis = this;
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            console.log('curr user', user, user.displayName, user.uid);
-            const allUser = firebaseApp.database().ref('/presence/');
-            allUser.on('value', snapshot => {
-                console.log('allUsers', snapshot.val());
-                realThis.setState({people: Object.values(snapshot.val())});
-            })
-        }
-      });
+    if (this.props.user.pictureURL) {
+        const realThis = this;
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log('inside componentdidMount', realThis.props);
+                const allUser = firebaseApp.database().ref('/presence/' + realThis.props.user.currentCommunity._id);
+                allUser.on('value', snapshot => {
+                    console.log('allUsers', snapshot.val());
+                    realThis.setState({people: Object.values(snapshot.val())});
+                })
+            }
+          });
+    }
   }
 
 
   render() {
+    console.log('user info', this.state.people);
     return (
       <div className="LeftSidebar_Online">
         <div className="discoverTitleBox">
