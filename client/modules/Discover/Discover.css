@@ -175,3 +175,8 @@
 .miniPostCard {
   box-shadow: none !important;
 }
+
+.itemGroupOnline {
+  height: 300px !important;
+  overflow-y: scroll !important;
+}

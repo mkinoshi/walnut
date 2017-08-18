@@ -410,6 +410,7 @@
     overflow: hidden;
     width: 100%;
     object-fit: cover;
+    height: 163px;
 }
 
 body ::-webkit-scrollbar-track {
