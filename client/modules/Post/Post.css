@@ -518,3 +518,7 @@ iframe {
     max-height: 100px !important;
     overflow-x: auto !important;
 }
+
+.unfollowText {
+    margin-right: 21px;
+}

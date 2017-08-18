@@ -334,7 +334,7 @@ class ModalInstance extends React.Component {
                 circular
                 id="leaveButton"
                 animated="vertical">
-              <Button.Content>unFollow</Button.Content>
+              <Button.Content className="unfollowText">unFollow</Button.Content>
             </Button>
           </div> :
             <div className="joinConversation">
