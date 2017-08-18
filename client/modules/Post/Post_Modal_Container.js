@@ -305,7 +305,7 @@ class ModalInstance extends React.Component {
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="users" />
-          <span className={(this.state.unread) ? 'commentNumUn' : 'commentNum'}>{this.state.unread ? this.state.unread : this.state.count}</span>
+          <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
         </div>}
         closeIcon="close"
