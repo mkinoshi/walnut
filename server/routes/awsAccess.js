@@ -183,12 +183,12 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
       return Community.findById(req.user.currentCommunity);
     })
     .then((com) => {
-      com.otherTags = savedTags;
+      com.otherTags = com.otherTags.concat(savedTags);
       return com.save();
     })
     .then((result) => {
       console.log(posts);
-      res.json({ posts: posts, lastRefresh: new Date() });
+      res.json({ posts: posts, lastRefresh: new Date()});
     })
     .catch((er) => {
       console.log('eror in aws save fetching recent posts', er);
