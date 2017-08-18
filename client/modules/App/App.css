@@ -1,8 +1,8 @@
 
 #navBar {
     display: flex;
-    height: 57px;
-    background-color: #303C4D;
+    height: 43px;
+    background-color: #DCDCE5;
 }
 
 .logoHolder {
@@ -27,11 +27,11 @@
 .navBarLinks {
     display: flex;
     justify-content: space-between;
-    width: 200px;
-    left: 40%;
-    right: 60%;
+    width: 300px;
+    left: 37%;
+    right: auto;
     position: absolute;
-    margin-top: 10px;
+    margin-top: 7px;
     color: #F1F1EF;
 }
 
@@ -48,8 +48,7 @@
     left: 10px;
     right: auto;
     position: absolute;
-    margin-top: 13px;
-    color: #F1F1EF;
+    color: #313D4D;
 }
 
 .bar {
@@ -66,14 +65,14 @@
 }
 
 .communityImage {
-    width:30px;
-    height: 30px;
+    width: 100%;
+    height: auto;
     margin-top: 10px;
 }
 
 .communityTitle {
     margin-left: 10px;
-    color: #F1F1EF;
+    color: #313D4D;
     margin-top: 15px;
 }
 
@@ -84,10 +83,19 @@
     flex-direction: column;
 }
 
-.navBarIcon {
+.navbarLinkOn {
     color: #F1F1EF !important;
+    background-color: #313D4D !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
 }
 
+.navbarLinkOff {
+    color: #313D4D !important;
+    background-color: #F1F1EF !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
 
 .imageWrapper {
     margin-left: 10px;
@@ -214,4 +222,42 @@
 
 .titleInput {
     margin-bottom: 15px;
+}
+
+.stickyDiv {
+    display: flex;
+}
+
+.imageWrapperCommunity {
+    margin-left: 10px;
+    margin-top: 6px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    overflow: hidden;
+}
+
+.communityImage {
+    max-width: 100%;
+    max-height: auto;
+    object-fit: contain;
+    margin: auto;
+}
+
+.imageWrapperNav {
+    margin-left: 10px;
+    margin-top: 6px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+    margin-right: 15px
+}
+
+.profileDropdown {
+    margin-top: 11px !important;
+    color: #313D4D;
 }

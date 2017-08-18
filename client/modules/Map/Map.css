@@ -18,6 +18,7 @@
   flex-direction: column;
   margin-left: 1%;
   margin-right: 1%;
+  margin-top: 14px;
 }
 
 .marker {
@@ -80,14 +81,17 @@
 }
 #PlacesAutocomplete__root {
   height: 36px;
+  margin-top: 10px;
 }
 #PlacesAutocomplete__root input {
   border-radius: 5px;
+  margin-top: 10px;
 }
 
 #PlacesAutocomplete__root input::placeholder {
   font-family: 'Lato';
   color: '#aaa';
+  margin-top: 10px;
 }
 
 .mapWrapper {
@@ -115,14 +119,16 @@ i.icon.map {
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background-color: #B48059;
+  background-color: #314460;
+  color: #FFF;
 }
 
 .iconSelectorWrapper2 {
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background-color: #97ABA9;
+  background-color: #FFF;
+  color: #314460;
 }
 
 i.clock.icon {
@@ -144,15 +150,15 @@ i.home.icon {
 }
 
 button.ui.positive.button, button.ui.positive.button:focus  {
-  background-color: #B48059;
+  background-color: #314460;
 }
 
 button.ui.positive.button:hover {
-  background-color: #8B5C38;
+  background-color: #314460;
 }
 
 button.ui.button {
-  background-color: #97ABA9;
+  background-color: #FFF;
 }
 
 .mapSelector .Select-placeholder {
@@ -188,6 +194,7 @@ button.ui.button {
 
 .cardOuter {
   margin-top: 0px !important;
+  margin-bottom: 4px !important;
 }
 
 .ui.card.cardOuter.clicked > .content {
