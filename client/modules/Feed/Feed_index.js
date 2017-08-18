@@ -82,7 +82,7 @@ class Feed extends React.Component {
             loader={<Loader active inline="centered" />}
             useWindow={false}
             >
-            {/* <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>*/}
+             <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
           {this.props.data.posts.map((post) => (
             <Post ref="card"
             key={post.postId}
