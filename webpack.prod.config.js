@@ -69,12 +69,12 @@ module.exports = {
         // new BundleAnalyzerPlugin({
         //     analyzerMode: 'static'
         // }),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        //     , sourceMap: false
-        // }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+            , sourceMap: false
+        }),
         // new CompressionPlugin({
         //     asset: "[path].gz[query]",
         //     algorithm: "gzip",

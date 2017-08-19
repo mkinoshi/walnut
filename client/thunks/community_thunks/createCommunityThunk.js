@@ -8,7 +8,7 @@ const createCommunityThunk = (image, title, filters) => (dispatch) => {
   axios.post(URL + 'db/create/community', {
     title: title,
     image: image,
-    defaultFilters: filters
+    otherTags: filters
   })
     .then((response) => {
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});

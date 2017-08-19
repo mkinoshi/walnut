@@ -17,7 +17,7 @@ class WalnutHomeContainer extends React.Component {
     this.state = {
       titleValue: '',
       image: 'https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      defaultFilters: [],
+      otherTags: [],
       filterValue: '',
       isCalled: false
     };
@@ -47,8 +47,8 @@ class WalnutHomeContainer extends React.Component {
     this.props.changeCommunity(com);
   }
 
-  handleSubmit(image, titleValue, defaultFilters) {
-    this.props.createCommunity(image, titleValue, defaultFilters);
+  handleSubmit(image, titleValue, otherTags) {
+    this.props.createCommunity(image, titleValue, otherTags);
   }
 
 
@@ -67,7 +67,7 @@ class WalnutHomeContainer extends React.Component {
                 <hr />
             </div>
                 <div>
-                  <NewCommunityModal handleCreate={this.handleSubmit} />
+                  <NewCommunityModal handleCreate={(image, title, filters) => this.handleSubmit(image, title, filters)} />
                 </div>
                <h2 className="subHead">Your Communities</h2>
                <div className="communitiesContainer">
@@ -85,8 +85,8 @@ class WalnutHomeContainer extends React.Component {
                                     title={community.title}
                                     key={idx} /></Link>)}
                </div>
-                <h2 className="subHead">Search For new Communities</h2>
-                <div className="communitiesContainer">
+                  {/* <h2 className="subHead">Search For new Communities</h2>
+                <div className="communitiesContainer"> */} */}
                     {/* {this.props.communities.filter((com) => {*/}
                       {/* return !(userCommunityTitles.indexOf(com.title) > -1);*/}
                     {/* }).map((community, idx) => <div key={idx}>*/}
@@ -95,15 +95,15 @@ class WalnutHomeContainer extends React.Component {
                         {/* <button onClick={() => this.joinCommunity(community._id)}>+ Join</button>*/}
                     {/* </div> )*/}
                     {/* }*/}
-                    {this.props.communities.filter((com) => {
-                      return !(userCommunityTitles.indexOf(com.title) > -1);
-                    }).map((community, idx) => <CommunityCard icon={community.icon}
+                     {/* {this.props.communities.filter((com) => {
+                       return !(userCommunityTitles.indexOf(com.title) > -1);
+                     }).map((community, idx) => <CommunityCard icon={community.icon}
                                                               title={community.title}
                                                               communityId={community._id}
                                                               join={this.joinCommunity}
                                                               key={idx}/>)
-                    }
-                </div>
+                    } */}
+               {/* </div> */}
         </div>
     );
   }

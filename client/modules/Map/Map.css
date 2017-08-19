@@ -74,6 +74,7 @@
 #scrollbar {
   height: 80vh;
   width: 20vw;
+  margin-left: 20px;
 }
 
 .zoomControl {

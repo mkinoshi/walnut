@@ -8,10 +8,14 @@
 .RightSideBar_Container {
   flex: 4;
   margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .LeftSidebar_Container {
   flex: 3;
+  margin-left: 30px;
 }
 
 .discoverTitleBox {
@@ -170,4 +174,9 @@
 
 .miniPostCard {
   box-shadow: none !important;
+}
+
+.itemGroupOnline {
+  height: 300px !important;
+  overflow-y: scroll !important;
 }

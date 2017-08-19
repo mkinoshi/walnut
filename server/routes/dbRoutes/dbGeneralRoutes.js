@@ -22,7 +22,7 @@ router.get('/user', (req, res) => {
 
 // TODO: this needs to be fixed. There is a "cannot read property map of undefined" error
 router.post('/create/community', (req, res) => {
-  const tagModels = req.body.defaultFilters.map((filter) =>
+  const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
           name: filter
         })
@@ -34,8 +34,8 @@ router.post('/create/community', (req, res) => {
             users: [req.user._id],
             admins: [req.user._id],
             icon: req.body.image,
-            defaultTags: values.map((val) => val._id),
-            otherTags: []
+            otherTags: values.map((val) => val._id),
+            defaultTags: []
           });
           return community.save();
         })
@@ -55,11 +55,11 @@ router.post('/create/community', (req, res) => {
                 .then((userSave) => {
                   console.log('dhhdhdhd', userSave);
                   Community.findById(community._id)
-                        .populate('defaultTags')
+                        .populate('otherTags')
                         .then((com) => {
                           com.queries.push(userSave.queries);
                           const tags = [];
-                          com.defaultTags.forEach((tag) => {
+                          com.otherTags.forEach((tag) => {
                             tag.owner = community._id;
                             tags.push(tag);
                           });
@@ -145,7 +145,6 @@ router.post('/toggle/community', (req, res) => {
         })
         .then((populatedUser) => {
           Community.findById(populatedUser.currentCommunity)
-            .populate('defaultTags')
             .populate('otherTags')
             .then((community) => {
               community.users.filter((user) => {
@@ -154,7 +153,7 @@ router.post('/toggle/community', (req, res) => {
               if (community.length === 0) {
                 res.json({ error: 'No authorization' });
               } else {
-                const defaultFilters = community.defaultTags;
+                const defaultFilters = community.otherTags;
                 const otherFilters = community.otherTags;
                 let posts = [];
                 const filter = populatedUser.communityPreference.length > 0 ? { tags: { $in: populatedUser.communityPreference }, community: populatedUser.currentCommunity } : { community: populatedUser.currentCommunity };

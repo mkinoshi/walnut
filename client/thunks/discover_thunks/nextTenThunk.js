@@ -8,8 +8,8 @@ const nextTenThunk = (lastOne, lastRefresh, filters) => (dispatch) => {
   axios.get(URL + 'db/get/next10' + '?lastOne=' + lastOne + '&lastRefresh=' + lastRefresh + '&filters=' + JSON.stringify(filters))
     .then((response) => {
       dispatch({type: 'GET_NEXT_TEN_DONE',
-          defaultFilters: response.data.defaultFilters,
-          otherFilters: response.data.defaultFilters,
+          otherTags: response.data.otherTags,
+          otherFilters: response.data.otherTags,
           posts: response.data.posts});
     })
     .catch((err) =>{

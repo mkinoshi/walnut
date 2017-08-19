@@ -13,7 +13,7 @@ class NewCommunityModal extends React.Component {
     this.state = {
       titleValue: '',
       image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      defaultFilters: [],
+      otherTags: [],
       filterValue: '',
     };
   }
@@ -29,9 +29,9 @@ class NewCommunityModal extends React.Component {
 
   handleClick(e) {
     e.preventDefault();
-    const copy = this.state.defaultFilters;
+    const copy = this.state.otherTags;
     copy.push(this.state.filterValue);
-    this.setState({defaultFilters: copy, filterValue: ''});
+    this.setState({otherTags: copy, filterValue: ''});
   }
 
   render() {
@@ -54,7 +54,7 @@ class NewCommunityModal extends React.Component {
                     Add Default Topics:
                 </div>
                 <ul>
-                    {this.state.defaultFilters.map((filter, idx) => <li key={idx}>#{' '}{filter}</li>)}
+                    {this.state.otherTags.map((filter, idx) => <li key={idx}>#{' '}{filter}</li>)}
                 </ul>
                 <Input labelPosition="left"
                        type="text"
@@ -67,7 +67,7 @@ class NewCommunityModal extends React.Component {
                 <Button className="addButton" content="Add" icon="add" onClick={(e) => {this.handleClick(e);}} />
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={() => this.handleCreate()}>
+                <Button onClick={() => this.props.handleCreate(this.state.image, this.state.titleValue, this.state.otherTags)}>
                     Create
                     <Icon name="lightning" />
                 </Button>

@@ -1,5 +1,6 @@
 node_modules
 .DS_Store
 env.sh
-build
+*bundle.js
+*node-static.js
 .idea
