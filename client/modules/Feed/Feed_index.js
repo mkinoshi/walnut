@@ -14,7 +14,7 @@ import { Loader, Button, Modal, Icon, Header } from 'semantic-ui-react';
 
 
 let refresh;
-let curScroll = 0;
+const curScroll = 0;
 
 class Feed extends React.Component {
   constructor(props) {
@@ -58,10 +58,6 @@ class Feed extends React.Component {
     return (
       <div className="Feed_Wrapper">
         <div className="feedTop">
-          <div className="discoverTitleBox">
-            <h1 className="discoverTitle">Discover</h1>
-            <div id="discoverLine" className="discoverTitleLine"></div>
-          </div>
           <div>
             <Button
             onClick={() => this.newConversationModal()}

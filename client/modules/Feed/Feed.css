@@ -19,7 +19,7 @@
 
 .Feed_Wrapper {
     flex: 5;
-    background-color: #EEEEF3;
+    background-color: #FAFAFA;
     margin-left: 107px;
 }
 
@@ -168,13 +168,14 @@ body ::-webkit-scrollbar-thumb {
 }
 
 #newConversationButton {
-    margin-left: 59px !important;
-    background-color: rgba(0, 166, 251, 57);
-    color: #F1F1EF;
+    background-color: #5bc0e3;
+    color: #FAFAFA;
 }
 
 .feedTop {
     display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 #discoverLine {
