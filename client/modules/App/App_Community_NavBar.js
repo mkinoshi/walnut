@@ -68,19 +68,22 @@ class Navbar extends React.Component {
               <div className="navBarLinks">
                 <div className="navBarLink" onClick={() => { this.handleClick(1); this.setState({ isOpen: true }); this.navBarChoiceArt(1);}}>
                   <Link className="tabs" to={'/community/' + title + '/discover'}>
-                     <Button className={(this.state.pos === 1) ? 'navbarLinkOn' : 'navbarLinkOff' } content="Discover" />
+                    <p className={(this.state.pos === 1) ? 'navbarLinkOn' : 'navbarLinkOff' }>Discover</p>
+                    {this.state.pos === 1 ? <div className="bottomBar"></div> : null}
                   </Link>
                 </div>
 
                 <div className="navBarLink" onClick={() => { this.handleClick(2); this.setState({ isOpen: true }); this.navBarChoiceArt(2);}}>
                   <Link className="tabs" to={'/community/' + title + '/directory'}>
-                     <Button className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'} content="Directory" />
+                    <p className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'}>Directory</p>
+                    {this.state.pos === 2 ? <div className="bottomBar"></div> : null}
                   </Link>
                 </div>
 
                 <div className="navBarLink" onClick={() => { this.handleClick(3); this.setState({ isOpen: true }); this.navBarChoiceArt(3);}}>
                   <Link className="tabs" to={'/community/' + title + '/map'}>
-                     <Button className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}  content="Map" />
+                    <p className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}>Map</p>
+                    {this.state.pos === 3 ? <div className="bottomBar"></div> : null}
                   </Link>
                 </div>
 
@@ -108,7 +111,7 @@ class Navbar extends React.Component {
                     {/* </div>*/}
                   {/* </div> : null}*/}
               </div>
-              <Dropdown className="profileDropdown link item" text={this.props.fullName} pointing>
+              <Dropdown className="profileDropdown link item" text={this.props.fullName.split(' ')[0]} pointing>
                 <Dropdown.Menu>
                   <Dropdown.Item>
                     <Link className="profilePopeoutHeaderTab" to={'/community/' + title + '/editprofile'} >

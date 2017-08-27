@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Creatable}  from 'react-select';
+import Select  from 'react-select';
 import { Icon, Button, Label } from 'semantic-ui-react';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 
@@ -76,31 +76,32 @@ class TagPref extends React.Component {
   }
 
   render() {
-    console.log('all of the tags here');
     return (
       <div>
+        <div className="topics">
         {this.props.tags || this.props.newtags ?
           this.props.tags.concat(this.props.newtags).map((filter, index) => (
-                <p key={index}>
-                  <Label image>
-                    # {typeof filter === 'string' ? filter : filter.name}
-                    <Icon name="delete" onClick={() => this.props.handleRemove(filter)} />
-                  </Label>
-                </p>
+              <div key={index} className="tag">
+                <text className="hashtag"># {filter.name}</text>
+                <Icon className="topicRemove" name="delete" onClick={() => this.props.handleRemove(filter)} />
+              </div>
               )) :
           null
         }
-          <Creatable
+        </div>
+        <div className="topicSelector">
+          <p className="addTopics">Add Topic(s):</p>
+          <Select.Creatable
+              placeholder="Add topic(s)"
               className="searchTags"
-              name="form-field-name"
-              placeholder="Select Tag or Type your own..."
+              clearable={false}
               value={this.state.value}
-              clearable
               options={this.props.otherFilters.map((tag) => {
                 return {value: tag.name, label: '#' + tag.name};
               })}
               onChange={(e) => this.handleSelectChange(e)}
           />
+        </div>
       </div>
     );
   }

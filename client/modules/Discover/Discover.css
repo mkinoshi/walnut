@@ -1,7 +1,7 @@
 #Discover {
   display: flex;
   flex-direction: row;
-  margin-top: 20px;
+  margin-top: 3px;
   overflow-x: scroll;
 }
 

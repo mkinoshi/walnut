@@ -57,17 +57,26 @@ class Feed extends React.Component {
   render() {
     return (
       <div className="Feed_Wrapper">
-        <div className="feedTop">
-          <div>
-            <Button
-            onClick={() => this.newConversationModal()}
-            id="newConversationButton"
-            content="New conversation"/>
-          </div>
-        </div>
+        {/* <div className="feedTop">*/}
+          {/* <div>*/}
+            {/* <Button*/}
+            {/* onClick={() => this.newConversationModal()}*/}
+            {/* id="newConversationButton"*/}
+            {/* content="New conversation"/>*/}
+          {/* </div>*/}
+        {/* </div>*/}
         {this.props.data.isFetching || !this.props.isReady ?
             <Loader active inline="centered" /> :
-           <div style={{height: '88vh', overflow: 'auto'}}>
+           <div style={{height: '90vh', overflow: 'auto'}}>
+             {/* <div className="feedTop">*/}
+               {/* <div>*/}
+                 {/* <Button*/}
+                     {/* onClick={() => this.newConversationModal()}*/}
+                     {/* id="newConversationButton"*/}
+                     {/* content="New conversation"/>*/}
+               {/* </div>*/}
+             {/* </div>*/}
+             <NewPostContainer />
             <InfiniteScroll
             className="banterScroller"
               id="banterScroller"
@@ -90,22 +99,21 @@ class Feed extends React.Component {
             </InfiniteScroll>
            </div>
         }
-        <Modal
-        basic
-        open={this.props.modalIsOpen}>
-          <Modal.Header
-          id="conversationHeader"
-          >
-            <h1 className="newConvHeader">New Conversation</h1>
-            <Button onClick={() => this.props.toggleModal()} className="cancelButton">
-              <Icon name="cancel"/>
-              Cancel
-            </Button>
-          </Modal.Header>
-          <Modal.Content className="newConversationOuter">
-            <NewPostContainer />
-          </Modal.Content>
-        </Modal>
+        {/* <Modal*/}
+        {/* basic*/}
+        {/* open={this.props.modalIsOpen}>*/}
+          {/* <Modal.Header*/}
+          {/* id="conversationHeader"*/}
+          {/* >*/}
+            {/* <h1 className="newConvHeader">New Conversation</h1>*/}
+            {/* <Button onClick={() => this.props.toggleModal()} className="cancelButton">*/}
+              {/* <Icon name="cancel"/>*/}
+              {/* Cancel*/}
+            {/* </Button>*/}
+          {/* </Modal.Header>*/}
+          {/* <Modal.Content className="newConversationOuter">*/}
+          {/* </Modal.Content>*/}
+        {/* </Modal>*/}
       </div>
     );
   }

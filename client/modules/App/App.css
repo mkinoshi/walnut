@@ -86,16 +86,18 @@
 }
 
 .navbarLinkOn {
+    font-weight: bold;
+    margin-bottom: 9px;
     color: #5bc0e3 !important;
     background-color: #FAFAFA !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    padding-top: 2px !important;
 }
 
 .navbarLinkOff {
-    color: #3A3A3A !important;
+    color: #3A3A3A;
     background-color: #FAFAFA !important;
     padding-top: 8px !important;
+    font-weight: bold;
     padding-bottom: 8px !important;
 }
 
@@ -263,4 +265,14 @@
 .profileDropdown {
     margin-top: 11px !important;
     color: #313D4D;
+}
+
+.bottomBar {
+    background-color: #5bc0e3;
+    height: 5px;
+    padding-bottom: 5px;
+}
+
+.navbarLinkOff:hover {
+    color: #5bc0e3 !important;
 }
