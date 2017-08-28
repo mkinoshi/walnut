@@ -70,6 +70,7 @@ class NewPostContainer extends React.Component {
         this.props.clearPostTag();
         this.props.toggleModal();
         this.setState({postBody: '', file: '', newFileName: null});
+        // TODO: dispatch front end refresh no backend call
         this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
       });
     } else {

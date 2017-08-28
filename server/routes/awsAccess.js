@@ -78,6 +78,25 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
     .catch((error) => console.log('error in aws db save', error));
 });
 
+router.post('/upload/community', upload.single('community'), (req, res) => {
+  res.json({pictureURL: req.file.location}).
+  catch((error) => {
+    res.json({pictureURL: null});
+  });
+  // User.findById(req.user._id)
+  //   .then((user) => {
+  //     const url = req.file.location;
+  //     user.pictureURL = url;
+  //     return user.save();
+  //   })
+  //   .then((user) => {
+  //     console.log('end of upload', user);
+  //     // user pic thunk and reducer data refresh
+  //     res.json({pictureURL: user.pictureURL});
+  //   })
+  //   .catch((error) => console.log('error in aws db save', error));
+});
+
 router.post('/upload/post', upload.single('attach'), (req, res) => {
   console.log('upload', req.file);
   console.log(req.body);

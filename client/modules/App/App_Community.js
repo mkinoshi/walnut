@@ -4,12 +4,11 @@ import {Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
-import Directory from '../Directory2/Directory_index2';
+import Directory from '../Directory/Directory_index';
 import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
-// import EditProfile from '../EditProfile/EditProfile_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
-import EditProfile from '../EditProfile_2/EditProfile_2_index';
+import EditProfile from '../EditProfile/EditProfile_index';
 
 
 class Community extends React.Component {

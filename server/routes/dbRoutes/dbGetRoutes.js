@@ -10,7 +10,10 @@ import Metascraper from 'metascraper';
 router.get('/app', (req, res) => {
   User.findById(req.user._id)
       .populate('communities')
-      .populate('currentCommunity')
+      .populate({
+        path: 'currentCommunity',
+        populate: {path: 'admins defaultTags users'},
+      })
       .then((response) => {
         Community.find()
           .then((communities) => {
