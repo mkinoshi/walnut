@@ -2,7 +2,9 @@
 #navBar {
     display: flex;
     height: 43px;
-    background-color: #DCDCE5;
+    background-color: #FAFAFA;
+    border-bottom: solid 1px #B3B5C1;
+    box-shadow: 0 1px 1px #b3b5c1;
 }
 
 .logoHolder {
@@ -48,7 +50,7 @@
     left: 10px;
     right: auto;
     position: absolute;
-    color: #313D4D;
+    color: #3a3a3a;
 }
 
 .bar {
@@ -72,7 +74,7 @@
 
 .communityTitle {
     margin-left: 10px;
-    color: #313D4D;
+    color: #3A3A3A;
     margin-top: 15px;
 }
 
@@ -84,16 +86,18 @@
 }
 
 .navbarLinkOn {
-    color: #F1F1EF !important;
-    background-color: #313D4D !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    font-weight: bold;
+    margin-bottom: 9px;
+    color: #5bc0e3 !important;
+    background-color: #FAFAFA !important;
+    padding-top: 2px !important;
 }
 
 .navbarLinkOff {
-    color: #313D4D !important;
-    background-color: #F1F1EF !important;
+    color: #3A3A3A;
+    background-color: #FAFAFA !important;
     padding-top: 8px !important;
+    font-weight: bold;
     padding-bottom: 8px !important;
 }
 
@@ -101,8 +105,8 @@
     margin-left: 10px;
     margin-top: 10px;
     background-color: red;
-    width: 30px;
-    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
@@ -110,9 +114,9 @@
 }
 
 .postUserImage {
-    max-width: 110%;
-    max-height: auto;
-    object-fit: contain;
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
     margin: auto;
 }
 
@@ -261,4 +265,35 @@
 .profileDropdown {
     margin-top: 11px !important;
     color: #313D4D;
+}
+
+.bottomBar {
+    background-color: #5bc0e3;
+    height: 5px;
+    padding-bottom: 5px;
+}
+
+.navbarLinkOff:hover {
+    color: #5bc0e3 !important;
+}
+
+.communityImgUpload {
+    height: 105px;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+button.ui.button > input {
+    display: inline !important;
+}
+
+.modalEditTrigger {
+    position: absolute !important;
+    top: 50px !important;
+    margin-left: 80px !important;
+}
+
+.adminFname {
+    color: white !important;
 }

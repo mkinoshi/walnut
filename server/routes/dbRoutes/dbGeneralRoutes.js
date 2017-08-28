@@ -11,7 +11,13 @@ router.get('/user', (req, res) => {
   User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')
+      .populate({
+        path: 'currentCommunity',
+        populate: {path: 'admins defaultTags users'},
+      })
       .then((response) => {
+        console.log('inside /db/user');
+        console.log(response);
         res.json({data: response});
       })
       .catch((err) => {
@@ -109,7 +115,9 @@ router.post('/join/community', (req, res) => {
         .then((savedUser) => {
           const opts = [
                 { path: 'communities'},
-                { path: 'currentCommunity'}
+                { path: 'currentCommunity'},
+                { path: 'currentCommunity',
+                  populate: {path: 'admins defaultags users'}}
           ];
           return User.populate(savedUser, opts);
         })
@@ -139,7 +147,11 @@ router.post('/toggle/community', (req, res) => {
         .then((savedUser) => {
           const opts = [
                 { path: 'communities'},
-                { path: 'currentCommunity'}
+                { path: 'currentCommunity'},
+                { path: 'communities'},
+                { path: 'currentCommunity'},
+                { path: 'currentCommunity',
+                  populate: {path: 'admins defaultags users'}}
           ];
           return User.populate(savedUser, opts);
         })
@@ -225,7 +237,10 @@ router.post('/toggle/checked', (req, res) => {
           response.save()
                 .then((savedUser) => {
                   const opts = [
-                        { path: 'currentCommunity' }
+                        { path: 'currentCommunity' },
+                        { path: 'communities'},
+                        { path: 'currentCommunity',
+                          populate: {path: 'admins defaultags users'}}
                   ];
                   return User.populate(savedUser, opts);
                 })

@@ -7,10 +7,9 @@ import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import ReactUploadFile from 'react-upload-file';
-import { Icon, Button } from 'semantic-ui-react';
+import { Icon, Button, TextArea, Form, Divider } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
-import Textarea from 'react-textarea-autosize';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
@@ -70,6 +69,7 @@ class NewPostContainer extends React.Component {
         this.props.clearPostTag();
         this.props.toggleModal();
         this.setState({postBody: '', file: '', newFileName: null});
+        // TODO: dispatch front end refresh no backend call
         this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
       });
     } else {
@@ -93,13 +93,6 @@ class NewPostContainer extends React.Component {
     this.setState({newFileName: name});
   }
 
-  handleKeyPress(event) {
-    if(event.key === 'Enter') {
-      console.log('enter press here! ');
-      console.log(event);
-    }
-  }
-
   handleRemove(tag) {
     if (typeof tag === 'string') {
       this.props.handleNewRemove(tag);
@@ -119,25 +112,27 @@ class NewPostContainer extends React.Component {
     return (
       <div className="newPost">
         <div className="row newPostContent">
-          <Textarea id="textarea1"
-            value={this.state.postBody}
-            minRows={3}
-            onChange={(e) => this.handleChange(e)}
-            onKeyPress={(e) => this.handleKeyPress(e)}
-            />
+          <Form className="newPostForm">
+            <TextArea
+              id="textarea1"
+              autoHeight
+              placeholder="What's on your mind?"
+              minRows={2}
+              onChange={(e) => this.handleChange(e)}
+              />
+          </Form>
         </div>
-        <div id="tagPrefTitleDiv"><h3 id="tagPrefTitleHash"># </h3><h4 id="tagPrefTitle"> add a topic</h4></div>
         <div className="row newPostTagsPref">
           <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
                             addNewTags={(tag) => {this.addNewTags(tag);}}
                             tags={this.props.postTags}
                             newtags={this.props.newPostTags}
                             handleRemove={(tag) => this.handleRemove(tag)} />
-          {/* <NewTagContainer addToPost={(tag) => (this.addNewTags(tag))} /> */}
         </div>
+          <Divider />
           <div className="row newPostFooter">
-          <div className="fileUpload col-xs-6">
             <ReactUploadFile
+              className="fileUpload"
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
               options={optionsForUpload}/>
@@ -146,15 +141,12 @@ class NewPostContainer extends React.Component {
               onChange={(e) => this.changeFileName(e.target.value)}/>
                 :
                 null}
-            </div>
-            <div className="col-xs-6">
-              <Button onClick={() => this.submitPost()} animated>
-                <Button.Content visible>create</Button.Content>
-                <Button.Content hidden>
-                  <Icon name="send"/>
+              <Button className="wholeCreateButton" onClick={() => this.submitPost()} animated>
+                <Button.Content className="createButton" visible>Create</Button.Content>
+                <Button.Content className="createButton" hidden>
+                  <Icon name="send" />
                 </Button.Content>
               </Button>
-            </div>
           </div>
       </div>
     );

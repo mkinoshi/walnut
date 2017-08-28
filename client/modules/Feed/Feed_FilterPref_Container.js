@@ -90,7 +90,7 @@ class FilterPrefContainer extends React.Component {
             filters.map((filter, index) => (
               <div key={index} className="tag">
                 <text className="hashtag"># {filter.name}</text>
-                <Icon name="delete" onClick={() => this.handleRemove(filter)} />
+                <Icon className="topicRemove" name="delete" onClick={() => this.handleRemove(filter)} />
               </div>
               ))
            :
@@ -102,7 +102,7 @@ class FilterPrefContainer extends React.Component {
             name="form-field-name"
             value={this.state.value}
             multi simpleValue
-            placeholder="Add new filter"
+            placeholder="Filter by topic(s)..."
             options={options}
             onChange={this.handleSelectChange.bind(this)}
           />

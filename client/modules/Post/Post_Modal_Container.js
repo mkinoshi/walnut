@@ -58,17 +58,17 @@ class ModalInstance extends React.Component {
       this.setState({count: snapshot.val()});
     });
     // notification stuff
-    const updates = {};
-    const userId = firebase.auth().currentUser.uid;
-    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
-      let unreadCount =  snapshotB.val();
-      if (!isNaN(unreadCount)) {
-        if (unreadCount > 0) {
-          this.setState({unread: unreadCount});
-          console.log('unread set to true');
-        }
-      }
-    });
+    // const updates = {};
+    // const userId = firebase.auth().currentUser.uid;
+    // firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+    //   let unreadCount =  snapshotB.val();
+    //   if (!isNaN(unreadCount)) {
+    //     if (unreadCount > 0) {
+    //       this.setState({unread: unreadCount});
+    //       console.log('unread set to true');
+    //     }
+    //   }
+    // });
   }
 
   scrollToBottom(id) {

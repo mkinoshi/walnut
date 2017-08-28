@@ -26,10 +26,6 @@ class LeftSideBar extends React.Component {
   render() {
     return (
       <div className="LeftSidebar_Container">
-        <div className="discoverTitleBox">
-          <h1 className="discoverTitle">Filter by topic...</h1>
-          <div className="discoverTitleLine"></div>
-        </div>
         <div className="LeftSideBar_Preference">
           <div>
              <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/>

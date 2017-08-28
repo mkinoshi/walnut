@@ -1,7 +1,6 @@
 'use strict';
 // Maybe we have to use schema
 import mongoose from 'mongoose';
-
 const CommunitySchema = new mongoose.Schema({
   title: {
     type: String

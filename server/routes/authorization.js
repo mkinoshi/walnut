@@ -7,6 +7,7 @@ const Profile = models.Profile;
 var router = express.Router();
 var path = require('path');
 var CryptoJS = require("crypto-js");
+
 import adminApp from '../firebaseAdmin';
 
   router.post('/signup', function(req, res) {
@@ -61,10 +62,17 @@ import adminApp from '../firebaseAdmin';
       var uid = decodedToken.uid;
       console.log('uid', uid);
       return User.findOne({firebaseId: uid})
+      .then((user) => {
+        user.password = req.body.password;
+        return user.save();
+      })
       .then((doc) => {
         const opts = [
-          {path: 'communities'},
-          {path: 'currentCommunity'}
+          { path: 'communities'},
+          { path: 'currentCommunity'},
+          { path: 'currentCommunity.admins'},
+          { path: 'currentCommunity.defaultTags'},
+          { path: 'currentCommunity.users'}
         ]
         return User.populate(doc, opts)
         .then((populated) => {

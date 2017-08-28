@@ -1,9 +1,12 @@
 .newPost {
-    padding: 1%;
-    background-color: #F1F1EF;
-    width: 400px;
-    margin-top: 30px;
+    padding: 2%;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 20px;
     border-radius: 3px;
+    margin-bottom: 20px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
 }
 .uploadButtonIcon {
     font-size: 30px !important;
@@ -19,7 +22,7 @@
 
 .Feed_Wrapper {
     flex: 5;
-    background-color: #EEEEF3;
+    background-color: #FAFAFA;
     margin-left: 107px;
 }
 
@@ -30,10 +33,20 @@
 }
 
 .fileUpload {
-    display: flex;
-    align-items: center;
-    margin-top: 0.6vw;
-    margin-left: 1%;
+
+}
+
+.createButton {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+}
+
+.createButton:hover {
+    background-color: #fff !important;
+}
+
+.wholeCreateButton {
+    background-color: #fff !important;
 }
 
 .tagItemLabel {
@@ -53,11 +66,6 @@
     margin-bottom: 14px;
 }
 
-.newPost {
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-}
 
 .newPost_Container {
     height: 310px;
@@ -73,20 +81,13 @@
 
 #textarea1 {
     width: 100%;
-    height: 150px !important;
     margin-top: 0px;
     padding-top: 12px;
     padding-bottom: 12px;
-    resize: none;
-    border-radius: 5px;
-    padding-left: 10px;
     padding-right: 10px;
-    border: none;
-    overflow: auto;
-    outline: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+    padding-left: 0px;
+    border: none !important;
+
 }
 
 #newPostHeader {
@@ -99,7 +100,9 @@
 }
 
 .searchTags {
-    width: 300px    
+    width: 35%;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 #addTagButton {
@@ -168,13 +171,14 @@ body ::-webkit-scrollbar-thumb {
 }
 
 #newConversationButton {
-    margin-left: 59px !important;
-    background-color: rgba(0, 166, 251, 57);
-    color: #F1F1EF;
+    background-color: #5bc0e3;
+    color: #FAFAFA;
 }
 
 .feedTop {
     display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 #discoverLine {
@@ -204,4 +208,35 @@ body ::-webkit-scrollbar-thumb {
 
 .newConvHeader {
     color: #fff;
+}
+
+.newPostForm {
+    width: 100%;
+}
+
+.topicSelector {
+    display: inline-flex;
+    width: 100%;
+}
+
+.addTopics {
+    font-weight: bold;
+    color: #3a3a3a;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+.newPostTagsPref {
+}
+
+.topics {
+    display: inline-flex;
+}
+
+.topic {
+    margin-right: 10px;
+}
+
+.topicRemove {
+    cursor: pointer;
 }

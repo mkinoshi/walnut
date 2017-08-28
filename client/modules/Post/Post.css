@@ -1,9 +1,11 @@
 .mediaAttachment {
+    margin-right: 10px;
+    margin-left: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 200px;
+    height: auto;
     overflow: hidden;
 }
 
@@ -135,7 +137,7 @@
 }
 
 .tag {
-    background-color: #97ABA9;
+    background-color: #5bc0e3;
     border-radius: 27px;
     padding-top: 4px;
     padding-bottom: 4px;
@@ -147,7 +149,7 @@
 }
 
 .hashtag {
-    color: #F1F1EF;
+    color: #FAFAFA;
     font-size: 14px;
     line-height: 19px;
 }
@@ -183,6 +185,8 @@
     margin-bottom: 20px;
     border-radius: 3px;
     width: 513.67px;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     /* box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;*/
 }
 
@@ -201,17 +205,19 @@
     margin-left: 10px;
     margin-top: 10px;
     background-color: red;
-    width: 30px;
-    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    max-width: 30px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
 }
 
 .postUserImage {
-    max-width: 110%;
-    max-height: auto;
-    object-fit: contain;
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
     margin: auto;
 }
 
@@ -237,6 +243,7 @@
 }
 
 .postInnerContent {
+    overflow: hidden;
     width: 480.83px;	
     color: #4A4A4A;	
     font-family: Avenir Next;	
@@ -389,6 +396,8 @@
 }
 
 .linkPrev {
+    margin-right: 10px;
+    margin-left: 10px;
     display: flex;
 }
 
@@ -522,4 +531,10 @@ iframe {
 
 .unfollowText {
     margin-right: 21px;
+}
+
+.postImage {
+    width: 100% !important;
+    object-fit: cover !important;
+    height: auto !important;
 }
