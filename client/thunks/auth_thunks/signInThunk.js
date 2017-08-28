@@ -6,6 +6,10 @@ import URL from '../../info';
 const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
+    console.log(result);
+    if (!result.emailVerified) {
+      dispatch({type: 'GET_USER_VERIFY_ERROR', email: email, password: password});
+    }
     result.getToken(/* forceRefresh */ true)
     .then((idToken) => {
       axios.post(URL + 'auth/login', {
@@ -26,10 +30,19 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
     console.log('you got a fucking error', error);
     const errorCode = error.code;
     const errorMessage = error.message;
+    dispatch({type: 'GET_USER_DATA_ERROR'});
     // ...
   });
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    console.log('you got a fucking error', error);
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    dispatch({type: 'GET_USER_DATA_ERROR'});
   });
 };
+
   // firebase.auth().onAuthStateChanged(function(user) {
   //   console.log('user', user);
   //   if (user) {

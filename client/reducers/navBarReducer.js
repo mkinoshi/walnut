@@ -1,3 +1,4 @@
+// TODO: not sure this is necessary as all of the logic is done off of window url
 const navBarReducer = (state = {
 }, action) => {
   switch (action.type) {

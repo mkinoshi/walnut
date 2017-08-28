@@ -276,3 +276,24 @@
 .navbarLinkOff:hover {
     color: #5bc0e3 !important;
 }
+
+.communityImgUpload {
+    height: 105px;
+    width: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+button.ui.button > input {
+    display: inline !important;
+}
+
+.modalEditTrigger {
+    position: absolute !important;
+    top: 50px !important;
+    margin-left: 80px !important;
+}
+
+.adminFname {
+    color: white !important;
+}

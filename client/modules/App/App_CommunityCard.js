@@ -8,15 +8,6 @@ import { Card, Button, Icon, Image } from 'semantic-ui-react';
 
 
 class CommunityCard extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
-  handleClick() {
-        // this.props.updateClicked(this.props.index);
-  }
 
   render() {
     if (this.props.joined) {

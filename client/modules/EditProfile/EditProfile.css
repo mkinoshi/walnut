@@ -1,88 +1,36 @@
-.ReactModal__Overlay--after-open {
-    background-color: rgba(0, 0, 0, 0.75) !important;
-}
-
-.ReactModal__Content--after-open {
-    position: absolute !important;
-    top: 8vw !important;
-    left: 10vw !important;
-    right: 10vw !important;
-    bottom: 1vw !important;
-    overflow: auto !important;
-    border-radius: 4px !important;
-    outline: none !important;
-    padding: 20px !important;
-}
-
-.close-modal {
-    float: right;
-}
-
-.portfolioBox {
-    width: 65%;
-    padding-left: 2%;
+.editPage {
     display: flex;
-    justify-content: center;
-}
-
-.tab-links {
-    display: flex;
+    flex-direction: row-reverse;
     justify-content: space-around;
-    margin-top: 2vw;
-}
-
-.pdfViewer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.files {
-    display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
-    flex-direction: row;
-    padding-bottom: 10px;
-    padding-top: 10px;
 }
 
-.dropzone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 1.7vw;
-    width: 1.7vw !important;
+.editCard {
+    background-color: #DADDD8;
+    padding: 20px;
+    border-radius: 5px;
 }
 
-.picThumb {
-    width: 30px;
-    margin-left: 1%;
+#graduation .text {
+    font-size: 14px !important;
 }
 
-.download {
-    float: right;
+.six.wide.field > .ui.dropdown {
+    margin-top: 0px;
 }
 
-.portfolioCard {
-    width: 100% !important;
+#PlacesAutocomplete__root input {
+    background-color: white;
+    border-radius: .28571429rem;
 }
 
-.settingsUploads {
-    display: flex;
-    justify-content: flex-end;
+.editProfilePic {
+    background-color: #DADDD8;
+    padding: 20px;
+    border-radius: 5px;
 }
 
-.addFile {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 1%;
-}
-
-.fileContainer {
-    width: 30% !important;
-}
-
-.fileName {
-    margin-left: 3% !important;
+.profilePicBox {
+    width: 150px;
+    height: 160px;
 }

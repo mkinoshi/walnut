@@ -4,7 +4,7 @@ import {User, Tag, Post, Quote, Community} from '../../models/models';
 import axios from 'axios';
 import Promise from 'promise';
 import firebaseApp from '../../../client/firebase';
-var adminApp = require('../../firebaseAdmin');
+import adminApp from '../../firebaseAdmin';
 
 router.post('/location', (req, res) => {
   User.findById(req.user._id)
@@ -29,7 +29,10 @@ router.post('/user', (req, res) => {
       .then((savedUser) => {
         const opts = [
           { path: 'communities'},
-          { path: 'currentCommunity'}
+          { path: 'currentCommunity'},
+          { path: 'currentCommunity.admins'},
+          { path: 'currentCommunity.defaultTags'},
+          { path: 'currentCommunity.users'}
         ];
         return User.populate(savedUser, opts);
       })
@@ -96,6 +99,37 @@ router.post('/removeportfoliotabs', (req, res) => {
       .catch((err) => {
         res.json({success: false});
       });
+});
+
+router.post('/community', (req, res) => {
+  const tagModels = req.body.newFilters.map((filter) =>
+        new Tag({
+          name: filter
+        })
+    ).concat(req.body.oldFilters);
+  console.log(tagModels);
+  Promise.all(tagModels.map((tag) => tag.save()))
+        .then((values) => {
+          console.log(values);
+          console.log('yoyoyoyoyo');
+          Community.findById(req.user.currentCommunity)
+          .then((community) => {
+            console.log(community);
+            community.title = req.body.title;
+            community.image = req.body.image;
+            community.admins = req.body.admins;
+            community.defaultTags = values.map((val) => val._id);
+            return community.save();
+          })
+          .then(() => {
+            console.log('you are about to go back');
+            res.json({success: true});
+          });
+        })
+        .catch((err) => {
+          console.log('got error', err);
+          res.json({error: err});
+        });
 });
 
 

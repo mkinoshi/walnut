@@ -2,7 +2,6 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import discoverReducer from './discoverReducer';
 import directoryReducer from './directoryReducer';
-import quoteReducer from './quoteReducer';
 import userReducer from './userReducer';
 import mapReducer from './mapReducer';
 import deckReducer from './deckReducer';
@@ -17,7 +16,6 @@ const rootReducer = combineReducers({
   userReducer: userReducer,
   directoryReducer: directoryReducer,
   discoverReducer: discoverReducer,
-  quoteReducer: quoteReducer,
   mapReducer: mapReducer,
   deckReducer: deckReducer,
   getCommunityReducer: getCommunityReducer,
