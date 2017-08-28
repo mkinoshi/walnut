@@ -7,15 +7,13 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
     result.getToken(/* forceRefresh */ true)
-    .then(function(idToken) {
-      console.log('idToken', idToken);
+    .then((idToken) => {
       axios.post(URL + 'auth/login', {
         token: idToken,
         email: email,
         password: password
       })
       .then((res) => {
-        console.log('signin thunk', res);
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
         // redirect('/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
         // history.replace('/');
