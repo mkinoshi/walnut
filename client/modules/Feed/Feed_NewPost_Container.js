@@ -116,7 +116,7 @@ class NewPostContainer extends React.Component {
               id="textarea1"
               autoHeight
               placeholder="What's on your mind?"
-              minRows={3}
+              minRows={2}
               onChange={(e) => this.handleChange(e)}
               />
           </Form>

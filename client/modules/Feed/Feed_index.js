@@ -67,7 +67,7 @@ class Feed extends React.Component {
         {/* </div>*/}
         {this.props.data.isFetching || !this.props.isReady ?
             <Loader active inline="centered" /> :
-           <div style={{height: '90vh', overflow: 'auto'}}>
+           <div style={{height: '92vh', overflow: 'auto'}}>
              {/* <div className="feedTop">*/}
                {/* <div>*/}
                  {/* <Button*/}

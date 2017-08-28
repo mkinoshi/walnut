@@ -85,7 +85,9 @@
     padding-top: 12px;
     padding-bottom: 12px;
     padding-right: 10px;
+    padding-left: 0px;
     border: none !important;
+
 }
 
 #newPostHeader {
@@ -225,7 +227,6 @@ body ::-webkit-scrollbar-thumb {
 }
 
 .newPostTagsPref {
-    margin-top: 10px;
 }
 
 .topics {

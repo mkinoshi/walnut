@@ -77,7 +77,7 @@ class Online extends React.Component {
     return (
       <div className="LeftSidebar_Online">
         <div className="discoverTitleBox">
-            <h1 className="discoverTitle">Currently Active</h1>
+            <h1 className="discoverTitle">Online</h1>
             <div className="discoverTitleLine"></div>
             <Item.Group className="itemGroupOnline">
                 {this.state.people.map(person => (

@@ -102,7 +102,7 @@ class FilterPrefContainer extends React.Component {
             name="form-field-name"
             value={this.state.value}
             multi simpleValue
-            placeholder="Add new filter"
+            placeholder="Filter by topic(s)..."
             options={options}
             onChange={this.handleSelectChange.bind(this)}
           />
