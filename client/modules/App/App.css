@@ -75,7 +75,8 @@
 .communityTitle {
     margin-left: 10px;
     color: #3A3A3A;
-    margin-top: 15px;
+    margin-top: 0;
+    align-self: center;
 }
 
 .navBarLink {
@@ -86,6 +87,7 @@
 }
 
 .navbarLinkOn {
+    cursor: pointer !important;
     font-weight: bold;
     margin-bottom: 9px;
     color: #5bc0e3 !important;
@@ -94,6 +96,7 @@
 }
 
 .navbarLinkOff {
+    cursor: pointer !important;
     color: #3A3A3A;
     background-color: #FAFAFA !important;
     padding-top: 8px !important;
@@ -192,7 +195,7 @@
 .walnutContainer {
     display: flex;
     flex-direction: column;
-    background-color: #EEEEF3;
+    background-color: #FAFAFA;
 }
 
 .communityCardContent {

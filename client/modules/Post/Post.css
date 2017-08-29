@@ -549,6 +549,11 @@ iframe {
 }
 
 .usersIcon {
-    cursor: pointer;
     color: #3a3a3a;
+}
+
+.Select-control {
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    border-radius: 3px !important;
 }
