@@ -85,9 +85,10 @@
 .conversationCardWrapper {
     margin-left: 0px;
     margin-top: 0px;
-    background-color: red;
-    width: 20px;
-    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    max-width: 20px;
+    max-height: 20px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
@@ -113,16 +114,18 @@
 .conversationCardHeaderUser {
     margin-left: 6px;
     font-size: 11px;
-    margin-top: 4px;
+    margin-top: 0 !important;
 }
 
 .conversationCardBody {
+    overflow: hidden;
     font-size: 10px;
     margin-left: 8px !important;
     margin-bottom: 0px !important;
 }
 
 .myConversationCard {
+  border-radius: 3px !important;
   margin-bottom: 5px !important;
 }
 
@@ -163,6 +166,7 @@
 
 .onlineName {
   margin-top: 5px;
+  align-self: center;
 }
 
 .LeftSidebar_Online {
@@ -215,4 +219,15 @@
 
 .onlineInline {
     display: inline-flex;
+}
+
+.minifyButton {
+    background: #3a3a3a !important;
+    color: #FAFAFA !important;
+    float: right !important;
+    margin: 0 0 15px 0 !important;
+}
+
+.minifyButton:hover {
+    color: #5bc0e3 !important;
 }

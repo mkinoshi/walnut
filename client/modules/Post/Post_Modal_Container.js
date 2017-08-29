@@ -343,8 +343,8 @@ class ModalInstance extends React.Component {
                 circular
                 id="joinButton"
                 animated="vertical">
-                <Button.Content hidden>Follow</Button.Content>
-                <Button.Content visible>
+                <Button.Content visible>Follow</Button.Content>
+                <Button.Content hidden>
                   <Icon name="plus" />
                 </Button.Content>
               </Button>

@@ -8,7 +8,7 @@ import RightSideBar from './Discover_Right_Sidebar_Container';
 import ConversationCard from './Discover_My_Conversations_Card';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
-import {Sidebar, Button} from 'semantic-ui-react';
+import {Sidebar, Button, Icon} from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
@@ -71,6 +71,11 @@ class Home extends React.Component {
                  icon="labeled"
                  direction="right"
                  vertical>
+            <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+              <Icon name="chevron circle right"
+                    size="large"
+                    />
+            </Button>
             {(this.props.myConversations && this.props.myConversations.length > 0) ? this.props.myConversations.map((conv) =>
                 <ConversationCard data={conv}
                                   key={uuidv4()}
