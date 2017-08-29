@@ -6,6 +6,7 @@ import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
 import Linkify from 'linkifyjs/react';
+import {Divider} from 'semantic-ui-react';
 
 const defaults = {
   attributes: null,
@@ -112,7 +113,7 @@ class Post extends React.Component {
       <div className="postOuter">
       <div className="postContent">
         <div className="postUser">
-          <div className="imageWrapper">
+          <div className="imageWrapperPost">
               <img className="postUserImage" src={this.props.postData.pictureURL} />
           </div>
           <div className="postHeader">
@@ -142,7 +143,7 @@ class Post extends React.Component {
           />
       </div>
 
-
+      <Divider className="postDivider" fitted />
       <div className="postFootnote">
         <div className="tagContainer">
           {this.props.postData.tags.map((tag, index) => (

@@ -67,7 +67,8 @@ class NewPostContainer extends React.Component {
           alert('failed uploaded!');
         }
         this.props.clearPostTag();
-        this.props.toggleModal();
+        const elem = document.getElementById('textarea1');
+        elem.value = '';
         this.setState({postBody: '', file: '', newFileName: null});
         // TODO: dispatch front end refresh no backend call
         this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
@@ -75,6 +76,8 @@ class NewPostContainer extends React.Component {
     } else {
       if (this.state.postBody && this.state.file === '') {
         this.props.newPost(this.state.postBody, this.props.postTags.map((tag) => tag._id), this.props.newPostTags, this.props.lastRefresh, this.props.useFilters);
+        const elem = document.getElementById('textarea1');
+        elem.value = '';
         this.setState({ postBody: '', file: ''});
         this.props.clearPostTag();
       } else {

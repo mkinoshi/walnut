@@ -107,6 +107,7 @@
     background-color: red;
     min-width: 30px;
     min-height: 30px;
+
     border-radius: 50%;
     display: flex;
     overflow: hidden;
@@ -236,7 +237,7 @@
 .imageWrapperCommunity {
     margin-left: 10px;
     margin-top: 7px;
-    background-color: red;
+    background-color: #3a3a3a;
     width: 30px;
     height: 30px;
     display: flex;
@@ -253,9 +254,10 @@
 .imageWrapperNav {
     margin-left: 10px;
     margin-top: 6px;
-    background-color: red;
-    width: 30px;
-    height: 30px;
+    min-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    max-width: 32px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
