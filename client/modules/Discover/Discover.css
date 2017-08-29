@@ -3,6 +3,7 @@
   flex-direction: row;
   margin-top: 3px;
   overflow-x: scroll;
+  justify-content: space-between;
 }
 
 .RightSideBar_Container {
@@ -14,7 +15,6 @@
 }
 
 .LeftSidebar_Container {
-  flex: 3;
   margin-left: 30px;
 }
 
@@ -24,11 +24,11 @@
 
 .discoverTitle {
   font-family: Avenir Next;
-  margin-right: 20px;
   font-size: 18px;
   line-height: 41px;
   margin-bottom: 0px;
   color: #3a3a3a;
+  margin-top: 0 !important;
 }
 
 .discoverTitleLine {
@@ -81,11 +81,6 @@
   color: #314460 !important;
 }
 
-.myConversationBox {
-  height: 528px;
-  overflow-y: scroll;
-  margin-left: 20px;
-}
 
 .conversationCardWrapper {
     margin-left: 0px;
@@ -181,4 +176,43 @@
 .itemGroupOnline {
   height: 300px !important;
   overflow-y: scroll !important;
+}
+
+.followedPostsSidebar {
+    box-shadow: none !important;
+    background: #3a3a3a !important;
+    width: 320px !important;
+    padding-top: 10px !important;
+    padding-left: 15px !important;
+}
+
+.followedPostsButton {
+    height: 40px !important;
+    background: #fff !important;
+    color: #5bc0e3 !important;
+    margin-top: 20px !important;
+    margin-right: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    width: 200px !important;
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    text-align: left !important;
+    border-right: none !important;
+    min-width: 150px !important;
+
+}
+
+.onlineCircle {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: #11e6a7;
+    margin-right: 10px;
+    align-self: center;
+    margin-bottom: 3px;
+}
+
+.onlineInline {
+    display: inline-flex;
 }
