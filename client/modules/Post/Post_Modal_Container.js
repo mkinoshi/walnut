@@ -58,17 +58,17 @@ class ModalInstance extends React.Component {
       this.setState({count: snapshot.val()});
     });
     // notification stuff
-    // const updates = {};
-    // const userId = firebase.auth().currentUser.uid;
-    // firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
-    //   let unreadCount =  snapshotB.val();
-    //   if (!isNaN(unreadCount)) {
-    //     if (unreadCount > 0) {
-    //       this.setState({unread: unreadCount});
-    //       console.log('unread set to true');
-    //     }
-    //   }
-    // });
+    const updates = {};
+    const userId = firebaseApp.auth().currentUser.uid;
+    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+      let unreadCount =  snapshotB.val();
+      if (!isNaN(unreadCount)) {
+        if (unreadCount > 0) {
+          this.setState({unread: unreadCount});
+          console.log('unread set to true');
+        }
+      }
+    });
   }
 
   scrollToBottom(id) {
@@ -163,7 +163,7 @@ class ModalInstance extends React.Component {
         const followers = Object.keys(snapshot.val());
         const memberIds = this.state.members.map(member => member.uid);
         followers.forEach(follower => {
-          // let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
+          let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
           console.log('got in here?', memberIds, follower, snapshot.val()[follower])
           if (snapshot.val()[follower] && !memberIds.includes(follower)) {
             firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
@@ -304,7 +304,7 @@ class ModalInstance extends React.Component {
              trigger={
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <Icon size="big" name="users" className="users" />
+          <Icon size="big" name="users" className="usersIcon" />
           <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
           <Icon size="big" name="comments" className="commentIcon" />
         </div>}

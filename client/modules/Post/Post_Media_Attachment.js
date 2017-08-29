@@ -26,7 +26,7 @@ class MediaAttachment extends React.Component {
     if(this.props.data.type === 'image/jpeg' || this.props.data.type === 'image/png') {
       return (
           <div className="mediaAttachment" >
-              <Image className="postImage" onClick={() => this.props.renderLightBox(this.props.data)} size="medium" src={this.props.data.url}/><br/>
+              <Image className="postImage" onClick={() => this.props.renderLightBox(this.props.data)} size="medium" src={this.props.data.url}/>
           </div>
       );
     }

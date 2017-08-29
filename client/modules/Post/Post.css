@@ -7,6 +7,7 @@
     flex-direction: column;
     height: auto;
     overflow: hidden;
+    margin-bottom: 15px;
 }
 
 .lightBoxImage {
@@ -150,7 +151,7 @@
 
 .hashtag {
     color: #FAFAFA;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 19px;
 }
 
@@ -201,17 +202,17 @@
     flex-direction: row;
 }
 
-.imageWrapper {
+.imageWrapperPost {
     margin-left: 10px;
-    margin-top: 10px;
-    background-color: red;
-    min-width: 30px;
-    min-height: 30px;
-    max-height: 30px;
-    max-width: 30px;
+    margin-top: 6px;
+    min-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    max-width: 32px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
+    margin-right: 15px
 }
 
 .postUserImage {
@@ -231,9 +232,10 @@
 }
 
 .postHeaderUser {
+    align-self: baseline;
     height: 19px;	
     width: 263.6px;	
-    color: #232425;	
+    color: #3a3a3a;
     font-family: Avenir Next;	
     font-size: 14px;	
     font-weight: bold;	
@@ -247,10 +249,9 @@
     width: 480.83px;	
     color: #4A4A4A;	
     font-family: Avenir Next;	
-    font-size: 18px;	
+    font-size: 16px;
     line-height: 25px;
     margin-left: 3%;
-    margin-top: 15px;
     margin-bottom: 15px;
 }
 
@@ -263,7 +264,8 @@
 }
 
 .commentIcon {
-    color: #313D4D !important;
+    cursor: pointer;
+    color: #3a3a3a !important;
 }
 
 .commentNum {
@@ -276,7 +278,7 @@
 
 
 .commentNumUn {
-    color: red;
+    color: #bc3e3e;
     margin-left: 10px;
     margin-top: 4px;
     margin-right: 3px;
@@ -295,6 +297,7 @@
     margin-left: 53px;
     color: #313D4D !important;
     display: flex;
+    margin-right: 10px;
 }
 
 .postDescription {
@@ -380,6 +383,7 @@
     color: black;
     padding-left: 10px;
     padding-right: 10px;
+    margin-bottom: 15px;
 }
 
 .linkPreviewWrapper{
@@ -389,7 +393,7 @@
 .lineLeft {
     height: 200px;
     width: 6px;
-    background-color: #DADDD8;
+    background-color: #3E719F;
     border-radius: 100px;
     height: 297px;
     margin-left: 10px;
@@ -402,9 +406,7 @@
 }
 
 .linkImage {
-    display: flex;
-    justify-content: center; 
-    height: 200px;
+
 }
 
 .linkPub {
@@ -418,8 +420,9 @@
 .linkImg {
     overflow: hidden;
     width: 100%;
-    object-fit: cover;
-    height: 163px;
+    max-height: 150px;
+    object-fit: contain;
+    object-position: 0 0;
 }
 
 body ::-webkit-scrollbar-track {
@@ -537,4 +540,15 @@ iframe {
     width: 100% !important;
     object-fit: cover !important;
     height: auto !important;
+}
+
+.postDivider {
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.usersIcon {
+    cursor: pointer;
+    color: #3a3a3a;
 }

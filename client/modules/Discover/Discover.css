@@ -150,16 +150,16 @@
 }
 
 .imageWrapperOnline {
-  margin-left: 10px;
-  background-color: red;
-  min-width: 30px;
-  min-height: 30px;
-  max-height: 30px;
-  max-width: 30px;
-  border-radius: 50%;
-  display: flex;
-  overflow: hidden;
-  margin-right: 15px
+    margin-left: 10px;
+    margin-top: 6px;
+    min-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    max-width: 32px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+    margin-right: 15px
 }
 
 .middle.aligned.content {
