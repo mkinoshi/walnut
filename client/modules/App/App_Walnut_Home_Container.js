@@ -49,7 +49,7 @@ class WalnutHomeContainer extends React.Component {
 
   handleSubmit(image, titleValue, defaultFilters) {
     this.props.createCommunity(image, titleValue, defaultFilters);
-    window.location.reload();
+    // window.location.reload();
   }
 
 

@@ -282,6 +282,7 @@ class ModalInstance extends React.Component {
   }
 
   joinConversation() {
+    console.log('inside here');
     const updates = {};
     updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
     updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;

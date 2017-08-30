@@ -7,7 +7,6 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
-  console.log('thththththththththt', req.body.lastRefresh);
   const tagModels = req.body.newTags.map((filter) =>
         new Tag({
           name: filter

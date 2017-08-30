@@ -35,6 +35,7 @@ class MyConversationContainer extends React.Component {
 
   render() {
     if (this.props.myConversations && this.props.myConversations.length > 0) {
+      console.log('my conversations exist', this.props.myConversations);
       return (
         <div className="myConversationBox">
             {this.props.myConversations.map((conv) =>

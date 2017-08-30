@@ -38,25 +38,35 @@ class NewCommunityModal extends React.Component {
     this.setState({otherTags: copy, filterValue: ''});
   }
 
-  handleCreate() {
-    superagent.post('/aws/upload/community')
-    .attach('community', this.state.file)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        alert('failed uploaded!');
-      }
-    //   this.setState({pic: res.body.pictureURL, file: {}});
-      if (this.state.titleValue) {
-        this.props.handleCreate(res.body.pictureURL, this.state.titleValue, this.state.defaultFilters);
-        this.setState({open: false});
-      }
-    });
+  handleNewComm() {
+    console.log('in here', this.state.titleValue);
+    if (this.state.file !== '') {
+      console.log('inside here', this.state.file);
+      // superagent.post('/aws/upload/community')
+      //   .attach('community', this.state.file)
+      //   .end((err, res) => {
+      //     if (err) {
+      //       console.log(err);
+      //       alert('failed uploaded!');
+      //     }
+      //     if (this.state.titleValue) {
+      //       this.props.handleCreate(res.body.pictureURL, this.state.titleValue, this.state.defaultFilters);
+      //       this.setState({ open: false });
+      //     }
+      //   });
+    } else if (this.state.titleValue) {
+      console.log('no file selected');
+      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.defaultFilters);
+      this.setState({ open: false });
+    }
   }
 
   handleUpload(file) {
     console.log('this is the file', file);
     this.setState({file: file});
+    const reader = new FileReader();
+    const url = reader.readAsDataURL(file);
+    console.log('cheeky url', url, reader.result);
   }
 
   saveImage() {
@@ -84,8 +94,10 @@ class NewCommunityModal extends React.Component {
     return (
         <Modal size={'small'}
                basic
-               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left" />}
+               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left"
+               onClick={() => this.setState({open: true})} />}
                closeIcon="close"
+               open={this.state.open}
         >
             <Modal.Header className="modalHeader">
                 Create your Community!
@@ -96,7 +108,6 @@ class NewCommunityModal extends React.Component {
                         style={{width: '80px', height: '40px'}}
                         chooseFileButton={<Button icon="plus" />}
                         options={optionsForUpload}/>
-                        {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
                 <Input
                        className="titleInput"
                        value={this.state.titleValue}
@@ -119,7 +130,7 @@ class NewCommunityModal extends React.Component {
                 <Button className="addButton" content="Add" icon="add" onClick={(e) => {this.handleClick(e);}} />
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={() => this.props.handleCreate(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
                     Create
                     <Icon name="lightning" />
                 </Button>

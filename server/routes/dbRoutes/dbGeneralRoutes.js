@@ -28,6 +28,7 @@ router.get('/user', (req, res) => {
 
 // TODO: this needs to be fixed. There is a "cannot read property map of undefined" error
 router.post('/create/community', (req, res) => {
+  console.log('this is the backend route', req.body);
   const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
           name: filter
