@@ -1,8 +1,7 @@
 #Discover {
   display: flex;
   flex-direction: row;
-  margin-top: 3px;
-  overflow-x: scroll;
+  margin-top: 6vh;
   justify-content: space-between;
 }
 
@@ -186,7 +185,7 @@
     box-shadow: none !important;
     background: #3a3a3a !important;
     width: 320px !important;
-    padding-top: 10px !important;
+    padding-top: 6vh !important;
     padding-left: 15px !important;
 }
 

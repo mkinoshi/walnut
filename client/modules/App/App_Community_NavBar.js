@@ -142,11 +142,12 @@ class Navbar extends React.Component {
               <Dropdown className="profileDropdown link item" text={this.props.fullName.split(' ')[0]} pointing>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link className="profilePopeoutHeaderTab" to={'/community/' + title + '/editprofile'} >
+                    <Link className="dropdownProfileLink" to={'/community/' + title + '/editprofile'} >
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               {/* <a className="logoutText" href="/logout">
