@@ -1,5 +1,8 @@
 
 #navBar {
+    width: 100%;
+    position: fixed;
+    z-index: 1;
     display: flex;
     height: 43px;
     background-color: #FAFAFA;
@@ -268,8 +271,8 @@
 }
 
 .profileDropdown {
-    margin-top: 11px !important;
-    color: #313D4D;
+    /* margin-top: 11px !important;*/
+    color: #3a3a3a;
 }
 
 .bottomBar {
@@ -301,4 +304,36 @@ button.ui.button > input {
 
 .adminFname {
     color: white !important;
+}
+
+.ui.dropdown .menu {
+    left: -62% !important;
+}
+
+.ui.pointing.dropdown>.menu:after {
+    box-shadow: none !important;
+    top: -.45em !important;
+    height: .8em !important;
+    width: .8em !important;
+    left: 78% !important;
+    border: 1px solid rgba(34,36,38,.15) !important;
+    border-right: none !important;
+    border-bottom: none !important;
+}
+
+.ui.dropdown>.dropdown.icon {
+    font-size: 1.25em !important;
+    margin-right: 10px;
+}
+
+.ui.pointing.dropdown>.menu {
+    margin-top: 5px !important;
+}
+
+.dropdownProfileLink {
+    color: #3a3a3a !important;
+}
+
+.dropdownLogout{
+    color: #3a3a3a !important;
 }

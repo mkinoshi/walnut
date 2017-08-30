@@ -44,6 +44,7 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
+    console.log('called _loadMore()');
     if (this.props.lastRefresh) {
       this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh, this.props.useFilters);
     }
@@ -55,69 +56,42 @@ class Feed extends React.Component {
   }
 
   render() {
-    return (
-      <div className="Feed_Wrapper">
-        {/* <div className="feedTop">*/}
-          {/* <div>*/}
-            {/* <Button*/}
-            {/* onClick={() => this.newConversationModal()}*/}
-            {/* id="newConversationButton"*/}
-            {/* content="New conversation"/>*/}
-          {/* </div>*/}
-        {/* </div>*/}
-        {this.props.data.isFetching || !this.props.isReady ?
+    if (this.props.data.isFetching || !this.props.isReady) {
+      return (
+        <div className="Feed_Wrapper">
             <Loader active inline="centered" /> :
-           <div style={{height: '92vh', overflow: 'auto'}}>
-             {/* <div className="feedTop">*/}
-               {/* <div>*/}
-                 {/* <Button*/}
-                     {/* onClick={() => this.newConversationModal()}*/}
-                     {/* id="newConversationButton"*/}
-                     {/* content="New conversation"/>*/}
-               {/* </div>*/}
-             {/* </div>*/}
-             <NewPostContainer />
-            <InfiniteScroll
-            className="banterScroller"
+        </div>
+      );
+    }
+    return (
+        <div className="Feed_Wrapper">
+          <NewPostContainer />
+          <InfiniteScroll
+              className="banterScroller"
               id="banterScroller"
-            pageStart={0}
-            loadMore={() => this._loadMore()}
-            hasMore={this.props.hasMore}
-            threshold={250}
-            loader={<Loader active inline="centered" />}
-            useWindow={false}
-            >
-             <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
-          {this.props.data.posts.map((post) => (
-            <Post ref="card"
-            key={post.postId}
-            isOpen={false}
-            currentUser={this.props.user}
-            postData={post}
-            newLike={() => (this.props.newLike(post.postId))}/>
-            ))}
-            </InfiniteScroll>
-           </div>
-        }
-        {/* <Modal*/}
-        {/* basic*/}
-        {/* open={this.props.modalIsOpen}>*/}
-          {/* <Modal.Header*/}
-          {/* id="conversationHeader"*/}
-          {/* >*/}
-            {/* <h1 className="newConvHeader">New Conversation</h1>*/}
-            {/* <Button onClick={() => this.props.toggleModal()} className="cancelButton">*/}
-              {/* <Icon name="cancel"/>*/}
-              {/* Cancel*/}
-            {/* </Button>*/}
-          {/* </Modal.Header>*/}
-          {/* <Modal.Content className="newConversationOuter">*/}
-          {/* </Modal.Content>*/}
-        {/* </Modal>*/}
-      </div>
+              pageStart={0}
+              loadMore={() => this._loadMore()}
+              hasMore={this.props.hasMore}
+              threshold={250}
+              loader={<Loader active inline="centered" />}
+              useWindow
+          >
+            <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
+              {this.props.data.posts.map((post) => (
+                  <Post ref="card"
+                        key={post.postId}
+                        isOpen={false}
+                        currentUser={this.props.user}
+                        postData={post}
+                        newLike={() => (this.props.newLike(post.postId))}/>
+              ))}
+          </InfiniteScroll>
+        </div>
     );
   }
 }
+
+// style={{height: '92vh', overflow: 'auto'}}
 
 Feed.propTypes = {
   data: PropTypes.object,

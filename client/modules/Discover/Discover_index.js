@@ -66,7 +66,7 @@ class Home extends React.Component {
     return (
       <Sidebar.Pushable>
         <Sidebar className="followedPostsSidebar"
-                 animation="push"
+                 animation="overlay"
                  visible={this.state.visible}
                  icon="labeled"
                  direction="right"
