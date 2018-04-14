@@ -8,3 +8,19 @@ source env.sh -> you have to create your own api key for facebook, AWS, and Fire
 npm run start:dev -> for local development
 npm run start -> for production
 ```
+## Techonology used
+⋅⋅* React
+⋅⋅* React Redux
+⋅⋅* Redux Thunk
+⋅⋅* React Router
+⋅⋅* Node.js
+⋅⋅* MongoDB
+⋅⋅* AWS
+⋅⋅* Heroku
+⋅⋅* Firebase
+⋅⋅* Webpack
+⋅⋅* browsify
+⋅⋅* UglifyJS
+⋅⋅* GZip
+⋅⋅* Mapbox API
+⋅⋅* GZip
