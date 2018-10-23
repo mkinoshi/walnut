@@ -4,3 +4,4 @@ env.sh
 *bundle.js
 *node-static.js
 .idea
+*build
